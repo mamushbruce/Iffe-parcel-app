@@ -27,10 +27,12 @@ const AppHeader = () => {
 
   const controlNavbar = useCallback(() => {
     if (typeof window !== 'undefined') {
-      if (window.scrollY > lastScrollY && window.scrollY > headerHeight) { // if scroll down hide the navbar
+      if (window.scrollY > lastScrollY && window.scrollY > headerHeight + 50) { 
         setShowNavbar(false);
-      } else { // if scroll up show the navbar
-        setShowNavbar(true);
+      } else { 
+        if (window.scrollY < lastScrollY || window.scrollY <= 50) {
+            setShowNavbar(true);
+        }
       }
       setLastScrollY(window.scrollY); 
     }
@@ -68,7 +70,6 @@ const AppHeader = () => {
             </a>
           </Link>
           
-          {/* Desktop Navigation Links */}
           <div className="hidden md:flex space-x-1 items-center">
             <Button variant="ghost" asChild>
               <Link href="/">
@@ -114,7 +115,6 @@ const AppHeader = () => {
 
           <div className="flex items-center space-x-2">
             <ThemeToggleButton />
-            {/* Auth Buttons - Hidden on mobile for cleaner look, accessible via other means or future mobile menu */}
             <div className="hidden md:flex items-center space-x-2">
               <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
                 <LogIn className="mr-2 h-4 w-4"/> Login
