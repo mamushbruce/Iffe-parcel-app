@@ -1,12 +1,13 @@
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import Summarizer from '@/components/summarizer';
-import { ArrowLeft, CalendarDays, DollarSign, ExternalLink, HeartHandshake, MessageSquare, Share2, Users, Tag } from 'lucide-react';
+import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import CampaignActionsCard from '@/components/campaign/campaign-actions-card'; // New Import
 
 // Mock data - replace with actual data fetching logic
 interface Campaign {
@@ -45,8 +46,8 @@ const mockCampaignsData: Campaign[] = [
     volunteersNeeded: 50,
     volunteersSignedUp: 22,
   },
-   { id: '2', title: 'Youth Empowerment Workshops', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'youth education training', shortDescription: 'Equipping young people with skills for a brighter future through interactive workshops.', description: 'Our Youth Empowerment Workshops are designed to equip young individuals aged 16-25 with essential life and vocational skills. The program covers financial literacy, digital skills, entrepreneurship, and leadership development. By investing in our youth, we are investing in the future of our nation. These workshops will be conducted across various regions, ensuring wide accessibility. Participants will receive certificates upon completion and mentorship opportunities to guide their career paths. This initiative is vital for addressing youth unemployment and fostering innovation.', storyline: 'Many young Ugandans lack access to quality skills training. These workshops bridge that gap.', budget: 20000, goal: 18000, currentAmount: 9200, organizer: 'Rotaract Club of Makerere', tags: ['#YouthEmpowerment', '#SkillsDevelopment', '#Education', '#FutureLeaders'], startDate: '2023-10-15', endDate: '2024-06-30', volunteersNeeded: 30, volunteersSignedUp: 15, },
-  { id: '3', title: 'Reforestation Project "Green Future"', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'forest trees environment', shortDescription: 'Planting 10,000 trees to combat climate change and restore local ecosystems.', description: 'The "Green Future" Reforestation Project is a response to the alarming rate of deforestation in the Mpigi district. We aim to plant 10,000 indigenous trees, restoring vital ecosystems, improving biodiversity, and combating climate change. This community-driven project will involve local schools and volunteers in tree planting and maintenance. Educational sessions on environmental conservation will also be part of the initiative. A greener future is possible with collective effort.', storyline: 'Deforestation threatens our environment. We are taking action by planting trees and educating communities.', budget: 8000, goal: 7500, currentAmount: 6100, organizer: 'Obutonde Initiative', tags: ['#Reforestation', '#ClimateAction', '#Environment', '#Sustainability'], startDate: '2023-11-01', endDate: '2024-05-31', volunteersNeeded: 100, volunteersSignedUp: 45, },
+   { id: '2', title: 'Youth Empowerment Workshops', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'youth education training', description: 'Our Youth Empowerment Workshops are designed to equip young individuals aged 16-25 with essential life and vocational skills. The program covers financial literacy, digital skills, entrepreneurship, and leadership development. By investing in our youth, we are investing in the future of our nation. These workshops will be conducted across various regions, ensuring wide accessibility. Participants will receive certificates upon completion and mentorship opportunities to guide their career paths. This initiative is vital for addressing youth unemployment and fostering innovation.', storyline: 'Many young Ugandans lack access to quality skills training. These workshops bridge that gap.', budget: 20000, goal: 18000, currentAmount: 9200, organizer: 'Rotaract Club of Makerere', tags: ['#YouthEmpowerment', '#SkillsDevelopment', '#Education', '#FutureLeaders'], startDate: '2023-10-15', endDate: '2024-06-30', volunteersNeeded: 30, volunteersSignedUp: 15, },
+  { id: '3', title: 'Reforestation Project "Green Future"', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'forest trees environment', description: 'The "Green Future" Reforestation Project is a response to the alarming rate of deforestation in the Mpigi district. We aim to plant 10,000 indigenous trees, restoring vital ecosystems, improving biodiversity, and combating climate change. This community-driven project will involve local schools and volunteers in tree planting and maintenance. Educational sessions on environmental conservation will also be part of the initiative. A greener future is possible with collective effort.', storyline: 'Deforestation threatens our environment. We are taking action by planting trees and educating communities.', budget: 8000, goal: 7500, currentAmount: 6100, organizer: 'Obutonde Initiative', tags: ['#Reforestation', '#ClimateAction', '#Environment', '#Sustainability'], startDate: '2023-11-01', endDate: '2024-05-31', volunteersNeeded: 100, volunteersSignedUp: 45, },
 ];
 
 async function getCampaign(id: string): Promise<Campaign | undefined> {
@@ -60,8 +61,6 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
   if (!campaign) {
     notFound();
   }
-
-  const progressPercentage = campaign.goal > 0 ? (campaign.currentAmount / campaign.goal) * 100 : 0;
 
   return (
     <div className="space-y-8 animate-slide-up">
@@ -101,32 +100,14 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
               )}
             </div>
             <aside className="space-y-6">
-              <Card className="bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="font-headline text-xl text-primary">Campaign Progress</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex justify-between text-sm font-medium">
-                    <span className="text-primary">${campaign.currentAmount.toLocaleString()}</span>
-                    <span className="text-muted-foreground">raised of ${campaign.goal.toLocaleString()} goal</span>
-                  </div>
-                  <Progress value={progressPercentage} aria-label={`${progressPercentage}% funded`} />
-                   <div className="flex items-center text-sm text-muted-foreground">
-                    <CalendarDays className="h-4 w-4 mr-2 text-accent" />
-                    <span>Ends: {new Date(campaign.endDate).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Users className="h-4 w-4 mr-2 text-accent" />
-                    <span>{campaign.volunteersSignedUp} / {campaign.volunteersNeeded} Volunteers</span>
-                  </div>
-                  <Button className="w-full mt-2 bg-accent text-accent-foreground hover:bg-accent/90">
-                    <HeartHandshake className="mr-2 h-5 w-5" /> Donate Now
-                  </Button>
-                   <Button variant="outline" className="w-full">
-                    <Users className="mr-2 h-5 w-5" /> Volunteer
-                  </Button>
-                </CardContent>
-              </Card>
+              <CampaignActionsCard
+                campaignTitle={campaign.title}
+                currentAmount={campaign.currentAmount}
+                goal={campaign.goal}
+                endDate={campaign.endDate}
+                volunteersSignedUp={campaign.volunteersSignedUp}
+                volunteersNeeded={campaign.volunteersNeeded}
+              />
               <Card className="bg-muted/30">
                 <CardHeader>
                   <CardTitle className="font-headline text-xl text-primary">Organizer</CardTitle>
