@@ -1,9 +1,11 @@
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import AppHeader from '@/components/layout/app-header';
 import BottomNav from '@/components/layout/bottom-nav';
+import { ThemeProviderClient } from '@/components/theme-provider-client'; // Added import
 
 export const metadata: Metadata = {
   title: 'e-Rotary Hub',
@@ -16,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning> {/* Added suppressHydrationWarning for theme handling */}
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -25,12 +27,14 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased bg-background text-foreground min-h-screen flex flex-col">
-        <AppHeader />
-        <main className="flex-grow container mx-auto px-4 py-8">
-          {children}
-        </main>
-        <BottomNav />
-        <Toaster />
+        <ThemeProviderClient> {/* Wrapped content with ThemeProviderClient */}
+          <AppHeader />
+          <main className="flex-grow container mx-auto px-4 py-8">
+            {children}
+          </main>
+          <BottomNav />
+          <Toaster />
+        </ThemeProviderClient>
       </body>
     </html>
   );

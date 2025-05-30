@@ -6,6 +6,7 @@ import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, E
 import React, { useState } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
+import { ThemeToggleButton } from '@/components/theme-toggle-button'; // Added import
 
 const AppHeader = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -70,7 +71,8 @@ const AppHeader = () => {
               </Link>
             </Button>
           </div>
-          <div className="space-x-2">
+          <div className="flex items-center space-x-2">
+            <ThemeToggleButton /> {/* Added ThemeToggleButton */}
             <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
               <LogIn className="mr-2 h-4 w-4"/> Login
             </Button>

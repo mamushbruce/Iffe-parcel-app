@@ -33,7 +33,7 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 225 30% 93%; /* Adjusted for theme */
+    --sidebar-background: 225 30% 93%;
     --sidebar-foreground: 221 80% 30%;
     --sidebar-primary: 221 100% 25%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -44,34 +44,38 @@ body {
   }
 
   .dark {
-    /* Basic dark theme, can be further customized if needed */
-    --background: 220 20% 10%;
-    --foreground: 225 20% 90%;
-    --card: 220 20% 12%;
-    --card-foreground: 225 20% 90%;
-    --popover: 220 20% 12%;
-    --popover-foreground: 225 20% 90%;
-    --primary: 39 92% 54%; /* Rotary Gold as primary in dark */
-    --primary-foreground: 220 20% 10%; /* Dark text on gold */
-    --secondary: 220 20% 20%;
-    --secondary-foreground: 225 20% 90%;
-    --muted: 220 20% 15%;
-    --muted-foreground: 220 15% 60%;
-    --accent: 221 100% 60%; /* Lighter Rotary Blue as accent */
-    --accent-foreground: 0 0% 100%;
+    --background: 0 0% 5%; /* #0D0D0D */
+    --foreground: 0 0% 100%; /* #FFFFFF */
+    --card: 0 0% 8%; /* Slightly lighter black for cards */
+    --card-foreground: 0 0% 95%; /* Off-white text on cards */
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 45 96% 58%; /* #FBC02D - Rotary Yellow */
+    --primary-foreground: 0 0% 10%; /* Dark text on yellow */
+    --secondary: 0 0% 15%; /* Dark gray */
+    --secondary-foreground: 0 0% 80%; /* Lighter gray text */
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 4 90% 61%; /* #F44336 - Rotary Red-Pink */
+    --accent-foreground: 0 0% 100%; /* White text on red-pink */
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 25%;
-    --input: 220 20% 22%;
-    --ring: 39 92% 54%; /* Rotary Gold */
-    --sidebar-background: 220 20% 12%;
-    --sidebar-foreground: 225 20% 90%;
-    --sidebar-primary: 39 92% 54%;
-    --sidebar-primary-foreground: 220 20% 10%;
-    --sidebar-accent: 221 100% 60%;
+    --border: 0 0% 12%; /* Dark border */
+    --input: 0 0% 10%; /* Dark input background */
+    --ring: 45 96% 58%; /* Rotary Yellow for focus rings */
+    --chart-1: 45 96% 58%; /* Rotary Yellow */
+    --chart-2: 4 90% 61%; /* Rotary Red-Pink */
+    --chart-3: 221 80% 70%; /* Lighter blue for contrast */
+    --chart-4: 39 80% 70%; /* Lighter gold/orange */
+    --chart-5: 0 0% 70%; /* Light Gray */
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 45 96% 58%;
+    --sidebar-primary-foreground: 0 0% 10%;
+    --sidebar-accent: 4 90% 61%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 20% 25%;
-    --sidebar-ring: 39 92% 54%;
+    --sidebar-border: 0 0% 12%;
+    --sidebar-ring: 45 96% 58%;
   }
 }
 
