@@ -56,6 +56,11 @@ export default function ChatPage() {
   ]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [clientReady, setClientReady] = useState(false);
+
+  useEffect(() => {
+    setClientReady(true);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -120,7 +125,7 @@ export default function ChatPage() {
               )}
             >
               <Avatar className="h-8 w-8 sm:h-10 sm:w-10 shrink-0">
-                <AvatarImage src={msg.avatarUrl} alt={msg.userName} data-ai-hint={msg.dataAiHint} />
+                <AvatarImage src={msg.avatarUrl} alt={msg.userName ?? undefined} data-ai-hint={msg.dataAiHint} />
                 <AvatarFallback>{msg.userName?.substring(0, 1).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
@@ -139,7 +144,7 @@ export default function ChatPage() {
                      msg.sender === 'user' ? 'text-muted-foreground text-right' : 'text-muted-foreground text-left'
                   )}
                 >
-                  {msg.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                  {clientReady ? msg.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '...'}
                 </p>
               </div>
             </div>
