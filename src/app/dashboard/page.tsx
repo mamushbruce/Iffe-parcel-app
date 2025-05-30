@@ -1,10 +1,11 @@
 
+
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Award, BarChart3, Bookmark, CalendarCheck2, Edit, ExternalLink, Eye, HandHeart, MessageSquare, Settings, ShieldCheck as ShieldCheckIcon, Star, UserPlus } from 'lucide-react';
+import { Award, BarChart3, Bookmark, CalendarCheck2, Edit, ExternalLink, Eye, HandHeart, MessageSquare, Settings, ShieldCheck as ShieldCheckIcon, Star, UserPlus, UserCircle } from 'lucide-react';
 import VerifiedBadge from '@/components/verified-badge'; // New import
 
 // Mock data
@@ -194,3 +195,4 @@ export default function DashboardPage() {
     </div>
   );
 }
+
