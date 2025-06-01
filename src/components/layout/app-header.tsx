@@ -29,10 +29,7 @@ const AppHeader = () => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
     }
-    // Try to get the main scroll container.
-    // Using querySelector for flexibility if ID isn't available or changes.
     scrollContainerRef.current = document.querySelector('main'); 
-
   }, []);
 
   const controlNavbar = useCallback(() => {
@@ -97,44 +94,43 @@ const AppHeader = () => {
             Rotaract e-Hub
           </Link>
           
-          {/* Desktop Navigation & Auth */}
-          <div className="hidden md:flex items-center space-x-1">
-            <Button variant="ghost" size="sm" asChild>
+          <div className="hidden lg:flex items-center space-x-1">
+            <Button variant="ghost" asChild>
               <Link href="/">
                 <Home className="mr-1 h-4 w-4" /> Home
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/campaigns">
                 <BarChart3 className="mr-1 h-4 w-4" /> Campaigns
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/blog">
                 <Edit3 className="mr-1 h-4 w-4" /> Blog
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/events">
                 <CalendarDays className="mr-1 h-4 w-4" /> Events
               </Link>
             </Button>
-             <Button variant="ghost" size="sm" asChild>
+             <Button variant="ghost" asChild>
               <Link href="/gallery">
                 <ImageIcon className="mr-1 h-4 w-4" /> Gallery
               </Link>
             </Button>
-             <Button variant="ghost" size="sm" asChild>
+             <Button variant="ghost" asChild>
               <Link href="/videos">
                 <PlayCircle className="mr-1 h-4 w-4" /> Videos
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/ideas">
                 <Lightbulb className="mr-1 h-4 w-4" /> Idea Box
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" asChild>
               <Link href="/dashboard">
                 <UserCircle className="mr-1 h-4 w-4" /> Dashboard
               </Link>
@@ -148,12 +144,10 @@ const AppHeader = () => {
             </Button>
           </div>
 
-          {/* Right side items on all screens (Theme Toggle) & Mobile Menu Trigger */}
           <div className="flex items-center space-x-2">
             <ThemeToggleButton />
             
-            {/* Mobile Menu Trigger */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon" aria-label="Open menu">
