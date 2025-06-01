@@ -19,34 +19,43 @@ const AppHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const [showNavbar, setShowNavbar] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
+
 
   useEffect(() => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
     }
+    // Try to get the main scroll container.
+    // Using querySelector for flexibility if ID isn't available or changes.
+    scrollContainerRef.current = document.querySelector('main'); 
+
   }, []);
 
   const controlNavbar = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      if (window.scrollY > lastScrollY && window.scrollY > headerHeight + 50) { 
+    const currentScrollContainer = scrollContainerRef.current;
+    if (currentScrollContainer) {
+      const currentScrollTop = currentScrollContainer.scrollTop;
+      if (currentScrollTop > lastScrollY.current && currentScrollTop > headerHeight + 50) { 
         setShowNavbar(false);
       } else { 
-        if (window.scrollY < lastScrollY || window.scrollY <= 50) {
+        if (currentScrollTop < lastScrollY.current || currentScrollTop <= 50) {
             setShowNavbar(true);
         }
       }
-      setLastScrollY(window.scrollY); 
+      lastScrollY.current = currentScrollTop;
     }
-  }, [lastScrollY, headerHeight]);
+  }, [headerHeight]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', controlNavbar);
+    const currentScrollContainer = scrollContainerRef.current;
+    if (currentScrollContainer) {
+      currentScrollContainer.addEventListener('scroll', controlNavbar);
       return () => {
-        window.removeEventListener('scroll', controlNavbar);
+        currentScrollContainer.removeEventListener('scroll', controlNavbar);
       };
     }
   }, [controlNavbar]);
@@ -84,48 +93,48 @@ const AppHeader = () => {
       >
         <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 font-headline text-lg md:text-xl font-bold text-primary hover:text-primary/80 transition-colors">
-            <RotarySpinner size={20} /> 
+            <RotarySpinner size={24} className="text-primary" /> 
             Rotaract e-Hub
           </Link>
           
           {/* Desktop Navigation & Auth */}
           <div className="hidden md:flex items-center space-x-1">
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/">
                 <Home className="mr-1 h-4 w-4" /> Home
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/campaigns">
                 <BarChart3 className="mr-1 h-4 w-4" /> Campaigns
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/blog">
                 <Edit3 className="mr-1 h-4 w-4" /> Blog
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/events">
                 <CalendarDays className="mr-1 h-4 w-4" /> Events
               </Link>
             </Button>
-             <Button variant="ghost" asChild>
+             <Button variant="ghost" size="sm" asChild>
               <Link href="/gallery">
                 <ImageIcon className="mr-1 h-4 w-4" /> Gallery
               </Link>
             </Button>
-             <Button variant="ghost" asChild>
+             <Button variant="ghost" size="sm" asChild>
               <Link href="/videos">
                 <PlayCircle className="mr-1 h-4 w-4" /> Videos
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/ideas">
                 <Lightbulb className="mr-1 h-4 w-4" /> Idea Box
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" size="sm" asChild>
               <Link href="/dashboard">
                 <UserCircle className="mr-1 h-4 w-4" /> Dashboard
               </Link>
@@ -151,10 +160,10 @@ const AppHeader = () => {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-[280px] sm:w-[320px] flex flex-col bg-card/95 backdrop-blur-lg">
+                <SheetContent side="left" className="w-[280px] sm:w-[320px] flex flex-col bg-card/95 backdrop-blur-lg p-0">
                   <SheetHeader className="p-4 border-b">
                     <SheetTitle className="flex items-center gap-2 text-primary">
-                       <RotarySpinner size={20} /> Rotaract e-Hub
+                       <RotarySpinner size={20} className="text-primary" /> Rotaract e-Hub
                     </SheetTitle>
                   </SheetHeader>
                   <nav className="flex-grow overflow-y-auto p-4 space-y-2">
@@ -171,7 +180,7 @@ const AppHeader = () => {
                     ))}
                   </nav>
                   <Separator className="my-2" />
-                  <div className="p-4 space-y-3">
+                  <div className="p-4 space-y-3 border-t">
                     <SheetClose asChild>
                       <Button variant="outline" className="w-full justify-start p-3 text-base" onClick={openLoginModalDirectly}>
                         <LogIn className="mr-3 h-5 w-5 text-accent"/> Login
@@ -196,4 +205,3 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
-
