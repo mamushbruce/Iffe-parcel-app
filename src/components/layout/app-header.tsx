@@ -2,23 +2,26 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus } from 'lucide-react';
-import React, { useState, useEffect, useCallback } from 'react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X } from 'lucide-react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
 import { ThemeToggleButton } from '@/components/theme-toggle-button';
 import { cn } from '@/lib/utils';
 import RotarySpinner from '@/components/ui/rotary-spinner';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 
 const AppHeader = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [signupInitialStep, setSignupInitialStep] = useState<"user" | "community" | "erotaract" | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const headerRef = React.useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (headerRef.current) {
@@ -48,12 +51,27 @@ const AppHeader = () => {
     }
   }, [controlNavbar]);
 
-
   const openSignupModal = (initialStep: "user" | "community" | "erotaract" | null = null) => {
     setSignupInitialStep(initialStep);
     setIsSignupModalOpen(true);
+    setIsMobileMenuOpen(false); 
   };
 
+  const openLoginModalDirectly = () => {
+    setIsLoginModalOpen(true);
+    setIsMobileMenuOpen(false);
+  }
+
+  const mobileNavItems = [
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/campaigns', label: 'Campaigns', icon: BarChart3 },
+    { href: '/blog', label: 'Blog', icon: Edit3 },
+    { href: '/events', label: 'Events', icon: CalendarDays },
+    { href: '/gallery', label: 'Gallery', icon: ImageIcon },
+    { href: '/videos', label: 'Videos', icon: PlayCircle },
+    { href: '/ideas', label: 'Idea Box', icon: Lightbulb },
+    { href: '/dashboard', label: 'Dashboard', icon: UserCircle },
+  ];
 
   return (
     <>
@@ -65,14 +83,13 @@ const AppHeader = () => {
         )}
       >
         <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <Link href="/" legacyBehavior>
-            <a className="flex items-center gap-2 font-headline text-lg md:text-xl font-bold text-primary hover:text-primary/80 transition-colors">
-              <RotarySpinner size={20} /> 
-              Rotaract e-Hub
-            </a>
+          <Link href="/" className="flex items-center gap-2 font-headline text-lg md:text-xl font-bold text-primary hover:text-primary/80 transition-colors">
+            <RotarySpinner size={20} /> 
+            Rotaract e-Hub
           </Link>
           
-          <div className="hidden md:flex space-x-1 items-center">
+          {/* Desktop Navigation & Auth */}
+          <div className="hidden md:flex items-center space-x-1">
             <Button variant="ghost" asChild>
               <Link href="/">
                 <Home className="mr-1 h-4 w-4" /> Home
@@ -113,17 +130,61 @@ const AppHeader = () => {
                 <UserCircle className="mr-1 h-4 w-4" /> Dashboard
               </Link>
             </Button>
+            <Separator orientation="vertical" className="h-6 mx-2 bg-border" />
+            <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
+              <LogIn className="mr-2 h-4 w-4"/> Login
+            </Button>
+            <Button className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
+              <UserPlus className="mr-2 h-4 w-4"/> Sign Up
+            </Button>
           </div>
 
+          {/* Right side items on all screens (Theme Toggle) & Mobile Menu Trigger */}
           <div className="flex items-center space-x-2">
             <ThemeToggleButton />
-            <div className="hidden md:flex items-center space-x-2">
-              <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
-                <LogIn className="mr-2 h-4 w-4"/> Login
-              </Button>
-              <Button className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
-                <UserPlus className="mr-2 h-4 w-4"/> Sign Up
-              </Button>
+            
+            {/* Mobile Menu Trigger */}
+            <div className="md:hidden">
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Open menu">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[280px] sm:w-[320px] flex flex-col bg-card/95 backdrop-blur-lg">
+                  <SheetHeader className="p-4 border-b">
+                    <SheetTitle className="flex items-center gap-2 text-primary">
+                       <RotarySpinner size={20} /> Rotaract e-Hub
+                    </SheetTitle>
+                  </SheetHeader>
+                  <nav className="flex-grow overflow-y-auto p-4 space-y-2">
+                    {mobileNavItems.map((item) => (
+                      <SheetClose asChild key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="flex items-center p-3 rounded-md text-base font-medium text-foreground hover:bg-muted hover:text-primary transition-colors"
+                        >
+                          <item.icon className="mr-3 h-5 w-5 text-accent" />
+                          {item.label}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                  <Separator className="my-2" />
+                  <div className="p-4 space-y-3">
+                    <SheetClose asChild>
+                      <Button variant="outline" className="w-full justify-start p-3 text-base" onClick={openLoginModalDirectly}>
+                        <LogIn className="mr-3 h-5 w-5 text-accent"/> Login
+                      </Button>
+                    </SheetClose>
+                    <SheetClose asChild>
+                       <Button className="w-full justify-start p-3 text-base bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
+                        <UserPlus className="mr-3 h-5 w-5"/> Sign Up
+                      </Button>
+                    </SheetClose>
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </nav>
@@ -135,3 +196,4 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
+
