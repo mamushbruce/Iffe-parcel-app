@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -44,22 +45,22 @@ const EventCard: React.FC<EventCardProps> = ({ id, title, date, time, location, 
       </CardContent>
       <CardFooter className="grid grid-cols-2 gap-2 border-t pt-4">
         {rsvpLink ? (
-          <Button asChild className="w-full bg-primary hover:bg-primary/90">
-            <Link href={rsvpLink} target="_blank" rel="noopener noreferrer">
-              <Users className="h-4 w-4 mr-2" /> RSVP Now
+          <Button asChild className="w-full bg-primary hover:bg-primary/90 whitespace-normal h-auto py-2">
+            <Link href={rsvpLink} target="_blank" rel="noopener noreferrer" className="text-center">
+              <Users className="h-4 w-4 mr-2 shrink-0" /> RSVP Now
             </Link>
           </Button>
         ) : (
-          <Button disabled className="w-full"><Users className="h-4 w-4 mr-2" /> RSVP Closed</Button>
+          <Button disabled className="w-full whitespace-normal h-auto py-2 text-center"><Users className="h-4 w-4 mr-2 shrink-0" /> RSVP Closed</Button>
         )}
         {calendarLink ? (
-           <Button variant="outline" asChild className="w-full border-accent text-accent hover:bg-accent/10 hover:text-accent">
-            <Link href={calendarLink} target="_blank" rel="noopener noreferrer">
-              <CalendarPlus className="h-4 w-4 mr-2" /> Add to Calendar
+           <Button variant="outline" asChild className="w-full border-accent text-accent hover:bg-accent/10 hover:text-accent whitespace-normal h-auto py-2">
+            <Link href={calendarLink} target="_blank" rel="noopener noreferrer" className="text-center">
+              <CalendarPlus className="h-4 w-4 mr-2 shrink-0" /> Add to Calendar
             </Link>
           </Button>
         ): (
-          <Button variant="outline" disabled className="w-full"><CalendarPlus className="h-4 w-4 mr-2" /> Add to Calendar</Button>
+          <Button variant="outline" disabled className="w-full whitespace-normal h-auto py-2 text-center"><CalendarPlus className="h-4 w-4 mr-2 shrink-0" /> Add to Calendar</Button>
         )}
       </CardFooter>
     </Card>
