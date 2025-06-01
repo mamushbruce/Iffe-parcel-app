@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import Summarizer from '@/components/summarizer';
 import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import CampaignActionsCard from '@/components/campaign/campaign-actions-card'; // New Import
+import CampaignActionsCard from '@/components/campaign/campaign-actions-card';
 
 // Mock data - replace with actual data fetching logic
 interface Campaign {
