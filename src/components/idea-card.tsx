@@ -54,7 +54,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
   return (
     <Card className={cn(
       "shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full relative overflow-hidden",
-      imageUrl && "bg-transparent" // Make card transparent if there's an image
+      imageUrl && "bg-transparent" 
     )}>
       {imageUrl && (
         <>
@@ -63,10 +63,10 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
             alt={title || 'Idea background image'}
             layout="fill"
             objectFit="cover"
-            className="absolute inset-0 w-full h-full z-0 blur-sm scale-105" // Added scale for better blur coverage at edges
+            className="absolute inset-0 w-full h-full z-0 blur-sm scale-105"
             data-ai-hint={dataAiHint || 'idea image'}
           />
-          <div className="absolute inset-0 w-full h-full z-[1] bg-black/20"></div> 
+          <div className="absolute inset-0 w-full h-full z-[1] bg-black/10 dark:bg-black/30"></div> 
         </>
       )}
       <CardHeader className={cn(
