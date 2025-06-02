@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation"; 
 
 interface LoginModalProps {
   open: boolean;
@@ -18,15 +18,30 @@ interface LoginModalProps {
 
 export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const { toast } = useToast();
-  const router = useRouter(); // Initialize router
+  const router = useRouter(); 
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [activeTab, setActiveTab] = useState('user'); // Added state for active tab
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true);
+
+    // If the active tab is 'admin', bypass authentication for testing
+    if (activeTab === 'admin') {
+      toast({
+        title: "Admin Panel Access (Bypassed Auth)",
+        description: "Redirecting to admin panel for testing. Authentication is disabled for this path.",
+        variant: "default",
+      });
+      onOpenChange(false);
+      router.push('/admin');
+      setEmail(''); 
+      setPassword('');
+      return; 
+    }
     
+    setIsLoading(true);
     const currentEmail = email;
     const currentPassword = password;
 
@@ -50,10 +65,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         });
         onOpenChange(false); 
         
-        // For testing purposes, redirect to /admin if admin credentials were used
-        if (currentEmail === 'admin@rtry.com') {
-          router.push('/admin');
-        }
+        // This part is now handled by the activeTab check above for direct redirect.
+        // if (currentEmail === 'admin@rtry.com') {
+        //   router.push('/admin');
+        // }
         
         setEmail(''); 
         setPassword('');
@@ -71,7 +86,8 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   };
 
   const handleTabChange = (newTabValue: string) => {
-    setIsLoading(false); // Reset loading state
+    setActiveTab(newTabValue); // Update active tab state
+    setIsLoading(false); 
     if (newTabValue === 'admin') {
       setEmail('admin@rtry.com');
       setPassword('password1234567');
@@ -97,7 +113,6 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             <TabsTrigger value="admin" disabled={isLoading}>Admin</TabsTrigger>
           </TabsList>
           
-          {/* User Login Form */}
           <TabsContent value="user">
             <form id="user-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
               <div>
@@ -109,7 +124,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required 
-                  disabled={isLoading}
+                  disabled={isLoading || activeTab === 'admin'}
                 />
               </div>
               <div>
@@ -121,16 +136,15 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required 
-                  disabled={isLoading}
+                  disabled={isLoading || activeTab === 'admin'}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading || activeTab === 'admin'}>
                 {isLoading ? "Logging in..." : "Login as User"}
               </Button>
             </form>
           </TabsContent>
           
-          {/* Community Login Form */}
           <TabsContent value="community">
              <form id="community-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
               <div>
@@ -142,7 +156,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)}
                   required 
-                  disabled={isLoading}
+                  disabled={isLoading || activeTab === 'admin'}
                 />
               </div>
               <div>
@@ -154,16 +168,15 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
-                  disabled={isLoading}
+                  disabled={isLoading || activeTab === 'admin'}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading || activeTab === 'admin'}>
                 {isLoading ? "Logging in..." : "Login as Community Member"}
               </Button>
             </form>
           </TabsContent>
           
-          {/* Admin Login Form */}
           <TabsContent value="admin">
              <form id="admin-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
               <div>
@@ -191,7 +204,8 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 />
               </div>
               <Button type="submit" className="w-full bg-destructive hover:bg-destructive/90" disabled={isLoading}>
-                {isLoading ? "Logging in..." : "Login as Admin"}
+                {/* Text will be "Login as Admin", but behavior is now direct redirect */}
+                {isLoading ? "Redirecting..." : "Access Admin Panel (Test)"} 
               </Button>
             </form>
           </TabsContent>
