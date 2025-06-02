@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Send, Trash2, UserX, ShieldBan, VolumeX, MessageSquare, Users, PowerOff, CornerDownLeft, MessageCircle } from "lucide-react";
+import { Send, Trash2, UserX, ShieldBan, VolumeX, MessageSquare, Users, PowerOff, CornerDownLeft, MessageCircle, ShieldAlert } from "lucide-react";
 import { cn } from '@/lib/utils';
 
 interface Chatroom {
@@ -27,6 +27,8 @@ interface ChatParticipant {
   dataAiHint?: string;
   role: 'user' | 'moderator';
   isMuted?: boolean;
+  isBannedFromRoom?: boolean; // New property
+  isGloballySuspended?: boolean; // New property
 }
 
 interface ChatMessage {
@@ -94,7 +96,14 @@ export default function AdminChatroomsPage() {
   useEffect(() => {
     if (selectedChatroomId) {
       setCurrentMessages(mockMessages[selectedChatroomId] || []);
-      setCurrentParticipants(mockParticipants[selectedChatroomId] || []);
+      // Ensure participants are initialized with new properties if they don't exist
+      const participantsForRoom = (mockParticipants[selectedChatroomId] || []).map(p => ({
+        ...p,
+        isMuted: p.isMuted ?? false,
+        isBannedFromRoom: p.isBannedFromRoom ?? false,
+        isGloballySuspended: p.isGloballySuspended ?? false,
+      }));
+      setCurrentParticipants(participantsForRoom);
       setAdminMessage('');
     } else {
       setCurrentMessages([]);
@@ -131,18 +140,42 @@ export default function AdminChatroomsPage() {
   
   const handleDeleteMessage = (messageId: string, messageText: string) => {
     setCurrentMessages(prev => prev.filter(msg => msg.id !== messageId));
-    toast({ title: "Message Deleted", description: `Message "${messageText.substring(0,20)}..." deleted. (Simulated)`, variant: "destructive" });
+    toast({ title: "Message Deleted", description: `Message "${messageText.substring(0,20)}..." deleted from ${selectedChatroom?.name || 'this chat'}. (Simulated)`, variant: "destructive" });
   };
 
-  const handleUserAction = (action: 'Mute' | 'Kick' | 'Ban', userId: string, userName: string) => {
-    // Simulate action
-    if (action === 'Mute') {
-      setCurrentParticipants(prev => prev.map(p => p.id === userId ? {...p, isMuted: !p.isMuted} : p));
-    }
+  const handleUserAction = (action: 'Mute' | 'Kick' | 'BanFromRoom' | 'SuspendGlobal', userId: string, userName: string) => {
+    let toastDescription = '';
+    let toastVariant: "default" | "destructive" = "default";
+
+    setCurrentParticipants(prev => prev.map(p => {
+      if (p.id === userId) {
+        if (action === 'Mute') {
+          toastDescription = `${userName} has been ${p.isMuted ? 'unmuted' : 'muted'} in ${selectedChatroom?.name || 'this chat'}. (Simulated)`;
+          return { ...p, isMuted: !p.isMuted };
+        }
+        if (action === 'Kick') {
+          toastDescription = `${userName} has been kicked from ${selectedChatroom?.name || 'this chat'} for this session. (Simulated)`;
+          toastVariant = "destructive";
+          // In a real app, you might remove them from the list or mark them as kicked temporarily
+        }
+        if (action === 'BanFromRoom') {
+          toastDescription = `${userName} has been ${p.isBannedFromRoom ? 'unbanned from' : 'banned from'} ${selectedChatroom?.name || 'this chat'}. (Simulated)`;
+          toastVariant = "destructive";
+          return { ...p, isBannedFromRoom: !p.isBannedFromRoom, isMuted: !p.isBannedFromRoom ? true : p.isMuted }; // Also mute if banning
+        }
+        if (action === 'SuspendGlobal') {
+          toastDescription = `${userName} has been ${p.isGloballySuspended ? 'unsuspended globally' : 'globally suspended from all chats and platform features'}. (Simulated)`;
+          toastVariant = "destructive";
+          return { ...p, isGloballySuspended: !p.isGloballySuspended, isMuted: !p.isGloballySuspended ? true : p.isMuted, isBannedFromRoom: !p.isGloballySuspended ? true : p.isBannedFromRoom }; // Also mute/ban from room if globally suspending
+        }
+      }
+      return p;
+    }));
+
     toast({
-      title: `User ${action}d`,
-      description: `${userName} has been ${action.toLowerCase()}ed from ${selectedChatroom?.name || 'this chat'}. (Simulated)`,
-      variant: action === 'Ban' || action === 'Kick' ? 'destructive' : 'default',
+      title: `User Action: ${action.replace(/([A-Z])/g, ' $1').trim()}`,
+      description: toastDescription,
+      variant: toastVariant,
     });
   };
 
@@ -240,6 +273,7 @@ export default function AdminChatroomsPage() {
                                 size="icon" 
                                 className="h-6 w-6 text-muted-foreground hover:text-destructive opacity-0 group-hover:opacity-100 transition-opacity"
                                 onClick={() => handleDeleteMessage(msg.id, msg.text)}
+                                title="Delete message"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
                               </Button>
@@ -278,27 +312,35 @@ export default function AdminChatroomsPage() {
                     <CardContent className="p-3 space-y-2">
                     {currentParticipants.map(user => (
                         <div key={user.id} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 group">
-                        <div className="flex items-center space-x-2">
-                            <Avatar className="h-8 w-8">
-                            <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint={user.dataAiHint} />
-                            <AvatarFallback>{user.name.substring(0,1)}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <p className="text-sm font-medium">{user.name} {user.isMuted && <Badge variant="outline" className="text-xs ml-1">Muted</Badge>}</p>
-                                <p className="text-xs text-muted-foreground">{user.role}</p>
-                            </div>
-                        </div>
-                        <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-yellow-600" onClick={() => handleUserAction('Mute', user.id, user.name)} title={user.isMuted ? "Unmute" : "Mute"}>
-                                <VolumeX className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-orange-600" onClick={() => handleUserAction('Kick', user.id, user.name)} title="Kick">
-                                <UserX className="h-4 w-4" />
-                            </Button>
-                            <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-red-600" onClick={() => handleUserAction('Ban', user.id, user.name)} title="Ban">
-                                <ShieldBan className="h-4 w-4" />
-                            </Button>
-                        </div>
+                          <div className="flex items-center space-x-2">
+                              <Avatar className="h-8 w-8">
+                              <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint={user.dataAiHint} />
+                              <AvatarFallback>{user.name.substring(0,1)}</AvatarFallback>
+                              </Avatar>
+                              <div>
+                                  <p className="text-sm font-medium flex items-center">
+                                    {user.name}
+                                    {user.isMuted && <Badge variant="outline" className="text-xs ml-1 px-1.5 py-0.5">Muted</Badge>}
+                                    {user.isBannedFromRoom && <Badge variant="destructive" className="text-xs ml-1 px-1.5 py-0.5">Banned</Badge>}
+                                    {user.isGloballySuspended && <Badge variant="destructive" className="text-xs ml-1 px-1.5 py-0.5">Suspended</Badge>}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">{user.role}</p>
+                              </div>
+                          </div>
+                          <div className="flex opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-yellow-600" onClick={() => handleUserAction('Mute', user.id, user.name)} title={user.isMuted ? "Unmute" : "Mute from Room"}>
+                                  <VolumeX className="h-4 w-4" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-orange-600" onClick={() => handleUserAction('Kick', user.id, user.name)} title="Kick from Room (Session)">
+                                  <UserX className="h-4 w-4" />
+                              </Button>
+                              <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-red-600" onClick={() => handleUserAction('BanFromRoom', user.id, user.name)} title={user.isBannedFromRoom ? "Unban from Room" : "Ban from Room"}>
+                                  <ShieldBan className="h-4 w-4" />
+                              </Button>
+                               <Button variant="ghost" size="icon" className="h-7 w-7 text-muted-foreground hover:text-red-700" onClick={() => handleUserAction('SuspendGlobal', user.id, user.name)} title={user.isGloballySuspended ? "Unsuspend User (Global)" : "Suspend User (Global)"}>
+                                  <ShieldAlert className="h-4 w-4" />
+                              </Button>
+                          </div>
                         </div>
                     ))}
                     {currentParticipants.length === 0 && <p className="text-muted-foreground text-sm text-center py-4">No participants in this room.</p>}
