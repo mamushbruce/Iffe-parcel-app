@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -11,8 +11,11 @@ import { cn } from '@/lib/utils';
 import RotarySpinner from '@/components/ui/rotary-spinner';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
+import { useSession, signOut } from 'next-auth/react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const AppHeader = () => {
+  const { data: session, status } = useSession();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [signupInitialStep, setSignupInitialStep] = useState<"user" | "community" | "erotaract" | null>(null);
@@ -24,12 +27,12 @@ const AppHeader = () => {
   const [headerHeight, setHeaderHeight] = useState(0);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
 
-
   useEffect(() => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
     }
-    scrollContainerRef.current = document.querySelector('main'); 
+    // Target the <main> element for scrolling
+    scrollContainerRef.current = document.querySelector('main#main-scroll-container');
   }, []);
 
   const controlNavbar = useCallback(() => {
@@ -67,6 +70,11 @@ const AppHeader = () => {
     setIsLoginModalOpen(true);
     setIsMobileMenuOpen(false);
   }
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: '/' }); // Redirect to home after sign out
+    setIsMobileMenuOpen(false);
+  };
 
   const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
@@ -136,12 +144,29 @@ const AppHeader = () => {
               </Link>
             </Button>
             <Separator orientation="vertical" className="h-6 mx-2 bg-border" />
-            <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
-              <LogIn className="mr-2 h-4 w-4"/> Login
-            </Button>
-            <Button className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
-              <UserPlus className="mr-2 h-4 w-4"/> Sign Up
-            </Button>
+            {status === 'loading' ? (
+              <Button variant="outline" disabled>Loading...</Button>
+            ) : session?.user ? (
+              <>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={session.user.image ?? undefined} alt={session.user.name ?? "User"} data-ai-hint="user avatar" />
+                  <AvatarFallback>{session.user.name?.substring(0,1).toUpperCase() ?? 'U'}</AvatarFallback>
+                </Avatar>
+                 <span className="text-sm font-medium mx-2 hidden xl:inline">{session.user.name}</span>
+                <Button variant="outline" onClick={() => signOut({ callbackUrl: '/' })}>
+                  <LogOut className="mr-2 h-4 w-4" /> Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
+                  <LogIn className="mr-2 h-4 w-4"/> Login
+                </Button>
+                <Button className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
+                  <UserPlus className="mr-2 h-4 w-4"/> Sign Up
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="flex items-center space-x-2">
@@ -156,7 +181,7 @@ const AppHeader = () => {
                 </SheetTrigger>
                 <SheetContent side="left" className="w-[280px] sm:w-[320px] flex flex-col bg-card/95 backdrop-blur-lg p-0">
                   <SheetHeader className="p-4 border-b">
-                    <SheetTitle className="flex items-center gap-2 text-primary">
+                     <SheetTitle className="flex items-center gap-2 text-primary">
                        <RotarySpinner size={20} className="text-primary" /> Rotaract e-Hub
                     </SheetTitle>
                   </SheetHeader>
@@ -175,16 +200,28 @@ const AppHeader = () => {
                   </nav>
                   <Separator className="my-2" />
                   <div className="p-4 space-y-3 border-t">
-                    <SheetClose asChild>
-                      <Button variant="outline" className="w-full justify-start p-3 text-base" onClick={openLoginModalDirectly}>
-                        <LogIn className="mr-3 h-5 w-5 text-accent"/> Login
-                      </Button>
-                    </SheetClose>
-                    <SheetClose asChild>
-                       <Button className="w-full justify-start p-3 text-base bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
-                        <UserPlus className="mr-3 h-5 w-5"/> Sign Up
-                      </Button>
-                    </SheetClose>
+                    {status === 'loading' ? (
+                      <Button variant="outline" className="w-full justify-start p-3 text-base" disabled>Loading...</Button>
+                    ) : session?.user ? (
+                      <SheetClose asChild>
+                        <Button variant="outline" className="w-full justify-start p-3 text-base" onClick={handleSignOut}>
+                          <LogOut className="mr-3 h-5 w-5 text-accent"/> Sign Out
+                        </Button>
+                      </SheetClose>
+                    ) : (
+                      <>
+                        <SheetClose asChild>
+                          <Button variant="outline" className="w-full justify-start p-3 text-base" onClick={openLoginModalDirectly}>
+                            <LogIn className="mr-3 h-5 w-5 text-accent"/> Login
+                          </Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Button className="w-full justify-start p-3 text-base bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
+                            <UserPlus className="mr-3 h-5 w-5"/> Sign Up
+                          </Button>
+                        </SheetClose>
+                      </>
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>
@@ -192,8 +229,8 @@ const AppHeader = () => {
           </div>
         </nav>
       </header>
-      <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />
-      <SignupModal open={isSignupModalOpen} onOpenChange={setIsSignupModalOpen} initialStep={signupInitialStep} />
+      {!session?.user && <LoginModal open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen} />}
+      {!session?.user && <SignupModal open={isSignupModalOpen} onOpenChange={setIsSignupModalOpen} initialStep={signupInitialStep} />}
     </>
   );
 };

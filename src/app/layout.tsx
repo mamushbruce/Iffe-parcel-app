@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import AppHeader from '@/components/layout/app-header';
 import BottomNav from '@/components/layout/bottom-nav';
 import { ThemeProviderClient } from '@/components/theme-provider-client';
+import AuthProvider from '@/components/auth-provider'; // Import AuthProvider
 
 export const metadata: Metadata = {
   title: 'e-Rotary Hub',
@@ -29,18 +30,20 @@ export default function RootLayout({
         className="font-body antialiased bg-background text-foreground min-h-screen flex flex-col h-screen"
         style={{ overflowX: 'hidden !important', overflowY: 'hidden !important' }}
       >
-        <ThemeProviderClient>
-          <AppHeader />
-          <main 
-            className="flex-grow container mx-auto px-4 pt-8 pb-24 md:pb-8 animate-fade-in" 
-            id="main-scroll-container" 
-            style={{ overflowY: 'auto' }}
-          >
-            {children}
-          </main>
-          <BottomNav />
-          <Toaster />
-        </ThemeProviderClient>
+        <AuthProvider> {/* Wrap with AuthProvider */}
+          <ThemeProviderClient>
+            <AppHeader />
+            <main 
+              className="flex-grow container mx-auto px-4 pt-8 pb-24 md:pb-8 animate-fade-in" 
+              id="main-scroll-container" 
+              style={{ overflowY: 'auto' }}
+            >
+              {children}
+            </main>
+            <BottomNav />
+            <Toaster />
+          </ThemeProviderClient>
+        </AuthProvider>
       </body>
     </html>
   );
