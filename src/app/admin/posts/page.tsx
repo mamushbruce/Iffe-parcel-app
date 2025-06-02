@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link'; // Import Link
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
@@ -167,7 +168,11 @@ export default function AdminPostsPage() {
                             <TableCell>{post.publishDate}</TableCell>
                             <TableCell>{post.lastActivityDate}</TableCell>
                             <TableCell className="text-right space-x-1">
-                              <Button variant="ghost" size="icon" onClick={() => handlePostAction('View', post.title)} title="View Post"><Eye className="h-4 w-4" /></Button>
+                              <Button variant="ghost" size="icon" title="View Post" asChild>
+                                <Link href={`/blog/${post.id}`} target="_blank" rel="noopener noreferrer">
+                                  <Eye className="h-4 w-4" />
+                                </Link>
+                              </Button>
                               <Button variant="ghost" size="icon" onClick={() => handlePostAction('Edit', post.title)} title="Edit Post"><Edit2 className="h-4 w-4" /></Button>
                               {post.status === 'Hidden' ?
                                 <Button variant="ghost" size="icon" className="text-green-600 hover:text-green-700" onClick={() => handlePostAction('Unhide', post.title)} title="Unhide Post"><Eye className="h-4 w-4" /></Button>
