@@ -17,9 +17,8 @@ import { Lightbulb, PlusCircle } from 'lucide-react';
 const ideaSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
   description: z.string().min(20, 'Description must be at least 20 characters.'),
-  // Add imageUrl and dataAiHint to schema if you implement image upload in the dialog
-  // imageUrl: z.string().url().optional().or(z.literal('')),
-  // dataAiHint: z.string().optional(),
+  imageUrl: z.string().url('Must be a valid URL for the image.').optional().or(z.literal('')),
+  dataAiHint: z.string().max(50, 'Keywords cannot exceed 50 characters.').optional(),
 });
 type IdeaFormValues = z.infer<typeof ideaSchema>;
 
@@ -58,8 +57,8 @@ const initialIdeas: Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[] = [
     votes: 15, 
     commentsCount: 2, 
     status: 'New',
-    imageUrl: 'https://placehold.co/600x400.png', // Added imageUrl
-    dataAiHint: 'solar charging station', // Added dataAiHint
+    imageUrl: 'https://placehold.co/600x400.png',
+    dataAiHint: 'solar charging station',
   },
 ];
 
@@ -105,15 +104,14 @@ export default function IdeaBoxPage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
     const newIdea = {
       id: String(ideas.length + 1 + Date.now()), // More unique ID
-      ...data,
+      title: data.title,
+      description: data.description,
       submittedBy: 'CurrentUser', // Replace with actual user
       dateSubmitted: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       votes: 0,
       commentsCount: 0,
       status: 'New' as 'New',
-      // @ts-ignore - this will exist if added to form
       imageUrl: data.imageUrl || `https://placehold.co/600x400.png?text=New+Idea`, 
-      // @ts-ignore - this will exist if added to form
       dataAiHint: data.dataAiHint || `idea placeholder`,
     };
     setIdeas(prevIdeas => [newIdea, ...prevIdeas]);
@@ -140,7 +138,7 @@ export default function IdeaBoxPage() {
               <PlusCircle className="mr-2 h-5 w-5" /> Suggest a New Idea
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle className="font-headline text-2xl text-primary">Submit Your Idea</DialogTitle>
               <DialogDescription>
@@ -162,18 +160,16 @@ export default function IdeaBoxPage() {
                 <Textarea id="description" {...register('description')} className="col-span-3 mt-1" rows={4} />
                 {errors.description && <p className="text-sm text-destructive mt-1">{errors.description.message}</p>}
               </div>
-              {/* 
-              To add image upload, you would add fields here for imageUrl and dataAiHint
               <div>
-                <Label htmlFor="imageUrl">Image URL (Optional)</Label>
-                <Input id="imageUrl" {...register('imageUrl')} />
-                {errors.imageUrl && <p>{errors.imageUrl.message}</p>}
+                <Label htmlFor="imageUrl" className="text-right font-semibold">Image URL (Optional)</Label>
+                <Input id="imageUrl" {...register('imageUrl')} className="col-span-3 mt-1" placeholder="https://example.com/image.png" />
+                {errors.imageUrl && <p className="text-sm text-destructive mt-1">{errors.imageUrl.message}</p>}
               </div>
               <div>
-                <Label htmlFor="dataAiHint">Image Keywords (Optional)</Label>
-                <Input id="dataAiHint" {...register('dataAiHint')} />
+                <Label htmlFor="dataAiHint" className="text-right font-semibold">Image Keywords (Optional)</Label>
+                <Input id="dataAiHint" {...register('dataAiHint')} className="col-span-3 mt-1" placeholder="e.g., nature community" />
+                {errors.dataAiHint && <p className="text-sm text-destructive mt-1">{errors.dataAiHint.message}</p>}
               </div>
-              */}
               <DialogFooter>
                 <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90">
                   {isSubmitting ? 'Submitting...' : 'Submit Idea'}
@@ -203,4 +199,3 @@ export default function IdeaBoxPage() {
     </div>
   );
 }
-
