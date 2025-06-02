@@ -62,10 +62,15 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     }
   };
 
-  const handleTabChange = () => {
-    setEmail('');
-    setPassword('');
-    setIsLoading(false); // Reset loading state if tab changes during a submission attempt
+  const handleTabChange = (newTabValue: string) => {
+    setIsLoading(false); // Reset loading state
+    if (newTabValue === 'admin') {
+      setEmail('admin@example.com');
+      setPassword('password');
+    } else {
+      setEmail('');
+      setPassword('');
+    }
   };
 
   return (
