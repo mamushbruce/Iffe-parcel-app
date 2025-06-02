@@ -42,7 +42,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     <SidebarProvider defaultOpen={false}> {/* Sidebar collapsed by default on desktop */}
       <div className="flex min-h-screen bg-muted/40">
         <Sidebar collapsible="icon" side="left" className="border-r bg-background">
-          <SidebarHeader className="flex items-center justify-center p-2 py-3 border-b h-14">
+          <SidebarHeader className="flex items-center justify-center p-2 py-2 border-b h-14"> {/* Changed py-3 to py-2 */}
             <Link
               href="/admin"
               className="group flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-3 text-lg font-semibold text-primary-foreground md:h-10 md:px-3 md:text-base"
@@ -56,7 +56,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </SidebarHeader>
           <SidebarContent>
             <ScrollArea className="flex-1">
-              <SidebarMenu className="px-2 pb-2 pt-0"> {/* Changed padding here */}
+              <SidebarMenu className="px-2 pb-2 pt-0">
                 {adminNavItems.map((item) => {
                   const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
                   return (
