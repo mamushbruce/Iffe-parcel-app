@@ -81,7 +81,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </Link>
         </nav>
         <ScrollArea className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+          <nav className="grid items-start px-2 text-sm font-medium lg:px-4 h-full">
             {adminNavItems.map((item) => {
               const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
               return (
