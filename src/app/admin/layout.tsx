@@ -3,14 +3,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Users, CheckSquare, FileText, Image as ImageIcon, MessageSquare, Settings, LayoutDashboard } from 'lucide-react'; // ShieldAlert removed
+import { Home, Users, CheckSquare, FileText, Image as ImageIcon, MessageSquare, Settings, LayoutDashboard, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import RotarySpinner from '@/components/ui/rotary-spinner';
 import { ScrollArea } from '@/components/ui/scroll-area';
-// import { Button } from '@/components/ui/button'; // Button for redirect is removed if not used elsewhere
-// import { useSession } from 'next-auth/react'; // No longer needed for bypassed auth
-// import { useRouter } from 'next/navigation'; // No longer needed for bypassed auth
-import React from 'react'; // useEffect removed
+import { Button } from '@/components/ui/button';
+import React from 'react';
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarInset,
+  SidebarTrigger
+} from '@/components/ui/sidebar';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -28,87 +37,73 @@ const adminNavItems = [
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
-  // const { data: session, status } = useSession(); // REMOVED
-  // const router = useRouter(); // REMOVED
 
-  // useEffect(() => { // REMOVED
-    // !!! AUTHENTICATION CHECKS BYPASSED FOR TESTING PURPOSES !!!
-    // TODO: Re-enable authentication checks before production.
-    // if (status === 'loading') {
-    //   return; 
-    // }
-    // if (status === 'unauthenticated') {
-    //   router.replace('/'); 
-    //   return;
-    // }
-    // if (!session?.user?.role || session.user.role !== 'admin') {
-    //   router.replace('/'); 
-    // }
-  // }, [session, status, router]);
-
-
-  // !!! AUTHENTICATION CHECKS BYPASSED FOR TESTING PURPOSES !!!
-  // TODO: Re-enable authentication checks before production.
-  // if (status === 'loading') { // REMOVED
-  //   return (
-  //     <div className="flex h-screen items-center justify-center">
-  //       <RotarySpinner size={60} />
-  //     </div>
-  //   );
-  // }
-
-  // if (status === 'unauthenticated' || (status === 'authenticated' && session?.user?.role !== 'admin')) { // REMOVED
-  //   return (
-  //       <div className="flex flex-col items-center justify-center h-screen bg-background text-foreground p-4">
-  //           <ShieldAlert className="w-16 h-16 text-destructive mb-4" />
-  //           <h1 className="text-2xl font-bold text-destructive mb-2">Access Denied</h1>
-  //           <p className="text-muted-foreground mb-6 text-center">You do not have permission to view this page. Redirecting...</p>
-  //           <Button onClick={() => router.push('/')} variant="outline">Go to Homepage</Button>
-  //       </div>
-  //   );
-  // }
-  
   return (
-    <div className="flex min-h-screen bg-muted/40">
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 flex-col border-r bg-background sm:flex">
-        <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-          <Link
-            href="/admin"
-            className="group flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-4 text-lg font-semibold text-primary-foreground md:h-10 md:px-4 md:text-base"
-          >
-            <RotarySpinner size={20} className="transition-all group-hover:scale-110" />
-            <span>Admin Panel</span>
-          </Link>
-        </nav>
-        <ScrollArea className="flex-1">
-          <nav className="grid items-start px-2 text-sm font-medium lg:px-4 h-full">
-            {adminNavItems.map((item) => {
-              const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
-                    isActive && 'bg-muted text-primary'
-                  )}
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
-        </ScrollArea>
-      </aside>
-      <main className="flex flex-1 flex-col sm:gap-4 sm:py-4 sm:pl-72 p-4 md:p-6">
-        {/* Added a message indicating auth is bypassed */}
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded-md" role="alert">
-          <p className="font-bold">Developer Note:</p>
-          <p>Admin authentication is currently bypassed for testing. Remember to re-enable security checks.</p>
+    <SidebarProvider defaultOpen={false}> {/* Sidebar collapsed by default on desktop */}
+      <div className="flex min-h-screen bg-muted/40">
+        <Sidebar collapsible="icon" side="left" className="border-r bg-background">
+          <SidebarHeader className="flex items-center justify-center p-2 py-3 border-b h-14">
+            <Link
+              href="/admin"
+              className="group flex h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary px-3 text-lg font-semibold text-primary-foreground md:h-10 md:px-3 md:text-base"
+            >
+              <RotarySpinner size={20} className="transition-all group-hover:scale-110" />
+              {/* Text span will be hidden by SidebarMenuButton logic when collapsed */}
+              <span className="font-semibold transition-opacity duration-300 group-data-[state=collapsed]:group-data-[data-collapsible=icon]:sr-only group-data-[state=collapsed]:group-data-[data-collapsible=icon]:opacity-0">
+                Admin Panel
+              </span>
+            </Link>
+          </SidebarHeader>
+          <SidebarContent>
+            <ScrollArea className="flex-1">
+              <SidebarMenu className="p-2">
+                {adminNavItems.map((item) => {
+                  const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
+                  return (
+                    <SidebarMenuItem key={item.label}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive}
+                        tooltip={item.label}
+                        className="w-full justify-start"
+                      >
+                        <Link href={item.href}>
+                          <item.icon className="h-5 w-5" /> {/* Standardized icon size */}
+                          <span>{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  );
+                })}
+              </SidebarMenu>
+            </ScrollArea>
+          </SidebarContent>
+        </Sidebar>
+
+        <div className="flex flex-col flex-1">
+          <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-background px-4 sm:px-6">
+            <SidebarTrigger asChild>
+              <Button size="icon" variant="outline" className="sm:hidden"> {/* Hidden on sm and up if sidebar is fixed open */}
+                <PanelLeft className="h-5 w-5" />
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </SidebarTrigger>
+             {/* Placeholder for breadcrumbs or other header elements */}
+             <div className="flex-1">
+                {/* <h1 className="text-lg font-semibold">Page Title</h1> */}
+             </div>
+          </header>
+          <SidebarInset> {/* This is the <main> tag for the page content */}
+            <div className="flex flex-1 flex-col gap-4 p-4 sm:px-6 sm:py-6 md:gap-8"> {/* Adjusted padding */}
+              <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 rounded-md" role="alert">
+                <p className="font-bold">Developer Note:</p>
+                <p>Admin authentication is currently bypassed for testing. Remember to re-enable security checks.</p>
+              </div>
+              {children}
+            </div>
+          </SidebarInset>
         </div>
-        {children}
-      </main>
-    </div>
+      </div>
+    </SidebarProvider>
   );
 }
