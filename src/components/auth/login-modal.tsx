@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 interface LoginModalProps {
   open: boolean;
@@ -17,6 +18,7 @@ interface LoginModalProps {
 
 export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const { toast } = useToast();
+  const router = useRouter(); // Initialize router
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -47,6 +49,12 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
           description: "Welcome back!",
         });
         onOpenChange(false); 
+        
+        // For testing purposes, redirect to /admin if admin credentials were used
+        if (currentEmail === 'admin@example.com') {
+          router.push('/admin');
+        }
+        
         setEmail(''); 
         setPassword('');
       }
