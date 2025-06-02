@@ -56,7 +56,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </SidebarHeader>
           <SidebarContent>
             <ScrollArea className="flex-1">
-              <SidebarMenu className="p-2">
+              <SidebarMenu className="px-2 pb-2 pt-0"> {/* Changed padding here */}
                 {adminNavItems.map((item) => {
                   const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
                   return (
