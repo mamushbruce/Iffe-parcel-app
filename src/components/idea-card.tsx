@@ -1,6 +1,9 @@
+
+'use client';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ThumbsUp, MessageSquare, UserCircle, CalendarDays } from 'lucide-react';
+import { ThumbsUp, MessageSquare, UserCircle, CalendarDays, ChevronDown, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -18,13 +21,20 @@ export interface IdeaCardProps {
 }
 
 const IdeaCard: React.FC<IdeaCardProps> = ({ id, title, description, submittedBy, dateSubmitted, votes, commentsCount, status, onVote, hasVoted }) => {
-  
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpanded = () => setIsExpanded(!isExpanded);
+
   const statusColors = {
     'New': 'bg-blue-100 text-blue-700 border-blue-300',
     'Under Review': 'bg-yellow-100 text-yellow-700 border-yellow-300',
     'Approved': 'bg-green-100 text-green-700 border-green-300',
     'Implemented': 'bg-purple-100 text-purple-700 border-purple-300',
   };
+
+  // Threshold for showing "Continue reading" - adjust as needed
+  const longDescriptionThreshold = 180; 
+  const isLongDescription = description.length > longDescriptionThreshold;
 
   return (
     <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
@@ -38,20 +48,37 @@ const IdeaCard: React.FC<IdeaCardProps> = ({ id, title, description, submittedBy
           <span className="flex items-center"><CalendarDays className="h-3.5 w-3.5 mr-1 text-accent" /> {dateSubmitted}</span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-sm text-muted-foreground line-clamp-4">{description}</p>
+      <CardContent className="flex-grow flex flex-col">
+        <p className={cn(
+          "text-sm text-muted-foreground mb-2",
+          !isExpanded && isLongDescription && "line-clamp-4"
+        )}>
+          {description}
+        </p>
+        {isLongDescription && (
+          <Button
+            variant="link"
+            size="sm"
+            onClick={toggleExpanded}
+            className="text-accent hover:text-accent/80 px-0 mt-auto self-start text-xs"
+            aria-expanded={isExpanded}
+          >
+            {isExpanded ? 'Show Less' : 'Continue Reading'}
+            {isExpanded ? <ChevronUp className="ml-1 h-3 w-3" /> : <ChevronDown className="ml-1 h-3 w-3" />}
+          </Button>
+        )}
       </CardContent>
-      <CardFooter className="flex justify-between items-center border-t pt-4">
-        <Button 
-          variant={hasVoted ? "default" : "outline"} 
-          size="sm" 
-          onClick={() => onVote(id)} 
+      <CardFooter className="flex justify-between items-center border-t pt-4 mt-auto">
+        <Button
+          variant={hasVoted ? "default" : "outline"}
+          size="sm"
+          onClick={() => onVote(id)}
           className={cn(
             !hasVoted && "hover:bg-accent/10 hover:border-accent hover:text-accent",
             hasVoted && "bg-primary text-primary-foreground hover:bg-primary/90"
           )}
         >
-          <ThumbsUp className={cn("h-4 w-4 mr-2", hasVoted ? "text-primary-foreground" : "")} /> 
+          <ThumbsUp className={cn("h-4 w-4 mr-2", hasVoted ? "text-primary-foreground" : "")} />
           {hasVoted ? 'Voted' : 'Vote'} ({votes})
         </Button>
         <div className="flex items-center text-sm text-muted-foreground">
