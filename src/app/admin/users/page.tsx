@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Eye, Edit2, Trash2, UserCheck, UserX } from "lucide-react";
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils'; // Added import
+import { cn } from '@/lib/utils';
 
 interface User {
   id: string;
@@ -61,7 +61,7 @@ export default function AdminUsersPage() {
           <div className="flex flex-col sm:flex-row gap-4 mb-6">
             <Input 
               placeholder="Search by name or email..." 
-              className="max-w-sm"
+              className="w-full sm:max-w-sm"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

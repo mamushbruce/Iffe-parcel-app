@@ -59,7 +59,7 @@ export default function AdminApprovalsPage() {
       <h1 className="text-3xl font-bold font-headline text-primary">Approval Management</h1>
       
       <Tabs defaultValue="members" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:max-w-md">
+        <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:max-w-md">
           <TabsTrigger value="members">Pending Members</TabsTrigger>
           <TabsTrigger value="posts">Pending Posts</TabsTrigger>
         </TabsList>

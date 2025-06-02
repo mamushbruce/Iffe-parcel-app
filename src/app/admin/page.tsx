@@ -18,7 +18,7 @@ export default function AdminOverviewPage() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold font-headline text-primary">Admin Overview</h1>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard title="Total Users" value={mockStats.totalUsers.toLocaleString()} icon={Users} description="All registered users" />
         <StatCard title="Community Members" value={mockStats.approvedCommunityMembers.toLocaleString()} icon={CheckCircle2} description="Approved Rotaract Club members" />
         <StatCard title="e-Rotaract Online Members" value={mockStats.onlineMembers.toLocaleString()} icon={Activity} description="Paid e-Rotaract members" />
