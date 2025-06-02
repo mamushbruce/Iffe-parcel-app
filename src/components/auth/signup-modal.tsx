@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 
 interface SignupModalProps {
@@ -20,15 +20,36 @@ type AccountType = "user" | "community" | "erotaract";
 
 export default function SignupModal({ open, onOpenChange, initialStep = null }: SignupModalProps) {
   const [step, setStep] = useState(initialStep ? 2 : 1);
-  const [accountType, setAccountType] = useState<AccountType | null>(initialStep);
+  const [currentAccountType, setCurrentAccountType] = useState<AccountType | null>(initialStep);
   const { toast } = useToast();
 
-  const handleAccountTypeChange = (value: string) => {
-    setAccountType(value as AccountType);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [clubName, setClubName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (initialStep) {
+      setStep(2);
+      setCurrentAccountType(initialStep);
+    }
+    // Reset form fields when modal opens or initialStep changes
+    if (open) {
+      setName('');
+      setEmail('');
+      setPassword('');
+      setClubName('');
+    }
+  }, [open, initialStep]);
+
+
+  const handleAccountTypeSelectionChange = (value: string) => {
+    setCurrentAccountType(value as AccountType);
   };
 
   const handleNext = () => {
-    if (accountType) {
+    if (currentAccountType) {
       setStep(2);
     } else {
       toast({ title: "Selection Required", description: "Please choose an account type.", variant: "destructive" });
@@ -36,45 +57,133 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
   };
   
   const handleBack = () => {
-    if (initialStep) onOpenChange(false); // If opened to a specific step, back closes
-    else setStep(1);
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Placeholder for signup logic
-    console.log("Signup submitted for:", accountType, Object.fromEntries(new FormData(event.target as HTMLFormElement)));
-    toast({ title: "Signup Initiated", description: "Please check your email to complete registration (simulated)." });
-    onOpenChange(false);
-    setStep(initialStep ? 2 : 1); // Reset step
-    if (!initialStep) setAccountType(null);
+    if (initialStep && step === 2) { // If opened directly to step 2, "Back" should close.
+      onOpenChange(false);
+    } else {
+      setStep(1);
+      // Don't reset currentAccountType if initialStep is present, so it remains selected if user navigates back and forth
+    }
   };
+
+  const resetFormFields = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setClubName('');
+  };
+
+  const handleCloseModal = () => {
+    onOpenChange(false);
+    // Delay reset to allow modal close animation
+    setTimeout(() => {
+      setStep(initialStep ? 2 : 1);
+      if (!initialStep) {
+        setCurrentAccountType(null);
+      }
+      resetFormFields();
+    }, 300);
+  };
+
+  const handleApiSubmit = async (selectedAccountType: AccountType) => {
+    setIsLoading(true);
+    let requestBody: any = {
+      name,
+      email,
+      password,
+      accountType: selectedAccountType,
+    };
+
+    if (selectedAccountType === 'community') {
+      if (!clubName.trim()) {
+        toast({ title: "Club Name Required", description: "Please enter your Rotaract club name.", variant: "destructive" });
+        setIsLoading(false);
+        return;
+      }
+      requestBody.clubName = clubName;
+    }
+    
+    // Basic validation for common fields
+    if (!name.trim() || !email.trim() || !password.trim()) {
+        toast({ title: "Missing Fields", description: "Please fill in all required fields.", variant: "destructive" });
+        setIsLoading(false);
+        return;
+    }
+
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Registration Successful!",
+          description: result.message || "Your account has been created.",
+        });
+        if (selectedAccountType === 'community') {
+             toast({
+                title: "Application Submitted",
+                description: "Your community membership application is pending admin approval.",
+                duration: 5000,
+            });
+        }
+        handleCloseModal();
+      } else {
+        toast({
+          title: "Registration Failed",
+          description: result.message || "An error occurred.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Registration Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
 
   return (
     <Dialog open={open} onOpenChange={(isOpen) => {
-      onOpenChange(isOpen);
       if (!isOpen) {
-        setStep(initialStep ? 2 : 1);
-        if(!initialStep) setAccountType(null);
+        handleCloseModal();
+      } else {
+        onOpenChange(true);
+         if (initialStep) { // If modal is opened with an initial step, ensure state is correct
+            setStep(2);
+            setCurrentAccountType(initialStep);
+        } else {
+            setStep(1);
+            setCurrentAccountType(null);
+        }
+        resetFormFields(); // Reset fields whenever dialog is opened/toggled
       }
     }}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-primary">
-            {step === 2 && !initialStep && <Button variant="ghost" size="sm" onClick={handleBack} className="absolute left-4 top-3.5 "><ArrowLeft className="h-4 w-4 mr-1"/> Back</Button>}
+            {step === 2 && !initialStep && <Button variant="ghost" size="sm" onClick={handleBack} className="absolute left-4 top-3.5 " disabled={isLoading}><ArrowLeft className="h-4 w-4 mr-1"/> Back</Button>}
             Create your e-Rotary Hub Account
           </DialogTitle>
           <DialogDescription>
             {step === 1 && "Choose the type of account you'd like to create."}
-            {step === 2 && accountType === "user" && "Sign up for a free user account."}
-            {step === 2 && accountType === "community" && "Apply to link your existing local Rotaract club membership."}
-            {step === 2 && accountType === "erotaract" && "Join the e-Rotaract Club of Uganda Global (Paid Membership)."}
+            {step === 2 && currentAccountType === "user" && "Sign up for a free user account."}
+            {step === 2 && currentAccountType === "community" && "Apply to link your existing local Rotaract club membership."}
+            {step === 2 && currentAccountType === "erotaract" && "Join the e-Rotaract Club of Uganda Global (Paid Membership)."}
           </DialogDescription>
         </DialogHeader>
 
         {step === 1 && !initialStep && (
           <div className="py-4 space-y-4">
-            <RadioGroup value={accountType ?? ""} onValueChange={handleAccountTypeChange}>
+            <RadioGroup value={currentAccountType ?? ""} onValueChange={handleAccountTypeSelectionChange}>
               <Label htmlFor="acc-type-user" className="flex items-center space-x-3 p-3 border rounded-md hover:bg-muted/50 cursor-pointer has-[:checked]:bg-accent/10 has-[:checked]:border-accent">
                 <RadioGroupItem value="user" id="acc-type-user" />
                 <div>
@@ -101,37 +210,78 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
           </div>
         )}
 
-        {step === 2 && accountType === "user" && (
-          <form onSubmit={handleSubmit} className="space-y-4 py-4">
+        {step === 2 && currentAccountType === "user" && (
+          <form onSubmit={(e) => { e.preventDefault(); handleApiSubmit('user'); }} className="space-y-4 py-4">
             <div>
               <Label htmlFor="user-name">Full Name</Label>
-              <Input id="user-name" name="fullName" required />
+              <Input id="user-name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isLoading} />
             </div>
             <div>
               <Label htmlFor="user-email-signup">Email</Label>
-              <Input id="user-email-signup" name="email" type="email" required />
+              <Input id="user-email-signup" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
             </div>
             <div>
               <Label htmlFor="user-password-signup">Password</Label>
-              <Input id="user-password-signup" name="password" type="password" required />
+              <Input id="user-password-signup" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required disabled={isLoading} />
             </div>
             <DialogFooter>
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">Create Free Account</Button>
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
+                {isLoading ? 'Creating Account...' : 'Create Free Account'}
+              </Button>
             </DialogFooter>
           </form>
         )}
 
-        {step === 2 && accountType === "community" && (
-          <div className="py-4 space-y-4 text-center">
-            <p className="text-muted-foreground">The application form for Community Members (linking your existing local club) is coming soon.</p>
-            <p className="text-sm">This will involve selecting your club, providing membership details, and admin review.</p>
-            <Button onClick={() => onOpenChange(false)} className="w-full">Okay</Button>
-          </div>
+        {step === 2 && currentAccountType === "community" && (
+           <form onSubmit={(e) => { e.preventDefault(); handleApiSubmit('community'); }} className="space-y-4 py-4">
+            <div>
+              <Label htmlFor="community-name">Full Name</Label>
+              <Input id="community-name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isLoading} />
+            </div>
+            <div>
+              <Label htmlFor="community-email">Email</Label>
+              <Input id="community-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
+            </div>
+            <div>
+              <Label htmlFor="community-password">Password</Label>
+              <Input id="community-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required disabled={isLoading} />
+            </div>
+             <div>
+              <Label htmlFor="community-club">Rotaract Club Name</Label>
+              <Input id="community-club" value={clubName} onChange={(e) => setClubName(e.target.value)} required disabled={isLoading} placeholder="E.g., Rotaract Club of Kampala South" />
+            </div>
+            <DialogFooter>
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
+                {isLoading ? 'Submitting...' : 'Submit Community Application'}
+              </Button>
+            </DialogFooter>
+          </form>
         )}
 
-        {step === 2 && accountType === "erotaract" && (
-           <div className="py-4 space-y-4">
+        {step === 2 && currentAccountType === "erotaract" && (
+           <form onSubmit={(e) => { 
+                e.preventDefault(); 
+                toast({ title: "Payment Gateway Mock", description: "Simulating payment..." });
+                // Simulate a delay for payment processing
+                setIsLoading(true);
+                setTimeout(() => {
+                    toast({ title: "Payment Successful (Simulated)", description: "Proceeding with registration." });
+                    handleApiSubmit('erotaract'); // This will set isLoading to false
+                }, 1500);
+            }} className="py-4 space-y-4">
             <p className="text-muted-foreground text-center">You're applying to become a paid member of the "e-Rotaract Club of Uganda Global"!</p>
+            <div>
+              <Label htmlFor="erotaract-name">Full Name</Label>
+              <Input id="erotaract-name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isLoading} />
+            </div>
+            <div>
+              <Label htmlFor="erotaract-email">Email</Label>
+              <Input id="erotaract-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required disabled={isLoading} />
+            </div>
+            <div>
+              <Label htmlFor="erotaract-password">Password</Label>
+              <Input id="erotaract-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required disabled={isLoading} />
+            </div>
             <div className="p-3 border rounded-md bg-muted/30">
                 <h4 className="font-semibold text-primary mb-1">Membership Benefits:</h4>
                 <ul className="list-disc list-inside text-sm text-muted-foreground space-y-0.5">
@@ -143,16 +293,12 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
                 </ul>
             </div>
             <p className="text-sm font-semibold text-center">Membership Fee: UGX 20,000 (approx. $5.50) per year.</p>
-            <Button onClick={() => {
-                toast({ title: "Payment Gateway Mock", description: "Redirecting to payment gateway (simulated)."});
-                onOpenChange(false);
-            }} className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-              Proceed to Payment (Simulated)
+            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
+              {isLoading ? 'Processing...' : 'Proceed to Payment (Simulated)'}
             </Button>
-          </div>
+          </form>
         )}
       </DialogContent>
     </Dialog>
   );
 }
-
