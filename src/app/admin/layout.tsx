@@ -12,13 +12,13 @@ import {
   Sidebar,
   SidebarHeader,
   SidebarContent,
-  // SidebarTrigger, // No longer used directly in this file's template
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
 } from '@/components/ui/sidebar';
-// import { Button } from '@/components/ui/button'; // No longer used directly in this file's template
+import AdminMobileTopNav from '@/components/admin/admin-mobile-top-nav';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -36,6 +36,19 @@ const adminNavItems = [
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
+
+  if (isMobile) {
+    return (
+      <>
+        <AdminMobileTopNav navItems={adminNavItems} />
+        <main className="flex-1 overflow-y-auto p-6 pt-20"> {/* Adjust pt to account for nav height */}
+          {/* Developer Note can be omitted on mobile or placed differently if needed */}
+          {children}
+        </main>
+      </>
+    );
+  }
 
   return (
     <SidebarProvider defaultOpen={false}> {/* Default to collapsed on desktop */}
@@ -80,9 +93,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </Sidebar>
 
       <SidebarInset>
-        {/* The header bar (banner) and its trigger previously in SidebarInset have been removed. */}
-        {/* This means the mobile trigger is also removed. If a mobile trigger is still needed, */}
-        {/* it would have to be re-added in a different location or the sidebar opened by default on mobile. */}
         <main className="flex-1 overflow-y-auto p-6">
           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 my-6 rounded-md" role="alert">
             <p className="font-bold">Developer Note:</p>
