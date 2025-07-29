@@ -8,6 +8,7 @@ import Summarizer from '@/components/summarizer';
 import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import CampaignActionsCard from '@/components/campaign/campaign-actions-card';
+import { generateImage } from '@/ai/flows/generate-image-flow';
 
 // Mock data - replace with actual data fetching logic
 interface Campaign {
@@ -39,20 +40,30 @@ const mockCampaignsData: Campaign[] = [
     budget: 15000,
     goal: 100,
     currentAmount: 92,
-    organizer: 'Wild Plains Safaris',
+    organizer: 'i-TRAVELS',
     tags: ['#GreatMigration', '#Tanzania', '#BigFive', '#LuxuryCamping'],
     startDate: '2024-07-15',
     endDate: '2024-07-22',
     volunteersNeeded: 12,
     volunteersSignedUp: 8,
   },
-   { id: '2', title: 'Gorilla Trekking Adventure', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'mountain gorilla', description: 'A once-in-a-lifetime opportunity to trek through the Bwindi Impenetrable Forest and spend time with a family of mountain gorillas. This 3-day package includes permits, expert local trackers, and comfortable lodging near the park. The trek can be challenging, but the reward is an unparalleled wildlife encounter that directly supports conservation efforts. We are committed to responsible tourism.', storyline: 'Our local guides have generations of experience in this forest. Your journey supports their families and the vital work of the park rangers protecting these magnificent creatures.', budget: 20000, goal: 100, currentAmount: 98, organizer: 'Wild Plains Safaris', tags: ['#GorillaTrekking', '#Uganda', '#Conservation', '#Primates'], startDate: '2024-09-01', endDate: '2024-09-04', volunteersNeeded: 8, volunteersSignedUp: 6, },
-  { id: '3', title: 'Okavango Delta Mokoro Trip', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'mokoro canoe delta', description: 'Silently glide through the crystal-clear waterways of the Okavango Delta in a traditional mokoro (dugout canoe). This 5-day tour offers a unique perspective on wildlife, from elephants drinking at the water\'s edge to vibrant birdlife. You will camp on remote islands under the stars, guided by experienced local polers. This is an immersive, eco-friendly way to experience one of Africa\'s last great wildernesses.', storyline: 'Disconnect from the world and reconnect with nature. Our guides share their deep understanding of this unique ecosystem, passed down through generations. This is a low-impact, high-immersion adventure.', budget: 8000, goal: 100, currentAmount: 95, organizer: 'Wild Plains Safaris', tags: ['#OkavangoDelta', '#Botswana', '#Mokoro', '#EcoTourism'], startDate: '2024-10-05', endDate: '2024-10-10', volunteersNeeded: 10, volunteersSignedUp: 10, },
+   { id: '2', title: 'Gorilla Trekking Adventure', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'mountain gorilla', description: 'A once-in-a-lifetime opportunity to trek through the Bwindi Impenetrable Forest and spend time with a family of mountain gorillas. This 3-day package includes permits, expert local trackers, and comfortable lodging near the park. The trek can be challenging, but the reward is an unparalleled wildlife encounter that directly supports conservation efforts. We are committed to responsible tourism.', storyline: 'Our local guides have generations of experience in this forest. Your journey supports their families and the vital work of the park rangers protecting these magnificent creatures.', budget: 20000, goal: 100, currentAmount: 98, organizer: 'i-TRAVELS', tags: ['#GorillaTrekking', '#Uganda', '#Conservation', '#Primates'], startDate: '2024-09-01', endDate: '2024-09-04', volunteersNeeded: 8, volunteersSignedUp: 6, },
+  { id: '3', title: 'Okavango Delta Mokoro Trip', imageUrl: 'https://placehold.co/1200x600.png', dataAiHint: 'mokoro canoe delta', description: 'Silently glide through the crystal-clear waterways of the Okavango Delta in a traditional mokoro (dugout canoe). This 5-day tour offers a unique perspective on wildlife, from elephants drinking at the water\'s edge to vibrant birdlife. You will camp on remote islands under the stars, guided by experienced local polers. This is an immersive, eco-friendly way to experience one of Africa\'s last great wildernesses.', storyline: 'Disconnect from the world and reconnect with nature. Our guides share their deep understanding of this unique ecosystem, passed down through generations. This is a low-impact, high-immersion adventure.', budget: 8000, goal: 100, currentAmount: 95, organizer: 'i-TRAVELS', tags: ['#OkavangoDelta', '#Botswana', '#Mokoro', '#EcoTourism'], startDate: '2024-10-05', endDate: '2024-10-10', volunteersNeeded: 10, volunteersSignedUp: 10, },
 ];
 
 async function getCampaign(id: string): Promise<Campaign | undefined> {
   // Simulate API call
-  return mockCampaignsData.find(campaign => campaign.id === id);
+  const campaign = mockCampaignsData.find(campaign => campaign.id === id);
+  if (campaign && campaign.dataAiHint) {
+    try {
+      const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
+      campaign.imageUrl = imageDataUri;
+    } catch (error) {
+      console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
+      // Fallback to placeholder is already handled by the mock data
+    }
+  }
+  return campaign;
 }
 
 export default async function CampaignDetailPage({ params }: { params: { id: string } }) {

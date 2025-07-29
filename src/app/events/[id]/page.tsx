@@ -18,7 +18,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
     fullDescription: `This is the detailed placeholder content for the tour with ID ${params.id}. We are planning an amazing trip that you won't want to miss. Stay tuned for updates on the detailed itinerary, accommodation, and specific activities. This tour aims to bring together like-minded adventurers for an unforgettable experience.`,
     imageUrl: `https://placehold.co/800x400.png`,
     dataAiHint: "safari group",
-    organizer: "Wild Plains Safaris",
+    organizer: "i-TRAVELS",
     rsvpLink: "#",
   };
 

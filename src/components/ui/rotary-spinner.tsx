@@ -2,7 +2,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Telescope } from 'lucide-react'; // Changed to Telescope
+import { Globe } from 'lucide-react'; // Changed to Globe
 
 interface RotarySpinnerProps {
   size?: number | string;
@@ -16,7 +16,7 @@ const RotarySpinner: React.FC<RotarySpinnerProps> = ({
   'aria-label': ariaLabel = "Loading..." 
 }) => {
   return (
-    <Telescope
+    <Globe
       className={cn('animate-pulse-slow', className)} // Changed animation
       size={size}
       aria-label={ariaLabel}

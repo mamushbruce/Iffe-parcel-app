@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -98,8 +98,8 @@ const AppHeader = () => {
       >
         <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 font-headline text-lg md:text-xl font-bold text-primary hover:text-primary/80 transition-colors">
-            <Telescope size={24} className="text-primary" /> 
-            Wild Plains Safaris
+            <Globe size={24} className="text-primary" /> 
+            i-TRAVELS
           </Link>
           
           <div className="hidden lg:flex items-center space-x-1">
@@ -182,7 +182,7 @@ const AppHeader = () => {
                 <SheetContent side="left" className="w-[280px] sm:w-[320px] flex flex-col bg-card/95 backdrop-blur-lg p-0">
                   <SheetHeader className="p-4 border-b">
                      <SheetTitle className="flex items-center gap-2 text-primary">
-                       <Telescope size={20} className="text-primary" /> Wild Plains Safaris
+                       <Globe size={20} className="text-primary" /> i-TRAVELS
                     </SheetTitle>
                   </SheetHeader>
                   <nav className="flex-grow overflow-y-auto p-4 space-y-2">

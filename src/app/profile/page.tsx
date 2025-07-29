@@ -19,7 +19,7 @@ export default function ProfilePage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <p className="text-muted-foreground">
-            Your personal dashboard for all your adventures with Wild Plains Safaris. View your trip history, manage settings, and more.
+            Your personal dashboard for all your adventures with i-TRAVELS. View your trip history, manage settings, and more.
           </p>
           <Button asChild className="bg-primary hover:bg-primary/90">
             <Link href="/dashboard">Go to My Trips</Link>
