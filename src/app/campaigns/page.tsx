@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tag, ArrowRight, PlusCircle, MountainSnow } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { generateImage } from '@/ai/flows/generate-image-flow';
 
 interface CampaignTeaser {
   id: string;
@@ -27,7 +28,19 @@ const mockCampaignsData: CampaignTeaser[] = [
 
 
 export default async function CampaignsPage() {
-  const campaigns = mockCampaignsData; // In a real app, fetch this data
+  const campaigns = await Promise.all(
+    mockCampaignsData.map(async (campaign) => {
+      if (campaign.dataAiHint) {
+        try {
+          const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
+          return { ...campaign, imageUrl: imageDataUri };
+        } catch (error) {
+          console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
+        }
+      }
+      return campaign;
+    })
+  );
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -89,7 +102,7 @@ export default async function CampaignsPage() {
       )}
        <div className="text-center mt-12">
         <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10 hover:text-accent whitespace-normal text-center h-auto" asChild>
-          <Link href="/create?action=campaign" className="flex items-center justify-center">
+          <Link href="/campaigns/new" className="flex items-center justify-center">
             <PlusCircle className="mr-0 md:mr-2 h-5 w-5" />
             <span className="md:hidden">New Tour</span>
             <span className="hidden md:inline">Plan a Custom Tour</span>

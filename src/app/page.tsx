@@ -11,6 +11,8 @@ import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import React, { useState } from 'react';
 import SignupModal from '@/components/auth/signup-modal';
+import { generateImage } from '@/ai/flows/generate-image-flow';
+import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
 
 
 const mockCarouselCampaigns = [
@@ -60,7 +62,7 @@ const feedItems: FeedItem[] = [
     avatarUrl: 'https://placehold.co/100x100.png',
     dataAiHint: 'safari guide',
     specialty: 'Expert Guide & Wildlife Photographer',
-    profileLink: '/dashboard',
+    profileLink: '/profile',
   },
   {
     id: 'blog-1',
@@ -108,25 +110,55 @@ const feedItems: FeedItem[] = [
     avatarUrl: 'https://placehold.co/100x100.png',
     dataAiHint: 'park ranger',
     specialty: 'Conservation & Tracking Specialist',
-    profileLink: '/dashboard', 
+    profileLink: '/profile', 
   },
 ];
 
 
-export default function Home() {
-  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [signupInitialStep, setSignupInitialStep] = useState<"user" | "community" | "erotaract" | null>(null);
+export default async function Home() {
+  const processedFeedItems = await Promise.all(
+    feedItems.map(async (item) => {
+      if (item.type === 'creator' && item.dataAiHint) {
+        try {
+          const { imageDataUri } = await generateImage({ prompt: item.dataAiHint });
+          return { ...item, avatarUrl: imageDataUri };
+        } catch (error) { console.error('Error generating image for creator:', error); }
+      }
+      if (item.type === 'blog' && item.post.dataAiHint) {
+        try {
+          const { imageDataUri } = await generateImage({ prompt: item.post.dataAiHint });
+          return { ...item, post: { ...item.post, imageUrl: imageDataUri } };
+        } catch (error) { console.error('Error generating image for blog:', error); }
+      }
+      if (item.type === 'event' && item.event.dataAiHint) {
+         try {
+          const { imageDataUri } = await generateImage({ prompt: item.event.dataAiHint });
+          return { ...item, event: { ...item.event, imageUrl: imageDataUri } };
+        } catch (error) { console.error('Error generating image for event:', error); }
+      }
+      return item;
+    })
+  );
 
-  const openSignupModalForERotaract = () => {
-    setSignupInitialStep("erotaract");
-    setIsSignupModalOpen(true);
-  };
+  const processedCarouselCampaigns = await Promise.all(
+    mockCarouselCampaigns.map(async (campaign) => {
+      if (campaign.dataAiHint) {
+        try {
+          const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
+          return { ...campaign, imageUrl: imageDataUri };
+        } catch (error) {
+          console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
+        }
+      }
+      return campaign;
+    })
+  );
 
   return (
     <>
     <div className="space-y-12 animate-fade-in">
       <section>
-        <CampaignCarousel campaigns={mockCarouselCampaigns} />
+        <CampaignCarousel campaigns={processedCarouselCampaigns} />
       </section>
 
       <section>
@@ -151,9 +183,7 @@ export default function Home() {
                 <Lightbulb className="mr-2 h-5 w-5" /> Suggest a Destination
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="w-full py-6 text-base border-accent text-accent hover:bg-accent/10 hover:text-accent" onClick={openSignupModalForERotaract}>
-              <UserPlus className="mr-2 h-5 w-5" /> Join Explorer's Club
-            </Button>
+            <ERotaractSignupTrigger />
           </CardContent>
         </Card>
       </section>
@@ -161,7 +191,7 @@ export default function Home() {
       <section>
         <h2 className="font-headline text-3xl font-bold text-primary mb-6">From the Wild</h2>
         <div className="space-y-8">
-          {feedItems.map((item) => {
+          {processedFeedItems.map((item) => {
             if (item.type === 'creator') {
               return (
                 <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
@@ -228,7 +258,6 @@ export default function Home() {
         )}
       </section>
     </div>
-    <SignupModal open={isSignupModalOpen} onOpenChange={setIsSignupModalOpen} initialStep={signupInitialStep} />
     </>
   );
 }

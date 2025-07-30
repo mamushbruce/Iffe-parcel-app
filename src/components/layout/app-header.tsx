@@ -8,7 +8,6 @@ import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
 import { ThemeToggleButton } from '@/components/theme-toggle-button';
 import { cn } from '@/lib/utils';
-import RotarySpinner from '@/components/ui/rotary-spinner';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import { useSession, signOut } from 'next-auth/react';
@@ -84,7 +83,7 @@ const AppHeader = () => {
     { href: '/gallery', label: 'Gallery', icon: ImageIcon },
     { href: '/videos', label: 'Videos', icon: PlayCircle },
     { href: '/ideas', label: 'Dream Trips', icon: Lightbulb },
-    { href: '/dashboard', label: 'My Trips', icon: UserCircle },
+    { href: '/profile', label: 'My Trips', icon: UserCircle },
   ];
 
   return (
@@ -139,7 +138,7 @@ const AppHeader = () => {
               </Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/dashboard">
+              <Link href="/profile">
                 <UserCircle className="mr-1 h-4 w-4" /> My Trips
               </Link>
             </Button>

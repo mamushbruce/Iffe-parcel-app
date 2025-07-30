@@ -20,7 +20,7 @@ const BottomNav = () => {
     <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-card border-t border-border shadow-t-lg z-50">
       <div className="flex justify-around items-center h-16">
         {navItems.map((item) => {
-          const isActive = pathname === item.href || (item.href === "/campaigns" && pathname.startsWith("/campaigns")) || (item.href === "/gallery" && pathname.startsWith("/gallery"));
+          const isActive = (item.href === '/' && pathname === '/') || (item.href !== '/' && pathname.startsWith(item.href));
           return (
             <Link href={item.href} key={item.label} legacyBehavior>
               <a className={cn(
