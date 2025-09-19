@@ -19,7 +19,7 @@ const GenerateImageOutputSchema = z.object({
   imageDataUri: z
     .string()
     .describe(
-      "The generated image as a data URI, including MIME type and Base64 encoding. Format: 'data:image/png;base64,<encoded_data>'."
+      "The generated image as a data URI, including MIME type and Base64 encoding. Format: 'data:image/png;base64,<encoded_data>'"
     ),
 });
 export type GenerateImageOutput = z.infer<typeof GenerateImageOutputSchema>;
@@ -36,11 +36,8 @@ const generateImageFlow = ai.defineFlow(
   },
   async (input) => {
     const {media} = await ai.generate({
-      model: 'googleai/gemini-2.0-flash-exp',
+      model: 'googleai/imagen-4.0-fast-generate-001',
       prompt: input.prompt,
-      config: {
-        responseModalities: ['TEXT', 'IMAGE'], // MUST provide both TEXT and IMAGE
-      },
     });
 
     if (!media?.url) {
