@@ -25,3 +25,5 @@ const RotarySpinner: React.FC<RotarySpinnerProps> = ({
 };
 
 export default RotarySpinner;
+
+    

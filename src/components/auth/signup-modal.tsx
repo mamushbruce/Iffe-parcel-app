@@ -111,13 +111,17 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
 
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-      });
+      // NOTE: This is a mock registration endpoint.
+      // In a real app, you would have a dedicated API route like '/api/auth/register'.
+      // For this demo, we'll simulate a successful response.
+      console.log("Simulating registration with:", requestBody);
 
-      const result = await response.json();
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const response = { ok: true }; // Mock success
+      const result = { message: "Your account has been created." };
+
 
       if (response.ok) {
         toast({
@@ -135,7 +139,7 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
       } else {
         toast({
           title: "Registration Failed",
-          description: result.message || "An error occurred.",
+          description: "An error occurred during simulation.",
           variant: "destructive",
         });
       }
@@ -171,13 +175,13 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
         <DialogHeader>
           <DialogTitle className="font-headline text-2xl text-primary">
             {step === 2 && !initialStep && <Button variant="ghost" size="sm" onClick={handleBack} className="absolute left-4 top-3.5 " disabled={isLoading}><ArrowLeft className="h-4 w-4 mr-1"/> Back</Button>}
-            Create your e-Rotary Hub Account
+            Create your iffe-travels Account
           </DialogTitle>
           <DialogDescription>
             {step === 1 && "Choose the type of account you'd like to create."}
             {step === 2 && currentAccountType === "user" && "Sign up for a free user account."}
             {step === 2 && currentAccountType === "community" && "Apply to link your existing local Rotaract club membership."}
-            {step === 2 && currentAccountType === "erotaract" && "Join the e-Rotaract Club of Uganda Global (Paid Membership)."}
+            {step === 2 && currentAccountType === "erotaract" && "Join the Explorer's Club (Paid Membership)."}
           </DialogDescription>
         </DialogHeader>
 
@@ -187,22 +191,15 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
               <Label htmlFor="acc-type-user" className="flex items-center space-x-3 p-3 border rounded-md hover:bg-muted/50 cursor-pointer has-[:checked]:bg-accent/10 has-[:checked]:border-accent">
                 <RadioGroupItem value="user" id="acc-type-user" />
                 <div>
-                  <span className="font-semibold block">Sign up as User (Free)</span>
-                  <span className="text-xs text-muted-foreground">Comment, follow, react. Option to upgrade later.</span>
-                </div>
-              </Label>
-              <Label htmlFor="acc-type-community" className="flex items-center space-x-3 p-3 border rounded-md hover:bg-muted/50 cursor-pointer has-[:checked]:bg-accent/10 has-[:checked]:border-accent">
-                <RadioGroupItem value="community" id="acc-type-community" />
-                 <div>
-                  <span className="font-semibold block">Apply as Community Member</span>
-                  <span className="text-xs text-muted-foreground">For members of existing physical Rotaract clubs.</span>
+                  <span className="font-semibold block">Sign up as Traveler (Free)</span>
+                  <span className="text-xs text-muted-foreground">Comment, follow, and book tours.</span>
                 </div>
               </Label>
               <Label htmlFor="acc-type-erotaract" className="flex items-center space-x-3 p-3 border rounded-md hover:bg-muted/50 cursor-pointer has-[:checked]:bg-accent/10 has-[:checked]:border-accent">
                 <RadioGroupItem value="erotaract" id="acc-type-erotaract" />
                 <div>
-                  <span className="font-semibold block">Join e-Rotaract Online (Paid)</span>
-                  <span className="text-xs text-muted-foreground">Post blogs, create campaigns, host chatrooms, get verified.</span>
+                  <span className="font-semibold block">Join Explorer's Club (Paid)</span>
+                  <span className="text-xs text-muted-foreground">Post stories, suggest destinations, and get a verified badge.</span>
                 </div>
               </Label>
             </RadioGroup>
@@ -269,7 +266,7 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
                     handleApiSubmit('erotaract'); // This will set isLoading to false
                 }, 1500);
             }} className="py-4 space-y-4">
-            <p className="text-muted-foreground text-center">You're applying to become a paid member of the "e-Rotaract Club of Uganda Global"!</p>
+            <p className="text-muted-foreground text-center">You're applying to become a member of the Explorer's Club!</p>
             <div>
               <Label htmlFor="erotaract-name">Full Name</Label>
               <Input id="erotaract-name" value={name} onChange={(e) => setName(e.target.value)} required disabled={isLoading} />
@@ -285,14 +282,14 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
             <div className="p-3 border rounded-md bg-muted/30">
                 <h4 className="font-semibold text-primary mb-1">Membership Benefits:</h4>
                 <ul className="list-disc list-inside text-sm text-muted-foreground space-y-0.5">
-                    <li>Post blogs and articles</li>
-                    <li>Create and manage campaigns</li>
-                    <li>Host public and private chatrooms</li>
-                    <li>Personal impact tracker on your profile</li>
+                    <li>Post travel stories and photos</li>
+                    <li>Suggest and vote on new destinations</li>
+                    <li>Get exclusive access to special events</li>
+                    <li>Personal trip tracker on your profile</li>
                     <li>Verified member badge</li>
                 </ul>
             </div>
-            <p className="text-sm font-semibold text-center">Membership Fee: UGX 20,000 (approx. $5.50) per year.</p>
+            <p className="text-sm font-semibold text-center">Membership Fee: $50 per year.</p>
             <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
               {isLoading ? 'Processing...' : 'Proceed to Payment (Simulated)'}
             </Button>
@@ -302,3 +299,5 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
     </Dialog>
   );
 }
+
+    

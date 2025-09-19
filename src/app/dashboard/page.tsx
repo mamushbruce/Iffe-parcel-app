@@ -31,7 +31,7 @@ const joinedCampaigns = [
 ];
 
 const followedContent = [
-  { id: 'c1', type: 'Guide', name: 'Safari Jane', link: '/dashboard' }, 
+  { id: 'c1', type: 'Guide', name: 'Safari Jane', link: '/profile' }, 
   { id: 'r1', type: 'Discussion', name: 'Birdwatching Hotspots', link: '/chat' }, 
   { id: 'b2', type: 'Journal Entry', name: 'A Lion\'s Tale', link: '/blog/2' }, 
 ];
@@ -72,8 +72,10 @@ export default function DashboardPage() {
                 <Button variant="outline" size="sm"><Edit className="w-4 h-4 mr-2" /> Edit Profile</Button>
                 <Button variant="outline" size="sm"><Settings className="w-4 h-4 mr-2" /> Settings</Button>
                 {userData.isERotaractMember && !userData.isCreator && (
-                  <Button variant="secondary" size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    <UserPlus className="w-4 h-4 mr-2" /> Share Your Stories
+                  <Button asChild variant="secondary" size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                    <Link href="/blog/submit">
+                      <UserPlus className="w-4 h-4 mr-2" /> Share Your Stories
+                    </Link>
                   </Button>
                 )}
             </div>
@@ -199,3 +201,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    

@@ -4,12 +4,11 @@ import Image from 'next/image';
 import CampaignCarousel from '@/components/campaign-carousel';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow } from 'lucide-react';
+import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck } from 'lucide-react';
 import BlogCard, { type BlogCardProps } from '@/components/blog-card';
 import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateImage } from '@/ai/flows/generate-image-flow';
-import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 
 
@@ -187,7 +186,17 @@ export default async function Home() {
                 <Lightbulb className="mr-2 h-5 w-5" /> Suggest a Destination
               </Link>
             </Button>
-            <ERotaractSignupTrigger />
+            <Button 
+              size="lg" 
+              variant="secondary" 
+              className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90"
+              // onClick will be handled by a client component if needed for modals
+              asChild
+            >
+              <Link href="/#signup-erotaract">
+                <ShieldCheck className="mr-2 h-5 w-5" /> Join the Explorer's Club
+              </Link>
+            </Button>
           </CardContent>
         </Card>
       </section>
@@ -267,3 +276,5 @@ export default async function Home() {
     </>
   );
 }
+
+    
