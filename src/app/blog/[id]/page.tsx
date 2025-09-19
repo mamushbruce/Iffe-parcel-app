@@ -1,8 +1,10 @@
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 export default function BlogPostPage({ params }: { params: { id: string } }) {
   // In a real app, you would fetch blog post data based on params.id
@@ -12,8 +14,10 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
     author: "Mock Explorer",
     date: new Date().toLocaleDateString(),
     content: `This is placeholder content for the travel journal entry with ID ${params.id}. Replace this with actual fetched data. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    imageUrl: `https://placehold.co/800x400.png`,
-    dataAiHint: "safari landscape",
+    imageUrl: placeholderImages.blogPostDefault.src,
+    imageWidth: placeholderImages.blogPostDefault.width,
+    imageHeight: placeholderImages.blogPostDefault.height,
+    dataAiHint: placeholderImages.blogPostDefault.hint,
     tags: ["#Adventure", `#Trip${params.id}`]
   };
 
@@ -33,8 +37,15 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
         </CardHeader>
         <CardContent>
           {mockPost.imageUrl && (
-            <div className="relative w-full mb-6 rounded-lg overflow-hidden">
-              <img src={mockPost.imageUrl} alt={mockPost.title} className="w-full h-auto max-h-[500px] object-cover" data-ai-hint={mockPost.dataAiHint} />
+            <div className="relative w-full mb-6 rounded-lg overflow-hidden aspect-[2/1]">
+              <Image 
+                src={mockPost.imageUrl} 
+                alt={mockPost.title} 
+                className="object-cover" 
+                fill
+                data-ai-hint={mockPost.dataAiHint} 
+                priority
+              />
             </div>
           )}
           <div className="prose dark:prose-invert max-w-none">

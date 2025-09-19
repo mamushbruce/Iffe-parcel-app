@@ -2,12 +2,14 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Send, Smile, MessageCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 interface ChatMessage {
   id: string;
@@ -15,6 +17,8 @@ interface ChatMessage {
   sender: 'user' | 'other';
   timestamp: Date;
   avatarUrl?: string;
+  avatarWidth?: number;
+  avatarHeight?: number;
   dataAiHint?: string;
   userName?: string;
 }
@@ -22,15 +26,19 @@ interface ChatMessage {
 const currentUser = {
   id: 'currentUser',
   name: 'You',
-  avatarUrl: 'https://placehold.co/40x40.png',
-  dataAiHint: 'person avatar',
+  avatarUrl: placeholderImages.chatUserCurrent.src,
+  avatarWidth: placeholderImages.chatUserCurrent.width,
+  avatarHeight: placeholderImages.chatUserCurrent.height,
+  dataAiHint: placeholderImages.chatUserCurrent.hint,
 };
 
 const otherUserMock = {
   id: 'otherUser1',
   name: 'Travel Bot',
-  avatarUrl: 'https://placehold.co/40x40.png',
-  dataAiHint: 'friendly bot',
+  avatarUrl: placeholderImages.chatUserBot.src,
+  avatarWidth: placeholderImages.chatUserBot.width,
+  avatarHeight: placeholderImages.chatUserBot.height,
+  dataAiHint: placeholderImages.chatUserBot.hint,
 };
 
 export default function ChatPage() {
@@ -40,18 +48,14 @@ export default function ChatPage() {
       text: 'Welcome to the traveler\'s chat! Have questions about a tour? Ask away!',
       sender: 'other',
       timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
-      avatarUrl: otherUserMock.avatarUrl,
-      userName: otherUserMock.name,
-      dataAiHint: otherUserMock.dataAiHint,
+      ...otherUserMock,
     },
     {
       id: '2',
       text: 'Hello! I\'m interested in the Gorilla Trekking tour.',
       sender: 'user',
       timestamp: new Date(Date.now() - 1000 * 60 * 3), // 3 minutes ago
-      avatarUrl: currentUser.avatarUrl,
-      userName: currentUser.name,
-      dataAiHint: currentUser.dataAiHint,
+      ...currentUser,
     },
   ]);
   const [newMessage, setNewMessage] = useState('');
@@ -79,9 +83,7 @@ export default function ChatPage() {
       text: newMessage,
       sender: 'user',
       timestamp: new Date(),
-      avatarUrl: currentUser.avatarUrl,
-      userName: currentUser.name,
-      dataAiHint: currentUser.dataAiHint,
+      ...currentUser,
     };
 
     setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -94,9 +96,7 @@ export default function ChatPage() {
         text: `Thanks for your message about: "${userMessage.text.substring(0, 30)}${userMessage.text.length > 30 ? "..." : ""}". I am a mock assistant. A real guide will be with you shortly!`,
         sender: 'other',
         timestamp: new Date(),
-        avatarUrl: otherUserMock.avatarUrl,
-        userName: otherUserMock.name,
-        dataAiHint: otherUserMock.dataAiHint,
+        ...otherUserMock,
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1500);
@@ -125,7 +125,9 @@ export default function ChatPage() {
               )}
             >
               <Avatar className="h-8 w-8 sm:h-10 sm:w-10 shrink-0">
-                <AvatarImage src={msg.avatarUrl} alt={msg.userName ?? undefined} data-ai-hint={msg.dataAiHint} />
+                {msg.avatarUrl && <AvatarImage asChild src={msg.avatarUrl} alt={msg.userName ?? undefined}>
+                    <Image src={msg.avatarUrl} alt={msg.userName || 'avatar'} width={msg.avatarWidth || 40} height={msg.avatarHeight || 40} data-ai-hint={msg.dataAiHint} />
+                </AvatarImage>}
                 <AvatarFallback>{msg.userName?.substring(0, 1).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">

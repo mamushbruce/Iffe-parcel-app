@@ -1,9 +1,11 @@
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, CalendarDays, Clock, MapPin, Users, Tv, Info, Globe } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 export default function EventDetailPage({ params }: { params: { id: string } }) {
   // In a real app, you would fetch event data based on params.id
@@ -16,9 +18,11 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
     type: params.id === 'e1' ? 'Online' as const : 'Offline' as const,
     excerpt: `This is a placeholder description for the scheduled departure with ID ${params.id}. Join us for an exciting time!`,
     fullDescription: `This is the detailed placeholder content for the tour with ID ${params.id}. We are planning an amazing trip that you won't want to miss. Stay tuned for updates on the detailed itinerary, accommodation, and specific activities. This tour aims to bring together like-minded adventurers for an unforgettable experience.`,
-    imageUrl: `https://placehold.co/800x400.png`,
-    dataAiHint: "safari group",
-    organizer: "i-TRAVELS",
+    imageUrl: placeholderImages.eventDetailDefault.src,
+    imageWidth: placeholderImages.eventDetailDefault.width,
+    imageHeight: placeholderImages.eventDetailDefault.height,
+    dataAiHint: placeholderImages.eventDetailDefault.hint,
+    organizer: "iffe-travels",
     rsvpLink: "#",
   };
 
@@ -31,8 +35,15 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
       </Button>
       <Card className="shadow-xl overflow-hidden">
         {mockEvent.imageUrl && (
-          <div className="relative w-full bg-muted rounded-lg overflow-hidden">
-            <img src={mockEvent.imageUrl} alt={mockEvent.title} className="w-full h-auto max-h-[500px] object-cover" data-ai-hint={mockEvent.dataAiHint} />
+          <div className="relative w-full bg-muted rounded-t-lg overflow-hidden aspect-[2/1]">
+            <Image 
+              src={mockEvent.imageUrl} 
+              alt={mockEvent.title} 
+              className="object-cover" 
+              fill
+              data-ai-hint={mockEvent.dataAiHint}
+              priority
+            />
              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
             <CardTitle className="font-headline text-3xl md:text-4xl text-white absolute bottom-6 left-6 z-10 p-2 bg-black/30 rounded">{mockEvent.title}</CardTitle>
           </div>

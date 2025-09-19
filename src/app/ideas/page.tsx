@@ -14,6 +14,7 @@ import * as z from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { Lightbulb, PlusCircle, UploadCloud } from 'lucide-react';
 import Image from 'next/image';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 const ideaSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
@@ -34,8 +35,8 @@ const initialIdeas: Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[] = [
     votes: 42, 
     commentsCount: 5, 
     status: 'Approved',
-    imageUrl: 'https://placehold.co/600x400.png',
-    dataAiHint: 'walking safari zambia',
+    imageUrl: placeholderImages.ideaWalkingSafari.src,
+    dataAiHint: placeholderImages.ideaWalkingSafari.hint,
   },
   { 
     id: '2', 
@@ -46,8 +47,8 @@ const initialIdeas: Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[] = [
     votes: 78, 
     commentsCount: 12, 
     status: 'Under Review',
-    imageUrl: 'https://placehold.co/600x400.png',
-    dataAiHint: 'safari family',
+    imageUrl: placeholderImages.ideaFamilySafari.src,
+    dataAiHint: placeholderImages.ideaFamilySafari.hint,
   },
   { 
     id: '3', 
@@ -58,8 +59,8 @@ const initialIdeas: Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[] = [
     votes: 15, 
     commentsCount: 2, 
     status: 'New',
-    imageUrl: 'https://placehold.co/600x400.png',
-    dataAiHint: 'photo hide waterhole',
+    imageUrl: placeholderImages.ideaPhotoHide.src,
+    dataAiHint: placeholderImages.ideaPhotoHide.hint,
   },
 ];
 
@@ -139,7 +140,7 @@ export default function IdeaBoxPage() {
       votes: 0,
       commentsCount: 0,
       status: 'New' as 'New',
-      imageUrl: data.imageUrl || 'https://placehold.co/600x400.png', 
+      imageUrl: data.imageUrl || placeholderImages.ideaWalkingSafari.src, 
       dataAiHint: data.dataAiHint || 'innovative idea',
     };
     setIdeas(prevIdeas => [newIdea, ...prevIdeas]);
@@ -213,7 +214,7 @@ export default function IdeaBoxPage() {
                 <div className="mt-2 col-span-3">
                   <Label className="font-semibold">Image Preview:</Label>
                   <div className="relative w-full aspect-video mt-1 border rounded-md overflow-hidden bg-muted">
-                    <Image src={imagePreviewUrl || currentImageUrl || ''} alt="Idea preview" layout="fill" objectFit="contain" />
+                    <Image src={imagePreviewUrl || currentImageUrl || ''} alt="Idea preview" fill objectFit="contain" />
                   </div>
                 </div>
               )}

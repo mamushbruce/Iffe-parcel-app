@@ -4,14 +4,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Award, BarChart3, Bookmark, CalendarCheck2, Edit, ExternalLink, Eye, HandHeart, MessageSquare, Settings, ShieldCheck as ShieldCheckIcon, Star, UserPlus, UserCircle, Mountain, MapPin } from 'lucide-react';
 import VerifiedBadge from '@/components/verified-badge'; 
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 // Mock data
 const userData = {
   name: 'Alex Johnson',
-  avatarUrl: 'https://placehold.co/100x100.png',
-  dataAiHint: 'smiling person',
+  avatarUrl: placeholderImages.dashboardAvatar.src,
+  avatarWidth: placeholderImages.dashboardAvatar.width,
+  avatarHeight: placeholderImages.dashboardAvatar.height,
+  dataAiHint: placeholderImages.dashboardAvatar.hint,
   email: 'alex.johnson@example.com',
   memberSince: 'January 15, 2023',
   impactPoints: 1250,
@@ -53,7 +57,9 @@ export default function DashboardPage() {
       <section className="bg-card p-6 rounded-lg shadow-lg">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <Avatar className="h-24 w-24 border-4 border-accent">
-            <AvatarImage src={userData.avatarUrl} alt={userData.name} data-ai-hint={userData.dataAiHint} />
+            <AvatarImage asChild src={userData.avatarUrl} alt={userData.name}>
+              <Image src={userData.avatarUrl} alt={userData.name} width={userData.avatarWidth} height={userData.avatarHeight} data-ai-hint={userData.dataAiHint} />
+            </AvatarImage>
             <AvatarFallback>{userData.name.substring(0,2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>

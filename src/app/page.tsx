@@ -10,12 +10,13 @@ import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateImage } from '@/ai/flows/generate-image-flow';
 import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 
 const mockCarouselCampaigns = [
-  { id: 'c1', title: 'Serengeti Great Migration Safari', imageUrl: 'https://placehold.co/1200x500.png', dataAiHint: 'wildebeest migration', shortDescription: 'Witness the breathtaking Great Migration in the vast plains of the Serengeti.' },
-  { id: 'c2', title: 'Gorilla Trekking in Bwindi', imageUrl: 'https://placehold.co/1200x500.png', dataAiHint: 'mountain gorilla', shortDescription: 'An intimate and unforgettable encounter with the majestic mountain gorillas of Uganda.' },
-  { id: 'c3', title: 'Okavango Delta Mokoro Expedition', imageUrl: 'https://placehold.co/1200x500.png', dataAiHint: 'mokoro canoe delta', shortDescription: 'Explore the serene waterways of the Okavango Delta by traditional mokoro canoe.' },
+  { id: 'c1', title: 'Serengeti Great Migration Safari', imageUrl: placeholderImages.campaignDetailWildebeest.src, dataAiHint: 'wildebeest migration', shortDescription: 'Witness the breathtaking Great Migration in the vast plains of the Serengeti.' },
+  { id: 'c2', title: 'Gorilla Trekking in Bwindi', imageUrl: placeholderImages.campaignDetailGorilla.src, dataAiHint: 'mountain gorilla', shortDescription: 'An intimate and unforgettable encounter with the majestic mountain gorillas of Uganda.' },
+  { id: 'c3', title: 'Okavango Delta Mokoro Expedition', imageUrl: placeholderImages.campaignDetailMokoro.src, dataAiHint: 'mokoro canoe delta', shortDescription: 'Explore the serene waterways of the Okavango Delta by traditional mokoro canoe.' },
 ];
 
 interface FeedItemBase {
@@ -27,6 +28,8 @@ interface CreatorFeedItem extends FeedItemBase {
   type: 'creator';
   name: string;
   avatarUrl: string;
+  avatarWidth: number;
+  avatarHeight: number;
   dataAiHint?: string;
   specialty: string;
   profileLink: string;
@@ -56,8 +59,10 @@ const feedItems: FeedItem[] = [
     id: 'creator-1',
     type: 'creator',
     name: 'Safari Jane',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    dataAiHint: 'safari guide',
+    avatarUrl: placeholderImages.homeCreatorJane.src,
+    avatarWidth: placeholderImages.homeCreatorJane.width,
+    avatarHeight: placeholderImages.homeCreatorJane.height,
+    dataAiHint: placeholderImages.homeCreatorJane.hint,
     specialty: 'Expert Guide & Wildlife Photographer',
     profileLink: '/profile',
   },
@@ -70,7 +75,7 @@ const feedItems: FeedItem[] = [
       author: 'David Attenborough',
       date: 'Nov 05, 2023',
       excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.',
-      imageUrl: 'https://placehold.co/600x400.png',
+      imageUrl: 'https://picsum.photos/seed/lionPride/600/400',
       dataAiHint: 'lion pride',
       tags: ['#BigCats', '#Serengeti'],
       commentCount: 18,
@@ -94,7 +99,7 @@ const feedItems: FeedItem[] = [
       location: 'Nairobi, Kenya',
       type: 'Offline',
       excerpt: 'Join our special group departure to track the Big Five in the Maasai Mara. Limited spots available!',
-      imageUrl: 'https://placehold.co/600x400.png',
+      imageUrl: 'https://picsum.photos/seed/safariJeep/600/400',
       dataAiHint: 'safari jeep',
       rsvpLink: '#',
       calendarLink: '#',
@@ -104,8 +109,10 @@ const feedItems: FeedItem[] = [
     id: 'creator-2',
     type: 'creator',
     name: 'Ranger Tom',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    dataAiHint: 'park ranger',
+    avatarUrl: placeholderImages.homeCreatorTom.src,
+    avatarWidth: placeholderImages.homeCreatorTom.width,
+    avatarHeight: placeholderImages.homeCreatorTom.height,
+    dataAiHint: placeholderImages.homeCreatorTom.hint,
     specialty: 'Conservation & Tracking Specialist',
     profileLink: '/profile', 
   },
@@ -195,7 +202,9 @@ export default async function Home() {
                   <CardHeader>
                     <div className="flex items-center space-x-3">
                       <Avatar className="h-12 w-12">
-                        <AvatarImage src={item.avatarUrl} alt={item.name} data-ai-hint={item.dataAiHint} />
+                        <AvatarImage asChild src={item.avatarUrl} alt={item.name}>
+                          <Image src={item.avatarUrl} alt={item.name} width={item.avatarWidth} height={item.avatarHeight} data-ai-hint={item.dataAiHint} />
+                        </AvatarImage>
                         <AvatarFallback>{item.name.substring(0,2).toUpperCase()}</AvatarFallback>
                       </Avatar>
                       <div>

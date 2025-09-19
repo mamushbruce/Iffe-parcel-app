@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Send, Trash2, UserX, ShieldBan, VolumeX, MessageSquare, Users, PowerOff, MessageCircle, ShieldAlert } from "lucide-react";
 import { cn } from '@/lib/utils';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 interface Chatroom {
   id: string;
@@ -24,6 +26,8 @@ interface ChatParticipant {
   id: string;
   name: string;
   avatarUrl: string;
+  avatarWidth?: number;
+  avatarHeight?: number;
   dataAiHint?: string;
   role: 'user' | 'moderator';
   isMuted?: boolean;
@@ -37,6 +41,8 @@ interface ChatMessage {
   senderId: string;
   senderName: string;
   senderAvatar: string;
+  avatarWidth?: number;
+  avatarHeight?: number;
   dataAiHint?: string;
   timestamp: Date;
   isOwnMessage?: boolean;
@@ -45,8 +51,7 @@ interface ChatMessage {
 const mockAdminUser = {
   id: 'admin',
   name: 'Admin',
-  avatarUrl: 'https://placehold.co/40x40.png',
-  dataAiHint: 'professional avatar',
+  ...placeholderImages.adminAvatar,
 };
 
 const mockChatrooms: Chatroom[] = [
@@ -57,27 +62,27 @@ const mockChatrooms: Chatroom[] = [
 
 const mockParticipants: { [chatroomId: string]: ChatParticipant[] } = {
   cr1: [
-    { id: 'u1', name: 'Alice Wonderland', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'woman profile', role: 'user' },
-    { id: 'u2', name: 'Bob The Builder', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'construction worker', role: 'user' },
-    { id: 'u3', name: 'Charlie Chaplin', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'classic film', role: 'moderator' },
+    { id: 'u1', name: 'Alice Wonderland', avatarUrl: placeholderImages.userAlice.src, avatarWidth: placeholderImages.userAlice.width, avatarHeight: placeholderImages.userAlice.height, dataAiHint: placeholderImages.userAlice.hint, role: 'user' },
+    { id: 'u2', name: 'Bob The Builder', avatarUrl: placeholderImages.userBob.src, avatarWidth: placeholderImages.userBob.width, avatarHeight: placeholderImages.userBob.height, dataAiHint: placeholderImages.userBob.hint, role: 'user' },
+    { id: 'u3', name: 'Charlie Chaplin', avatarUrl: placeholderImages.userCharlie.src, avatarWidth: placeholderImages.userCharlie.width, avatarHeight: placeholderImages.userCharlie.height, dataAiHint: placeholderImages.userCharlie.hint, role: 'moderator' },
   ],
   cr2: [
-    { id: 'u4', name: 'Diana Prince', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'heroic woman', role: 'user' },
-    { id: 'u5', name: 'Edward Scissorhands', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'gothic man', role: 'user' },
+    { id: 'u4', name: 'Diana Prince', avatarUrl: placeholderImages.userDiana.src, avatarWidth: placeholderImages.userDiana.width, avatarHeight: placeholderImages.userDiana.height, dataAiHint: placeholderImages.userDiana.hint, role: 'user' },
+    { id: 'u5', name: 'Edward Scissorhands', avatarUrl: placeholderImages.userEdward.src, avatarWidth: placeholderImages.userEdward.width, avatarHeight: placeholderImages.userEdward.height, dataAiHint: placeholderImages.userEdward.hint, role: 'user' },
   ],
   cr3: [
-    { id: 'u2', name: 'Bob The Builder', avatarUrl: 'https://placehold.co/40x40.png', dataAiHint:'construction worker', role: 'user' },
+    { id: 'u2', name: 'Bob The Builder', avatarUrl: placeholderImages.userBob.src, avatarWidth: placeholderImages.userBob.width, avatarHeight: placeholderImages.userBob.height, dataAiHint: placeholderImages.userBob.hint, role: 'user' },
   ],
 };
 
 const mockMessages: { [chatroomId: string]: ChatMessage[] } = {
   cr1: [
-    { id: 'm1', text: 'Hello everyone! Welcome to the general chat.', senderId: 'u3', senderName: 'Charlie Chaplin', senderAvatar: 'https://placehold.co/40x40.png', dataAiHint:'classic film', timestamp: new Date(Date.now() - 1000 * 60 * 10) },
-    { id: 'm2', text: 'Hi Charlie! Glad to be here.', senderId: 'u1', senderName: 'Alice Wonderland', senderAvatar: 'https://placehold.co/40x40.png', dataAiHint:'woman profile', timestamp: new Date(Date.now() - 1000 * 60 * 8) },
-    { id: 'm3', text: 'What are we discussing today?', senderId: 'u2', senderName: 'Bob The Builder', senderAvatar: 'https://placehold.co/40x40.png', dataAiHint:'construction worker', timestamp: new Date(Date.now() - 1000 * 60 * 5) },
+    { id: 'm1', text: 'Hello everyone! Welcome to the general chat.', senderId: 'u3', senderName: 'Charlie Chaplin', senderAvatar: placeholderImages.userCharlie.src, avatarWidth: placeholderImages.userCharlie.width, avatarHeight: placeholderImages.userCharlie.height, dataAiHint: placeholderImages.userCharlie.hint, timestamp: new Date(Date.now() - 1000 * 60 * 10) },
+    { id: 'm2', text: 'Hi Charlie! Glad to be here.', senderId: 'u1', senderName: 'Alice Wonderland', senderAvatar: placeholderImages.userAlice.src, avatarWidth: placeholderImages.userAlice.width, avatarHeight: placeholderImages.userAlice.height, dataAiHint: placeholderImages.userAlice.hint, timestamp: new Date(Date.now() - 1000 * 60 * 8) },
+    { id: 'm3', text: 'What are we discussing today?', senderId: 'u2', senderName: 'Bob The Builder', senderAvatar: placeholderImages.userBob.src, avatarWidth: placeholderImages.userBob.width, avatarHeight: placeholderImages.userBob.height, dataAiHint: placeholderImages.userBob.hint, timestamp: new Date(Date.now() - 1000 * 60 * 5) },
   ],
   cr2: [
-    { id: 'm4', text: 'Any new project ideas for this quarter?', senderId: 'u4', senderName: 'Diana Prince', senderAvatar: 'https://placehold.co/40x40.png', dataAiHint:'heroic woman', timestamp: new Date(Date.now() - 1000 * 60 * 15) },
+    { id: 'm4', text: 'Any new project ideas for this quarter?', senderId: 'u4', senderName: 'Diana Prince', senderAvatar: placeholderImages.userDiana.src, avatarWidth: placeholderImages.userDiana.width, avatarHeight: placeholderImages.userDiana.height, dataAiHint: placeholderImages.userDiana.hint, timestamp: new Date(Date.now() - 1000 * 60 * 15) },
   ],
   cr3: [],
 };
@@ -127,8 +132,10 @@ export default function AdminChatroomsPage() {
       text: adminMessage,
       senderId: mockAdminUser.id,
       senderName: mockAdminUser.name,
-      senderAvatar: mockAdminUser.avatarUrl,
-      dataAiHint: mockAdminUser.dataAiHint,
+      senderAvatar: mockAdminUser.src,
+      avatarWidth: mockAdminUser.width,
+      avatarHeight: mockAdminUser.height,
+      dataAiHint: mockAdminUser.hint,
       timestamp: new Date(),
       isOwnMessage: true,
     };
@@ -241,7 +248,9 @@ export default function AdminChatroomsPage() {
                         )}
                       >
                         <Avatar className="h-8 w-8 shrink-0">
-                          <AvatarImage src={msg.senderAvatar} alt={msg.senderName} data-ai-hint={msg.dataAiHint} />
+                          <AvatarImage asChild src={msg.senderAvatar} alt={msg.senderName}>
+                            <Image src={msg.senderAvatar} alt={msg.senderName} width={msg.avatarWidth || 32} height={msg.avatarHeight || 32} data-ai-hint={msg.dataAiHint} />
+                          </AvatarImage>
                           <AvatarFallback>{msg.senderName?.substring(0, 1).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col group">
@@ -310,8 +319,10 @@ export default function AdminChatroomsPage() {
                         <div key={user.id} className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 group">
                           <div className="flex items-center space-x-2">
                               <Avatar className="h-8 w-8">
-                              <AvatarImage src={user.avatarUrl} alt={user.name} data-ai-hint={user.dataAiHint} />
-                              <AvatarFallback>{user.name.substring(0,1)}</AvatarFallback>
+                                <AvatarImage asChild src={user.avatarUrl} alt={user.name}>
+                                    <Image src={user.avatarUrl} alt={user.name} width={user.avatarWidth || 32} height={user.avatarHeight || 32} data-ai-hint={user.dataAiHint} />
+                                </AvatarImage>
+                                <AvatarFallback>{user.name.substring(0,1)}</AvatarFallback>
                               </Avatar>
                               <div>
                                   <p className="text-sm font-medium flex items-center">
