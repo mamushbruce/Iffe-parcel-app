@@ -1,16 +1,13 @@
 
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import CampaignCarousel from '@/components/campaign-carousel';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { BarChart3, Edit3, Lightbulb, MessageCircle, UserPlus, ArrowRight, ExternalLink, ShieldCheck, MountainSnow, Binoculars } from 'lucide-react';
+import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow } from 'lucide-react';
 import BlogCard, { type BlogCardProps } from '@/components/blog-card';
 import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import React, { useState } from 'react';
-import SignupModal from '@/components/auth/signup-modal';
 import { generateImage } from '@/ai/flows/generate-image-flow';
 import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
 
