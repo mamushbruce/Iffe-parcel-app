@@ -29,17 +29,18 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
       </head>
       <body 
-        className="font-body antialiased bg-background text-foreground min-h-screen"
+        className="font-body antialiased bg-background text-foreground"
       >
         <AuthProvider>
           <ThemeProviderClient>
             <AppHeader />
             <main 
-              className="flex-grow container mx-auto px-4 pt-8 pb-24 md:pb-8 animate-fade-in" 
+              className="flex-grow container mx-auto px-2 sm:px-4 pt-4 sm:pt-8 pb-24 md:pb-8" 
+              id="main-scroll-container"
             >
               {children}
-              <AppFooter />
             </main>
+            <AppFooter />
             <BottomNav />
             <Toaster />
           </ThemeProviderClient>
