@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -12,6 +12,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose 
 import { Separator } from '@/components/ui/separator';
 import { useSession, signOut } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+
 
 const AppHeader = () => {
   const { data: session, status } = useSession();
@@ -123,39 +125,77 @@ const AppHeader = () => {
                 <PlayCircle className="mr-1 h-4 w-4" /> Videos
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/ideas">
-                <Lightbulb className="mr-1 h-4 w-4" /> Dream Trips
-              </Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/profile">
-                <UserCircle className="mr-1 h-4 w-4" /> My Trips
-              </Link>
-            </Button>
+
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost">
+                        Trips <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                        <Link href="/ideas">
+                            <Lightbulb className="mr-2 h-4 w-4" /> Dream Trips
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                        <Link href="/profile">
+                            <UserCircle className="mr-2 h-4 w-4" /> My Trips
+                        </Link>
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
             <Separator orientation="vertical" className="h-6 mx-2 bg-border" />
             {status === 'loading' ? (
               <Button variant="outline" disabled>Loading...</Button>
             ) : session?.user ? (
-              <>
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={session.user.image ?? undefined} alt={session.user.name ?? "User"} data-ai-hint="profile avatar" />
-                  <AvatarFallback>{session.user.name?.substring(0,1).toUpperCase() ?? 'U'}</AvatarFallback>
-                </Avatar>
-                 <span className="text-sm font-medium mx-2 hidden xl:inline">{session.user.name}</span>
-                <Button variant="outline" onClick={() => signOut({ callbackUrl: '/' })}>
-                  <LogOut className="mr-2 h-4 w-4" /> Sign Out
-                </Button>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center gap-2">
+                        <Avatar className="h-8 w-8">
+                          <AvatarImage src={session.user.image ?? undefined} alt={session.user.name ?? "User"} data-ai-hint="profile avatar" />
+                          <AvatarFallback>{session.user.name?.substring(0,1).toUpperCase() ?? 'U'}</AvatarFallback>
+                        </Avatar>
+                        <span className="hidden xl:inline">{session.user.name}</span>
+                        <ChevronDown className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                       <Link href="/dashboard">
+                        <User className="mr-2 h-4 w-4" /> Dashboard
+                       </Link>
+                    </DropdownMenuItem>
+                     <DropdownMenuItem asChild>
+                       <Link href="/profile">
+                        <UserCircle className="mr-2 h-4 w-4" /> Profile
+                       </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
+                        <LogOutIcon className="mr-2 h-4 w-4" /> Sign Out
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
-              <>
-                <Button variant="outline" onClick={() => setIsLoginModalOpen(true)}>
-                  <LogIn className="mr-2 h-4 w-4"/> Login
-                </Button>
-                <Button className="bg-accent text-accent-foreground hover:bg-accent/90" onClick={() => openSignupModal()}>
-                  <UserPlus className="mr-2 h-4 w-4"/> Sign Up
-                </Button>
-              </>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                            Account <ChevronDown className="ml-2 h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={() => setIsLoginModalOpen(true)}>
+                            <LogIn className="mr-2 h-4 w-4"/> Login
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openSignupModal()}>
+                            <UserPlus className="mr-2 h-4 w-4"/> Sign Up
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             )}
           </div>
 
