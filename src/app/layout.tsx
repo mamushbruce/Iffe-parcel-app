@@ -40,8 +40,8 @@ export default function RootLayout({
               style={{ overflowY: 'auto' }}
             >
               {children}
+              <AppFooter /> {/* Add the footer here */}
             </main>
-            <AppFooter /> {/* Add the footer here */}
             <BottomNav />
             <Toaster />
           </ThemeProviderClient>
