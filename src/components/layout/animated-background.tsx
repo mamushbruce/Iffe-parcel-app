@@ -27,7 +27,7 @@ export default function AnimatedBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-0 overflow-hidden">
+    <div className="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
       {backgroundImages.map((image, index) => (
         <Image
           key={image.src}
@@ -43,7 +43,7 @@ export default function AnimatedBackground() {
           priority={index === 0}
         />
       ))}
-      <div className="absolute inset-0 bg-background/50"></div>
+      <div className="absolute inset-0 bg-background/50 pointer-events-none"></div>
     </div>
   );
 }
