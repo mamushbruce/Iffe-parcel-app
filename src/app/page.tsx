@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateImage } from '@/ai/flows/generate-image-flow';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import SignupModal from '@/components/auth/signup-modal';
+import AnimatedBackground from '@/components/layout/animated-background';
 
 
 const mockCarouselCampaigns = [
@@ -160,17 +161,7 @@ export default async function Home() {
 
   return (
     <div className="relative">
-      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
-        <Image
-            src={placeholderImages.campaignDetailWildebeest.src}
-            alt="Background of Serengeti plains"
-            layout="fill"
-            objectFit="cover"
-            className="blur-lg scale-110 opacity-30"
-            data-ai-hint="serengeti plains"
-        />
-        <div className="absolute inset-0 bg-background/50"></div>
-      </div>
+      <AnimatedBackground />
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
           <CampaignCarousel campaigns={processedCarouselCampaigns} />
