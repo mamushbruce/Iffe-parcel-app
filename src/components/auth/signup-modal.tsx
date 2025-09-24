@@ -111,16 +111,14 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
 
 
     try {
-      // NOTE: This is a mock registration endpoint.
-      // In a real app, you would have a dedicated API route like '/api/auth/register'.
-      // For this demo, we'll simulate a successful response.
-      console.log("Simulating registration with:", requestBody);
+      // NOTE: In a real app, you would have a dedicated API route like '/api/auth/register'.
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestBody),
+      });
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      const response = { ok: true }; // Mock success
-      const result = { message: "Your account has been created." };
+      const result = await response.json();
 
 
       if (response.ok) {
@@ -139,7 +137,7 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
       } else {
         toast({
           title: "Registration Failed",
-          description: "An error occurred during simulation.",
+          description: result.message || "An error occurred during registration.",
           variant: "destructive",
         });
       }
@@ -299,5 +297,3 @@ export default function SignupModal({ open, onOpenChange, initialStep = null }: 
     </Dialog>
   );
 }
-
-    

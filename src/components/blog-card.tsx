@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 import { Button } from '@/components/ui/button';
 import { Tag, Share2, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export interface BlogCardProps {
   id: string;
@@ -19,7 +20,10 @@ export interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ id, title, author, date, excerpt, tags, imageUrl, dataAiHint, commentCount }) => {
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+    <Card className={cn(
+        "overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full",
+        "bg-card/80 backdrop-blur-sm"
+        )}>
       {imageUrl && (
         <div className="relative w-full h-48">
           <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" data-ai-hint={dataAiHint} />

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, MapPin, Users, Tv, CalendarPlus } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 export interface EventCardProps {
   id: string;
@@ -21,7 +22,10 @@ export interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ id, title, date, time, location, type, excerpt, imageUrl, dataAiHint, rsvpLink, calendarLink }) => {
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+    <Card className={cn(
+        "overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full",
+        "bg-card/80 backdrop-blur-sm"
+        )}>
       {imageUrl && (
         <div className="relative w-full h-48">
           <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" data-ai-hint={dataAiHint} />

@@ -10,6 +10,7 @@ import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { generateImage } from '@/ai/flows/generate-image-flow';
 import placeholderImages from '@/app/lib/placeholder-images.json';
+import SignupModal from '@/components/auth/signup-modal';
 
 
 const mockCarouselCampaigns = [
@@ -158,123 +159,126 @@ export default async function Home() {
   );
 
   return (
-    <>
-    <div className="space-y-12 animate-fade-in">
-      <section>
-        <CampaignCarousel campaigns={processedCarouselCampaigns} />
-      </section>
+    <div className="relative">
+      <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
+        <Image
+            src={placeholderImages.campaignDetailWildebeest.src}
+            alt="Background of Serengeti plains"
+            layout="fill"
+            objectFit="cover"
+            className="blur-lg scale-110 opacity-30"
+            data-ai-hint="serengeti plains"
+        />
+        <div className="absolute inset-0 bg-background/50"></div>
+      </div>
+      <div className="relative z-10 space-y-12 animate-fade-in">
+        <section>
+          <CampaignCarousel campaigns={processedCarouselCampaigns} />
+        </section>
 
-      <section>
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="font-headline text-2xl text-primary">Your Adventure Starts Here</CardTitle>
-            <CardDescription>Ready to explore the wild? Let's get started:</CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-            <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
-              <Link href="/campaigns">
-                <MountainSnow className="mr-2 h-5 w-5" /> Browse All Tours
-              </Link>
-            </Button>
-            <Button size="lg" variant="secondary" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-              <Link href="/blog">
-                <Edit3 className="mr-2 h-5 w-5" /> Read Travel Stories
-              </Link>
-            </Button>
-             <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
-               <Link href="/ideas">
-                <Lightbulb className="mr-2 h-5 w-5" /> Suggest a Destination
-              </Link>
-            </Button>
-            <Button 
-              size="lg" 
-              variant="secondary" 
-              className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90"
-              // onClick will be handled by a client component if needed for modals
-              asChild
-            >
-              <Link href="/#signup-erotaract">
-                <ShieldCheck className="mr-2 h-5 w-5" /> Join the Explorer's Club
-              </Link>
-            </Button>
-          </CardContent>
-        </Card>
-      </section>
-      
-      <section>
-        <h2 className="font-headline text-3xl font-bold text-primary mb-6">From the Wild</h2>
-        <div className="space-y-8">
-          {processedFeedItems.map((item) => {
-            if (item.type === 'creator') {
-              return (
-                <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                      <Avatar className="h-12 w-12">
-                        <AvatarImage asChild src={item.avatarUrl} alt={item.name}>
-                          <Image src={item.avatarUrl} alt={item.name} width={item.avatarWidth} height={item.avatarHeight} data-ai-hint={item.dataAiHint} />
-                        </AvatarImage>
-                        <AvatarFallback>{item.name.substring(0,2).toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <CardTitle className="font-headline text-lg text-primary">{item.name}</CardTitle>
-                        <CardDescription className="text-xs">{item.specialty}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-3">Discover stories and photos from {item.name}.</p>
-                     <Button variant="outline" asChild size="sm">
-                       <Link href={item.profileLink}>
-                         View Profile <ArrowRight className="ml-2 h-4 w-4" />
-                       </Link>
-                     </Button>
-                  </CardContent>
-                </Card>
-              );
-            }
-            if (item.type === 'room') {
-              return (
-                <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                     <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-accent/20 rounded-full">
-                           <MessageCircle className="h-6 w-6 text-accent" />
-                        </div>
+        <section>
+          <Card className="shadow-lg bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+              <CardTitle className="font-headline text-2xl text-primary">Your Adventure Starts Here</CardTitle>
+              <CardDescription>Ready to explore the wild? Let's get started:</CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
+                <Link href="/campaigns">
+                  <MountainSnow className="mr-2 h-5 w-5" /> Browse All Tours
+                </Link>
+              </Button>
+              <Button size="lg" variant="secondary" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+                <Link href="/blog">
+                  <Edit3 className="mr-2 h-5 w-5" /> Read Travel Stories
+                </Link>
+              </Button>
+               <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
+                 <Link href="/ideas">
+                  <Lightbulb className="mr-2 h-5 w-5" /> Suggest a Destination
+                </Link>
+              </Button>
+              <Button asChild size="lg" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90">
+                 <Link href="/#signup-erotaract">
+                  <ShieldCheck className="mr-2 h-5 w-5" /> Join the Explorer's Club
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </section>
+        
+        <section>
+          <h2 className="font-headline text-3xl font-bold text-primary mb-6">From the Wild</h2>
+          <div className="space-y-8">
+            {processedFeedItems.map((item) => {
+              if (item.type === 'creator') {
+                return (
+                  <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow bg-card/80 backdrop-blur-sm">
+                    <CardHeader>
+                      <div className="flex items-center space-x-3">
+                        <Avatar className="h-12 w-12">
+                          <AvatarImage asChild src={item.avatarUrl} alt={item.name}>
+                            <Image src={item.avatarUrl} alt={item.name} width={item.avatarWidth} height={item.avatarHeight} data-ai-hint={item.dataAiHint} />
+                          </AvatarImage>
+                          <AvatarFallback>{item.name.substring(0,2).toUpperCase()}</AvatarFallback>
+                        </Avatar>
                         <div>
-                            <CardTitle className="font-headline text-lg text-primary">{item.name}</CardTitle>
+                          <CardTitle className="font-headline text-lg text-primary">{item.name}</CardTitle>
+                          <CardDescription className="text-xs">{item.specialty}</CardDescription>
                         </div>
-                     </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-3">{item.topic}</p>
-                    <Button variant="default" asChild size="sm" className="bg-primary hover:bg-primary/90">
-                       <Link href={item.chatLink}>
-                         Join Discussion <ArrowRight className="ml-2 h-4 w-4" />
-                       </Link>
-                     </Button>
-                  </CardContent>
-                </Card>
-              );
-            }
-            if (item.type === 'blog') {
-              return <BlogCard key={item.id} {...item.post} />;
-            }
-            if (item.type === 'event') {
-              return <EventCard key={item.id} {...item.event} />;
-            }
-            return null;
-          })}
-        </div>
-        {feedItems.length === 0 && (
-            <div className="text-center py-12">
-                <p className="text-xl text-muted-foreground">The feed is quiet right now... Why not start something?</p>
-            </div>
-        )}
-      </section>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-3">Discover stories and photos from {item.name}.</p>
+                       <Button variant="outline" asChild size="sm">
+                         <Link href={item.profileLink}>
+                           View Profile <ArrowRight className="ml-2 h-4 w-4" />
+                         </Link>
+                       </Button>
+                    </CardContent>
+                  </Card>
+                );
+              }
+              if (item.type === 'room') {
+                return (
+                  <Card key={item.id} className="shadow-md hover:shadow-lg transition-shadow bg-card/80 backdrop-blur-sm">
+                    <CardHeader>
+                       <div className="flex items-center space-x-3">
+                          <div className="p-2 bg-accent/20 rounded-full">
+                             <MessageCircle className="h-6 w-6 text-accent" />
+                          </div>
+                          <div>
+                              <CardTitle className="font-headline text-lg text-primary">{item.name}</CardTitle>
+                          </div>
+                       </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-3">{item.topic}</p>
+                      <Button variant="default" asChild size="sm" className="bg-primary hover:bg-primary/90">
+                         <Link href={item.chatLink}>
+                           Join Discussion <ArrowRight className="ml-2 h-4 w-4" />
+                         </Link>
+                       </Button>
+                    </CardContent>
+                  </Card>
+                );
+              }
+              if (item.type === 'blog') {
+                return <BlogCard key={item.id} {...item.post} />;
+              }
+              if (item.type === 'event') {
+                return <EventCard key={item.id} {...item.event} />;
+              }
+              return null;
+            })}
+          </div>
+          {feedItems.length === 0 && (
+              <div className="text-center py-12">
+                  <p className="text-xl text-muted-foreground">The feed is quiet right now... Why not start something?</p>
+              </div>
+          )}
+        </section>
+      </div>
     </div>
-    </>
   );
 }
-
-    
