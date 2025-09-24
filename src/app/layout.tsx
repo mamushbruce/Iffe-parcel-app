@@ -29,18 +29,16 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet" />
       </head>
       <body 
-        className="font-body antialiased bg-background text-foreground min-h-screen flex flex-col h-screen"
+        className="font-body antialiased bg-background text-foreground min-h-screen"
       >
         <AuthProvider>
           <ThemeProviderClient>
             <AppHeader />
             <main 
               className="flex-grow container mx-auto px-4 pt-8 pb-24 md:pb-8 animate-fade-in" 
-              id="main-scroll-container" 
-              style={{ overflowY: 'auto' }}
             >
               {children}
-              <AppFooter /> {/* Add the footer here */}
+              <AppFooter />
             </main>
             <BottomNav />
             <Toaster />

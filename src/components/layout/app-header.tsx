@@ -24,20 +24,15 @@ const AppHeader = () => {
   const lastScrollY = useRef(0);
   const headerRef = useRef<HTMLElement>(null);
   const [headerHeight, setHeaderHeight] = useState(0);
-  const scrollContainerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     if (headerRef.current) {
       setHeaderHeight(headerRef.current.offsetHeight);
     }
-    // Target the <main> element for scrolling
-    scrollContainerRef.current = document.querySelector('main#main-scroll-container');
   }, []);
 
   const controlNavbar = useCallback(() => {
-    const currentScrollContainer = scrollContainerRef.current;
-    if (currentScrollContainer) {
-      const currentScrollTop = currentScrollContainer.scrollTop;
+      const currentScrollTop = window.scrollY;
       if (currentScrollTop > lastScrollY.current && currentScrollTop > headerHeight + 50) { 
         setShowNavbar(false);
       } else { 
@@ -46,17 +41,13 @@ const AppHeader = () => {
         }
       }
       lastScrollY.current = currentScrollTop;
-    }
   }, [headerHeight]);
 
   useEffect(() => {
-    const currentScrollContainer = scrollContainerRef.current;
-    if (currentScrollContainer) {
-      currentScrollContainer.addEventListener('scroll', controlNavbar);
-      return () => {
-        currentScrollContainer.removeEventListener('scroll', controlNavbar);
-      };
-    }
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
   }, [controlNavbar]);
 
   const openSignupModal = (initialStep: "user" | "community" | "erotaract" | null = null) => {
