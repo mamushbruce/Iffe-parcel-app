@@ -69,7 +69,7 @@ const AppHeader = () => {
 
   const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
-    { href: '/campaigns', label: 'Tours', icon: MountainSnow },
+    { href: '/events', label: 'Events', icon: CalendarDays },
     { href: '/packages', label: 'Packages', icon: Package },
     { href: '/blog', label: 'Journal', icon: Edit3 },
     { href: '/events', label: 'Departures', icon: CalendarDays },
@@ -101,8 +101,8 @@ const AppHeader = () => {
               </Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/campaigns">
-                <MountainSnow className="mr-1 h-4 w-4" /> Tours
+              <Link href="/events">
+                <CalendarDays className="mr-1 h-4 w-4" /> Events
               </Link>
             </Button>
              <Button variant="ghost" asChild>
