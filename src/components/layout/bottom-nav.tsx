@@ -2,12 +2,12 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, MessageCircle, BarChart3, PlusSquare, UserCircle, Image as ImageIcon, PlayCircle, MountainSnow, Package, CalendarDays } from 'lucide-react';
+import { Home, MessageCircle, BarChart3, PlusSquare, UserCircle, Image as ImageIcon, PlayCircle, MountainSnow, Package, CalendarDays, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
   { href: '/', label: 'Home', icon: Home },
-  { href: '/events', label: 'Events', icon: CalendarDays },
+  { href: '/contact', label: 'Contact', icon: Mail },
   { href: '/gallery', label: 'Gallery', icon: ImageIcon },
   { href: '/packages', label: 'Packages', icon: Package },
   { href: '/profile', label: 'Profile', icon: UserCircle },

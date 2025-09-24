@@ -1,7 +1,8 @@
+
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -69,7 +70,7 @@ const AppHeader = () => {
 
   const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
-    { href: '/events', label: 'Events', icon: CalendarDays },
+    { href: '/contact', label: 'Contact', icon: Mail },
     { href: '/packages', label: 'Packages', icon: Package },
     { href: '/blog', label: 'Journal', icon: Edit3 },
     { href: '/events', label: 'Departures', icon: CalendarDays },
@@ -101,8 +102,8 @@ const AppHeader = () => {
               </Link>
             </Button>
             <Button variant="ghost" asChild>
-              <Link href="/events">
-                <CalendarDays className="mr-1 h-4 w-4" /> Events
+              <Link href="/contact">
+                <Mail className="mr-1 h-4 w-4" /> Contact
               </Link>
             </Button>
              <Button variant="ghost" asChild>

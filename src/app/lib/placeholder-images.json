@@ -161,5 +161,23 @@
     "width": 320,
     "height": 180,
     "hint": "uploaded video"
+  },
+  "teamJane": {
+    "src": "https://picsum.photos/seed/teamJane/64/64",
+    "width": 64,
+    "height": 64,
+    "hint": "woman portrait"
+  },
+  "teamJohn": {
+    "src": "https://picsum.photos/seed/teamJohn/64/64",
+    "width": 64,
+    "height": 64,
+    "hint": "man portrait"
+  },
+  "teamAlice": {
+    "src": "https://picsum.photos/seed/teamAlice/64/64",
+    "width": 64,
+    "height": 64,
+    "hint": "person smiling"
   }
 }

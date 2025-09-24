@@ -77,7 +77,7 @@ export default function AppFooter() {
             <Separator className="my-6" />
 
             <div className="text-center text-xs text-muted-foreground">
-            &copy; {currentYear} iffe-travels. All Rights Reserved. Your Adventure Awaits.
+            &copy; {new Date().getFullYear()} iffe-travels. All Rights Reserved. Your Adventure Awaits.
             </div>
         </footer>
     </div>
