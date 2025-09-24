@@ -31,14 +31,16 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <ThemeProviderClient>
-            <AppHeader />
-            <main 
-              className="flex-grow px-1 sm:px-4 pt-4 sm:pt-8 pb-24 md:pb-8"
-            >
-              {children}
+            <div className="flex flex-col min-h-screen">
+              <AppHeader />
+              <main 
+                className="flex-grow px-1 sm:px-4 pt-4 sm:pt-8 pb-24"
+              >
+                {children}
+              </main>
               <AppFooter />
-            </main>
-            <BottomNav />
+              <BottomNav />
+            </div>
             <Toaster />
           </ThemeProviderClient>
         </AuthProvider>
