@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock, Map } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -71,13 +71,18 @@ const AppHeader = () => {
   const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/packages', label: 'Packages', icon: Package },
-    { href: '/events', label: 'Events', icon: CalendarClock },
+    { href: '/events', label: 'Departures', icon: CalendarClock },
+    { href: '/ideas', label: 'Dream Trips', icon: Lightbulb },
     { href: '/blog', label: 'Journal', icon: Edit3 },
     { href: '/gallery', label: 'Gallery', icon: ImageIcon },
-    { href: '/ideas', label: 'Dream Trips', icon: Lightbulb },
+    { href: '/videos', label: 'Videos', icon: PlayCircle },
     { href: '/about', label: 'About', icon: Info },
     { href: '/contact', label: 'Contact', icon: Mail },
-    { href: '/profile', label: 'My Trips', icon: UserCircle },
+  ];
+  
+  const mobileProfileItems = [
+      { href: '/dashboard', label: 'Dashboard', icon: UserCircle },
+      { href: '/profile', label: 'My Trips', icon: MountainSnow },
   ];
 
   return (
@@ -101,31 +106,38 @@ const AppHeader = () => {
                 <Home className="mr-1 h-4 w-4" /> Home
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/packages">
-                <Package className="mr-1 h-4 w-4" /> Packages
-              </Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/events">
-                <CalendarClock className="mr-1 h-4 w-4" /> Events
-              </Link>
-            </Button>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  <Compass className="mr-1 h-4 w-4" /> Trips <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild><Link href="/packages"><Package className="mr-2 h-4 w-4" />Packages</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/events"><CalendarClock className="mr-2 h-4 w-4" />Departures</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/ideas"><Lightbulb className="mr-2 h-4 w-4" />Dream Trips</Link></DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="ghost" asChild>
               <Link href="/blog">
                 <Edit3 className="mr-1 h-4 w-4" /> Journal
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/gallery">
-                <ImageIcon className="mr-1 h-4 w-4" /> Gallery
-              </Link>
-            </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/ideas">
-                <Lightbulb className="mr-1 h-4 w-4" /> Dream Trips
-              </Link>
-            </Button>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost">
+                  <ImageIcon className="mr-1 h-4 w-4" /> Media <ChevronDown className="ml-1 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem asChild><Link href="/gallery"><ImageIcon className="mr-2 h-4 w-4" />Gallery</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/videos"><PlayCircle className="mr-2 h-4 w-4" />Videos</Link></DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button variant="ghost" asChild>
               <Link href="/about">
                 <Info className="mr-1 h-4 w-4" /> About
@@ -136,12 +148,7 @@ const AppHeader = () => {
                 <Mail className="mr-1 h-4 w-4" /> Contact
               </Link>
             </Button>
-            <Button variant="ghost" asChild>
-              <Link href="/profile">
-                <UserCircle className="mr-1 h-4 w-4" /> My Trips
-              </Link>
-            </Button>
-
+            
             <Separator orientation="vertical" className="h-6 mx-2 bg-border" />
             {status === 'loading' ? (
               <Button variant="outline" disabled>Loading...</Button>
@@ -167,7 +174,7 @@ const AppHeader = () => {
                     </DropdownMenuItem>
                      <DropdownMenuItem asChild>
                        <Link href="/profile">
-                        <UserCircle className="mr-2 h-4 w-4" /> My Trips
+                        <MountainSnow className="mr-2 h-4 w-4" /> My Trips
                        </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -223,6 +230,23 @@ const AppHeader = () => {
                         </Link>
                       </SheetClose>
                     ))}
+                    {session?.user && (
+                        <>
+                         <Separator className="my-4" />
+                          <p className="px-3 text-xs font-semibold text-muted-foreground uppercase">My Account</p>
+                          {mobileProfileItems.map((item) => (
+                              <SheetClose asChild key={item.href}>
+                                <Link
+                                  href={item.href}
+                                  className="flex items-center p-3 rounded-md text-base font-medium text-foreground hover:bg-muted hover:text-primary transition-colors"
+                                >
+                                  <item.icon className="mr-3 h-5 w-5 text-accent" />
+                                  {item.label}
+                                </Link>
+                              </SheetClose>
+                          ))}
+                        </>
+                    )}
                   </nav>
                   <Separator className="my-2" />
                   <div className="p-4 space-y-3 border-t">
