@@ -53,25 +53,24 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
 
   return (
     <Card className={cn(
-      "shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full relative overflow-hidden",
-      imageUrl && "bg-transparent" 
-    )}>
+        "overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full",
+        "bg-card/80 backdrop-blur-sm"
+        )}>
       {imageUrl && (
-        <>
+        <div className="relative w-full h-48">
           <Image
             src={imageUrl}
             alt={title || 'Idea background image'}
             layout="fill"
             objectFit="cover"
-            className="absolute inset-0 w-full h-full z-0 blur-sm scale-105"
+            className="z-0"
             data-ai-hint={dataAiHint || 'idea image'}
           />
           <div className="absolute inset-0 w-full h-full z-[1] bg-black/10 dark:bg-black/30"></div> 
-        </>
+        </div>
       )}
       <CardHeader className={cn(
-        "relative z-10",
-        imageUrl && "bg-card/80 backdrop-blur-sm rounded-t-lg"
+        "relative z-10"
       )}>
         <div className="flex justify-between items-start">
           <CardTitle className="font-headline text-xl text-primary">{title}</CardTitle>
@@ -83,8 +82,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
         </CardDescription>
       </CardHeader>
       <CardContent className={cn(
-        "flex-grow flex flex-col relative z-10",
-        imageUrl && "bg-card/80 backdrop-blur-sm"
+        "flex-grow flex flex-col relative z-10"
       )}>
         <p className={cn(
           "text-sm text-muted-foreground mb-2",
@@ -106,8 +104,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
         )}
       </CardContent>
       <CardFooter className={cn(
-        "flex justify-between items-center border-t pt-4 mt-auto relative z-10",
-        imageUrl && "bg-card/80 backdrop-blur-sm rounded-b-lg border-transparent"
+        "flex justify-between items-center border-t pt-4 mt-auto relative z-10"
       )}>
         <Button
           variant={hasVoted ? "default" : "outline"}
