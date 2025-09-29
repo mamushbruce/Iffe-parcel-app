@@ -95,22 +95,22 @@ export default function FifaCardCarousel() {
         opacity = 1;
         break;
       case 1: // Right Middle Ground
-        transform = 'translateX(50%) scale(0.5)';
+        transform = 'translateX(40%) scale(0.5)';
         zIndex = 4;
         opacity = 0.6;
         break;
       case -1: // Left Middle Ground
-        transform = 'translateX(-50%) scale(0.5)';
+        transform = 'translateX(-40%) scale(0.5)';
         zIndex = 4;
         opacity = 0.6;
         break;
       case 2: // Right Background
-        transform = 'translateX(75%) scale(0.25)';
+        transform = 'translateX(65%) scale(0.25)';
         zIndex = 3;
         opacity = 0.3;
         break;
       case -2: // Left Background
-        transform = 'translateX(-75%) scale(0.25)';
+        transform = 'translateX(-65%) scale(0.25)';
         zIndex = 3;
         opacity = 0.3;
         break;
