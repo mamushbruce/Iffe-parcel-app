@@ -62,40 +62,41 @@ export default function FifaCardCarousel() {
   const getCardStyle = (index: number) => {
     const totalCards = cards.length;
     let offset = index - currentIndex;
+    if (offset > totalCards / 2) offset -= totalCards;
+    if (offset < -totalCards / 2) offset += totalCards;
 
-    if (offset > totalCards / 2) {
-      offset -= totalCards;
-    } else if (offset < -totalCards / 2) {
-      offset += totalCards;
-    }
-    
     let transform = 'scale(0)';
     let zIndex = 0;
-    let opacity = 1;
-    let filter = 'grayscale(0)';
+    let opacity = 0.3;
+    let filter = 'grayscale(50%)';
 
+    // Apply new rotation rules
     switch (offset) {
-      case 0: // Foreground
-        transform = 'translateX(0%) scale(1)';
+      case 0: // Was Foreground, moves to Left Background
+        transform = 'translateX(-75%) scale(0.25)';
+        zIndex = 1;
+        opacity = 0.3;
+        break;
+      case 1: // Was Right Middle, moves to Foreground
+        transform = 'translateX(0) scale(1)';
         zIndex = 5;
         opacity = 1;
-        filter = 'grayscale(0)';
+        filter = 'grayscale(0%)';
         break;
-      case 1: // Right Middle Ground
-        transform = 'translateX(50%) scale(0.6)';
-        zIndex = 4;
+      case -1: // Was Left Middle, moves to Right Background
+        transform = 'translateX(75%) scale(0.25)';
+        zIndex = 1;
+        opacity = 0.3;
         break;
-      case -1: // Left Middle Ground
-        transform = 'translateX(-50%) scale(0.6)';
-        zIndex = 4;
+      case 2: // Was Right Background, moves to Right Middle
+        transform = 'translateX(40%) scale(0.5)';
+        zIndex = 2;
+        opacity = 0.6;
         break;
-      case 2: // Right Background
-        transform = 'translateX(75%) scale(0.4)';
-        zIndex = 3;
-        break;
-      case -2: // Left Background
-        transform = 'translateX(-75%) scale(0.4)';
-        zIndex = 3;
+      case -2: // Was Left Background, moves to Left Middle
+         transform = 'translateX(-40%) scale(0.5)';
+        zIndex = 2;
+        opacity = 0.6;
         break;
       default:
         transform = 'scale(0)';
@@ -103,12 +104,107 @@ export default function FifaCardCarousel() {
         zIndex = 0;
         break;
     }
+    
+    // This logic is for the state *after* the button is clicked. 
+    // We need to think about the state *before*.
+    // Let's reverse the logic. Where does the card at a given position *come from*?
+
+    const targetOffset = index - currentIndex;
+    
+    const getFinalStyle = (initialOffset: number) => {
+        let transform = 'scale(0)';
+        let zIndex = 0;
+        let opacity = 0.3;
+        let filter = 'grayscale(50%)';
+
+        switch(initialOffset) {
+            case 0: // Foreground
+                transform = 'translateX(0) scale(1)';
+                zIndex = 5;
+                opacity = 1;
+                filter = 'grayscale(0%)';
+                break;
+            case 1: // Right Middle
+                transform = 'translateX(40%) scale(0.5)';
+                zIndex = 2;
+                opacity = 0.6;
+                break;
+            case -1: // Left Middle
+                transform = 'translateX(-40%) scale(0.5)';
+                zIndex = 2;
+                opacity = 0.6;
+                break;
+            case 2: // Right Background
+                transform = 'translateX(75%) scale(0.25)';
+                zIndex = 1;
+                opacity = 0.3;
+                break;
+            case -2: // Left Background
+                transform = 'translateX(-75%) scale(0.25)';
+                zIndex = 1;
+                opacity = 0.3;
+                break;
+            default:
+                transform = 'scale(0)';
+                opacity = 0;
+                zIndex = 0;
+                break;
+        }
+        return { transform, zIndex, opacity, filter };
+    }
+    
+    // Determine the initial position (offset) of the card that will land in the `targetOffset` position
+    let initialOffset;
+    const normalizedTarget = (targetOffset % totalCards + totalCards) % totalCards;
+
+    // This is the reverse mapping of the user's rules
+    // Rule: new position -> old position
+    if (normalizedTarget === (0 % totalCards)) { // Foreground comes from Right Middle
+        initialOffset = 1;
+    } else if (normalizedTarget === (1 % totalCards)) { // Right Middle comes from Right Background
+        initialOffset = 2;
+    } else if (normalizedTarget === ((totalCards-1) % totalCards)) { // Left Middle comes from Left Background
+        initialOffset = -2;
+    } else if (normalizedTarget === (2 % totalCards)) { // Right Background comes from Left Middle
+        initialOffset = -1;
+    } else if (normalizedTarget === ((totalCards-2) % totalCards)) { // Left Background comes from Foreground
+        initialOffset = 0;
+    } else {
+        initialOffset = 99; // Should hide
+    }
+
+    // Now, let's adjust for the current index to find which card it was
+    let cardOriginalIndex = (currentIndex + initialOffset + totalCards) % totalCards;
+    
+    // We want the style for the card at `index`
+    // Let's rethink. `index` is the card's fixed position in the array.
+    // `offset` is its current view position relative to `currentIndex`.
+    
+    let finalStyle;
+
+    switch (offset) {
+      case 0: // Foreground
+        finalStyle = getFinalStyle(0);
+        break;
+      case 1: // Card to the right of foreground
+        finalStyle = getFinalStyle(1);
+        break;
+      case -1: // Card to the left of foreground
+        finalStyle = getFinalStyle(-1);
+        break;
+      case 2: // Second card to the right
+        finalStyle = getFinalStyle(2);
+        break;
+      case -2: // Second card to the left
+        finalStyle = getFinalStyle(-2);
+        break;
+      default:
+        finalStyle = getFinalStyle(99);
+        break;
+    }
 
     return {
-      transform,
-      zIndex,
-      opacity,
-      filter,
+      ...finalStyle,
       transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out, filter 0.5s ease-in-out',
     };
   };
