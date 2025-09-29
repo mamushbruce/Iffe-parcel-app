@@ -32,14 +32,25 @@ const initialCards: CardData[] = [
 export default function FifaCardCarousel() {
   const [cards] = useState(initialCards);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const handleNext = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
-  }, [cards.length]);
+  }, [isAnimating, cards.length]);
 
   const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
   };
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsAnimating(false), 500); // Duration of the transition
+    return () => clearTimeout(timer);
+  }, [currentIndex]);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,81 +61,56 @@ export default function FifaCardCarousel() {
 
   const getCardStyle = (index: number) => {
     const totalCards = cards.length;
-    if (totalCards === 0) return {};
+    let offset = index - currentIndex;
 
-    const offset = (index - currentIndex + totalCards) % totalCards;
-    
-    let transform = 'scale(0.5)';
+    if (offset > totalCards / 2) {
+      offset -= totalCards;
+    } else if (offset < -totalCards / 2) {
+      offset += totalCards;
+    }
+
+    let transform = 'scale(0)';
     let zIndex = 0;
-    let opacity = 1; // All cards are opaque
-    let filter = 'grayscale(0%)'; // No grayscale effect
-
-    if (totalCards === 1) {
-      transform = 'translateX(0) scale(1)';
-      zIndex = 5;
-    } else if (totalCards === 2) {
-        if(offset === 0) { // center
+    let opacity = 1;
+    
+    switch(offset) {
+        case 0:
             transform = 'translateX(0) scale(1)';
             zIndex = 5;
-        } else { // right
-            transform = 'translateX(55%) scale(0.9)';
-            zIndex = 4;
-        }
-    } else if (totalCards === 3) {
-        if (offset === 0) { // center
-            transform = 'translateX(0) scale(1)';
-            zIndex = 5;
-        } else if (offset === 1) { // right
+            break;
+        case 1:
             transform = 'translateX(50%) scale(0.9)';
             zIndex = 4;
-        } else if (offset === 2) { // left
+            break;
+        case -1:
             transform = 'translateX(-50%) scale(0.9)';
             zIndex = 4;
-        }
-    } else if (totalCards === 4) {
-        if (offset === 0) { // center
-            transform = 'translateX(0) scale(1)';
-            zIndex = 5;
-        } else if (offset === 1) { // right
-            transform = 'translateX(50%) scale(0.9)';
-            zIndex = 4;
-        } else if (offset === 2) { // far item (shown on left)
+            break;
+        case 2:
+            transform = 'translateX(75%) scale(0.8)';
+            zIndex = 3;
+            break;
+        case -2:
             transform = 'translateX(-75%) scale(0.8)';
             zIndex = 3;
-        } else if (offset === 3) { // left
-            transform = 'translateX(-50%) scale(0.9)';
-            zIndex = 4;
-        }
-    }
-    else { // 5 or more cards
-        if (offset === 0) { // Center card
-            transform = 'translateX(0) scale(1)';
-            zIndex = 5;
-        } else if (offset === 1) { // Right card
-            transform = 'translateX(45%) scale(0.9)';
-            zIndex = 4;
-        } else if (offset === totalCards - 1) { // Left card
-            transform = 'translateX(-45%) scale(0.9)';
-            zIndex = 4;
-        } else if (offset === 2) { // Far right card
-            transform = 'translateX(65%) scale(0.8)';
-            zIndex = 3;
-        } else if (offset === totalCards - 2) { // Far left card
-            transform = 'translateX(-65%) scale(0.8)';
-            zIndex = 3;
-        } else { // Hidden cards
-            transform = 'scale(0.7)';
+            break;
+        default:
+            // For cards further away, hide them but keep them in a ready position for smooth transition
+            if (offset > 2) {
+                transform = 'translateX(100%) scale(0.7)';
+            } else {
+                transform = 'translateX(-100%) scale(0.7)';
+            }
             opacity = 0;
             zIndex = 0;
-        }
+            break;
     }
 
     return {
       transform,
       zIndex,
       opacity,
-      filter,
-      transition: 'transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease',
+      transition: 'transform 0.5s ease, opacity 0.5s ease',
     };
   };
   
