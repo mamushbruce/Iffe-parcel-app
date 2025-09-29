@@ -51,41 +51,35 @@ export default function FifaCardCarousel() {
     let transform = '';
     let zIndex = 0;
     let opacity = 1;
-    let filter = 'blur(0px)';
 
     if (offset === 0) { // Center card
       transform = 'translateX(0) scale(1)';
       zIndex = 30;
     } else if (offset === 1) { // Right card
-      transform = 'translateX(35%) scale(0.8) rotateY(-30deg)';
+      transform = 'translateX(50%) scale(0.9)';
       zIndex = 20;
-      filter = 'blur(2px)';
     } else if (offset === cards.length - 1) { // Left card
-      transform = 'translateX(-35%) scale(0.8) rotateY(30deg)';
+      transform = 'translateX(-50%) scale(0.9)';
       zIndex = 20;
-      filter = 'blur(2px)';
     } else if (offset === 2) { // Far right card
-      transform = 'translateX(60%) scale(0.6) rotateY(-45deg)';
+      transform = 'translateX(75%) scale(0.8)';
       zIndex = 10;
-      opacity = 0.5;
-      filter = 'blur(4px)';
+      opacity = 0.8;
     } else if (offset === cards.length - 2) { // Far left card
-      transform = 'translateX(-60%) scale(0.6) rotateY(45deg)';
+      transform = 'translateX(-75%) scale(0.8)';
       zIndex = 10;
-      opacity = 0.5;
-      filter = 'blur(4px)';
+      opacity = 0.8;
     } else { // Hidden cards
-      transform = 'scale(0)';
+      transform = 'scale(0.5)';
       opacity = 0;
       zIndex = 0;
     }
 
     return {
-      transform: `${transform}`,
+      transform,
       zIndex,
       opacity,
-      filter,
-      transition: 'transform 0.5s ease, opacity 0.5s ease, filter 0.5s ease',
+      transition: 'transform 0.5s ease, opacity 0.5s ease',
     };
   };
 
