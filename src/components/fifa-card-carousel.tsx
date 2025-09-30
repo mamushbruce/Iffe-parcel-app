@@ -78,7 +78,7 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
 
   return (
      <div className="carousel-container">
-        <h2 className="font-headline text-3xl font-bold text-white mb-6 text-center">Featured Expeditions</h2>
+        <h1 className="font-headline text-4xl font-bold text-white mb-6 text-center">Featured Expeditions</h1>
         
         <div className="carousel">
             <div className="carousel-track">
