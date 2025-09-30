@@ -117,4 +117,157 @@ body {
       linear-gradient(190deg, hsl(var(--primary)), hsl(var(--accent))),
       radial-gradient(circle at 100% 100%, hsl(var(--secondary)), transparent 70%);
   }
+
+  /* Carousel Styles */
+  .carousel-container {
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+      padding: 40px 0;
+  }
+  .carousel {
+      position: relative;
+      height: 500px;
+      perspective: 1200px;
+      overflow: visible; /* Allow seeing cards outside */
+  }
+  .carousel-track {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+  }
+  .card {
+      position: absolute;
+      width: 320px;
+      height: 420px;
+      background: hsl(var(--card));
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      cursor: pointer;
+  }
+  .card-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+  }
+  .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: hsl(var(--card-foreground));
+  }
+  .card-location {
+      font-size: 1rem;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+  }
+  .card-location::before {
+      content: "📍";
+      margin-right: 5px;
+  }
+  .card-button {
+      margin-top: auto;
+      background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--accent)));
+      color: hsl(var(--primary-foreground));
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 15px hsla(var(--accent), 0.4);
+  }
+  .card-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px hsla(var(--accent), 0.6);
+  }
+  .card-center {
+      z-index: 30;
+      transform: translateX(0) scale(1);
+      filter: brightness(1);
+      opacity: 1;
+      pointer-events: auto;
+  }
+  .card-left {
+      z-index: 20;
+      transform: translateX(-80%) scale(0.85);
+      filter: brightness(0.75);
+      opacity: 0.9;
+      pointer-events: none;
+  }
+  .card-right {
+      z-index: 20;
+      transform: translateX(80%) scale(0.85);
+      filter: brightness(0.75);
+      opacity: 0.9;
+      pointer-events: none;
+  }
+  .card-far-left {
+      z-index: 10;
+      transform: translateX(-160%) scale(0.7);
+      filter: brightness(0.5);
+      opacity: 0.7;
+      pointer-events: none;
+  }
+  .card-far-right {
+      z-index: 10;
+      transform: translateX(160%) scale(0.7);
+      filter: brightness(0.5);
+      opacity: 0.7;
+      pointer-events: none;
+  }
+  .card-hidden {
+      opacity: 0;
+      transform: scale(0.5);
+      z-index: 5;
+      pointer-events: none;
+  }
+  .carousel-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 15px;
+  }
+  .nav-button {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: hsla(var(--card), 0.2);
+      border-color: hsl(var(--card));
+      color: hsl(var(--card));
+  }
+  .nav-button:hover {
+      background: hsla(var(--card), 0.3);
+      transform: scale(1.1);
+      color: hsl(var(--card));
+  }
+  .card-indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+  }
+  .indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: hsla(var(--card), 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+  }
+  .indicator.active {
+      background: hsl(var(--card));
+      transform: scale(1.2);
+  }
 }

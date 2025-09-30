@@ -188,7 +188,7 @@ export default function Home() {
 
   return (
     <>
-      <AnimatedBackground />
+      <div className="fixed inset-0 w-full h-full z-0 bg-gradient-to-br from-blue-900 via-purple-900 to-red-900 pointer-events-none" />
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
           <CampaignCarousel campaigns={processedCarouselCampaigns} />
@@ -312,7 +312,6 @@ export default function Home() {
         </section>
 
         <section>
-          <h2 className="font-headline text-3xl font-bold text-primary mb-6 text-center">Featured Expeditions</h2>
           <FifaCardCarousel />
         </section>
       </div>

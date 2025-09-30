@@ -2,57 +2,57 @@
 [
   {
     "id": "1",
-    "title": "Serengeti Safari",
-    "country": "Tanzania",
-    "rating": "94",
-    "speed": "90",
-    "skill": "92",
-    "imageUrl": "https://picsum.photos/seed/campaignWildebeest/1200/600",
-    "dataAiHint": "wildebeest migration",
-    "link": "/campaigns/1"
-  },
-  {
-    "id": "2",
     "title": "Gorilla Trek",
     "country": "Uganda",
     "rating": "92",
-    "speed": "85",
-    "skill": "95",
-    "imageUrl": "https://picsum.photos/seed/campaignGorilla/1200/600",
+    "speed": "8 Days",
+    "skill": "5 Activities",
+    "image": "https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     "dataAiHint": "mountain gorilla",
     "link": "/campaigns/2"
+  },
+  {
+    "id": "2",
+    "title": "Masai Mara Visit",
+    "country": "Kenya",
+    "rating": "93",
+    "speed": "9 Days",
+    "skill": "6 Activities",
+    "image": "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    "dataAiHint": "safari group sunset",
+    "link": "/campaigns/1"
   },
   {
     "id": "3",
     "title": "Okavango Delta",
     "country": "Botswana",
     "rating": "91",
-    "speed": "88",
-    "skill": "93",
-    "imageUrl": "https://picsum.photos/seed/campaignMokoro/1200/600",
+    "speed": "7 Days",
+    "skill": "4 Activities",
+    "image": "https://images.unsplash.com/photo-1598894595350-70d01b93b6c8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     "dataAiHint": "mokoro canoe delta",
     "link": "/campaigns/3"
   },
   {
     "id": "4",
-    "title": "Masai Mara Visit",
-    "country": "Kenya",
-    "rating": "93",
-    "speed": "91",
-    "skill": "90",
-    "imageUrl": "https://picsum.photos/seed/gallerySafariGroup/600/400",
-    "dataAiHint": "safari group sunset",
-    "link": "/campaigns/1"
-  },
-  {
-    "id": "5",
     "title": "Nile Cruise",
     "country": "Egypt",
     "rating": "89",
-    "speed": "82",
-    "skill": "88",
-    "imageUrl": "https://picsum.photos/seed/eventDetailDefault/800/400",
+    "speed": "10 Days",
+    "skill": "8 Activities",
+    "image": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     "dataAiHint": "nile river cruise",
     "link": "/campaigns/2"
+  },
+  {
+    "id": "5",
+    "title": "Kilimanjaro Hike",
+    "country": "Tanzania",
+    "rating": "94",
+    "speed": "12 Days",
+    "skill": "3 Activities",
+    "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+    "dataAiHint": "mount kilimanjaro",
+    "link": "/campaigns/1"
   }
 ]
