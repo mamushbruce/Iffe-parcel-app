@@ -128,6 +128,8 @@ const initialFeedItems: FeedItem[] = [
 export default function Home() {
     const [processedFeedItems, setProcessedFeedItems] = useState<FeedItem[]>(initialFeedItems);
     const [processedCarouselCampaigns, setProcessedCarouselCampaigns] = useState(mockCarouselCampaigns);
+    const [activeCarouselImage, setActiveCarouselImage] = useState<string | null>(null);
+
 
     useEffect(() => {
         const processItems = async () => {
@@ -309,8 +311,13 @@ export default function Home() {
           )}
         </section>
 
-        <section>
-          <FifaCardCarousel />
+        <section className="carousel-background-container">
+            <div 
+                className="carousel-background-image"
+                style={{ backgroundImage: activeCarouselImage ? `url(${activeCarouselImage})` : 'none' }}
+            />
+            <div className="carousel-background-overlay" />
+            <FifaCardCarousel onActiveCardChange={(card) => setActiveCarouselImage(card ? card.image : null)} />
         </section>
       </div>
     </>

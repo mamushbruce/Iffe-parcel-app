@@ -270,4 +270,37 @@ body {
       background: hsl(var(--card));
       transform: scale(1.2);
   }
+
+  .carousel-background-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.5rem; /* 24px */
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .carousel-background-image {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) brightness(0.7);
+    transition: background-image 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 1;
+  }
+
+  .carousel-background-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: hsl(var(--background) / 0.5);
+    z-index: 2;
+  }
+
+  .carousel-container {
+    position: relative;
+    z-index: 3;
+  }
 }

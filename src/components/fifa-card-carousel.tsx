@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -15,15 +14,22 @@ interface CardData {
   title: string;
   country: string;
   rating: string;
-  speed: string;
-  skill: string;
+  speed: string; // Changed to represent days
+  days: string;   // Explicitly adding for clarity
+  skill: string; // Changed to represent activities
+  activities: string; // Explicitly adding for clarity
   image: string;
   dataAiHint: string;
   link: string;
 }
 
-export default function FifaCardCarousel() {
-  const [cards] = useState<CardData[]>(cardData);
+interface FifaCardCarouselProps {
+    onActiveCardChange?: (card: CardData | null) => void;
+}
+
+
+export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouselProps) {
+  const [cards] = useState<CardData[]>(cardData.map(c => ({...c, days: c.speed, activities: c.skill})));
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = useCallback(() => {
@@ -39,21 +45,34 @@ export default function FifaCardCarousel() {
   };
 
   useEffect(() => {
+    if (onActiveCardChange) {
+        onActiveCardChange(cards[currentIndex]);
+    }
+
     const interval = setInterval(() => {
       handleNext();
     }, 4000);
     return () => clearInterval(interval);
-  }, [handleNext]);
+  }, [currentIndex, cards, handleNext, onActiveCardChange]);
   
   const getCardPositionClass = (cardIndex: number) => {
       const totalCards = cards.length;
-      const diff = cardIndex - currentIndex;
+      let diff = cardIndex - currentIndex;
+
+      // Handle wrapping around the array
+      if (diff > totalCards / 2) {
+          diff -= totalCards;
+      }
+      if (diff < -totalCards / 2) {
+          diff += totalCards;
+      }
+
 
       if (diff === 0) return 'card-center';
-      if (diff === 1 || diff === - (totalCards - 1)) return 'card-right';
-      if (diff === -1 || diff === (totalCards - 1)) return 'card-left';
-      if (diff === 2 || diff === - (totalCards - 2)) return 'card-far-right';
-      if (diff === -2 || diff === (totalCards - 2)) return 'card-far-left';
+      if (diff === 1) return 'card-right';
+      if (diff === -1) return 'card-left';
+      if (diff === 2) return 'card-far-right';
+      if (diff === -2) return 'card-far-left';
 
       return 'card-hidden';
   };
@@ -74,11 +93,11 @@ export default function FifaCardCarousel() {
                             }
                         }}
                     >
-                         <div className="relative h-[200px]">
+                         <div className="h-[200px] relative">
                             <Image src={card.image} alt={card.title} layout="fill" objectFit="cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent flex justify-between items-end p-4 text-white">
-                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.speed}</div>
-                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.skill}</div>
+                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.days}</div>
+                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.activities}</div>
                             </div>
                         </div>
                         <div className="card-content">
