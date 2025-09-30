@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -9,6 +8,8 @@ import Link from 'next/link';
 import cardData from '@/app/lib/fifa-card-data.json';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/app/lib/placeholder-images.json';
+import { useIsMobile } from '@/hooks/use-mobile';
+
 
 interface CardData {
   id: string;
@@ -42,6 +43,7 @@ const CardImage = ({ card }: { card: CardData }) => {
 export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouselProps) {
   const [cards] = useState<CardData[]>(cardData);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const isMobile = useIsMobile();
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
@@ -60,11 +62,15 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
         onActiveCardChange(cards[currentIndex]);
     }
 
+    if (isMobile) return; // Disable auto-scroll on mobile
+
     const interval = setInterval(handleNext, 4000);
     return () => clearInterval(interval);
-  }, [currentIndex, cards, handleNext, onActiveCardChange]);
+  }, [currentIndex, cards, handleNext, onActiveCardChange, isMobile]);
   
   const getCardPositionClass = (index: number): string => {
+    if (isMobile) return ''; // No special classes needed for mobile scroll
+
     const offset = index - currentIndex;
     const totalCards = cards.length;
     let diff = (offset + totalCards) % totalCards;
@@ -101,7 +107,7 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
                         key={card.id} 
                         className={cn("card", getCardPositionClass(index))}
                         onClick={() => {
-                            if (index !== currentIndex) {
+                            if (!isMobile && index !== currentIndex) {
                                 setCurrentIndex(index);
                             }
                         }}
