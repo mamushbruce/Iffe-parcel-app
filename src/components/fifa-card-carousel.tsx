@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -44,6 +45,10 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
   const [cards] = useState<CardData[]>(cardData);
   const [currentIndex, setCurrentIndex] = useState(0);
   const isMobile = useIsMobile();
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
 
   const handleNext = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
@@ -55,6 +60,27 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
   
   const handleIndicatorClick = (index: number) => {
     setCurrentIndex(index);
+  };
+  
+  const onTouchStart = (e: React.TouchEvent) => {
+      setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+      setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+      if (!touchStart || !touchEnd) return;
+      const distance = touchStart - touchEnd;
+      const isLeftSwipe = distance > minSwipeDistance;
+      const isRightSwipe = distance < -minSwipeDistance;
+      if (isLeftSwipe) {
+          handleNext();
+      } else if (isRightSwipe) {
+          handlePrev();
+      }
+      setTouchStart(null);
+      setTouchEnd(null);
   };
 
   useEffect(() => {
@@ -93,7 +119,7 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
 
 
   return (
-     <div className="carousel-container">
+     <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
         <h1 className="font-headline text-4xl font-bold text-white mb-6 text-center">Featured Expeditions</h1>
         
         <div className="carousel">
