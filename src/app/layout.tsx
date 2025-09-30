@@ -4,7 +4,6 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import AppHeader from '@/components/layout/app-header';
 import AppFooter from '@/components/layout/app-footer'; // Import the new footer
-import BottomNav from '@/components/layout/bottom-nav';
 import { ThemeProviderClient } from '@/components/theme-provider-client';
 import AuthProvider from '@/components/auth-provider';
 import WhatsAppCTA from '@/components/layout/whatsapp-cta';
@@ -41,7 +40,6 @@ export default function RootLayout({
                 {children}
               </main>
               <AppFooter />
-              <BottomNav />
               <WhatsAppCTA />
             </div>
             <Toaster />
