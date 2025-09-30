@@ -5,7 +5,6 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import cardData from '@/app/lib/fifa-card-data.json';
 
@@ -22,26 +21,35 @@ interface CardData {
 }
 
 export default function FifaCardCarousel() {
-  const [cards] = useState<CardData[]>(cardData);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cards, setCards] = useState<CardData[]>(cardData);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleNext = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
-  }, [isAnimating, cards.length]);
+    setCards((prevCards) => {
+      const newCards = [...prevCards];
+      const first = newCards.shift();
+      if (first) newCards.push(first);
+      return newCards;
+    });
+  }, [isAnimating]);
 
   const handlePrev = () => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
+    setCards((prevCards) => {
+      const newCards = [...prevCards];
+      const last = newCards.pop();
+      if (last) newCards.unshift(last);
+      return newCards;
+    });
   };
-
+  
   useEffect(() => {
-    const timer = setTimeout(() => setIsAnimating(false), 500); // Duration of the transition
+    const timer = setTimeout(() => setIsAnimating(false), 500); // Animation duration
     return () => clearTimeout(timer);
-  }, [currentIndex]);
+  }, [cards]);
 
 
   useEffect(() => {
@@ -52,47 +60,42 @@ export default function FifaCardCarousel() {
   }, [handleNext]);
 
   const getCardStyle = (index: number) => {
-    const totalCards = cards.length;
-    let offset = index - currentIndex;
-
-    if (offset > Math.floor(totalCards / 2)) {
-      offset -= totalCards;
-    } else if (offset < -Math.floor(totalCards / 2)) {
-      offset += totalCards;
-    }
-
-    let transform = 'scale(0)';
+    let transform = '';
     let zIndex = 0;
-    let opacity = 1;
+    let opacity = 0;
     let pointerEvents: 'auto' | 'none' = 'none';
 
-    switch (offset) {
-      case 0: // Foreground card
+    switch (index) {
+      case 0: // Foreground
         transform = 'translateX(0) scale(1)';
-        zIndex = 30;
+        zIndex = 5;
         opacity = 1;
         pointerEvents = 'auto';
         break;
-      case 1: // Right middle card
-        transform = 'translateX(30%) scale(0.7)';
-        zIndex = 2;
-        break;
-      case -1: // Left middle card
-        transform = 'translateX(-30%) scale(0.7)';
-        zIndex = 2;
-        break;
-      case 2: // Right background card
+      case 1: // Middle-right
         transform = 'translateX(50%) scale(0.5)';
-        zIndex = 1;
+        zIndex = 4;
+        opacity = 0.6;
         break;
-      case -2: // Left background card
+      case 2: // Background-right
+        transform = 'translateX(75%) scale(0.25)';
+        zIndex = 3;
+        opacity = 0.3;
+        break;
+      case (cards.length - 1): // Middle-left
         transform = 'translateX(-50%) scale(0.5)';
-        zIndex = 1;
+        zIndex = 4;
+        opacity = 0.6;
         break;
-      default:
-        transform = `translateX(${offset > 0 ? 100 : -100}%) scale(0)`;
+      case (cards.length - 2): // Background-left
+        transform = 'translateX(-75%) scale(0.25)';
+        zIndex = 2;
+        opacity = 0.3;
+        break;
+      default: // Hidden cards
+        transform = `translateX(${index > cards.length / 2 ? '-100%' : '100%'}) scale(0)`;
         opacity = 0;
-        zIndex = 0;
+        zIndex = 1;
         break;
     }
     
@@ -105,26 +108,29 @@ export default function FifaCardCarousel() {
     };
   };
 
+  const currentForegroundCard = cards[0];
+
   return (
     <div className="relative w-full h-[550px] flex flex-col items-center justify-center overflow-hidden">
         <div className="absolute inset-0 w-full h-full">
-            {cards.map((card, index) => (
+            {currentForegroundCard && (
                 <div
-                    key={`bg-${card.id}`}
+                    key={`bg-${currentForegroundCard.id}`}
                     className="absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out"
-                    style={{ opacity: index === currentIndex ? 1 : 0 }}
+                    style={{ opacity: 1 }}
                 >
                     <Image
-                        src={card.imageUrl}
-                        alt={`${card.title} background`}
+                        src={currentForegroundCard.imageUrl}
+                        alt={`${currentForegroundCard.title} background`}
                         layout="fill"
                         objectFit="cover"
                         className="transform scale-125 blur-lg"
-                        data-ai-hint={card.dataAiHint}
+                        data-ai-hint={currentForegroundCard.dataAiHint}
+                        priority
                     />
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
-            ))}
+            )}
         </div>
       <div className="relative w-full h-[450px]" style={{ perspective: '1000px' }}>
         {cards.map((card, index) => {
