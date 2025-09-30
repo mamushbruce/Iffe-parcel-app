@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -9,7 +10,6 @@ import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck 
 import BlogCard, { type BlogCardProps } from '@/components/blog-card';
 import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { generateImage } from '@/ai/flows/generate-image-flow';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import SignupModal from '@/components/auth/signup-modal';
 import AnimatedBackground from '@/components/layout/animated-background';
@@ -126,56 +126,9 @@ const initialFeedItems: FeedItem[] = [
 
 
 export default function Home() {
-    const [processedFeedItems, setProcessedFeedItems] = useState<FeedItem[]>(initialFeedItems);
-    const [processedCarouselCampaigns, setProcessedCarouselCampaigns] = useState(mockCarouselCampaigns);
+    const [feedItems] = useState<FeedItem[]>(initialFeedItems);
+    const [carouselCampaigns] = useState(mockCarouselCampaigns);
     const [activeCarouselImage, setActiveCarouselImage] = useState<string | null>(null);
-
-
-    useEffect(() => {
-        const processItems = async () => {
-            const feed = await Promise.all(
-                initialFeedItems.map(async (item) => {
-                    if (item.type === 'creator' && item.dataAiHint) {
-                        try {
-                            const { imageDataUri } = await generateImage({ prompt: item.dataAiHint });
-                            return { ...item, avatarUrl: imageDataUri };
-                        } catch (error) { console.error('Error generating image for creator:', error); }
-                    }
-                    if (item.type === 'blog' && item.post.dataAiHint) {
-                        try {
-                            const { imageDataUri } = await generateImage({ prompt: item.post.dataAiHint });
-                            return { ...item, post: { ...item.post, imageUrl: imageDataUri } };
-                        } catch (error) { console.error('Error generating image for blog:', error); }
-                    }
-                    if (item.type === 'event' && item.event.dataAiHint) {
-                        try {
-                            const { imageDataUri } = await generateImage({ prompt: item.event.dataAiHint });
-                            return { ...item, event: { ...item.event, imageUrl: imageDataUri } };
-                        } catch (error) { console.error('Error generating image for event:', error); }
-                    }
-                    return item;
-                })
-            );
-            setProcessedFeedItems(feed);
-
-            const carousel = await Promise.all(
-                mockCarouselCampaigns.map(async (campaign) => {
-                    if (campaign.dataAiHint) {
-                        try {
-                            const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
-                            return { ...campaign, imageUrl: imageDataUri };
-                        } catch (error) {
-                            console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
-                        }
-                    }
-                    return campaign;
-                })
-            );
-            setProcessedCarouselCampaigns(carousel);
-        };
-
-        processItems();
-    }, []);
 
     const AnimatedCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
         const [ref, isVisible] = useScrollAnimation();
@@ -191,7 +144,7 @@ export default function Home() {
       <AnimatedBackground />
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
-          <CampaignCarousel campaigns={processedCarouselCampaigns} />
+          <CampaignCarousel campaigns={carouselCampaigns} />
         </section>
 
         <section>
@@ -230,7 +183,7 @@ export default function Home() {
         <section>
           <h2 className="font-headline text-3xl font-bold text-primary mb-6">From the Wild</h2>
           <div className="space-y-8">
-            {processedFeedItems.map((item) => {
+            {feedItems.map((item) => {
               if (item.type === 'creator') {
                 return (
                   <AnimatedCard key={item.id}>
@@ -304,7 +257,7 @@ export default function Home() {
               return null;
             })}
           </div>
-          {processedFeedItems.length === 0 && (
+          {feedItems.length === 0 && (
               <div className="text-center py-12">
                   <p className="text-xl text-muted-foreground">The feed is quiet right now... Why not start something?</p>
               </div>

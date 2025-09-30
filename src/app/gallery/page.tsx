@@ -1,5 +1,4 @@
 
-import { generateImage } from '@/ai/flows/generate-image-flow';
 import GalleryClientContent from '@/components/gallery/gallery-client-content';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 
@@ -23,25 +22,9 @@ const initialMockGalleryImages: GalleryImage[] = [
   { id: 'g6', ...placeholderImages.galleryGorilla, alt: 'Gorilla in the mist', caption: 'Encounter in Bwindi', date: 'Oct 28, 2023', tags: ['#Gorillas', '#Uganda'] },
 ];
 
-async function processInitialImages(images: GalleryImage[]): Promise<GalleryImage[]> {
-    const processedImages = await Promise.all(
-      images.map(async (image) => {
-        try {
-          if (image.dataAiHint) {
-            const { imageDataUri } = await generateImage({ prompt: image.dataAiHint });
-            return { ...image, src: imageDataUri };
-          }
-        } catch (error) {
-          console.error(`Failed to generate image for hint: "${image.dataAiHint}". Falling back to placeholder.`, error);
-        }
-        return image; // Return original image on error or if no hint
-      })
-    );
-    return processedImages;
-}
-
 export default async function GalleryPage() {
-  const processedGalleryImages = await processInitialImages(initialMockGalleryImages);
+  // Directly use initial images without server-side processing
+  const processedGalleryImages = initialMockGalleryImages;
 
   return (
     <div className="animate-fade-in">

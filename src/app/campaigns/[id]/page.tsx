@@ -9,7 +9,6 @@ import Summarizer from '@/components/summarizer';
 import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import CampaignActionsCard from '@/components/campaign/campaign-actions-card';
-import { generateImage } from '@/ai/flows/generate-image-flow';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
@@ -98,18 +97,7 @@ const mockCampaignsData: Campaign[] = [
 
 async function getCampaign(id: string): Promise<Campaign | undefined> {
   // Simulate API call
-  const campaign = mockCampaignsData.find(campaign => campaign.id === id);
-  if (!campaign) return undefined;
-
-  try {
-    if (campaign.dataAiHint) {
-      const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
-      campaign.imageUrl = imageDataUri;
-    }
-  } catch (error) {
-    console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
-  }
-  return campaign;
+  return mockCampaignsData.find(campaign => campaign.id === id);
 }
 
 export default function CampaignDetailPage({ params }: { params: { id: string } }) {

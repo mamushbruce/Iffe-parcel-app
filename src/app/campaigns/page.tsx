@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Tag, ArrowRight, PlusCircle, MountainSnow } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { generateImage } from '@/ai/flows/generate-image-flow';
 import { useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
@@ -33,27 +32,7 @@ const mockCampaignsData: CampaignTeaser[] = [
 
 
 export default function CampaignsPage() {
-  const [campaigns, setCampaigns] = useState<CampaignTeaser[]>(mockCampaignsData);
-
-  useEffect(() => {
-    const processCampaigns = async () => {
-      const processed = await Promise.all(
-        mockCampaignsData.map(async (campaign) => {
-          if (campaign.dataAiHint) {
-            try {
-              const { imageDataUri } = await generateImage({ prompt: campaign.dataAiHint });
-              return { ...campaign, imageUrl: imageDataUri };
-            } catch (error) {
-              console.error(`Failed to generate image for campaign ${campaign.id}:`, error);
-            }
-          }
-          return campaign;
-        })
-      );
-      setCampaigns(processed);
-    };
-    processCampaigns();
-  }, []);
+  const campaigns: CampaignTeaser[] = mockCampaignsData;
 
   const AnimatedCard = ({ campaign }: { campaign: CampaignTeaser }) => {
     const [ref, isVisible] = useScrollAnimation();
