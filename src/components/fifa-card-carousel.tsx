@@ -55,7 +55,6 @@ export default function FifaCardCarousel() {
     const totalCards = cards.length;
     let offset = index - currentIndex;
 
-    // Handle wrapping around for a circular effect
     if (offset > Math.floor(totalCards / 2)) {
       offset -= totalCards;
     } else if (offset < -Math.floor(totalCards / 2)) {
@@ -70,7 +69,7 @@ export default function FifaCardCarousel() {
     switch (offset) {
       case 0: // Foreground card
         transform = 'translateX(0) scale(1)';
-        zIndex = 20; // Highest z-index
+        zIndex = 20;
         opacity = 1;
         filter = 'grayscale(0%)';
         break;
@@ -95,7 +94,6 @@ export default function FifaCardCarousel() {
         opacity = 0.3;
         break;
       default:
-        // Hide other cards that are further away
         transform = `translateX(${offset > 0 ? 100 : -100}%) scale(0)`;
         opacity = 0;
         zIndex = 0;
