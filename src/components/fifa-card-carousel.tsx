@@ -31,7 +31,7 @@ const initialCards: CardData[] = [
 
 export default function FifaCardCarousel() {
   const [cards] = useState(initialCards);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(cards.findIndex(c => c.rating === '89') || 0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -63,7 +63,7 @@ export default function FifaCardCarousel() {
     const totalCards = cards.length;
     let offset = index - currentIndex;
 
-    // Handle wrapping around
+    // Handle wrapping around for a circular effect
     if (offset > Math.floor(totalCards / 2)) {
       offset -= totalCards;
     } else if (offset < -Math.floor(totalCards / 2)) {
@@ -76,29 +76,29 @@ export default function FifaCardCarousel() {
     let filter = 'grayscale(50%)';
 
     switch (offset) {
-      case 0: // Foreground
+      case 0: // Foreground card
         transform = 'translateX(0) scale(1)';
-        zIndex = 5;
+        zIndex = 10; // Highest z-index
         opacity = 1;
         filter = 'grayscale(0%)';
         break;
-      case 1: // Right Middle
-        transform = 'translateX(30%) scale(0.7)';
+      case 1: // Right middle card
+        transform = 'translateX(50%) scale(0.7)';
         zIndex = 2;
         opacity = 0.6;
         break;
-      case -1: // Left Middle
-        transform = 'translateX(-30%) scale(0.7)';
+      case -1: // Left middle card
+        transform = 'translateX(-50%) scale(0.7)';
         zIndex = 2;
         opacity = 0.6;
         break;
-      case 2: // Right Background
-        transform = 'translateX(50%) scale(0.5)';
+      case 2: // Right background card
+        transform = 'translateX(80%) scale(0.5)';
         zIndex = 1;
         opacity = 0.3;
         break;
-      case -2: // Left Background
-        transform = 'translateX(-50%) scale(0.5)';
+      case -2: // Left background card
+        transform = 'translateX(-80%) scale(0.5)';
         zIndex = 1;
         opacity = 0.3;
         break;
@@ -110,18 +110,6 @@ export default function FifaCardCarousel() {
         break;
     }
     
-    // Ensure that for setups with less than 5 cards, we don't have empty spots.
-    // This logic can be simplified if we always assume 5+ cards.
-    if (totalCards < 5) {
-      if (Math.abs(offset) > 1) { // For 3 cards, only show foreground and middle
-          if (totalCards === 3) {
-             transform = 'scale(0)';
-             opacity = 0;
-          }
-      }
-    }
-
-
     return {
       transform,
       zIndex,
@@ -130,9 +118,6 @@ export default function FifaCardCarousel() {
       transition: 'transform 0.5s ease-in-out, opacity 0.5s ease-in-out, filter 0.5s ease-in-out',
     };
   };
-  
-  const currentCard = cards[currentIndex];
-
 
   return (
     <div className="relative w-full h-[550px] flex flex-col items-center justify-center overflow-hidden">
@@ -214,10 +199,10 @@ export default function FifaCardCarousel() {
         ))}
       </div>
 
-        <Button variant="outline" size="icon" onClick={handlePrev} className="absolute left-4 md:left-16 top-1/2 -translate-y-1/2 rounded-full h-12 w-12 bg-card/80 z-10">
+        <Button variant="outline" size="icon" onClick={handlePrev} className="absolute left-4 md:left-16 top-1/2 -translate-y-1/2 rounded-full h-12 w-12 bg-card/80 z-20">
           <ChevronLeft />
         </Button>
-        <Button variant="outline" size="icon" onClick={handleNext} className="absolute right-4 md:right-16 top-1/2 -translate-y-1/2 rounded-full h-12 w-12 bg-card/80 z-10">
+        <Button variant="outline" size="icon" onClick={handleNext} className="absolute right-4 md:right-16 top-1/2 -translate-y-1/2 rounded-full h-12 w-12 bg-card/80 z-20">
           <ChevronRight />
         </Button>
     </div>
