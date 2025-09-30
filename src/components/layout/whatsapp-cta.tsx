@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -18,7 +17,7 @@ export default function WhatsAppCTA() {
             asChild
             variant="default"
             size="icon"
-            className="fixed bottom-20 md:bottom-6 right-6 h-14 w-14 rounded-full bg-background hover:bg-background/90 text-white shadow-lg z-50 animate-slow-bounce flex items-center justify-center"
+            className="fixed bottom-20 md:bottom-6 right-6 h-14 w-14 rounded-full bg-background hover:bg-background/90 text-white shadow-lg z-50 flex items-center justify-center"
           >
             <Link href={whatsappLink} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
                 <i className="fa-brands fa-whatsapp" style={{ fontSize: '36px', color: '#25D366' }}></i>
