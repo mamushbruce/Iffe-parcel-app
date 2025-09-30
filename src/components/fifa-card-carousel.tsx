@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -25,7 +26,7 @@ interface FifaCardCarouselProps {
 }
 
 export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouselProps) {
-  const [cards] = useState<CardData[]>(() => cardData.map(c => ({ ...c, days: c.speed, activities: c.skill })));
+  const [cards] = useState<CardData[]>(cardData);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = useCallback(() => {
@@ -49,58 +50,31 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
     return () => clearInterval(interval);
   }, [currentIndex, cards, handleNext, onActiveCardChange]);
   
-  const getCardStyle = (cardIndex: number): React.CSSProperties => {
-      const totalCards = cards.length;
-      let diff = cardIndex - currentIndex;
-
-      if (diff > totalCards / 2) diff -= totalCards;
-      if (diff < -totalCards / 2) diff += totalCards;
-
-      let transform = 'scale(0.5)';
-      let zIndex = 5;
-      let filter = 'brightness(0.5)';
-      let pointerEvents: 'auto' | 'none' = 'none';
-
-      switch (diff) {
-          case 0: // Center
-              transform = 'translateX(0) scale(1)';
-              zIndex = 30;
-              filter = 'brightness(1)';
-              pointerEvents = 'auto';
-              break;
-          case 1: // Right
-              transform = 'translateX(80%) scale(0.85)';
-              zIndex = 20;
-              filter = 'brightness(0.75)';
-              break;
-          case -1: // Left
-              transform = 'translateX(-80%) scale(0.85)';
-              zIndex = 20;
-              filter = 'brightness(0.75)';
-              break;
-          case 2: // Far Right
-              transform = 'translateX(160%) scale(0.7)';
-              zIndex = 10;
-              filter = 'brightness(0.5)';
-              break;
-          case -2: // Far Left
-              transform = 'translateX(-160%) scale(0.7)';
-              zIndex = 10;
-              filter = 'brightness(0.5)';
-              break;
-          default: // Hidden
-              transform = 'scale(0.5)';
-              zIndex = 5;
-              filter = 'brightness(0.5)';
-              break;
-      }
-      
-       if (Math.abs(diff) > 2) {
-            return { display: 'none' };
-       }
-
-      return { transform, zIndex, filter, pointerEvents, transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)' };
+  const getCardPositionClass = (index: number): string => {
+    const offset = index - currentIndex;
+    const totalCards = cards.length;
+    let diff = (offset + totalCards) % totalCards;
+  
+    if (diff > Math.floor(totalCards / 2)) {
+      diff -= totalCards;
+    }
+  
+    switch (diff) {
+      case 0:
+        return 'card-center';
+      case 1:
+        return 'card-right';
+      case -1:
+        return 'card-left';
+      case 2:
+        return 'card-far-right';
+      case -2:
+        return 'card-far-left';
+      default:
+        return 'card-hidden';
+    }
   };
+
 
   return (
      <div className="carousel-container">
@@ -111,8 +85,7 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
                 {cards.map((card, index) => (
                     <div 
                         key={card.id} 
-                        className="card"
-                        style={getCardStyle(index)}
+                        className={cn("card", getCardPositionClass(index))}
                         onClick={() => {
                             if (index !== currentIndex) {
                                 setCurrentIndex(index);
@@ -122,8 +95,8 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
                          <div className="h-[200px] relative">
                             <Image src={card.image} alt={card.title} layout="fill" objectFit="cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent flex justify-between items-end p-4 text-white">
-                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.days}</div>
-                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.activities}</div>
+                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.speed}</div>
+                                <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.skill}</div>
                             </div>
                         </div>
                         <div className="card-content">
