@@ -1,10 +1,13 @@
 
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, MapPin, Users, Tv, CalendarPlus } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 export interface EventCardProps {
   id: string;
@@ -21,6 +24,8 @@ export interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ id, title, date, time, location, type, excerpt, imageUrl, dataAiHint, rsvpLink, calendarLink }) => {
+  const [imgSrc, setImgSrc] = useState(imageUrl || placeholderImages.eventDetailDefault.src);
+  
   return (
     <Card className={cn(
         "overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full",
@@ -28,7 +33,14 @@ const EventCard: React.FC<EventCardProps> = ({ id, title, date, time, location, 
         )}>
       {imageUrl && (
         <div className="relative w-full h-48">
-          <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" data-ai-hint={dataAiHint} />
+          <Image 
+            src={imgSrc} 
+            alt={title} 
+            layout="fill" 
+            objectFit="cover" 
+            data-ai-hint={dataAiHint}
+            onError={() => setImgSrc(placeholderImages.eventDetailDefault.src)}
+          />
         </div>
       )}
       <CardHeader>

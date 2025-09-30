@@ -7,6 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import placeholderImages from "@/app/lib/placeholder-images.json";
 
 interface PackageTier {
     id: string;
@@ -61,12 +63,22 @@ const mockPackages: PackageTier[] = [
 export default function PackagesPage() {
     const AnimatedPackageCard = ({ pkg }: { pkg: PackageTier }) => {
         const [ref, isVisible] = useScrollAnimation();
+        const [imgSrc, setImgSrc] = useState(pkg.imageUrl || placeholderImages.eventDetailDefault.src);
+
         return (
             <div ref={ref} className={cn('scroll-animate h-full', isVisible && 'scroll-animate-in')}>
                 <Card key={pkg.id} className={`shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col h-full ${pkg.isFeatured ? 'border-accent border-2 -translate-y-2' : ''}`}>
                     {pkg.imageUrl && (
                         <div className="relative w-full h-56">
-                            <Image src={pkg.imageUrl} alt={pkg.title} layout="fill" objectFit="cover" className="rounded-t-lg" data-ai-hint={pkg.dataAiHint} />
+                            <Image 
+                                src={imgSrc} 
+                                alt={pkg.title} 
+                                layout="fill" 
+                                objectFit="cover" 
+                                className="rounded-t-lg" 
+                                data-ai-hint={pkg.dataAiHint}
+                                onError={() => setImgSrc(placeholderImages.eventDetailDefault.src)}
+                             />
                             {pkg.isFeatured && <div className="absolute top-0 right-0 bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-md">Most Popular</div>}
                         </div>
                     )}

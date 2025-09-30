@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ThumbsUp, MessageSquare, UserCircle, CalendarDays, ChevronDown, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 export interface IdeaCardProps {
   id: string;
@@ -38,6 +39,7 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
   dataAiHint
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [imgSrc, setImgSrc] = useState(imageUrl || placeholderImages.ideaWalkingSafari.src);
 
   const toggleExpanded = () => setIsExpanded(!isExpanded);
 
@@ -59,12 +61,13 @@ const IdeaCard: React.FC<IdeaCardProps> = ({
       {imageUrl && (
         <div className="relative w-full h-48">
           <Image
-            src={imageUrl}
+            src={imgSrc}
             alt={title || 'Idea background image'}
             layout="fill"
             objectFit="cover"
             className="z-0"
             data-ai-hint={dataAiHint || 'idea image'}
+            onError={() => setImgSrc(placeholderImages.ideaWalkingSafari.src)}
           />
           <div className="absolute inset-0 w-full h-full z-[1] bg-black/10 dark:bg-black/30"></div> 
         </div>

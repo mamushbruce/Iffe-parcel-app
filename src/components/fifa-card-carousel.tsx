@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 import cardData from '@/app/lib/fifa-card-data.json';
 import { cn } from '@/lib/utils';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 interface CardData {
   id: string;
@@ -24,6 +25,19 @@ interface CardData {
 interface FifaCardCarouselProps {
     onActiveCardChange?: (card: CardData | null) => void;
 }
+
+const CardImage = ({ card }: { card: CardData }) => {
+    const [imgSrc, setImgSrc] = useState(card.image);
+    return (
+        <Image 
+            src={imgSrc} 
+            alt={card.title} 
+            layout="fill" 
+            objectFit="cover" 
+            onError={() => setImgSrc(placeholderImages.campaignDetailWildebeest.src)}
+        />
+    );
+};
 
 export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouselProps) {
   const [cards] = useState<CardData[]>(cardData);
@@ -93,7 +107,7 @@ export default function FifaCardCarousel({ onActiveCardChange }: FifaCardCarouse
                         }}
                     >
                          <div className="h-[200px] relative">
-                            <Image src={card.image} alt={card.title} layout="fill" objectFit="cover" />
+                            <CardImage card={card} />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent flex justify-between items-end p-4 text-white">
                                 <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.speed}</div>
                                 <div className="bg-black/70 px-3 py-1 rounded-full text-sm font-semibold">{card.skill}</div>

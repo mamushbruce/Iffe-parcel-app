@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 // This type must match the one in `gallery/page.tsx`
 interface GalleryImage {
@@ -41,6 +42,43 @@ type MediaFormValues = z.infer<typeof mediaSchema>;
 interface GalleryClientContentProps {
   initialImages: GalleryImage[];
 }
+
+const GalleryImageCard = ({ image }: { image: GalleryImage }) => {
+    const [imgSrc, setImgSrc] = useState(image.src);
+    const [ref, isVisible] = useScrollAnimation();
+
+    return (
+      <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
+        <Card key={image.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
+          <div className="relative w-full aspect-[3/2] group-hover:opacity-90 transition-opacity">
+            <Image 
+                src={imgSrc} 
+                alt={image.alt} 
+                layout="fill" 
+                objectFit="cover" 
+                data-ai-hint={image.dataAiHint} 
+                onError={() => setImgSrc(placeholderImages.gallerySafariGroup.src)}
+            />
+          </div>
+          <CardHeader className="p-4">
+            {image.caption && <CardTitle className="text-base font-semibold line-clamp-1">{image.caption}</CardTitle>}
+            {image.date && <CardDescription className="text-xs">{image.date}</CardDescription>}
+          </CardHeader>
+          {image.tags.length > 0 && (
+            <CardFooter className="p-4 pt-0">
+              <div className="flex flex-wrap gap-1.5">
+                {image.tags.map(tag => (
+                  <Badge key={tag} variant="secondary" className="text-xs">
+                     {tag}
+                  </Badge>
+                ))}
+              </div>
+            </CardFooter>
+          )}
+        </Card>
+      </div>
+    );
+  };
 
 export default function GalleryClientContent({ initialImages }: GalleryClientContentProps) {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>(initialImages);
@@ -116,34 +154,6 @@ export default function GalleryClientContent({ initialImages }: GalleryClientCon
   const filteredImages = activeTag
     ? galleryImages.filter(image => image.tags.includes(activeTag))
     : galleryImages;
-
-  const AnimatedImageCard = ({ image }: { image: GalleryImage }) => {
-    const [ref, isVisible] = useScrollAnimation();
-    return (
-      <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
-        <Card key={image.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
-          <div className="relative w-full aspect-[3/2] group-hover:opacity-90 transition-opacity">
-            <Image src={image.src} alt={image.alt} layout="fill" objectFit="cover" data-ai-hint={image.dataAiHint} />
-          </div>
-          <CardHeader className="p-4">
-            {image.caption && <CardTitle className="text-base font-semibold line-clamp-1">{image.caption}</CardTitle>}
-            {image.date && <CardDescription className="text-xs">{image.date}</CardDescription>}
-          </CardHeader>
-          {image.tags.length > 0 && (
-            <CardFooter className="p-4 pt-0">
-              <div className="flex flex-wrap gap-1.5">
-                {image.tags.map(tag => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
-                     {tag}
-                  </Badge>
-                ))}
-              </div>
-            </CardFooter>
-          )}
-        </Card>
-      </div>
-    );
-  };
 
   return (
     <div className="space-y-8">
@@ -253,7 +263,7 @@ export default function GalleryClientContent({ initialImages }: GalleryClientCon
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredImages.map(image => (
-          <AnimatedImageCard key={image.id} image={image} />
+          <GalleryImageCard key={image.id} image={image} />
         ))}
       </section>
 

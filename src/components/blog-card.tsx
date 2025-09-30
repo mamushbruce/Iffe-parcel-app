@@ -1,3 +1,5 @@
+
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -5,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Tag, Share2, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 export interface BlogCardProps {
   id: string;
@@ -19,6 +23,8 @@ export interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ id, title, author, date, excerpt, tags, imageUrl, dataAiHint, commentCount }) => {
+  const [imgSrc, setImgSrc] = useState(imageUrl || placeholderImages.blogPostDefault.src);
+
   return (
     <Card className={cn(
         "overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full",
@@ -26,7 +32,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ id, title, author, date, excerpt, t
         )}>
       {imageUrl && (
         <div className="relative w-full h-48">
-          <Image src={imageUrl} alt={title} layout="fill" objectFit="cover" data-ai-hint={dataAiHint} />
+          <Image 
+            src={imgSrc} 
+            alt={title} 
+            layout="fill" 
+            objectFit="cover" 
+            data-ai-hint={dataAiHint} 
+            onError={() => setImgSrc(placeholderImages.blogPostDefault.src)}
+          />
         </div>
       )}
       <CardHeader>

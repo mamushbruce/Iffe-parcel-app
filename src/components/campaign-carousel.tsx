@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 interface Campaign {
   id: string;
@@ -48,18 +49,25 @@ const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
   }
   
   const currentCampaign = campaigns[currentIndex];
+  const [imgSrc, setImgSrc] = useState(currentCampaign.imageUrl);
+
+  useEffect(() => {
+      setImgSrc(campaigns[currentIndex].imageUrl);
+  }, [currentIndex, campaigns]);
 
   return (
     <Card className="relative w-full overflow-hidden shadow-lg group">
       <CardContent className="p-0">
         <div className="aspect-[16/7] relative">
           <Image
-            src={currentCampaign.imageUrl}
+            src={imgSrc}
             alt={currentCampaign.title}
             layout="fill"
             objectFit="cover"
             className="transition-transform duration-500 ease-in-out group-hover:scale-105"
             data-ai-hint={currentCampaign.dataAiHint}
+            onError={() => setImgSrc(placeholderImages.campaignDetailWildebeest.src)}
+            key={currentIndex} // Add key to force re-render on slide change
           />
           <div className="absolute inset-0 bg-primary/70 flex flex-col justify-end p-6 md:p-10">
             <h3 className="font-headline text-2xl md:text-4xl font-bold text-primary-foreground mb-2">
