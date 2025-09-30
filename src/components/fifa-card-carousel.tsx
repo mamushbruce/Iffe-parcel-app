@@ -23,7 +23,7 @@ interface CardData {
 
 export default function FifaCardCarousel() {
   const [cards] = useState<CardData[]>(cardData);
-  const [currentIndex, setCurrentIndex] = useState(cards.findIndex(c => c.rating === '89') || 0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleNext = useCallback(() => {
@@ -69,7 +69,7 @@ export default function FifaCardCarousel() {
     switch (offset) {
       case 0: // Foreground card
         transform = 'translateX(0) scale(1)';
-        zIndex = 30; // Increased zIndex
+        zIndex = 30;
         opacity = 1;
         pointerEvents = 'auto';
         break;
