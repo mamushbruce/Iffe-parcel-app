@@ -123,7 +123,7 @@ body {
       width: 100%;
       max-width: 1200px;
       position: relative;
-      padding: 40px 20px;
+      padding: 2rem 1.25rem;
       margin: auto;
   }
   .carousel {
@@ -285,7 +285,7 @@ body {
   .carousel-nav {
       display: flex;
       justify-content: center;
-      margin-top: 30px;
+      margin-top: 1.25rem;
       gap: 15px;
   }
   .nav-button {
