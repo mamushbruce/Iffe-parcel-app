@@ -1,5 +1,3 @@
-
-
 'use client';
 
 import Link from 'next/link';
@@ -188,7 +186,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed inset-0 w-full h-full z-0 bg-gradient-to-br from-blue-900 via-purple-900 to-red-900 pointer-events-none" />
+      <AnimatedBackground />
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
           <CampaignCarousel campaigns={processedCarouselCampaigns} />
