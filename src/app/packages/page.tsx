@@ -188,16 +188,18 @@ export default function PackagesPage() {
   return (
     <div className="space-y-8 animate-fade-in">
        <section ref={headerRef} className={cn('relative w-full min-h-[400px] overflow-hidden rounded-lg shadow-lg scroll-animate', isHeaderVisible && 'scroll-animate-in')}>
-        <Image
-          src={heroImage}
-          alt="Safari Packages"
-          layout="fill"
-          objectFit="cover"
-          className="z-0"
-          data-ai-hint={heroDataAiHint}
-          priority
-        />
-        <div className="absolute inset-0 bg-black/30 z-0"></div>
+        <div className="absolute inset-0">
+            <Image
+              src={heroImage}
+              alt="Safari Packages"
+              layout="fill"
+              objectFit="cover"
+              className="z-0"
+              data-ai-hint={heroDataAiHint}
+              priority
+            />
+            <div className="absolute inset-0 bg-black/30 z-0"></div>
+        </div>
 
         <div className="relative h-full flex items-center z-10 min-h-[400px]">
           <div className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-background/80 backdrop-blur-sm p-8 md:p-12 min-h-[400px]">
@@ -232,5 +234,3 @@ export default function PackagesPage() {
     </div>
   );
 }
-
-    
