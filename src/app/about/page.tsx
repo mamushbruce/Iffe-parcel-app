@@ -5,22 +5,31 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Globe } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
-import HeroSection from "@/components/layout/hero-section";
+import Hero from "@/components/layout/hero";
+import AnimatedBackground from "@/components/layout/animated-background";
 import placeholderImages from '@/app/lib/placeholder-images.json';
+import { useState } from 'react';
+
+const backgroundContent = [
+  { image: placeholderImages.gallerySafariGroup, description: 'Your adventure into the wild begins with a story.' },
+];
 
 export default function AboutPage() {
   const [ref, isVisible] = useScrollAnimation();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <div className="space-y-8">
-       <HeroSection
-        title="About iffe-travels"
-        subtitle="Your adventure into the wild begins with a story."
-        iconName="Info"
-        imageUrl={placeholderImages.gallerySafariGroup.src}
-        dataAiHint={placeholderImages.gallerySafariGroup.hint}
+       <AnimatedBackground 
+        images={backgroundContent.map(item => ({src: item.image.src, hint: item.image.hint}))} 
+        onIndexChange={setCurrentIndex} 
       />
-      <div ref={ref} className={cn('container mx-auto max-w-3xl py-8 px-4 scroll-animate', isVisible && 'scroll-animate-in')}>
+      <div className="relative z-10 animate-fade-in">
+        <section>
+          <Hero description={backgroundContent[currentIndex].description} />
+        </section>
+      </div>
+      <div ref={ref} className={cn('container mx-auto max-w-3xl py-8 px-4 scroll-animate relative z-10', isVisible && 'scroll-animate-in')}>
         <Card className="bg-card/80 backdrop-blur-sm">
           <CardHeader className="text-center">
              <div className="mx-auto bg-accent/20 p-3 rounded-full w-fit mb-4">
