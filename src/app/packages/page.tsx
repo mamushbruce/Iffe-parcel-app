@@ -62,7 +62,7 @@ const mockPackages: PackageTier[] = [
 
 const PaintBrushSeparatorSVG = () => (
   <svg
-    className="absolute top-0 right-0 h-full w-[100px] z-20 backdrop-blur-sm"
+    className="absolute top-0 right-0 h-full w-[100px] z-20 text-stone-900 dark:text-stone-900 backdrop-blur-sm opacity-70"
     viewBox="0 0 100 800"
     preserveAspectRatio="none"
     style={{ transform: 'translateX(50%)' }}
