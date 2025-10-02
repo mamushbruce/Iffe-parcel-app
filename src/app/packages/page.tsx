@@ -187,7 +187,7 @@ export default function PackagesPage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-       <section ref={headerRef} className={cn('relative w-full min-h-[400px] overflow-hidden rounded-lg shadow-lg scroll-animate', isHeaderVisible && 'scroll-animate-in')}>
+       <section ref={headerRef} className={cn('relative w-full h-[80vh] min-h-[600px] overflow-hidden rounded-lg shadow-lg scroll-animate', isHeaderVisible && 'scroll-animate-in')}>
         <Image
           src={heroImage}
           alt="Safari Packages"
@@ -198,8 +198,8 @@ export default function PackagesPage() {
           priority
         />
         <div className="absolute inset-0 bg-black/30 z-0"></div>
-        <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
-          <div className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-stone-900/70 backdrop-blur-sm p-8 md:p-12 min-h-[400px]">
+        <div className="absolute inset-0 h-full flex items-center z-10">
+          <div className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-stone-900/70 backdrop-blur-sm p-8 md:p-12">
             <div className="text-left">
                <div className="bg-white/20 p-3 rounded-full w-fit mb-4">
                   <Package className="h-10 w-10 md:h-12 md:w-12 text-white" />
