@@ -8,7 +8,7 @@ import { CalendarPlus, CalendarClock } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/app/lib/placeholder-images.json';
-import HeroSection from '@/components/layout/hero-section';
+import Image from 'next/image';
 
 // Mock data
 const mockEvents: EventCardProps[] = [
@@ -18,17 +18,48 @@ const mockEvents: EventCardProps[] = [
 ];
 
 export default function EventsPage() {
+    const [headerRef, isHeaderVisible] = useScrollAnimation();
     const [footerRef, isFooterVisible] = useScrollAnimation();
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <HeroSection
-        title="Scheduled Departures"
-        subtitle="Join our group tours, webinars, and special events. Your adventure awaits!"
-        Icon={CalendarClock}
-        imageUrl={placeholderImages.eventDetailDefault.src}
-        dataAiHint={placeholderImages.eventDetailDefault.hint}
-      />
+        <section ref={headerRef} className={cn('relative w-full h-[80vh] min-h-[600px] overflow-hidden rounded-lg shadow-lg scroll-animate flex items-center', isHeaderVisible && 'scroll-animate-in')}>
+            <Image
+                src={placeholderImages.eventDetailDefault.src}
+                alt="Scheduled Departures"
+                layout="fill"
+                objectFit="cover"
+                className="z-0"
+                data-ai-hint={placeholderImages.eventDetailDefault.hint}
+                priority
+            />
+            <div className="absolute inset-0 bg-stone-900/30 z-10"></div>
+            
+            <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
+                  <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">GROUP TOURS & SPECIAL EVENTS</p>
+                  <h1 className="font-headline text-4xl md:text-5xl font-extrabold mb-4 pb-4 relative bg-gradient-to-r from-white to-yellow-300 bg-clip-text text-transparent">
+                    Scheduled Departures
+                     <span className="absolute bottom-0 left-0 w-20 h-0.5 bg-gradient-to-r from-yellow-400 to-transparent"></span>
+                  </h1>
+                  <p className="text-lg text-slate-300 max-w-md mb-8">
+                    Join our group tours, webinars, and special events. Your adventure awaits!
+                  </p>
+                  <div className="flex flex-wrap items-center gap-4">
+                     <Button size="lg" asChild className="bg-gradient-to-r from-yellow-400 to-orange-400 text-stone-900 font-bold hover:opacity-90 transition-transform hover:scale-105">
+                       <Link href="/contact">
+                         Inquire Now
+                       </Link>
+                     </Button>
+                     <Button variant="link" asChild className="text-yellow-400 hover:text-yellow-300">
+                        <Link href="/campaigns/new">
+                            Plan a Custom Trip
+                        </Link>
+                     </Button>
+                  </div>
+                </div>
+              </div>
+        </section>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {mockEvents.map(event => (
