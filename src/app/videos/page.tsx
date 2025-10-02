@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import HeroSection from '@/components/layout/hero-section';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface VideoItem {
   id: string;
@@ -31,7 +33,11 @@ const mockVideoData: VideoItem[] = [
 const availableCategories = ['Events', 'Trainings', 'Campaigns', 'Testimonials', 'All'];
 
 export default function VideoLibraryPage() {
+  const [headerRef, isHeaderVisible] = useScrollAnimation();
   const [filterRef, isFilterVisible] = useScrollAnimation();
+  const heroImage = 'https://placehold.co/1200x400.png';
+  const heroDataAiHint = 'video library';
+
 
   const AnimatedVideoCard = ({ video }: { video: VideoItem }) => {
     const [ref, isVisible] = useScrollAnimation();
@@ -66,13 +72,38 @@ export default function VideoLibraryPage() {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <HeroSection 
-        title="Video Library"
-        subtitle="Watch highlights, trainings, testimonials, and more."
-        iconName="PlayCircle"
-        imageUrl={'https://placehold.co/1200x400.png'}
-        dataAiHint={'video library'}
-      />
+        <section ref={headerRef} className={cn('relative w-full h-[80vh] min-h-[600px] overflow-hidden rounded-lg shadow-lg scroll-animate flex items-center', isHeaderVisible && 'scroll-animate-in')}>
+            <Image
+                src={heroImage}
+                alt="Video Library"
+                layout="fill"
+                objectFit="cover"
+                className="z-0"
+                data-ai-hint={heroDataAiHint}
+                priority
+            />
+            <div className="absolute inset-0 bg-stone-900/30 z-10"></div>
+            
+            <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
+                  <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">FROM THE HUB</p>
+                  <h1 className="font-headline text-4xl md:text-5xl font-extrabold mb-4 pb-4 relative bg-gradient-to-r from-white to-yellow-300 bg-clip-text text-transparent">
+                    Video Library
+                     <span className="absolute bottom-0 left-0 w-20 h-0.5 bg-gradient-to-r from-yellow-400 to-transparent"></span>
+                  </h1>
+                  <p className="text-lg text-slate-300 max-w-md mb-8">
+                    Watch highlights, trainings, testimonials, and more.
+                  </p>
+                  <div className="flex flex-wrap items-center gap-4">
+                     <Button size="lg" asChild className="bg-gradient-to-r from-yellow-400 to-orange-400 text-stone-900 font-bold hover:opacity-90 transition-transform hover:scale-105">
+                       <Link href="/contact">
+                         Contact Us
+                       </Link>
+                     </Button>
+                  </div>
+                </div>
+            </div>
+        </section>
 
       <section ref={filterRef} className={cn('flex flex-col md:flex-row gap-4 items-center justify-between p-4 bg-card rounded-lg shadow scroll-animate', isFilterVisible && 'scroll-animate-in')}>
         <div className="flex flex-wrap gap-2">
