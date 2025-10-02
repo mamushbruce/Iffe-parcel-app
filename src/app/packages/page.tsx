@@ -61,6 +61,28 @@ const mockPackages: PackageTier[] = [
     }
 ];
 
+const BrushStrokeSeparator = () => (
+    <div className="w-full -mt-8 md:-mt-12 mb-8 relative z-10">
+        <svg width="100%" height="100" viewBox="0 0 1200 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="brushGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(var(--primary))" />
+                <stop offset="100%" stopColor="hsl(var(--accent))" />
+                </linearGradient>
+                <filter id="brushTexture">
+                <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise"/>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+                </filter>
+            </defs>
+            <path d="M-50,50 C100,30 200,80 350,50 C500,20 600,90 750,50 C900,10 1000,70 1150,50 L1250,50 L1250,80 C1100,100 950,20 800,70 C650,100 500,10 350,70 C200,100 50,20 -50,70 Z"
+                fill="url(#brushGradient)"
+                filter="url(#brushTexture)"
+                opacity="0.85"/>
+        </svg>
+    </div>
+);
+
+
 export default function PackagesPage() {
     const AnimatedPackageCard = ({ pkg }: { pkg: PackageTier }) => {
         const [ref, isVisible] = useScrollAnimation();
@@ -126,6 +148,8 @@ export default function PackagesPage() {
         imageUrl={'https://picsum.photos/seed/pkg2/1200/400'}
         dataAiHint={'luxury safari tent'}
       />
+      
+      <BrushStrokeSeparator />
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         {mockPackages.map(pkg => (
