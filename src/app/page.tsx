@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import FifaCardCarousel from '@/components/fifa-card-carousel';
 import Hero from '@/components/layout/hero';
+import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
 
 
 interface FeedItemBase {
@@ -143,7 +144,7 @@ export default function Home() {
   return (
     <>
       <AnimatedBackground 
-        images={backgroundContent.map(item => item.image)} 
+        images={backgroundContent.map(item => ({src: item.image.src, hint: item.image.hint}))} 
         onIndexChange={setCurrentIndex} 
       />
       <div className="relative z-10 space-y-12 animate-fade-in">
@@ -165,8 +166,8 @@ export default function Home() {
                 </Link>
               </Button>
               <Button size="lg" variant="secondary" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-                <Link href="/blog">
-                  <Edit3 className="mr-2 h-5 w-5" /> Read Travel Stories
+                <Link href="/create">
+                  <Edit3 className="mr-2 h-5 w-5" /> Share & Create
                 </Link>
               </Button>
                <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
@@ -174,11 +175,7 @@ export default function Home() {
                   <Lightbulb className="mr-2 h-5 w-5" /> Suggest a Destination
                 </Link>
               </Button>
-              <Button asChild size="lg" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90">
-                 <Link href="/#signup-erotaract">
-                  <ShieldCheck className="mr-2 h-5 w-5" /> Join the Explorer's Club
-                </Link>
-              </Button>
+              <ERotaractSignupTrigger />
             </CardContent>
           </Card>
           </AnimatedCard>
