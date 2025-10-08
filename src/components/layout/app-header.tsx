@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock, Map } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock, Map, Waves } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -12,7 +12,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose 
 import { Separator } from '@/components/ui/separator';
 import { useSession, signOut } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuGroup } from '@/components/ui/dropdown-menu';
 
 
 const AppHeader = () => {
@@ -71,6 +71,8 @@ const AppHeader = () => {
   const mobileNavItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/packages', label: 'Packages', icon: Package },
+    { href: '/discover-jinja', label: 'Jinja', icon: Waves },
+    { href: '/sipi-falls', label: 'Sipi Falls', icon: MountainSnow },
     { href: '/events', label: 'Departures', icon: CalendarClock },
     { href: '/ideas', label: 'Dream Trips', icon: Lightbulb },
     { href: '/blog', label: 'Journal', icon: Edit3 },
@@ -110,13 +112,23 @@ const AppHeader = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost">
-                  <Compass className="mr-1 h-4 w-4" /> Trips <ChevronDown className="ml-1 h-4 w-4" />
+                  <Compass className="mr-1 h-4 w-4" /> Destinations <ChevronDown className="ml-1 h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem asChild><Link href="/packages"><Package className="mr-2 h-4 w-4" />Packages</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/events"><CalendarClock className="mr-2 h-4 w-4" />Departures</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="/ideas"><Lightbulb className="mr-2 h-4 w-4" />Dream Trips</Link></DropdownMenuItem>
+                <DropdownMenuGroup>
+                    <DropdownMenuLabel>Our Tours</DropdownMenuLabel>
+                    <DropdownMenuItem asChild><Link href="/packages"><Package className="mr-2 h-4 w-4" />All Packages</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link href="/events"><CalendarClock className="mr-2 h-4 w-4" />Scheduled Departures</Link></DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                    <DropdownMenuLabel>Featured Locations</DropdownMenuLabel>
+                    <DropdownMenuItem asChild><Link href="/discover-jinja"><Waves className="mr-2 h-4 w-4" />Discover Jinja</Link></DropdownMenuItem>
+                    <DropdownMenuItem asChild><Link href="/sipi-falls"><MountainSnow className="mr-2 h-4 w-4" />Sipi Falls Experience</Link></DropdownMenuItem>
+                </DropdownMenuGroup>
+                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild><Link href="/ideas"><Lightbulb className="mr-2 h-4 w-4" />Suggest a Dream Trip</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -286,3 +298,4 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
+
