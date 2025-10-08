@@ -5,27 +5,15 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const SailingBoatPreloader: React.FC = () => {
-    const [progress, setProgress] = useState(0);
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
-        let currentProgress = 0;
-        const loadingInterval = setInterval(() => {
-            currentProgress += Math.random() * 8;
-            if (currentProgress >= 100) {
-                currentProgress = 100;
-                setProgress(100);
-                clearInterval(loadingInterval);
-                
-                setTimeout(() => {
-                    setVisible(false);
-                }, 800);
-            }
-            setProgress(currentProgress);
-        }, 200);
+        const timer = setTimeout(() => {
+            setVisible(false);
+        }, 3000); // Keep preloader for 3 seconds
 
         return () => {
-            clearInterval(loadingInterval);
+            clearTimeout(timer);
         };
     }, []);
 
@@ -67,18 +55,10 @@ const SailingBoatPreloader: React.FC = () => {
                 <div className="text-sm text-muted-foreground mb-6 italic">
                     Charting Your Course...
                 </div>
-                <div className="w-full h-2 bg-muted rounded overflow-hidden mb-2">
-                    <div 
-                        className="h-full bg-primary rounded" 
-                        style={{ width: `${Math.min(progress, 100)}%`, transition: 'width 0.3s ease' }}
-                    ></div>
-                </div>
-                <div className="text-primary text-sm font-bold">
-                    {Math.min(progress, 100).toFixed(0)}%
-                </div>
             </div>
         </div>
     );
 };
 
 export default SailingBoatPreloader;
+
