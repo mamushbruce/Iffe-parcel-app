@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+  
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user is an admin
+    function isAdmin() {
+      return request.auth.token.role == 'admin';
+    }
+    
+    // Invoice PDFs: Only the user who owns the booking or an admin can read them.
+    // Invoices are written by Cloud Functions only.
+    match /invoices/{bookingId}.pdf {
+      allow read: if isAuthenticated() && (exists(/databases/$(database)/documents/bookings/$(bookingId)) && 
+                  (resource.data.userID == request.auth.uid || isAdmin()));
+      allow write: if false; // Only backend can write
+    }
+
+    // User-uploaded profile pictures (if you implement this feature)
+    // Users can only write to their own path.
+    match /user-profiles/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && userId == request.auth.uid;
+    }
+    
+    // General public assets (e.g., images for destinations)
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
