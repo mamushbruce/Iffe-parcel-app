@@ -9,7 +9,10 @@ export interface Booking {
   userID: string;
   destination: string;
   package: string;
-  travelDates: Date;
+  travelDates: {
+    start: FieldValue | Date | string;
+    end: FieldValue | Date | string;
+  };
   groupSize: number;
   paymentStatus: 'pending' | 'successful' | 'failed' | 'refunded';
   createdAt: FieldValue;

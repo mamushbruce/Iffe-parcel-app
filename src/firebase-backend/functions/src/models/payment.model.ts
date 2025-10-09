@@ -5,12 +5,13 @@
 import type { FieldValue } from 'firebase-admin/firestore';
  
 export interface Payment {
-  paymentID: string; // Stripe Payment Intent ID
+  paymentID: string; // Can be Stripe Payment Intent ID
   bookingID: string;
   userID: string;
   amount: number; // in cents
   currency: string;
-  method: 'card' | 'apple_pay' | 'google_pay' | 'mobile_money' | string;
+  method: 'Visa' | 'Mastercard' | 'Apple Pay' | 'Google Pay' | 'Mobile Money' | string;
   status: 'succeeded' | 'processing' | 'failed';
   timestamp: FieldValue;
+  invoiceURL?: string;
 }
