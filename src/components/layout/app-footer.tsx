@@ -1,12 +1,34 @@
 
+'use client';
 import Link from 'next/link';
 import { Globe, Facebook, Twitter, Instagram, Waves, Mountain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 
 export default function AppFooter() {
-  const currentYear = new Date().getFullYear();
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const emailInput = (e.currentTarget.elements.namedItem('email') as HTMLInputElement);
+    const email = emailInput.value;
+
+    if (email) {
+      toast({
+        title: "Subscribed! (Simulated)",
+        description: `Thank you for subscribing, ${email}!`,
+      });
+      emailInput.value = '';
+    } else {
+       toast({
+        title: "Email required",
+        description: `Please enter a valid email to subscribe.`,
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="bg-card/75 backdrop-blur-lg border-t mt-auto text-card-foreground">
@@ -23,8 +45,8 @@ export default function AppFooter() {
                 <p className="text-sm text-muted-foreground mb-4 max-w-sm">
                     Subscribe to our newsletter for the latest travel deals, tips, and stories from the wild.
                 </p>
-                <form className="flex w-full max-w-sm">
-                    <Input type="email" placeholder="Enter your email" className="rounded-r-none focus:ring-accent focus:border-accent" />
+                <form className="flex w-full max-w-sm" onSubmit={handleNewsletterSubmit}>
+                    <Input name="email" type="email" placeholder="Enter your email" className="rounded-r-none focus:ring-accent focus:border-accent" />
                     <Button type="submit" className="rounded-l-none bg-accent text-accent-foreground hover:bg-accent/90">Subscribe</Button>
                 </form>
                 </div>

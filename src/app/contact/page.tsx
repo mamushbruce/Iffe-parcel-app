@@ -1,6 +1,9 @@
 
 'use client';
 
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +17,16 @@ import placeholderImages from "@/app/lib/placeholder-images.json";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import HeroSection from "@/components/layout/hero-section";
+import { useState } from 'react';
+
+const contactSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters.'),
+  email: z.string().email('Please enter a valid email address.'),
+  message: z.string().min(10, 'Message must be at least 10 characters.'),
+});
+
+type ContactFormValues = z.infer<typeof contactSchema>;
+
 
 const teamMembers = [
   {
@@ -46,15 +59,21 @@ function AnimatedCard({ children, className }: { children: React.ReactNode, clas
 
 export default function ContactPage() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+  });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
     toast({
       title: "Message Sent! (Simulated)",
       description: "Thanks for reaching out. We'll get back to you shortly.",
     });
-    // In a real app, you would handle form submission here
-    (e.target as HTMLFormElement).reset();
+    reset();
+    setIsSubmitting(false);
   };
 
   return (
@@ -73,20 +92,25 @@ export default function ContactPage() {
             <CardTitle className="font-headline text-2xl text-primary flex items-center"><Send className="mr-2 h-6 w-6 text-accent"/>Send Us a Message</CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <div>
                 <Label htmlFor="name" className="font-semibold">Your Name</Label>
-                <Input id="name" type="text" required />
+                <Input id="name" {...register('name')} disabled={isSubmitting} />
+                {errors.name && <p className="text-sm text-destructive mt-1">{errors.name.message}</p>}
               </div>
               <div>
                 <Label htmlFor="email" className="font-semibold">Your Email</Label>
-                <Input id="email" type="email" required />
+                <Input id="email" type="email" {...register('email')} disabled={isSubmitting} />
+                {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
               </div>
               <div>
                 <Label htmlFor="message" className="font-semibold">Your Message</Label>
-                <Textarea id="message" rows={5} required />
+                <Textarea id="message" {...register('message')} rows={5} disabled={isSubmitting} />
+                {errors.message && <p className="text-sm text-destructive mt-1">{errors.message.message}</p>}
               </div>
-              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90">Send Message</Button>
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </Button>
             </form>
           </CardContent>
         </AnimatedCard>
