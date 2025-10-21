@@ -16,6 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { Badge } from '@/components/ui/badge';
+import Lightbox from './lightbox';
 
 interface GalleryImage {
   id: string;
@@ -48,7 +49,7 @@ const CategoryCard = ({ category, images, onSelectCategory }: { category: string
         images.forEach(img => {
             img.tags.forEach(tag => tags.add(tag));
         });
-        return Array.from(tags).slice(0, 6); // Limit to 6 tags
+        return Array.from(tags).slice(0, 6);
     }, [images]);
 
     return (
@@ -98,6 +99,9 @@ export default function GalleryClientContent({ initialImages }: GalleryClientCon
   const { toast } = useToast();
   const [filterRef, isFilterVisible] = useScrollAnimation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     setClientRendered(true);
@@ -161,6 +165,11 @@ export default function GalleryClientContent({ initialImages }: GalleryClientCon
   };
   
   const imagesToShow = selectedCategory ? imageCategories[selectedCategory] : [];
+
+  const openLightbox = (index: number) => {
+    setSelectedImageIndex(index);
+    setIsLightboxOpen(true);
+  };
   
   if (!clientRendered) {
     return null; // or a loading skeleton
@@ -236,23 +245,32 @@ export default function GalleryClientContent({ initialImages }: GalleryClientCon
 
       {selectedCategory ? (
         // Expanded Grid View
-        <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
-            {imagesToShow.map(image => (
-                 <div key={image.id} className="relative aspect-square w-full rounded-md overflow-hidden group">
-                    <Image
-                        src={image.src}
-                        alt={image.alt}
-                        layout="fill"
-                        objectFit="cover"
-                        data-ai-hint={image.dataAiHint}
-                        className="transition-transform duration-300 group-hover:scale-105"
-                    />
-                    {image.caption && <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
-                        <p className="text-white text-xs line-clamp-2">{image.caption}</p>
-                    </div>}
-                </div>
-            ))}
-        </section>
+        <>
+          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+              {imagesToShow.map((image, index) => (
+                  <div key={image.id} className="relative aspect-square w-full rounded-md overflow-hidden group cursor-pointer" onClick={() => openLightbox(index)}>
+                      <Image
+                          src={image.src}
+                          alt={image.alt}
+                          layout="fill"
+                          objectFit="cover"
+                          data-ai-hint={image.dataAiHint}
+                          className="transition-transform duration-300 group-hover:scale-105"
+                      />
+                      {image.caption && <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                          <p className="text-white text-xs line-clamp-2">{image.caption}</p>
+                      </div>}
+                  </div>
+              ))}
+          </section>
+          {isLightboxOpen && (
+            <Lightbox
+              images={imagesToShow}
+              startIndex={selectedImageIndex}
+              onClose={() => setIsLightboxOpen(false)}
+            />
+          )}
+        </>
       ) : (
         // Category Selection View
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
