@@ -10,7 +10,6 @@ import BlogCard, { type BlogCardProps } from '@/components/blog-card';
 import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/app/lib/placeholder-images.json';
-import AnimatedBackground from '@/components/layout/animated-background';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
@@ -132,6 +131,13 @@ export default function Home() {
     const [activeCarouselImage, setActiveCarouselImage] = useState<string | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+          setCurrentIndex(prevIndex => (prevIndex + 1) % backgroundContent.length);
+        }, 7000);
+        return () => clearInterval(interval);
+      }, []);
+
     const AnimatedCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
         const [ref, isVisible] = useScrollAnimation();
         return (
@@ -140,16 +146,18 @@ export default function Home() {
             </div>
         );
     };
+  
+    const currentBg = backgroundContent[currentIndex];
 
   return (
     <>
-      <AnimatedBackground 
-        images={backgroundContent.map(item => ({src: item.image.src, hint: item.image.hint}))} 
-        onIndexChange={setCurrentIndex} 
-      />
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
-          <Hero description={backgroundContent[currentIndex].description} />
+          <Hero 
+            description={currentBg.description}
+            imageUrl={currentBg.image.src}
+            imageHint={currentBg.image.hint}
+          />
         </section>
 
         <section>

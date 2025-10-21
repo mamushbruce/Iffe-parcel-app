@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
@@ -9,6 +10,8 @@ import Link from 'next/link';
 
 interface HeroProps {
   description: string;
+  imageUrl?: string;
+  imageHint?: string;
 }
 
 const TornPaperSVG = () => (
@@ -26,11 +29,39 @@ const TornPaperSVG = () => (
 );
 
 
-export default function Hero({ description }: HeroProps) {
+export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
   const [ref, isVisible] = useScrollAnimation();
 
   return (
-    <div ref={ref} className={cn('relative w-full h-[60vh] min-h-[400px] md:min-h-[500px] overflow-hidden rounded-lg shadow-2xl scroll-animate', isVisible && 'scroll-animate-in')}>
+    <div ref={ref} className={cn('relative w-full h-[60vh] min-h-[400px] md:min-h-[500px] overflow-hidden rounded-lg shadow-2xl scroll-animate bg-background', isVisible && 'scroll-animate-in')}>
+        {imageUrl && (
+            <>
+                {/* Right side clear image */}
+                <div className="absolute top-0 right-0 w-1/2 h-full z-0">
+                    <Image
+                        src={imageUrl}
+                        alt={description}
+                        layout="fill"
+                        objectFit="cover"
+                        className="object-right"
+                        data-ai-hint={imageHint}
+                        priority
+                    />
+                </div>
+                {/* Left side blurry image */}
+                 <div className="absolute top-0 left-0 w-1/2 h-full z-0">
+                    <Image
+                        src={imageUrl}
+                        alt={description}
+                        layout="fill"
+                        objectFit="cover"
+                        className="object-left blur-lg"
+                        data-ai-hint={imageHint}
+                        priority
+                    />
+                </div>
+            </>
+        )}
       {/* Content Container */}
       <div className="relative h-full flex items-center z-10">
         {/* Left Panel */}
