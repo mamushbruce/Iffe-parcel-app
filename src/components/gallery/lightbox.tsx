@@ -37,6 +37,9 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
   }, [images.length]);
 
   useEffect(() => {
+    // Prevent body from scrolling when lightbox is open
+    document.body.style.overflow = 'hidden';
+    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
@@ -44,7 +47,10 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
     };
 
     window.addEventListener('keydown', handleKeyDown);
+    
+    // Cleanup function to restore scrolling
     return () => {
+      document.body.style.overflow = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [nextImage, prevImage, onClose]);
