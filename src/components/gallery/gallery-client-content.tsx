@@ -7,15 +7,15 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { UploadCloud, Tag, Layers, ArrowLeft } from 'lucide-react';
+import { UploadCloud, Layers, ArrowLeft, ArrowRight, Tag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
-import placeholderImages from '@/app/lib/placeholder-images.json';
+import { Badge } from '@/components/ui/badge';
 
 interface GalleryImage {
   id: string;
@@ -45,15 +45,15 @@ const CategoryCard = ({ category, images, onSelectCategory }: { category: string
 
     return (
         <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
-            <Card onClick={() => onSelectCategory(category)} className="cursor-pointer group overflow-hidden">
+            <Card className="group overflow-hidden flex flex-col h-full">
                 <CardHeader>
-                    <CardTitle className="flex items-center text-xl font-headline text-primary group-hover:text-accent transition-colors">
+                    <CardTitle className="flex items-center text-xl font-headline text-primary">
                         <Layers className="mr-2 h-5 w-5 text-accent"/>
                         {category.replace('#','')}
                     </CardTitle>
                     <CardDescription>{images.length} photos</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex-grow">
                     <div className="grid grid-cols-2 gap-1 rounded-lg overflow-hidden">
                         {previewImages.map(img => (
                             <div key={img.id} className="relative aspect-square w-full">
@@ -62,6 +62,14 @@ const CategoryCard = ({ category, images, onSelectCategory }: { category: string
                         ))}
                     </div>
                 </CardContent>
+                <CardFooter className="mt-auto pt-4 border-t flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      <Tag className="h-3 w-3 mr-1" /> {category}
+                    </Badge>
+                    <Button variant="link" size="sm" onClick={() => onSelectCategory(category)} className="text-accent hover:text-accent/80 p-0 h-auto">
+                        View More <ArrowRight className="ml-1 h-4 w-4" />
+                    </Button>
+                </CardFooter>
             </Card>
         </div>
     )
