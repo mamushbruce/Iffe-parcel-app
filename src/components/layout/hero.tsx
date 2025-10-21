@@ -35,37 +35,37 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
   return (
     <div ref={ref} className={cn('relative w-full h-[60vh] min-h-[400px] md:min-h-[500px] overflow-hidden rounded-lg shadow-2xl scroll-animate bg-background', isVisible && 'scroll-animate-in')}>
         {imageUrl && (
-            <>
-                {/* Right side clear image */}
-                <div className="absolute top-0 right-0 w-1/2 h-full z-0">
-                    <Image
-                        src={imageUrl}
-                        alt={description}
-                        layout="fill"
-                        objectFit="cover"
-                        className="object-right"
-                        data-ai-hint={imageHint}
-                        priority
-                    />
-                </div>
-                {/* Left side blurry image */}
-                 <div className="absolute top-0 left-0 w-1/2 h-full z-0">
-                    <Image
-                        src={imageUrl}
-                        alt={description}
-                        layout="fill"
-                        objectFit="cover"
-                        className="object-left blur-lg"
-                        data-ai-hint={imageHint}
-                        priority
-                    />
-                </div>
-            </>
+            <div className="absolute inset-0 z-0">
+                <Image
+                    src={imageUrl}
+                    alt={description}
+                    layout="fill"
+                    objectFit="cover"
+                    data-ai-hint={imageHint}
+                    priority
+                    className="blur-lg"
+                    style={{
+                        maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+                    }}
+                />
+                 <Image
+                    src={imageUrl}
+                    alt={description}
+                    layout="fill"
+                    objectFit="cover"
+                    data-ai-hint={imageHint}
+                    priority
+                    style={{
+                        clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)'
+                    }}
+                />
+            </div>
         )}
       {/* Content Container */}
       <div className="relative h-full flex items-center z-10">
         {/* Left Panel */}
-        <div className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-old-paper/70 dark:bg-background/70 backdrop-blur-md p-8 md:p-12">
+        <div className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-old-paper/70 dark:bg-background/70 p-8 md:p-12">
           <div className="text-primary">
             <p className="font-semibold text-accent uppercase tracking-widest text-sm mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
             <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
