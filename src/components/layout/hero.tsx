@@ -43,10 +43,10 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
                     objectFit="cover"
                     data-ai-hint={imageHint}
                     priority
-                    className="blur-lg"
                     style={{
-                        maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+                        maskImage: 'linear-gradient(to right, transparent 0%, black 50%)',
+                        WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 50%)',
+                        filter: 'blur(8px)',
                     }}
                 />
                  <Image
