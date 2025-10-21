@@ -16,7 +16,7 @@ interface HeroProps {
 
 const TornPaperSVG = () => (
   <svg
-    className="absolute top-0 right-0 h-full w-[60px] text-old-paper/50 dark:text-background/50 z-20 backdrop-blur-md"
+    className="absolute top-0 right-0 h-full w-[60px] text-old-paper/50 dark:text-background/50 backdrop-blur-md"
     viewBox="0 0 60 1000"
     preserveAspectRatio="none"
     style={{ transform: 'translateX(100%)' }}
@@ -65,7 +65,7 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
       <div className="relative h-full flex items-center z-10">
         {/* Left Panel */}
         <div 
-          className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-old-paper/50 dark:bg-background/50 p-8 md:p-12"
+          className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-old-paper/70 dark:bg-background/70 md:bg-old-paper/50 md:dark:bg-background/50 p-8 md:p-12"
           style={{backdropFilter: 'blur(8px)'}}
         >
           <div className="text-primary">
