@@ -94,6 +94,9 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  a {
+    @apply transition-colors duration-200;
+  }
 }
 
 @layer utilities {
