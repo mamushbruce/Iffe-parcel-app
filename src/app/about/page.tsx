@@ -44,6 +44,28 @@ const teamMembers = [
     dataAiHint: "customer relations portrait",
     link: "/about"
   },
+  {
+    id: "team4",
+    title: "David Lee",
+    country: "Lead Photographer",
+    rating: "97",
+    speed: "7 Yrs",
+    skill: "1000+ Photos",
+    image: "teamDavid" as keyof typeof placeholderImages,
+    dataAiHint: "photographer portrait",
+    link: "/about"
+  },
+  {
+    id: "team5",
+    title: "Emily White",
+    country: "Logistics Coordinator",
+    rating: "96",
+    speed: "5 Yrs",
+    skill: "200+ Trips",
+    image: "teamEmily" as keyof typeof placeholderImages,
+    dataAiHint: "logistics coordinator portrait",
+    link: "/about"
+  }
 ];
 
 

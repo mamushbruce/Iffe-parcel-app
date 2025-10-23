@@ -216,6 +216,18 @@
     "height": 64,
     "hint": "person smiling"
   },
+  "teamDavid": {
+    "src": "https://picsum.photos/seed/teamDavid/64/64",
+    "width": 64,
+    "height": 64,
+    "hint": "photographer portrait"
+  },
+  "teamEmily": {
+    "src": "https://picsum.photos/seed/teamEmily/64/64",
+    "width": 64,
+    "height": 64,
+    "hint": "logistics coordinator"
+  },
   "fifaCardGorilla": {
     "src": "https://picsum.photos/seed/fifaGorilla/800/800",
     "width": 800,
