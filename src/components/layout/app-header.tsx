@@ -159,6 +159,17 @@ const AppHeader = () => {
                 <DropdownMenuItem asChild><Link href="/blog/submit"><Edit3 className="mr-2 h-4 w-4" />Share a Story</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            <Button variant="ghost" asChild>
+              <Link href="/about">
+                <Info className="mr-1 h-4 w-4" /> About
+              </Link>
+            </Button>
+            <Button variant="ghost" asChild>
+              <Link href="/contact">
+                <Mail className="mr-1 h-4 w-4" /> Contact
+              </Link>
+            </Button>
             
             <Separator orientation="vertical" className="h-6 mx-2 bg-border" />
             {status === 'loading' ? (
@@ -296,3 +307,5 @@ const AppHeader = () => {
 };
 
 export default AppHeader;
+
+    
