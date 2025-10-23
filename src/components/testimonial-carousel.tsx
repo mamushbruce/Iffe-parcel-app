@@ -58,7 +58,7 @@ export default function TestimonialCarousel() {
     }
 
     return (
-        <div ref={ref} className={cn('relative mb-[-120px] z-10 scroll-animate py-8', isVisible && 'scroll-animate-in')}>
+        <div ref={ref} className={cn('scroll-animate py-8', isVisible && 'scroll-animate-in')}>
             <div className="min-h-[200px] flex items-center py-16 relative">
                 <Card className="bg-transparent w-full border-none shadow-none">
                     <CardHeader className="text-center">
