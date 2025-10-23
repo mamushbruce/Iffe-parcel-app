@@ -2,13 +2,14 @@
 'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Package, ArrowRight, CheckCircle2, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import placeholderImages from "@/app/lib/placeholder-images.json";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface PackageTier {
     id: string;
@@ -114,6 +115,15 @@ export default function PackagesPage() {
         );
     };
 
+    const AnimatedSection = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+        const [ref, isVisible] = useScrollAnimation();
+        return (
+            <section ref={ref} className={cn('scroll-animate py-8', isVisible && 'scroll-animate-in', className)}>
+                {children}
+            </section>
+        );
+    };
+
     const [headerRef, isHeaderVisible] = useScrollAnimation();
     const [footerRef, isFooterVisible] = useScrollAnimation();
     const heroImage = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';
@@ -164,6 +174,32 @@ export default function PackagesPage() {
             <AnimatedPackageCard key={pkg.id} pkg={pkg} />
         ))}
       </section>
+
+      <AnimatedSection>
+        <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader className="text-center">
+                <MessageSquare className="mx-auto h-8 w-8 text-accent mb-2"/>
+                <CardTitle className="font-headline text-2xl text-primary">From Our Travelers</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 max-w-2xl mx-auto">
+                    <div className="text-center shrink-0">
+                        <Avatar className="h-20 w-20 mx-auto border-2 border-accent">
+                            <AvatarImage src={placeholderImages.userAlice.src} alt="Alice" data-ai-hint="happy traveler" />
+                            <AvatarFallback>A</AvatarFallback>
+                        </Avatar>
+                        <p className="mt-2 text-sm font-semibold text-primary">Alice</p>
+                    </div>
+                    <div className="relative w-full">
+                        <div className="absolute -left-3 top-4 w-0 h-0 border-t-[10px] border-t-transparent border-b-[10px] border-b-transparent border-r-[10px] border-r-muted hidden sm:block"></div>
+                        <div className="bg-muted p-4 rounded-lg shadow-inner">
+                            <p className="text-muted-foreground italic">"The adventurer package was worth every penny! Our guide was incredibly knowledgeable, and seeing the 'Big Five' was a dream come true. The luxury tents were surprisingly comfortable. Unforgettable!"</p>
+                        </div>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+      </AnimatedSection>
 
        <section ref={footerRef} className={cn('text-center mt-12 p-8 bg-card/80 backdrop-blur-sm rounded-lg shadow-inner scroll-animate', isFooterVisible && 'scroll-animate-in')}>
           <h2 className="font-headline text-2xl font-bold text-primary mb-4">Can't find the perfect package?</h2>
