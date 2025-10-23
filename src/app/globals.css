@@ -102,13 +102,12 @@ body {
 @layer utilities {
   .scroll-animate {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s ease-out, transform 0.5s ease-out, box-shadow 0.3s ease-out;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   }
   .scroll-animate-in {
     opacity: 1;
-    transform: translateY(-1px);
-    @apply shadow-md;
+    transform: translateY(-45px);
   }
   @media (prefers-reduced-motion: reduce) {
     .scroll-animate {
