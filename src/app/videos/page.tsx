@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 interface VideoItem {
   id: string;
@@ -19,15 +20,16 @@ interface VideoItem {
   youtubeVideoId?: string; // For actual embed
   category: string;
   duration?: string; // e.g., "12:34"
+  previewVideoUrl?: string; // URL for the short preview video
 }
 
 const mockVideoData: VideoItem[] = [
-  { id: 'v1', title: 'Rotary International Convention Highlights', description: 'Relive the best moments from the annual convention.', thumbnailUrl: placeholderImages.videoThumbConference.src, dataAiHint: placeholderImages.videoThumbConference.hint, youtubeVideoId: 'dQw4w9WgXcQ', category: 'Events', duration: '5:20' },
-  { id: 'v2', title: 'Leadership Training Workshop Part 1', description: 'Essential skills for aspiring leaders in our community.', thumbnailUrl: placeholderImages.videoThumbTraining.src, dataAiHint: placeholderImages.videoThumbTraining.hint, category: 'Trainings', duration: '45:12' },
-  { id: 'v3', title: 'Clean Water Campaign Impact Story', description: 'See how your contributions are changing lives.', thumbnailUrl: placeholderImages.videoThumbWater.src, dataAiHint: placeholderImages.videoThumbWater.hint, youtubeVideoId: 'rokGy0huYEA', category: 'Campaigns', duration: '3:15' },
-  { id: 'v4', title: 'A Rotaractor\'s Journey: Testimonial', description: 'Hear from a member about their experiences.', thumbnailUrl: placeholderImages.videoThumbTestimonial.src, dataAiHint: placeholderImages.videoThumbTestimonial.hint, category: 'Testimonials', duration: '7:45' },
-  { id: 'v5', title: 'Youth Summit 2023 Recap', description: 'Highlights from the inspiring sessions at the Youth Summit.', thumbnailUrl: placeholderImages.videoThumbYouth.src, dataAiHint: placeholderImages.videoThumbYouth.hint, category: 'Events', duration: '8:03' },
-  { id: 'v6', title: 'Project Management Basics', description: 'A quick guide to managing successful Rotary projects.', thumbnailUrl: placeholderImages.videoThumbPlanning.src, dataAiHint: placeholderImages.videoThumbPlanning.hint, category: 'Trainings', duration: '22:50' },
+  { id: 'v1', title: 'Rotary International Convention Highlights', description: 'Relive the best moments from the annual convention.', thumbnailUrl: placeholderImages.videoThumbConference.src, dataAiHint: placeholderImages.videoThumbConference.hint, youtubeVideoId: 'dQw4w9WgXcQ', category: 'Events', duration: '5:20', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 'v2', title: 'Leadership Training Workshop Part 1', description: 'Essential skills for aspiring leaders in our community.', thumbnailUrl: placeholderImages.videoThumbTraining.src, dataAiHint: placeholderImages.videoThumbTraining.hint, category: 'Trainings', duration: '45:12', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: 'v3', title: 'Clean Water Campaign Impact Story', description: 'See how your contributions are changing lives.', thumbnailUrl: placeholderImages.videoThumbWater.src, dataAiHint: placeholderImages.videoThumbWater.hint, youtubeVideoId: 'rokGy0huYEA', category: 'Campaigns', duration: '3:15', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' },
+  { id: 'v4', title: 'A Rotaractor\'s Journey: Testimonial', description: 'Hear from a member about their experiences.', thumbnailUrl: placeholderImages.videoThumbTestimonial.src, dataAiHint: placeholderImages.videoThumbTestimonial.hint, category: 'Testimonials', duration: '7:45', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4' },
+  { id: 'v5', title: 'Youth Summit 2023 Recap', description: 'Highlights from the inspiring sessions at the Youth Summit.', thumbnailUrl: placeholderImages.videoThumbYouth.src, dataAiHint: placeholderImages.videoThumbYouth.hint, category: 'Events', duration: '8:03', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+  { id: 'v6', title: 'Project Management Basics', description: 'A quick guide to managing successful Rotary projects.', thumbnailUrl: placeholderImages.videoThumbPlanning.src, dataAiHint: placeholderImages.videoThumbPlanning.hint, category: 'Trainings', duration: '22:50', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4' },
 ];
 
 const availableCategories = ['Events', 'Trainings', 'Campaigns', 'Testimonials', 'All'];
@@ -41,12 +43,33 @@ export default function VideoLibraryPage() {
 
   const AnimatedVideoCard = ({ video }: { video: VideoItem }) => {
     const [ref, isVisible] = useScrollAnimation();
+    const [isHovering, setIsHovering] = useState(false);
+
     return (
-      <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
+      <div 
+        ref={ref} 
+        className={cn('scroll-animate', isVisible && 'scroll-animate-in')}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <Card key={video.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
           <div className="relative w-full aspect-video bg-muted">
-            <Image src={video.thumbnailUrl} alt={video.title} className="w-full h-full object-cover" data-ai-hint={video.dataAiHint} layout="fill" />
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            {isHovering && video.previewVideoUrl ? (
+                <video
+                    src={video.previewVideoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                />
+            ) : (
+                <Image src={video.thumbnailUrl} alt={video.title} className="w-full h-full object-cover" data-ai-hint={video.dataAiHint} layout="fill" />
+            )}
+            <div className={cn(
+              "absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity",
+              isHovering ? "opacity-0" : "opacity-0 group-hover:opacity-100"
+            )}>
               <PlayCircle className="h-16 w-16 text-white/80" />
             </div>
             {video.duration && (
