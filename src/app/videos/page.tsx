@@ -24,15 +24,15 @@ interface VideoItem {
 }
 
 const mockVideoData: VideoItem[] = [
-  { id: 'v1', title: 'Rotary International Convention Highlights', description: 'Relive the best moments from the annual convention.', thumbnailUrl: placeholderImages.videoThumbConference.src, dataAiHint: placeholderImages.videoThumbConference.hint, youtubeVideoId: 'dQw4w9WgXcQ', category: 'Events', duration: '5:20', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
-  { id: 'v2', title: 'Leadership Training Workshop Part 1', description: 'Essential skills for aspiring leaders in our community.', thumbnailUrl: placeholderImages.videoThumbTraining.src, dataAiHint: placeholderImages.videoThumbTraining.hint, category: 'Trainings', duration: '45:12', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
-  { id: 'v3', title: 'Clean Water Campaign Impact Story', description: 'See how your contributions are changing lives.', thumbnailUrl: placeholderImages.videoThumbWater.src, dataAiHint: placeholderImages.videoThumbWater.hint, youtubeVideoId: 'rokGy0huYEA', category: 'Campaigns', duration: '3:15', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' },
-  { id: 'v4', title: 'A Rotaractor\'s Journey: Testimonial', description: 'Hear from a member about their experiences.', thumbnailUrl: placeholderImages.videoThumbTestimonial.src, dataAiHint: placeholderImages.videoThumbTestimonial.hint, category: 'Testimonials', duration: '7:45', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4' },
-  { id: 'v5', title: 'Youth Summit 2023 Recap', description: 'Highlights from the inspiring sessions at the Youth Summit.', thumbnailUrl: placeholderImages.videoThumbYouth.src, dataAiHint: placeholderImages.videoThumbYouth.hint, category: 'Events', duration: '8:03', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
-  { id: 'v6', title: 'Project Management Basics', description: 'A quick guide to managing successful Rotary projects.', thumbnailUrl: placeholderImages.videoThumbPlanning.src, dataAiHint: placeholderImages.videoThumbPlanning.hint, category: 'Trainings', duration: '22:50', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4' },
+  { id: 'v1', title: 'Sunrise Over the Serengeti', description: 'Witness the breathtaking beauty of a sunrise casting its golden hues over the vast plains of the Serengeti.', thumbnailUrl: placeholderImages.videoThumbConference.src, dataAiHint: 'Serengeti sunrise', youtubeVideoId: 'dQw4w9WgXcQ', category: 'Destination Highlights', duration: '2:30', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4' },
+  { id: 'v2', title: 'Gorilla Trekking in Bwindi', description: 'An up-close and personal look at a family of mountain gorillas in Uganda\'s Bwindi Impenetrable Forest.', thumbnailUrl: placeholderImages.videoThumbTraining.src, dataAiHint: 'gorilla family', category: 'Expeditions', duration: '5:45', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4' },
+  { id: 'v3', title: 'The Great Wildebeest Migration', description: 'Experience the thunderous river crossings of the Great Migration, a true wonder of the natural world.', thumbnailUrl: placeholderImages.videoThumbWater.src, dataAiHint: 'wildebeest river', youtubeVideoId: 'rokGy0huYEA', category: 'Nature & Wildlife', duration: '4:10', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4' },
+  { id: 'v4', title: 'Traveler Stories: My First Safari', description: 'Hear from a recent traveler about their unforgettable first safari experience with iffe-travels.', thumbnailUrl: placeholderImages.videoThumbTestimonial.src, dataAiHint: 'tourist testimonial', category: 'Testimonials', duration: '6:22', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4' },
+  { id: 'v5', title: 'Packing for a Safari: Pro Tips', description: 'Our expert guides share their top tips on what to pack for the ultimate safari adventure.', thumbnailUrl: placeholderImages.videoThumbYouth.src, dataAiHint: 'safari packing', category: 'Travel Tips', duration: '3:50', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4' },
+  { id: 'v6', title: 'Okavango Delta Mokoro Trip', description: 'A serene journey through the waterways of the Okavango Delta in a traditional dugout canoe.', thumbnailUrl: placeholderImages.videoThumbPlanning.src, dataAiHint: 'mokoro canoe safari', category: 'Expeditions', duration: '4:30', previewVideoUrl: 'https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4' },
 ];
 
-const availableCategories = ['Events', 'Trainings', 'Campaigns', 'Testimonials', 'All'];
+const availableCategories = ['Destination Highlights', 'Expeditions', 'Nature & Wildlife', 'Travel Tips', 'Testimonials', 'All'];
 
 export default function VideoLibraryPage() {
   const [headerRef, isHeaderVisible] = useScrollAnimation();
@@ -109,13 +109,13 @@ export default function VideoLibraryPage() {
             
             <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
                 <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
-                  <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">FROM THE HUB</p>
+                  <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">FROM THE WILD</p>
                   <h1 className="font-headline text-4xl md:text-5xl font-extrabold mb-4 pb-4 relative bg-gradient-to-r from-white to-yellow-300 bg-clip-text text-transparent">
-                    Video Library
+                    Travel Video Library
                      <span className="absolute bottom-0 left-0 w-20 h-0.5 bg-gradient-to-r from-yellow-400 to-transparent"></span>
                   </h1>
                   <p className="text-lg text-slate-300 max-w-md mb-8">
-                    Watch highlights, trainings, testimonials, and more.
+                    Watch highlights from our expeditions, travel tips from guides, and stories from fellow adventurers.
                   </p>
                   <div className="flex flex-wrap items-center gap-4">
                      <Button size="lg" asChild className="bg-gradient-to-r from-yellow-400 to-orange-400 text-stone-900 font-bold hover:opacity-90 transition-transform hover:scale-105">
@@ -138,7 +138,7 @@ export default function VideoLibraryPage() {
           ))}
         </div>
         <Button variant="secondary" className="bg-accent text-accent-foreground hover:bg-accent/90 shrink-0">
-          <UploadCloud className="mr-2 h-5 w-5" /> Upload Video (Admin/Community)
+          <UploadCloud className="mr-2 h-5 w-5" /> Share Your Video
         </Button>
       </section>
 
