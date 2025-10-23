@@ -134,7 +134,7 @@ body {
   }
   .carousel {
       position: relative;
-      height: 480px;
+      height: 450px;
       perspective: 1200px;
       overflow: hidden;
   }
