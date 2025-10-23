@@ -2,7 +2,7 @@
 'use client';
 
 import { notFound, useParams } from 'next/navigation';
-import { getMockVideoData, type VideoItem } from '../page';
+import { getMockVideoData, type VideoItem } from '../data';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -16,11 +16,12 @@ import { cn } from '@/lib/utils';
 export default function VideoPlayerPage() {
     const params = useParams();
     const { id } = params;
-    const allVideos = getMockVideoData();
+    
     const [video, setVideo] = useState<VideoItem | null>(null);
     const [otherVideos, setOtherVideos] = useState<VideoItem[]>([]);
 
     useEffect(() => {
+        const allVideos = getMockVideoData();
         const currentVideo = allVideos.find(v => v.id === id);
         if (currentVideo) {
             setVideo(currentVideo);
@@ -29,7 +30,7 @@ export default function VideoPlayerPage() {
         } else {
             notFound();
         }
-    }, [id, allVideos]);
+    }, [id]);
 
     const [ref, isVisible] = useScrollAnimation();
 
