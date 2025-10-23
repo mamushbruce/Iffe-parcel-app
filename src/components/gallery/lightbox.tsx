@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -37,9 +37,6 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
   }, [images.length]);
 
   useEffect(() => {
-    // Prevent body from scrolling when lightbox is open
-    document.body.style.overflow = 'hidden';
-    
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') nextImage();
       if (e.key === 'ArrowLeft') prevImage();
@@ -48,9 +45,7 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
 
     window.addEventListener('keydown', handleKeyDown);
     
-    // Cleanup function to restore scrolling
     return () => {
-      document.body.style.overflow = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [nextImage, prevImage, onClose]);
@@ -78,8 +73,7 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-background animate-in fade-in-0"
-      onClick={onClose}
+      className="relative w-full my-8 bg-background animate-in fade-in-0"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >
@@ -94,8 +88,8 @@ const Lightbox: React.FC<LightboxProps> = ({ images, startIndex, onClose }) => {
       </Button>
 
       {/* Main Image and Info */}
-      <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8" onClick={(e) => e.stopPropagation()}>
-        <div className="relative w-full max-w-5xl h-full max-h-[80vh]">
+      <div className="relative w-full h-full flex flex-col items-center justify-center p-4 sm:p-8">
+        <div className="relative w-full max-w-5xl h-[80vh]">
           {isLoading && (
             <div className="absolute inset-0 flex items-center justify-center">
               <RotarySpinner size={48} className="text-foreground" />
