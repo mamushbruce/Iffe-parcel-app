@@ -131,7 +131,7 @@ export default function PackagesPage() {
 
 
   return (
-    <div className="space-y-8 animate-fade-in pb-32">
+    <div className="space-y-8 animate-fade-in pb-[123px]">
        <section ref={headerRef} className={cn('relative w-full h-[80vh] min-h-[600px] overflow-hidden rounded-lg shadow-lg scroll-animate flex items-center', isHeaderVisible && 'scroll-animate-in')}>
         <Image
           src={heroImage}
@@ -176,7 +176,7 @@ export default function PackagesPage() {
         ))}
       </section>
 
-      <section className={cn('text-center mt-12 p-8 bg-card/80 backdrop-blur-sm rounded-lg shadow-inner pb-8')}>
+      <section className={cn('text-center mt-12 p-8 bg-card/80 backdrop-blur-sm rounded-lg shadow-inner')}>
           <h2 className="font-headline text-2xl font-bold text-primary mb-4">Can't find the perfect package?</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Let us create a bespoke journey just for you. From family adventures to photographic expeditions, we can tailor every detail to your desires.</p>
           <Button size="lg" asChild>
