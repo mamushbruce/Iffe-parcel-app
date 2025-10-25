@@ -44,9 +44,14 @@ export default function TestimonialCarousel() {
     const [testimonialIndex, setTestimonialIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
     const [ref, isVisible] = useScrollAnimation();
+    const [clientReady, setClientReady] = useState(false);
+    
+    useEffect(() => {
+        setClientReady(true);
+    }, []);
 
     useEffect(() => {
-        if (!isVisible) return;
+        if (!isVisible || !clientReady) return;
 
         const timer = setInterval(() => {
             setIsAnimating(true);
@@ -57,13 +62,17 @@ export default function TestimonialCarousel() {
         }, 7000); // Change testimonial every 7 seconds
 
         return () => clearInterval(timer);
-    }, [isVisible]);
+    }, [isVisible, clientReady]);
+    
+    if (!clientReady) {
+        return null; // Don't render on the server to prevent hydration issues
+    }
     
     const currentTestimonial = testimonials[testimonialIndex];
 
     return (
-        <section ref={ref} className={cn('scroll-animate py-12', isVisible && 'scroll-animate-in')}>
-            <Card className="bg-transparent w-full max-w-3xl mx-auto border-none shadow-none">
+        <section ref={ref} className={cn('scroll-animate py-8', isVisible && 'scroll-animate-in')}>
+            <Card className="bg-transparent w-full max-w-2xl mx-auto border-none shadow-none">
                 <CardHeader className="text-center">
                     <MessageSquare className="mx-auto h-8 w-8 text-accent mb-2"/>
                     <CardTitle className="font-headline text-2xl text-primary">From Our Travelers</CardTitle>
@@ -72,8 +81,8 @@ export default function TestimonialCarousel() {
                     "transition-all duration-300 ease-in-out",
                     isAnimating ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
                 )}>
-                    <div className="flex flex-col items-center gap-6 text-center">
-                        <Avatar className="h-24 w-24 border-4 border-accent shadow-lg">
+                    <div className="flex flex-col items-center gap-4 text-center">
+                        <Avatar className="h-20 w-20 border-4 border-accent shadow-lg">
                            <Image 
                              src={currentTestimonial.avatarSrc} 
                              alt={currentTestimonial.name} 
@@ -84,7 +93,7 @@ export default function TestimonialCarousel() {
                             <AvatarFallback>{currentTestimonial.name.substring(0,1)}</AvatarFallback>
                         </Avatar>
                         <div className="space-y-2">
-                             <p className="text-lg font-medium text-primary">{currentTestimonial.name}</p>
+                             <p className="font-medium text-primary">{currentTestimonial.name}</p>
                             <div className="flex justify-center">
                                 {Array.from({ length: 5 }).map((_, i) => (
                                     <Star
@@ -98,7 +107,7 @@ export default function TestimonialCarousel() {
                                     />
                                 ))}
                             </div>
-                           <p className="text-muted-foreground italic text-lg max-w-xl">"{currentTestimonial.message}"</p>
+                           <p className="text-muted-foreground italic max-w-lg">"{currentTestimonial.message}"</p>
                         </div>
                     </div>
                 </CardContent>
