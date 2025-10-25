@@ -94,7 +94,7 @@ export default function TestimonialSection() {
         >
             <div className="flex items-start gap-3">
             <Avatar className="h-10 w-10 border-2 border-accent shadow-lg">
-                <AvatarFallback className="bg-primary text-primary-foreground">{currentTestimonial.initials}</AvatarFallback>
+                <AvatarFallback className="bg-primary text-primary-foreground shadow-lg">{currentTestimonial.initials}</AvatarFallback>
             </Avatar>
             <div className="flex-1 bg-muted rounded-lg p-3 shadow-2xl relative">
                 <div className="absolute -left-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-muted"></div>
