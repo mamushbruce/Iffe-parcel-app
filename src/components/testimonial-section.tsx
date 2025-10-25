@@ -90,8 +90,8 @@ export default function TestimonialSection() {
                     <Avatar className="h-10 w-10 border-2 border-accent">
                         <AvatarFallback className="bg-primary text-primary-foreground">{currentTestimonial.initials}</AvatarFallback>
                     </Avatar>
-                    <div className="flex-1 bg-background rounded-lg p-3 shadow-md relative">
-                        <div className="absolute -left-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-background"></div>
+                    <div className="flex-1 bg-card rounded-lg p-3 shadow-2xl relative">
+                        <div className="absolute -left-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8 border-r-card"></div>
                         <p className="text-sm text-foreground font-semibold mb-1">{currentTestimonial.name}</p>
                         <p className="text-sm text-muted-foreground">{currentTestimonial.text}</p>
                         <div className="flex justify-end mt-2">
