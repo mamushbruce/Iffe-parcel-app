@@ -73,7 +73,7 @@ export default function TestimonialPopup() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <div className="w-full flex justify-end p-4 md:p-6 pointer-events-none">
+    <div className="w-full flex justify-end p-4 md:p-6 py-8 pointer-events-none">
       <div
         className={cn(
           "w-80 transition-all duration-1000 pointer-events-auto",
