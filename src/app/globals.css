@@ -342,4 +342,20 @@ body {
     0% { transform: translateX(0); }
     100% { transform: translateX(-100px); }
   }
+
+  /* PiP Animation */
+  .animate-pip-in {
+    animation: pip-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+
+  @keyframes pip-in {
+    from {
+      transform: scale(0.5) translate(100%, 100%);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1) translate(0, 0);
+      opacity: 1;
+    }
+  }
 }
