@@ -18,6 +18,7 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import HeroSection from "@/components/layout/hero-section";
 import { useState } from 'react';
+import TestimonialSection from '@/components/testimonial-section';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -135,6 +136,7 @@ export default function ContactPage() {
             </div>
         </div>
       </div>
+      <TestimonialSection />
     </div>
   );
 }

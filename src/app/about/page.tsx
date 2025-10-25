@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import HeroSection from "@/components/layout/hero-section";
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import FifaCardCarousel from "@/components/fifa-card-carousel";
+import TestimonialSection from "@/components/testimonial-section";
 
 const teamMembers = [
   {
@@ -113,6 +114,8 @@ export default function AboutPage() {
             <div className="carousel-background-overlay" />
             <FifaCardCarousel cards={teamMembers} title="Meet The Team" />
         </section>
+
+        <TestimonialSection />
 
     </div>
   );
