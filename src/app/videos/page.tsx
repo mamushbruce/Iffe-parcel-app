@@ -35,31 +35,35 @@ export default function VideoLibraryPage() {
         onMouseLeave={() => setIsHovering(false)}
       >
         <Card key={video.id} className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow group">
-          <div className="relative w-full aspect-video bg-muted">
-            {isHovering && video.previewVideoUrl ? (
-                <video
-                    src={video.previewVideoUrl}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover"
-                />
-            ) : (
-                <Image src={video.thumbnailUrl} alt={video.title} className="w-full h-full object-cover" data-ai-hint={video.dataAiHint} layout="fill" />
-            )}
-            <div className={cn(
-              "absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity",
-              isHovering ? "opacity-0" : "opacity-0 group-hover:opacity-100"
-            )}>
-              <PlayCircle className="h-16 w-16 text-white/80" />
+          <Link href={`/videos/${video.id}`} className="block">
+            <div className="relative w-full aspect-video bg-muted">
+              {isHovering && video.previewVideoUrl ? (
+                  <video
+                      src={video.previewVideoUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="w-full h-full object-cover"
+                  />
+              ) : (
+                  <Image src={video.thumbnailUrl} alt={video.title} className="w-full h-full object-cover" data-ai-hint={video.dataAiHint} layout="fill" />
+              )}
+              <div className={cn(
+                "absolute inset-0 bg-black/30 flex items-center justify-center transition-opacity",
+                isHovering ? "opacity-0" : "opacity-0 group-hover:opacity-100"
+              )}>
+                <PlayCircle className="h-16 w-16 text-white/80" />
+              </div>
+              {video.duration && (
+                <Badge variant="secondary" className="absolute bottom-2 right-2 text-xs bg-black/70 text-white border-none">{video.duration}</Badge>
+              )}
             </div>
-            {video.duration && (
-              <Badge variant="secondary" className="absolute bottom-2 right-2 text-xs bg-black/70 text-white border-none">{video.duration}</Badge>
-            )}
-          </div>
+          </Link>
           <CardHeader className="p-4">
-            <CardTitle className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors h-14">{video.title}</CardTitle>
+            <CardTitle className="text-lg font-semibold line-clamp-2 group-hover:text-primary transition-colors h-14">
+              <Link href={`/videos/${video.id}`}>{video.title}</Link>
+            </CardTitle>
             <Badge variant="outline" className="w-fit mt-1">{video.category}</Badge>
           </CardHeader>
           <CardContent className="p-4 pt-0">
