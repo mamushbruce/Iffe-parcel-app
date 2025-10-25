@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -78,10 +79,10 @@ export default function TestimonialSection() {
   return (
     <section ref={ref}>
         <div className="py-8">
-            <div className="mx-auto">
+            <div className="mx-auto max-w-2xl">
                 <Card
                     className={cn(
-                    'relative p-4 rounded-xl shadow-2xl bg-card/80 backdrop-blur-sm transition-all duration-1000',
+                    'relative p-4 rounded-xl transition-all duration-1000 border-none bg-transparent shadow-none',
                     isSectionVisible && isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
                     )}
                 >
