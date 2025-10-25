@@ -111,7 +111,7 @@ export default function TestimonialSection() {
             <div className={cn("flex-1 rounded-lg p-3 shadow-2xl relative", currentColor.bg)}>
                 <div className={cn("absolute -left-2 top-2 w-0 h-0 border-t-8 border-t-transparent border-b-8 border-b-transparent border-r-8", currentColor.border)}></div>
                 <p className={cn("text-sm font-semibold mb-1", currentColor.text)}>{currentTestimonial.name}</p>
-                <p className={cn("text-sm", currentColor.text, "opacity-90")}>{currentTestimonial.text}</p>
+                <p className={cn("text-sm font-bold", currentColor.text, "opacity-90")}>{currentTestimonial.text}</p>
                 <div className="flex justify-end mt-2">
                     {[...Array(5)].map((_, i) => (
                         <Star
@@ -130,3 +130,4 @@ export default function TestimonialSection() {
     </section>
   );
 }
+
