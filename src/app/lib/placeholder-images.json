@@ -311,5 +311,11 @@
     "width": 600,
     "height": 338,
     "hint": "planning board"
+  },
+  "contactMap": {
+    "src": "https://picsum.photos/seed/map/800/600",
+    "width": 800,
+    "height": 600,
+    "hint": "city map"
   }
 }

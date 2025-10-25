@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Users, Send } from "lucide-react";
+import { Users, Send, MapPin, Share2, Facebook, Instagram, Twitter } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import HeroSection from "@/components/layout/hero-section";
 import { useState } from 'react';
 import TestimonialSection from '@/components/testimonial-section';
+import Link from 'next/link';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters.'),
@@ -136,6 +137,56 @@ export default function ContactPage() {
             </div>
         </div>
       </div>
+      
+      <div className={cn('grid grid-cols-1 md:grid-cols-2 gap-12 container mx-auto max-w-4xl')}>
+        <AnimatedCard>
+            <CardHeader>
+                <CardTitle className="font-headline text-2xl text-primary flex items-center">
+                    <MapPin className="mr-2 h-6 w-6 text-accent"/> Our Location
+                </CardTitle>
+            </CardHeader>
+            <CardContent>
+                <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-muted">
+                    <Image 
+                        src={placeholderImages.contactMap.src} 
+                        alt="Map showing our location" 
+                        layout="fill"
+                        objectFit="cover"
+                        data-ai-hint={placeholderImages.contactMap.hint}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                        <p className="text-white font-bold text-lg">Map Placeholder</p>
+                    </div>
+                </div>
+                <p className="text-muted-foreground mt-2 text-sm">Plot 123, Adventure Lane, Kampala, Uganda</p>
+            </CardContent>
+        </AnimatedCard>
+        <AnimatedCard>
+            <CardHeader>
+                <CardTitle className="font-headline text-2xl text-primary flex items-center">
+                    <Share2 className="mr-2 h-6 w-6 text-accent"/> Connect With Us
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+                 <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
+                    <Link href="#">
+                        <Facebook className="mr-3 h-6 w-6 text-blue-600"/> Facebook
+                    </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
+                    <Link href="#">
+                        <Instagram className="mr-3 h-6 w-6 text-pink-500"/> Instagram
+                    </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
+                    <Link href="#">
+                        <Twitter className="mr-3 h-6 w-6 text-sky-500"/> Twitter
+                    </Link>
+                </Button>
+            </CardContent>
+        </AnimatedCard>
+      </div>
+
       <TestimonialSection />
     </div>
   );
