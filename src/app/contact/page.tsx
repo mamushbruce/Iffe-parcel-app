@@ -147,16 +147,16 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
                 <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-muted">
-                    <Image 
-                        src={placeholderImages.contactMap.src} 
-                        alt="Map showing our location" 
-                        layout="fill"
-                        objectFit="cover"
-                        data-ai-hint={placeholderImages.contactMap.hint}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                        <p className="text-white font-bold text-lg">Map Placeholder</p>
-                    </div>
+                    <iframe
+                        className="absolute inset-0 w-full h-full"
+                        src="https://maps.google.com/maps?q=0.347596,32.582520&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                        frameBorder="0"
+                        scrolling="no"
+                        marginHeight={0}
+                        marginWidth={0}
+                        title="iffe-travels Location"
+                        loading="lazy"
+                    ></iframe>
                 </div>
                 <p className="text-muted-foreground mt-2 text-sm">Plot 123, Adventure Lane, Kampala, Uganda</p>
             </CardContent>
