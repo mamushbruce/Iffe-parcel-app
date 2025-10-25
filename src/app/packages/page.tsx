@@ -1,6 +1,6 @@
 
 'use client';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
@@ -9,7 +9,6 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import placeholderImages from "@/app/lib/placeholder-images.json";
-import TestimonialCarousel from "@/components/testimonial-carousel";
 import AnimatedSection from "@/components/animated-section";
 
 interface PackageTier {
@@ -181,7 +180,6 @@ export default function PackagesPage() {
         </div>
       </AnimatedSection>
       
-      <TestimonialCarousel />
     </div>
   );
 }
