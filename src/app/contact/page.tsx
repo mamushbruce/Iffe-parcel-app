@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Users, Send, MapPin, Share2, Facebook, Instagram, Twitter } from "lucide-react";
+import { Users, Send, MapPin, Share2, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
@@ -170,17 +170,27 @@ export default function ContactPage() {
             <CardContent className="space-y-3">
                  <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
                     <Link href="#">
-                        <Facebook className="mr-3 h-6 w-6 text-blue-600"/> Facebook
+                        <i className="fa-brands fa-facebook mr-3 h-6 w-6 text-blue-600"></i> Facebook
                     </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
                     <Link href="#">
-                        <Instagram className="mr-3 h-6 w-6 text-pink-500"/> Instagram
+                        <i className="fa-brands fa-instagram mr-3 h-6 w-6 text-pink-500"></i> Instagram
+                    </Link>
+                </Button>
+                 <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
+                    <Link href="#">
+                        <i className="fa-brands fa-x-twitter mr-3 h-6 w-6 text-foreground"></i> X (Twitter)
                     </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
                     <Link href="#">
-                        <Twitter className="mr-3 h-6 w-6 text-sky-500"/> Twitter
+                        <i className="fa-brands fa-linkedin mr-3 h-6 w-6 text-sky-700"></i> LinkedIn
+                    </Link>
+                </Button>
+                 <Button asChild variant="outline" className="w-full justify-start text-lg py-6">
+                    <Link href="#">
+                        <i className="fa-brands fa-tripadvisor mr-3 h-6 w-6 text-green-600"></i> TripAdvisor
                     </Link>
                 </Button>
             </CardContent>
