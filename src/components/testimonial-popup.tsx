@@ -51,7 +51,7 @@ export default function TestimonialPopup() {
 
   useEffect(() => {
     // Initial appearance
-    const initialTimer = setTimeout(() => setIsVisible(true), 1000);
+    const initialTimer = setTimeout(() => setIsVisible(true), 5000); // Delay initial appearance
 
     const cycleTestimonials = () => {
       setIsVisible(false); // Start exit animation
@@ -73,7 +73,7 @@ export default function TestimonialPopup() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <div className="fixed bottom-6 right-6 w-80 z-50 pointer-events-none">
+    <div className="fixed bottom-20 md:bottom-6 right-6 w-80 z-50 pointer-events-none">
       <div
         className={cn(
           "flex items-start gap-3 transition-all duration-1000",
