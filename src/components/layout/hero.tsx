@@ -43,32 +43,6 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
                     objectFit="cover"
                     data-ai-hint={imageHint}
                     priority
-                    className="md:hidden"
-                />
-                <Image
-                    src={imageUrl}
-                    alt={description}
-                    layout="fill"
-                    objectFit="cover"
-                    data-ai-hint={imageHint}
-                    priority
-                    className="hidden md:block"
-                    style={{
-                        maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
-                    }}
-                />
-                 <Image
-                    src={imageUrl}
-                    alt={description}
-                    layout="fill"
-                    objectFit="cover"
-                    data-ai-hint={imageHint}
-                    priority
-                    className="hidden md:block"
-                    style={{
-                        clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)'
-                    }}
                 />
             </div>
         )}
@@ -79,14 +53,9 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
             <p className="font-semibold text-yellow-400 uppercase tracking-widest text-xs mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
             <h1
               className="font-montserrat text-3xl font-black mb-3 tracking-widest uppercase"
-              style={{
-                backgroundImage: `url(${imageUrl})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                color: 'transparent',
-                WebkitTextStroke: '0.5px hsl(var(--primary))',
+               style={{
+                WebkitTextStroke: '0.5px white',
+                color: 'transparent'
               }}
             >
               <span className="block">Explore the</span>
