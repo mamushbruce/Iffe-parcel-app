@@ -77,9 +77,18 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
       <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden">
         <div className="bg-black/20 dark:bg-black/40 backdrop-blur-md rounded-2xl p-6 text-center text-white">
             <p className="font-semibold text-yellow-400 uppercase tracking-widest text-xs mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
-            <h1 className="font-headline text-3xl font-extrabold mb-3 text-white">
-              <span className="block" style={{ color: 'transparent', textShadow: '0 0 2px rgba(255,255,255,0.9)' }}>Explore the</span>
-              <span className="block" style={{ color: 'transparent', textShadow: '0 0 2px rgba(255,255,255,0.9)' }}>PEARL</span>
+            <h1 className="font-headline text-3xl font-extrabold mb-3 text-white"
+                style={{
+                    backgroundImage: `url(${imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    color: 'transparent',
+                }}
+            >
+              <span className="block">Explore the</span>
+              <span className="block">PEARL</span>
             </h1>
             <p className="text-white/90 text-sm max-w-md mb-6 transition-opacity duration-500" key={description}>
                 {description}
@@ -103,7 +112,18 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
         >
           <div className="mix-blend-multiply dark:mix-blend-screen">
             <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
-            <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white">
+            <h1
+              className="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 text-white"
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundAttachment: 'fixed',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+              }}
+            >
                 <span className="block">Explore the</span>
                 <span className="block">PEARL</span>
             </h1>
