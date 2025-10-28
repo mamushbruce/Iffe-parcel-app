@@ -102,7 +102,7 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
           style={{backdropFilter: 'blur(8px)'}}
         >
           <div className="text-primary">
-            <p className="font-semibold text-accent uppercase tracking-widest text-sm mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
+            <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
             <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4">
                 <span className="text-accent block">Explore the</span>
                 <span className="block">PEARL</span>
