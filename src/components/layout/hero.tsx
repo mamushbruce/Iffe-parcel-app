@@ -86,13 +86,7 @@ export default function Hero({ description, imageUrl, imageHint }: HeroProps) {
             <h1
               className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-[3px] uppercase"
               style={{
-                backgroundImage: `url(${imageUrl})`,
-                backgroundAttachment: 'fixed',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                color: 'transparent',
+                color: 'hsl(var(--primary-foreground))',
                 WebkitTextStroke: '1px hsl(var(--primary))',
               }}
             >
