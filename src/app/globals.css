@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Inter', sans-serif; /* Fallback, will be overridden by tailwind config */
+  font-family: 'Lora', serif; /* Fallback, will be overridden by tailwind config */
 }
 
 @layer base {
