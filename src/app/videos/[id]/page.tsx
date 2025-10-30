@@ -1,3 +1,4 @@
+
 'use client';
 
 import { notFound, useParams } from 'next/navigation';
@@ -12,6 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import RotarySpinner from '@/components/ui/rotary-spinner';
 
 export default function VideoPlayerPage() {
     const params = useParams();
@@ -19,12 +21,14 @@ export default function VideoPlayerPage() {
     
     const [video, setVideo] = useState<VideoItem | null>(null);
     const [otherVideos, setOtherVideos] = useState<VideoItem[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     
     const [showPip, setShowPip] = useState(false);
     const playerContainerRef = useRef<HTMLDivElement>(null);
     const isMobile = useIsMobile(1024);
 
     useEffect(() => {
+        setIsLoading(true);
         const allVideos = getMockVideoData();
         const currentVideo = allVideos.find(v => v.id === id);
 
@@ -32,22 +36,20 @@ export default function VideoPlayerPage() {
             setVideo(currentVideo);
             const relatedVideos = allVideos.filter(v => v.id !== id);
             setOtherVideos(relatedVideos);
-            // Reset PiP state when video changes
             setShowPip(false);
             window.scrollTo(0, 0);
         } else {
             notFound();
         }
+        setIsLoading(false);
     }, [id]);
 
     useEffect(() => {
         const handleScroll = () => {
             if (playerContainerRef.current) {
                 const { bottom } = playerContainerRef.current.getBoundingClientRect();
-                // Activate PiP only if the user has scrolled past the player
                 if (bottom < 0 && !showPip) {
                     setShowPip(true);
-                // Deactivate PiP if the player is back in view
                 } else if (bottom >= 0 && showPip) {
                     setShowPip(false);
                 }
@@ -60,26 +62,30 @@ export default function VideoPlayerPage() {
 
     const [ref, isVisible] = useScrollAnimation();
 
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-[60vh]">
+                <RotarySpinner size={48} />
+                <p className="ml-4 text-muted-foreground">Loading video...</p>
+            </div>
+        );
+    }
+    
     if (!video) {
-        return null; // Or a loading spinner
+        return null;
     }
 
     const youtubeEmbedUrl = `https://www.youtube.com/embed/${video.youtubeVideoId}?autoplay=1`;
 
     const handleClosePip = () => {
       setShowPip(false);
-      // Optional: Scroll back to the top of the player when closing PiP
       if(playerContainerRef.current) {
         playerContainerRef.current.scrollIntoView({ behavior: 'smooth' });
       }
     };
 
     const VideoPlayer = () => (
-        <div
-            className={cn(
-                "aspect-video w-full rounded-lg overflow-hidden shadow-lg bg-black transition-all duration-300",
-            )}
-        >
+        <div className="aspect-video w-full rounded-lg overflow-hidden shadow-lg bg-black">
             <iframe
                 className="w-full h-full"
                 src={youtubeEmbedUrl}
@@ -92,11 +98,7 @@ export default function VideoPlayerPage() {
     );
 
      const PipPlayer = () => (
-        <div
-            className={cn(
-                "fixed bottom-4 right-4 z-50 w-[320px] aspect-video rounded-lg overflow-hidden shadow-2xl bg-black animate-pip-in",
-            )}
-        >
+        <div className="fixed bottom-4 right-4 z-50 w-[320px] aspect-video rounded-lg overflow-hidden shadow-2xl bg-black animate-pip-in">
             <iframe
                 className="w-full h-full"
                 src={youtubeEmbedUrl}
@@ -151,18 +153,15 @@ export default function VideoPlayerPage() {
                 </Link>
             </Button>
             
-            <div ref={playerContainerRef} className={cn("transition-all duration-300", showPip ? "aspect-video" : "")}>
-                 {/* This container preserves space. The player inside is always rendered. */}
-                <div className={cn(showPip ? "opacity-0" : "opacity-100")}>
-                    <VideoPlayer />
-                </div>
+            <div ref={playerContainerRef}>
+                <VideoPlayer />
             </div>
 
             {showPip && <PipPlayer />}
 
             <div className={cn(
               "grid gap-8 transition-all duration-300",
-              "grid-cols-1 lg:grid-cols-3" // Always use 3-column layout on desktop
+              "grid-cols-1 lg:grid-cols-3"
             )}>
               <div className="lg:col-span-2 space-y-6">
                 <Card>
@@ -177,11 +176,9 @@ export default function VideoPlayerPage() {
                         <CardDescription>{video.description}</CardDescription>
                     </CardContent>
                 </Card>
-                 {/* Mobile-only view for related videos */}
                 {isMobile && <RelatedVideosList />}
               </div>
               
-              {/* Desktop-only sidebar for related videos */}
               {!isMobile && (
                 <aside>
                   <RelatedVideosList />
