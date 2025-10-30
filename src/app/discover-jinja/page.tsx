@@ -10,6 +10,7 @@ import BookingForm from '@/components/booking-form';
 import WhatsAppCTA from '@/components/layout/whatsapp-cta';
 import { Metadata } from 'next';
 import Script from 'next/script';
+import Link from 'next/link';
 
 const jinjaHeroImage = { src: 'https://picsum.photos/seed/jinja-nile/1920/1080', hint: 'river nile jinja' };
 const sourceOfTheNileImage = { src: 'https://picsum.photos/seed/source-nile/600/400', hint: 'source of nile' };
