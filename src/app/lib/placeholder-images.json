@@ -317,5 +317,29 @@
     "width": 800,
     "height": 600,
     "hint": "city map"
+  },
+  "sipiHero": {
+    "src": "https://picsum.photos/seed/sipi-falls-hero/1920/1080",
+    "width": 1920,
+    "height": 1080,
+    "hint": "sipi falls uganda"
+  },
+  "sipiHiking": {
+    "src": "https://picsum.photos/seed/sipi-hiking/600/400",
+    "width": 600,
+    "height": 400,
+    "hint": "hiking mount elgon"
+  },
+  "sipiAbseiling": {
+    "src": "https://picsum.photos/seed/sipi-abseiling/600/400",
+    "width": 600,
+    "height": 400,
+    "hint": "abseiling waterfall"
+  },
+  "sipiCoffee": {
+    "src": "https://picsum.photos/seed/sipi-coffee/600/400",
+    "width": 600,
+    "height": 400,
+    "hint": "coffee beans uganda"
   }
 }
