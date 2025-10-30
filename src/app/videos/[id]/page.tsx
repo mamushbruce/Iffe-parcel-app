@@ -44,8 +44,10 @@ export default function VideoPlayerPage() {
         const handleScroll = () => {
             if (playerContainerRef.current) {
                 const { bottom } = playerContainerRef.current.getBoundingClientRect();
+                // Activate PiP only if the user has scrolled past the player
                 if (bottom < 0 && !isPip) {
                     setIsPip(true);
+                // Deactivate PiP if the player is back in view
                 } else if (bottom >= 0 && isPip) {
                     setIsPip(false);
                 }
@@ -135,7 +137,7 @@ export default function VideoPlayerPage() {
                 </Link>
             </Button>
             
-            <div ref={playerContainerRef} className={cn("transition-all duration-500", isPip && "h-0 mb-0")}>
+            <div ref={playerContainerRef} className={cn("transition-all duration-500", isPip ? "aspect-video" : "")}>
                 {!isPip && <VideoPlayer isPipMode={false} />}
             </div>
             {isPip && <VideoPlayer isPipMode={true} />}
@@ -165,7 +167,7 @@ export default function VideoPlayerPage() {
               {!isMobile && (
                 <aside className={cn(
                   "transition-opacity duration-500",
-                   isPip ? "opacity-100" : "opacity-0 hidden lg:block"
+                   isPip ? "opacity-100" : "opacity-100" // Always visible now on desktop
                 )}>
                   <RelatedVideosList />
                 </aside>
