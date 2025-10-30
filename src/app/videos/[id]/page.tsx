@@ -37,7 +37,9 @@ export default function VideoPlayerPage() {
             const relatedVideos = allVideos.filter(v => v.id !== id);
             setOtherVideos(relatedVideos);
             setShowPip(false);
-            window.scrollTo(0, 0);
+            if (typeof window !== 'undefined') {
+              window.scrollTo(0, 0);
+            }
         } else {
             notFound();
         }
@@ -47,7 +49,7 @@ export default function VideoPlayerPage() {
     useEffect(() => {
         const handleScroll = () => {
             if (playerContainerRef.current) {
-                const { bottom } = playerContainerRef.current.getBoundingClientRect();
+                const { bottom } = playerContainerref.current.getBoundingClientRect();
                 if (bottom < 0 && !showPip) {
                     setShowPip(true);
                 } else if (bottom >= 0 && showPip) {
@@ -56,8 +58,10 @@ export default function VideoPlayerPage() {
             }
         };
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        if (typeof window !== 'undefined') {
+          window.addEventListener('scroll', handleScroll, { passive: true });
+          return () => window.removeEventListener('scroll', handleScroll);
+        }
     }, [showPip]);
 
     const [ref, isVisible] = useScrollAnimation();
