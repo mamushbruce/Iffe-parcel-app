@@ -17,7 +17,7 @@ interface ChatMessage {
   id: string;
   text: string;
   sender: 'user' | 'other';
-  timestamp: Date;
+  timestamp: string; // Store as string to avoid date object issues
   avatarUrl?: string;
   avatarWidth?: number;
   avatarHeight?: number;
@@ -47,24 +47,23 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [clientReady, setClientReady] = useState(false);
   const [ref, isVisible] = useScrollAnimation();
 
   useEffect(() => {
-    setClientReady(true);
+    // This effect runs only on the client, ensuring dates are handled correctly
     setMessages([
       {
         id: '1',
         text: 'Welcome to the traveler\'s chat! Have questions about a tour? Ask away!',
         sender: 'other',
-        timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
+        timestamp: new Date(Date.now() - 1000 * 60 * 5).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
         ...otherUserMock,
       },
       {
         id: '2',
         text: 'Hello! I\'m interested in the Gorilla Trekking tour.',
         sender: 'user',
-        timestamp: new Date(Date.now() - 1000 * 60 * 3), // 3 minutes ago
+        timestamp: new Date(Date.now() - 1000 * 60 * 3).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
         ...currentUser,
       },
     ]);
@@ -86,7 +85,7 @@ export default function ChatPage() {
       id: String(Date.now()),
       text: newMessage,
       sender: 'user',
-      timestamp: new Date(),
+      timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
       ...currentUser,
     };
 
@@ -99,7 +98,7 @@ export default function ChatPage() {
         id: String(Date.now() + 1),
         text: `Thanks for your message about: "${userMessage.text.substring(0, 30)}${userMessage.text.length > 30 ? "..." : ""}". I am a mock assistant. A real guide will be with you shortly!`,
         sender: 'other',
-        timestamp: new Date(),
+        timestamp: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
         ...otherUserMock,
       };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
@@ -146,7 +145,7 @@ export default function ChatPage() {
                       msg.sender === 'user' ? 'text-muted-foreground text-right' : 'text-muted-foreground text-left'
                     )}
                   >
-                    {clientReady ? msg.timestamp.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) : '...'}
+                    {msg.timestamp}
                   </p>
                 </div>
               </div>

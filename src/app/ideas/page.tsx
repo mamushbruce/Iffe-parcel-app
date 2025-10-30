@@ -132,19 +132,24 @@ export default function IdeaBoxPage() {
 
   const onSubmitIdea: SubmitHandler<IdeaFormValues> = async (data) => {
     setIsSubmitting(true);
+    // This client-side only operation avoids hydration errors
+    const submissionDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    
     await new Promise(resolve => setTimeout(resolve, 1000));
+    
     const newIdea = {
       id: String(ideas.length + 1 + Date.now()),
       title: data.title,
       description: data.description,
       submittedBy: 'CurrentUser', 
-      dateSubmitted: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      dateSubmitted: submissionDate,
       votes: 0,
       commentsCount: 0,
       status: 'New' as 'New',
       imageUrl: data.imageUrl || placeholderImages.ideaWalkingSafari.src, 
       dataAiHint: data.dataAiHint || 'innovative idea',
     };
+    
     setIdeas(prevIdeas => [newIdea, ...prevIdeas]);
     toast({ title: "Trip Idea Submitted!", description: "Your suggestion has been added."});
     reset();

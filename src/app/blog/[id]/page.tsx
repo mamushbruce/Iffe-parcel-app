@@ -31,6 +31,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
   const [ref, isVisible] = useScrollAnimation();
 
   useEffect(() => {
+    // This runs only on the client, after hydration
     setFormattedDate(mockPost.date.toLocaleDateString());
   }, [mockPost.date]);
 
@@ -45,7 +46,7 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
         <CardHeader>
           <CardTitle className="font-headline text-3xl text-primary">{mockPost.title}</CardTitle>
           <CardDescription>
-            By {mockPost.author} on {formattedDate}
+            By {mockPost.author} on {formattedDate || '...'}
           </CardDescription>
         </CardHeader>
         <CardContent>

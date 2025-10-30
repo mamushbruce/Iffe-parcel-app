@@ -109,12 +109,18 @@ export default function CampaignDetailPage({ params }: { params: { id: string } 
     getCampaign(params.id).then(data => {
         if(data) {
             setCampaign(data);
-            setFormattedDate(new Date(data.endDate).toLocaleDateString())
         } else {
             notFound();
         }
     });
   }, [params.id]);
+
+  useEffect(() => {
+    if (campaign?.endDate) {
+      // This runs only on the client, after hydration
+      setFormattedDate(new Date(campaign.endDate).toLocaleDateString())
+    }
+  }, [campaign?.endDate]);
 
   if (!campaign) {
     // You might want to show a loader here
