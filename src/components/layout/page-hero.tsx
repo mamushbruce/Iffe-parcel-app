@@ -56,11 +56,10 @@ export default function PageHero({ title, subtitle, imageUrl, dataAiHint, primar
         
         <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
             <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
-              <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">TOUR TRAVEL & ADVENTURE CAMPING</p>
+              <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
               <h1
-                className="font-headline text-4xl md:text-5xl font-black mb-4 pb-4 relative uppercase tracking-widest"
+                className="font-headline text-4xl md:text-5xl font-black mb-4 pb-4 relative uppercase tracking-widest text-primary-foreground"
                 style={{
-                  color: 'hsl(var(--primary-foreground))',
                   WebkitTextStroke: '1px hsl(var(--primary))',
                 }}
               >
