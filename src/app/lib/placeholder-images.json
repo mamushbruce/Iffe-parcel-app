@@ -383,5 +383,113 @@
     "width": 600,
     "height": 350,
     "hint": "karuma falls"
+  },
+  "campaignBwindi": {
+    "src": "https://picsum.photos/seed/bwindi/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "bwindi forest"
+  },
+  "campaignQueenElizabeth": {
+    "src": "https://picsum.photos/seed/queen-elizabeth/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "tree climbing lion"
+  },
+  "campaignKibale": {
+    "src": "https://picsum.photos/seed/kibale/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "chimpanzee forest"
+  },
+  "campaignRwenzori": {
+    "src": "https://picsum.photos/seed/rwenzori/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "rwenzori mountains"
+  },
+  "campaignBunyonyi": {
+    "src": "https://picsum.photos/seed/bunyonyi/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "lake bunyonyi"
+  },
+  "campaignMburo": {
+    "src": "https://picsum.photos/seed/mburo/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "zebra safari"
+  },
+  "campaignElgon": {
+    "src": "https://picsum.photos/seed/elgon/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "mount elgon"
+  },
+  "campaignSipi": {
+    "src": "https://picsum.photos/seed/sipi/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "sipi falls"
+  },
+  "campaignBusoga": {
+    "src": "https://picsum.photos/seed/busoga/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "cultural kingdom"
+  },
+  "campaignKidepo": {
+    "src": "https://picsum.photos/seed/kidepo/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "kidepo valley"
+  },
+  "campaignPianUpe": {
+    "src": "https://picsum.photos/seed/pian-upe/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "savannah reserve"
+  },
+  "campaignKampala": {
+    "src": "https://picsum.photos/seed/kampala/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "kampala city"
+  },
+  "campaignEntebbe": {
+    "src": "https://picsum.photos/seed/entebbe/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "entebbe botanical"
+  },
+  "campaignNgamba": {
+    "src": "https://picsum.photos/seed/ngamba/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "chimpanzee sanctuary"
+  },
+  "campaignMabira": {
+    "src": "https://picsum.photos/seed/mabira/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "rainforest zip"
+  },
+  "campaignSsese": {
+    "src": "https://picsum.photos/seed/ssese/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "lake victoria island"
+  },
+  "campaignSemuliki": {
+    "src": "https://picsum.photos/seed/semuliki/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "semuliki hot springs"
+  },
+  "campaignFortPortal": {
+    "src": "https://picsum.photos/seed/fort-portal/600/350",
+    "width": 600,
+    "height": 350,
+    "hint": "crater lake"
   }
 }
