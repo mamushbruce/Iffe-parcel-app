@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Tag, ArrowRight, PlusCircle } from 'lucide-react';
+import { Tag, ArrowRight, PlusCircle, Loader2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
@@ -39,9 +39,21 @@ const mockCampaignsData: CampaignTeaser[] = [
   { id: '11', title: 'Karuma Falls Wildlife Tour', imageUrl: placeholderImages.campaignKaruma.src, dataAiHint: 'karuma falls', shortDescription: 'Spot wildlife near the stunning Karuma Falls.', goal: 100, currentAmount: 85, tags: ['#Wildlife', '#NationalPark'] },
 ];
 
+const ITEMS_PER_PAGE = 6;
 
 export default function CampaignsPage() {
-  const campaigns: CampaignTeaser[] = mockCampaignsData;
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+
+  const handleLoadMore = () => {
+    setIsLoadingMore(true);
+    setTimeout(() => {
+      setVisibleCount(prevCount => prevCount + ITEMS_PER_PAGE);
+      setIsLoadingMore(false);
+    }, 500); // Simulate network delay
+  };
+
+  const campaignsToShow = mockCampaignsData.slice(0, visibleCount);
 
   const AnimatedCard = ({ campaign }: { campaign: CampaignTeaser }) => {
     const [ref, isVisible] = useScrollAnimation();
@@ -49,7 +61,7 @@ export default function CampaignsPage() {
     const [imgSrc, setImgSrc] = useState(campaign.imageUrl);
 
     return (
-        <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
+        <div ref={ref} className={cn('scroll-animate h-full', isVisible && 'scroll-animate-in')}>
             <Card key={campaign.id} className="overflow-hidden shadow-lg transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 flex flex-col h-full bg-card/80 backdrop-blur-sm">
             <div className="relative w-full h-48">
                 <Image 
@@ -107,9 +119,9 @@ export default function CampaignsPage() {
         dataAiHint={placeholderImages.campaignDetailWildebeest.hint}
       />
 
-      {campaigns.length > 0 ? (
+      {campaignsToShow.length > 0 ? (
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {campaigns.map(campaign => (
+          {campaignsToShow.map(campaign => (
             <AnimatedCard key={campaign.id} campaign={campaign} />
           ))}
         </section>
@@ -118,7 +130,18 @@ export default function CampaignsPage() {
           <p className="text-xl text-muted-foreground">No tours found. Check back later or suggest a new one!</p>
         </div>
       )}
-       <div className="text-center mt-12">
+
+      <div className="text-center mt-12 space-y-4">
+        {visibleCount < mockCampaignsData.length && (
+            <Button size="lg" variant="secondary" onClick={handleLoadMore} disabled={isLoadingMore}>
+                {isLoadingMore ? (
+                    <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Loading...
+                    </>
+                ) : "Load More Tours"}
+            </Button>
+        )}
         <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10 hover:text-accent whitespace-normal text-center h-auto" asChild>
           <Link href="/campaigns/new" className="flex items-center justify-center">
             <PlusCircle className="mr-0 md:mr-2 h-5 w-5" />
