@@ -193,7 +193,7 @@ export default function Home() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground mb-3">Discover stories and photos from {item.name}.</p>
+                      <p className="text-sm text-muted-foreground mb-3">Learn more about our expert guides and their experiences in the wild. Check out their profile for stories, photos, and upcoming tours.</p>
                        <Button variant="outline" asChild size="sm">
                          <Link href={item.profileLink}>
                            View Profile <ArrowRight className="ml-2 h-4 w-4" />
