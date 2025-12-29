@@ -108,7 +108,7 @@ const initialFeedItems: FeedItem[] = [
   {
     id: 'creator-2',
     type: 'creator',
-    name: 'Ranger Tom',
+    name: 'Ranger Ben',
     avatarUrl: placeholderImages.homeCreatorTom.src,
     avatarWidth: placeholderImages.homeCreatorTom.width,
     avatarHeight: placeholderImages.homeCreatorTom.height,
@@ -135,7 +135,7 @@ export default function Home() {
   
 
   return (
-    <>
+    
       <div className="relative z-10 space-y-12 animate-fade-in">
         <section>
           <Hero />
@@ -273,6 +273,6 @@ export default function Home() {
             />
         </section>
       </div>
-    </>
+    
   );
 }
