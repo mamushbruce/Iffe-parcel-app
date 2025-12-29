@@ -42,7 +42,7 @@
     "skill": "8 Activities",
     "image": "fifaCardNile",
     "dataAiHint": "nile river cruise",
-    "link": "/discover-jinja"
+    "link": "/campaigns/nile-cruise"
   },
   {
     "id": "5",
@@ -53,6 +53,6 @@
     "skill": "3 Activities",
     "image": "fifaCardKili",
     "dataAiHint": "mount kilimanjaro",
-    "link": "/campaigns/1"
+    "link": "/campaigns/kilimanjaro-hike"
   }
 ]

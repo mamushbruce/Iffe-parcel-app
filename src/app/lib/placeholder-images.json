@@ -491,5 +491,17 @@
     "width": 600,
     "height": 350,
     "hint": "crater lake"
+  },
+   "campaignNileCruise": {
+    "src": "https://picsum.photos/seed/nile-cruise/1200/600",
+    "width": 1200,
+    "height": 600,
+    "hint": "nile river cruise"
+  },
+  "campaignKilimanjaro": {
+    "src": "https://picsum.photos/seed/kilimanjaro-hike/1200/600",
+    "width": 1200,
+    "height": 600,
+    "hint": "mount kilimanjaro"
   }
 }
