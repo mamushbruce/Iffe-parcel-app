@@ -1,7 +1,7 @@
 
 'use client';
 import Link from 'next/link';
-import { Globe, Facebook, Twitter, Instagram, Waves, Mountain } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Waves, Mountain, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -38,17 +38,21 @@ export default function AppFooter() {
             {/* Column 1: Brand, Newsletter, Social */}
             <div className="space-y-6">
                 <div>
-                <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold text-primary mb-4">
-                    <Globe size={28} className="text-primary" />
-                    iffe-travels
-                </Link>
-                <p className="text-sm text-muted-foreground mb-4 max-w-sm">
-                    Subscribe to our newsletter for the latest travel deals, tips, and stories from the wild.
-                </p>
-                <form className="flex w-full max-w-sm" onSubmit={handleNewsletterSubmit}>
-                    <Input name="email" type="email" placeholder="Enter your email" className="rounded-r-none focus:ring-accent focus:border-accent" />
-                    <Button type="submit" className="rounded-l-none bg-accent text-accent-foreground hover:bg-accent/90">Subscribe</Button>
-                </form>
+                    <Link href="/" className="flex items-center gap-2 font-headline text-xl font-bold text-primary mb-4">
+                        <Globe size={28} className="text-primary" />
+                        iffe-travels
+                    </Link>
+                    <div className="flex items-start text-sm text-muted-foreground mb-4 max-w-sm">
+                        <MapPin className="h-4 w-4 mr-2 mt-1 text-accent shrink-0" />
+                        <span>Plot 123, Adventure Lane, Kampala, Uganda</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4 max-w-sm">
+                        Subscribe to our newsletter for the latest travel deals, tips, and stories from the wild.
+                    </p>
+                    <form className="flex w-full max-w-sm" onSubmit={handleNewsletterSubmit}>
+                        <Input name="email" type="email" placeholder="Enter your email" className="rounded-r-none focus:ring-accent focus:border-accent" />
+                        <Button type="submit" className="rounded-l-none bg-accent text-accent-foreground hover:bg-accent/90">Subscribe</Button>
+                    </form>
                 </div>
                 <div>
                 <h3 className="font-headline text-lg font-semibold text-primary mb-3">Follow Us</h3>
