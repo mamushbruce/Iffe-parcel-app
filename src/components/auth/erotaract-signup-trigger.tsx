@@ -26,7 +26,7 @@ export default function ERotaractSignupTrigger() {
         className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90" 
         onClick={openSignupModalForERotaract}
       >
-        <ShieldCheck className="mr-2 h-5 w-5" /> Join the Iffe Explorers Club
+        <ShieldCheck className="mr-2 h-5 w-5" /> Join the Iffe Explorer's Club
       </Button>
     </>
   );
