@@ -4,7 +4,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, UserCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, UserCircle, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import cardDataFromFile from '@/app/lib/fifa-card-data.json';
 import { cn } from '@/lib/utils';
@@ -158,11 +158,11 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
                         </div>
                         <div className="card-content">
                             <h3 className="card-title">{card.title}</h3>
-                            <div className="card-location">{card.country}</div>
+                            <div className="card-location"><MapPin className="mr-1 h-4 w-4" />{card.country}</div>
                             <Button asChild className="card-button w-full">
                                 <Link href={card.link}>
                                   <UserCircle className="mr-2 h-4 w-4" />
-                                  View Profile
+                                  View More
                                 </Link>
                             </Button>
                         </div>
