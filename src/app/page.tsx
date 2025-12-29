@@ -72,8 +72,8 @@ const initialFeedItems: FeedItem[] = [
     post: {
       id: 'b1', 
       title: 'A Lion\'s Tale: A Close Encounter',
-      author: 'David Attenborough',
-      date: 'Nov 05, 2023',
+      author: 'Dr Ian',
+      date: 'Nov 05, 2025',
       excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.',
       imageUrl: 'https://picsum.photos/seed/lionPride/600/400',
       dataAiHint: 'lion pride',
