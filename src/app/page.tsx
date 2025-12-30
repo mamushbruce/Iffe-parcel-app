@@ -137,7 +137,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="relative z-10 space-y-12 animate-fade-in">
+      <div className="relative z-10 space-y-12 animate-fade-in pt-12">
         <section>
           <AnimatedCard>
           <Card className="shadow-lg bg-card/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
