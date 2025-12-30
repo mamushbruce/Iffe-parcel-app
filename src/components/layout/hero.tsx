@@ -20,10 +20,10 @@ const backgroundContent = [
 
 const TornPaperSVG = () => (
   <svg
-    className="absolute top-0 right-0 h-full w-[60px] text-old-paper/50 dark:text-background/50 backdrop-blur-md"
+    className="absolute top-0 right-0 h-full w-[60px] text-old-paper/70 dark:text-background/70 z-20 drop-shadow-[0_5px_5px_rgba(0,0,0,0.25)]"
     viewBox="0 0 60 1000"
     preserveAspectRatio="none"
-    style={{ transform: 'translateX(100%)' }}
+    style={{ transform: 'translateX(50%)' }}
   >
     <path
       d="M 50 0 L 40 15 C 60 25, 40 35, 50 50 L 35 60 C 55 70, 35 80, 45 95 L 55 105 C 35 115, 55 125, 50 140 L 40 155 C 60 165, 40 175, 50 190 L 35 200 C 55 210, 35 220, 45 235 L 55 245 C 35 255, 55 265, 50 280 L 40 295 C 60 305, 40 315, 50 330 L 35 340 C 55 350, 35 360, 45 375 L 55 385 C 35 395, 55 405, 50 420 L 40 435 C 60 445, 40 455, 50 470 L 35 480 C 55 490, 35 500, 45 515 L 55 525 C 35 535, 55 545, 50 560 L 40 575 C 60 585, 40 595, 50 610 L 35 620 C 55 630, 35 640, 45 655 L 55 665 C 35 675, 55 685, 50 700 L 40 715 C 60 725, 40 735, 50 750 L 35 760 C 55 770, 35 780, 45 795 L 55 805 C 35 815, 55 825, 50 840 L 40 855 C 60 865, 40 875, 50 890 L 35 900 C 55 910, 35 920, 45 935 L 55 945 C 35 955, 55 965, 50 980 L 40 995 L 50 1000 L 0 1000 L 0 0 Z"
@@ -37,14 +37,17 @@ export default function Hero() {
   const [ref, isVisible] = useScrollAnimation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setHasScrolled(true);
-      } else {
-        setHasScrolled(false);
-      }
+      const scrollY = window.scrollY;
+      setHasScrolled(scrollY > 10);
+
+      const animationStart = 10;
+      const animationEnd = 200;
+      const progress = Math.max(0, Math.min(1, (scrollY - animationStart) / (animationEnd - animationStart)));
+      setScrollProgress(progress);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -103,7 +106,7 @@ export default function Hero() {
               <span className="block">Explore the</span>
               <span className="block">PEARL</span>
             </h1>
-            <p className={cn("text-white/90 text-sm max-w-md transition-opacity duration-500", hasScrolled ? "h-12 line-clamp-2" : "h-16 mb-6")} key={currentBg.description}>
+            <p className={cn("text-white/90 text-sm max-w-md transition-opacity duration-500", hasScrolled ? "h-12 line-clamp-2" : "h-16")} key={currentBg.description}>
                 {currentBg.description}
             </p>
             <div className="space-y-4">
@@ -129,8 +132,8 @@ export default function Hero() {
           <div className="mix-blend-multiply dark:mix-blend-screen">
             <p className={cn("font-semibold text-primary uppercase tracking-widest mb-2 transition-all duration-500", hasScrolled ? 'text-xs' : 'text-sm')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
              <div className={cn("font-black mb-4 tracking-[3px] uppercase transition-all duration-500", hasScrolled ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl lg:text-6xl")}>
-                <DockTextEffect text="Explore the" className="font-headline dock-text-container" />
-                <DockTextEffect text="PEARL" className="font-headline dock-text-container" />
+                <DockTextEffect text="Explore the" className="font-headline dock-text-container" scrollProgress={scrollProgress} />
+                <DockTextEffect text="PEARL" className="font-headline dock-text-container" scrollProgress={scrollProgress} />
             </div>
             <div className={cn("h-1 bg-accent mb-6 transition-all duration-500", hasScrolled ? "w-16" : "w-24")}></div>
              <p className={cn("text-muted-foreground max-w-md transition-all duration-500", hasScrolled ? 'text-sm h-16' : 'h-20 mb-8')} key={currentBg.description}>
