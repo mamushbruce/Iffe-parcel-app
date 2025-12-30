@@ -63,8 +63,8 @@ export default function Hero() {
     <div 
         ref={ref} 
         className={cn(
-            'relative w-full overflow-hidden shadow-2xl scroll-animate bg-background transition-all duration-700 ease-in-out',
-            hasScrolled ? 'h-[60vh] min-h-[500px] rounded-lg' : 'h-screen min-h-[600px] rounded-none',
+            'relative w-full overflow-hidden shadow-2xl scroll-animate bg-background transition-all duration-700 ease-in-out -mt-[68px]', // Negative margin to pull it up
+            hasScrolled ? 'h-[60vh] min-h-[500px] rounded-b-lg' : 'h-screen min-h-[600px] rounded-none',
             isVisible && 'scroll-animate-in'
         )}
     >
@@ -87,7 +87,7 @@ export default function Hero() {
       </div>
       
       {/* Mobile Content Container */}
-      <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden">
+      <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden pt-[68px]">
         <div className="bg-black/20 dark:bg-black/40 backdrop-blur-md rounded-2xl p-6 text-center text-white">
             <p className="font-semibold text-primary uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
             <h1
@@ -114,7 +114,7 @@ export default function Hero() {
       </div>
 
       {/* Desktop Content Container */}
-      <div className="relative h-full hidden md:flex items-center z-10">
+      <div className="relative h-full hidden md:flex items-center z-10 pt-[68px]">
         {/* Left Panel */}
         <div 
           className="relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-old-paper/70 dark:bg-background/70 md:bg-old-paper/50 md:dark:bg-background/50 p-8 md:p-12"
