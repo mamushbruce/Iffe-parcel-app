@@ -97,7 +97,7 @@ export default function Hero() {
       
       {/* Mobile Content Container */}
       <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden pt-[68px]">
-        <div className="bg-black/20 dark:bg-black/40 backdrop-blur-md rounded-2xl p-6 text-center text-white">
+        <div className="bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent backdrop-blur-md rounded-2xl p-6 text-center text-white">
             <p className={cn("font-semibold text-primary uppercase tracking-widest mb-2 transition-all duration-500", hasScrolled ? 'text-xs' : 'text-sm')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
             <h1
               className={cn("font-headline font-black mb-3 tracking-widest uppercase transition-all duration-500", hasScrolled ? "text-2xl" : "text-3xl")}
@@ -127,7 +127,7 @@ export default function Hero() {
         {/* Left Panel */}
         <div 
           className={cn(
-            "relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-background/50 transition-all duration-500",
+            "relative w-full md:w-1/2 lg:w-2/5 h-full flex flex-col justify-center bg-gradient-to-r from-background/70 via-background/70 to-transparent transition-all duration-500",
              hasScrolled ? 'p-6 md:p-8' : 'p-8 md:p-12'
           )}
           style={{backdropFilter: 'blur(8px)'}}
