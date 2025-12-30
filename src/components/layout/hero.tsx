@@ -111,13 +111,13 @@ export default function Hero() {
              <p className="text-muted-foreground max-w-md mb-8 h-20 transition-opacity duration-500" key={currentBg.description}>
                 {currentBg.description}
             </p>
-            <div className="flex items-center justify-between w-full">
-               <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg py-7 px-8 rounded-full">
+            <div className="flex items-center gap-4">
+               <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 text-md py-6 px-8 rounded-full">
                 <Link href="/contact">
                   LET'S GET STARTED
                 </Link>
               </Button>
-               <Button variant="outline" asChild className="rounded-full px-6 py-5 text-sm border-primary/50 text-primary hover:bg-primary/5 hover:text-primary">
+               <Button variant="outline" asChild className="rounded-full px-6 py-6 text-sm border-primary/50 text-primary hover:bg-primary/5 hover:text-primary">
                 <Link href="/about">Who we are</Link>
               </Button>
             </div>
