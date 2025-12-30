@@ -34,15 +34,14 @@ const AppHeader = () => {
   }, []);
 
   const controlNavbar = useCallback(() => {
-      const currentScrollTop = window.scrollY;
-      if (currentScrollTop > lastScrollY.current && currentScrollTop > headerHeight + 50) { 
+      const currentScrollY = window.scrollY;
+      // Hide header
+      if (currentScrollY > lastScrollY.current && currentScrollY > headerHeight) {
         setShowNavbar(false);
-      } else { 
-        if (currentScrollTop < lastScrollY.current || currentScrollTop <= 50) {
-            setShowNavbar(true);
-        }
+      } else { // Show header
+        setShowNavbar(true);
       }
-      lastScrollY.current = currentScrollTop;
+      lastScrollY.current = currentScrollY;
   }, [headerHeight]);
 
   useEffect(() => {
