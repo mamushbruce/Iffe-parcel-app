@@ -68,7 +68,7 @@ export default function Hero() {
       {/* Mobile Content Container */}
       <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden">
         <div className="bg-black/20 dark:bg-black/40 backdrop-blur-md rounded-2xl p-6 text-center text-white">
-            <p className="font-semibold text-accent uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
+            <p className="font-semibold text-primary uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
             <h1
               className="font-headline text-3xl font-black mb-3 tracking-widest uppercase"
                style={{
@@ -100,7 +100,7 @@ export default function Hero() {
           style={{backdropFilter: 'blur(8px)'}}
         >
           <div className="mix-blend-multiply dark:mix-blend-screen">
-            <p className="font-semibold text-accent uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
+            <p className="font-semibold text-primary uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
             <h1
               className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 tracking-[3px] uppercase"
               style={{
