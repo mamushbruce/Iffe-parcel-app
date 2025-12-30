@@ -7,13 +7,13 @@ import { cn } from '@/lib/utils';
 interface DockTextEffectProps {
   text: string;
   className?: string;
-  scrollProgress?: number;
+  animationTrigger?: 'idle' | 'forward' | 'backward';
 }
 
-export default function DockTextEffect({ text, className, scrollProgress = 0 }: DockTextEffectProps) {
+export default function DockTextEffect({ text, className, animationTrigger = 'idle' }: DockTextEffectProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [transforms, setTransforms] = useState<number[]>(Array(text.length).fill(1));
-  const [isInitialAnimationActive, setIsInitialAnimationActive] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // Function to calculate transformations based on a mouse X position
   const calculateTransforms = (mouseX: number) => {
@@ -40,57 +40,53 @@ export default function DockTextEffect({ text, className, scrollProgress = 0 }: 
     });
   };
   
-  // Effect for initial animation and scroll-based animation
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || animationTrigger === 'idle') return;
+
+    let animationFrameId: number;
+    const duration = 1500; // ms
+    const startTime = performance.now();
     const containerWidth = containerRef.current.offsetWidth;
-    let virtualMouseX: number;
+    setIsAnimating(true);
 
-    if (scrollProgress > 0 && scrollProgress < 1) {
-      // If actively scrolling within the progress range, use scroll progress
-      if(isInitialAnimationActive) setIsInitialAnimationActive(false); // Disable initial animation if scrolling starts
-      virtualMouseX = scrollProgress * containerWidth;
+    const animate = (currentTime: number) => {
+      const elapsedTime = currentTime - startTime;
+      let progress = Math.min(elapsedTime / duration, 1);
+      
+      if(animationTrigger === 'backward') {
+        progress = 1 - progress;
+      }
+
+      const virtualMouseX = progress * containerWidth;
       setTransforms(calculateTransforms(virtualMouseX));
-    } else if (isInitialAnimationActive) {
-      // Run initial animation only if not scrolling
-      let animationFrameId: number;
-      const duration = 1500; // ms
-      const startTime = performance.now();
 
-      const animate = (currentTime: number) => {
-        const elapsedTime = currentTime - startTime;
-        const progress = Math.min(elapsedTime / duration, 1);
-        
-        virtualMouseX = progress * containerWidth;
-        setTransforms(calculateTransforms(virtualMouseX));
+      if ((animationTrigger === 'forward' && progress < 1) || (animationTrigger === 'backward' && progress > 0)) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        setIsAnimating(false);
+        // Reset to normal state after animation if not hovering
+        setTimeout(() => {
+             if (containerRef.current) {
+               setTransforms(Array(text.length).fill(1));
+             }
+        }, 200);
+      }
+    };
 
-        if (progress < 1) {
-          animationFrameId = requestAnimationFrame(animate);
-        } else {
-          setTimeout(() => {
-              if (containerRef.current) {
-                 setTransforms(Array(text.length).fill(1));
-                 setIsInitialAnimationActive(false);
-              }
-          }, 200);
-        }
-      };
-
-      animationFrameId = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(animationFrameId);
-    }
+    animationFrameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrameId);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrollProgress, isInitialAnimationActive, text.length]);
+  }, [animationTrigger]);
 
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (isInitialAnimationActive || (scrollProgress > 0 && scrollProgress < 1)) return; // Disable manual hover during animations
+    if (isAnimating) return; // Disable manual hover during animations
     const virtualMouseX = e.clientX - (containerRef.current?.getBoundingClientRect().left ?? 0);
     setTransforms(calculateTransforms(virtualMouseX));
   };
 
   const handleMouseLeave = () => {
-    if (isInitialAnimationActive || (scrollProgress > 0 && scrollProgress < 1)) return;
+    if (isAnimating) return;
     setTransforms(Array(text.length).fill(1));
   };
 
@@ -107,7 +103,7 @@ export default function DockTextEffect({ text, className, scrollProgress = 0 }: 
           style={{ 
               transform: `scale(${transforms[i]})`, 
               transformOrigin: 'bottom',
-              transition: (isInitialAnimationActive || (scrollProgress > 0 && scrollProgress < 1)) ? 'none' : 'transform 0.1s ease-out',
+              transition: isAnimating ? 'none' : 'transform 0.1s ease-out',
            }}
         >
           {char === ' ' ? '\u00A0' : char}

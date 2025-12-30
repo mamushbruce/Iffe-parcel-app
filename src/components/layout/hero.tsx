@@ -37,21 +37,38 @@ export default function Hero() {
   const [ref, isVisible] = useScrollAnimation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [animationState, setAnimationState] = useState<'idle' | 'forward' | 'backward'>('idle');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setHasScrolled(scrollY > 10);
+    let lastScrollY = window.scrollY;
+    let ticking = false;
 
-      const animationStart = 10;
-      const animationEnd = 200;
-      const progress = Math.max(0, Math.min(1, (scrollY - animationStart) / (animationEnd - animationStart)));
-      setScrollProgress(progress);
+    const handleScroll = () => {
+        const scrollY = window.scrollY;
+        
+        if (scrollY > 10 && lastScrollY <= 10) {
+            setAnimationState('forward');
+        } else if (scrollY <= 10 && lastScrollY > 10) {
+            setAnimationState('backward');
+        }
+        
+        setHasScrolled(scrollY > 10);
+        lastScrollY = scrollY;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                handleScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
@@ -95,7 +112,7 @@ export default function Hero() {
       {/* Mobile Content Container */}
       <div className="relative h-full flex items-center justify-center z-10 p-4 md:hidden pt-[68px]">
         <div className="bg-black/20 dark:bg-black/40 backdrop-blur-md rounded-2xl p-6 text-center text-white">
-            <p className={cn("font-semibold text-primary uppercase tracking-widest text-sm mb-2 transition-all duration-500", hasScrolled && "text-xs")}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
+            <p className={cn("font-semibold text-primary uppercase tracking-widest mb-2 transition-all duration-500", hasScrolled ? 'text-xs' : 'text-sm')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
             <h1
               className={cn("font-headline font-black mb-3 tracking-widest uppercase transition-all duration-500", hasScrolled ? "text-2xl" : "text-3xl")}
                style={{
@@ -106,7 +123,7 @@ export default function Hero() {
               <span className="block">Explore the</span>
               <span className="block">PEARL</span>
             </h1>
-            <p className={cn("text-white/90 text-sm max-w-md transition-opacity duration-500", hasScrolled ? "h-12 line-clamp-2" : "h-16")} key={currentBg.description}>
+            <p className={cn("text-white/90 max-w-md transition-opacity duration-500", hasScrolled ? "h-12 text-sm line-clamp-2" : "h-16 text-base")} key={currentBg.description}>
                 {currentBg.description}
             </p>
             <div className="space-y-4">
@@ -130,13 +147,13 @@ export default function Hero() {
           style={{backdropFilter: 'blur(8px)'}}
         >
           <div className="mix-blend-multiply dark:mix-blend-screen">
-            <p className={cn("font-semibold text-primary uppercase tracking-widest mb-2 transition-all duration-500", hasScrolled ? 'text-xs' : 'text-sm')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
+            <p className={cn("font-semibold text-primary uppercase tracking-widest transition-all duration-500", hasScrolled ? 'text-xs mb-1' : 'text-sm mb-2')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
              <div className={cn("font-black mb-4 tracking-[3px] uppercase transition-all duration-500", hasScrolled ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl lg:text-6xl")}>
-                <DockTextEffect text="Explore the" className="font-headline dock-text-container" scrollProgress={scrollProgress} />
-                <DockTextEffect text="PEARL" className="font-headline dock-text-container" scrollProgress={scrollProgress} />
+                <DockTextEffect text="Explore the" className="font-headline dock-text-container" animationTrigger={animationState} />
+                <DockTextEffect text="PEARL" className="font-headline dock-text-container" animationTrigger={animationState} />
             </div>
-            <div className={cn("h-1 bg-accent mb-6 transition-all duration-500", hasScrolled ? "w-16" : "w-24")}></div>
-             <p className={cn("text-muted-foreground max-w-md transition-all duration-500", hasScrolled ? 'text-sm h-16' : 'h-20 mb-8')} key={currentBg.description}>
+            <div className={cn("h-1 bg-accent transition-all duration-500", hasScrolled ? "w-16 mb-4" : "w-24 mb-6")}></div>
+             <p className={cn("text-muted-foreground max-w-md transition-all duration-500", hasScrolled ? 'text-sm h-16' : 'h-20 mb-8 text-base')} key={currentBg.description}>
                 {currentBg.description}
             </p>
             <div className="flex items-center gap-4 mb-4">
