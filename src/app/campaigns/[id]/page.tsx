@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Summarizer from '@/components/summarizer';
-import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass } from 'lucide-react';
+import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass, Activity, BedDouble, UtensilsCrossed } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import CampaignActionsCard from '@/components/campaign/campaign-actions-card';
 import placeholderImages from '@/app/lib/placeholder-images.json';
@@ -33,6 +33,9 @@ interface Campaign {
   endDate: string;
   volunteersNeeded: number;
   volunteersSignedUp: number;
+  activities: string[];
+  accommodation: string;
+  meals: string;
 }
 
 const mockCampaignsData: Campaign[] = [
@@ -54,6 +57,9 @@ const mockCampaignsData: Campaign[] = [
     endDate: '2024-07-22',
     volunteersNeeded: 12,
     volunteersSignedUp: 8,
+    activities: ['Daily Game Drives', 'Cultural Village Visit', 'Bush Dinners', 'Sundowner Cocktails'],
+    accommodation: 'Luxury ensuite tented camps with comfortable beds and private verandas overlooking the plains.',
+    meals: 'All-inclusive. Gourmet breakfast, lunch, and dinner with a mix of international and local cuisine. All drinks included.',
   },
    { 
     id: '2', 
@@ -73,6 +79,9 @@ const mockCampaignsData: Campaign[] = [
     endDate: '2024-09-04', 
     volunteersNeeded: 8, 
     volunteersSignedUp: 6,
+    activities: ['Gorilla Trekking (permit included)', 'Community Walk', 'Bird Watching Tour'],
+    accommodation: 'Comfortable eco-lodges with stunning forest views. Options range from budget to luxury.',
+    meals: 'Full board. Includes breakfast, packed lunch for the trek, and dinner. Locally sourced ingredients.',
   },
   { 
     id: '3', 
@@ -92,6 +101,9 @@ const mockCampaignsData: Campaign[] = [
     endDate: '2024-10-10', 
     volunteersNeeded: 10, 
     volunteersSignedUp: 10, 
+    activities: ['Mokoro Excursions', 'Guided Bush Walks on Islands', 'Stargazing', 'Wild Camping'],
+    accommodation: 'Mobile camping on remote islands in serviced dome tents with cot beds and shared ablutions.',
+    meals: 'All meals prepared by a dedicated camp chef over an open fire. Includes tea, coffee, and filtered water.',
   },
   {
     id: 'nile-cruise',
@@ -111,6 +123,9 @@ const mockCampaignsData: Campaign[] = [
     endDate: '2024-11-10',
     volunteersNeeded: 20,
     volunteersSignedUp: 15,
+    activities: ['Guided Temple Tours (Karnak, Luxor, Edfu)', 'Valley of the Kings Visit', 'Onboard Galabeya Party', 'Sailing'],
+    accommodation: '5-star Nile cruise ship with air-conditioned cabins, private bathrooms, swimming pool, and sundeck.',
+    meals: 'Full board buffet-style breakfast, lunch, and dinner. Afternoon tea served daily. Excludes drinks.',
   },
   {
     id: 'kilimanjaro-hike',
@@ -130,6 +145,9 @@ const mockCampaignsData: Campaign[] = [
     endDate: '2025-01-27',
     volunteersNeeded: 10,
     volunteersSignedUp: 7,
+    activities: ['Multi-day Mountain Trekking', 'Acclimatization Hikes', 'Summit Attempt', 'Camping'],
+    accommodation: 'High-quality mountain tents during the hike and comfortable hotel accommodation before and after the climb.',
+    meals: 'All meals and purified water provided on the mountain, prepared by a dedicated mountain cook.',
   },
 ];
 
@@ -188,7 +206,7 @@ export default function CampaignDetailPage({ params }: { params: { id: string } 
         </div>
         
         <CardContent className="p-6">
-          <div className="grid md:grid-cols-3 gap-6 mb-6">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
             <div className="md:col-span-2 space-y-6">
               <section>
                 <h2 className="font-headline text-2xl font-semibold text-primary mb-2">About this Tour</h2>
@@ -198,6 +216,25 @@ export default function CampaignDetailPage({ params }: { params: { id: string } 
                 <h2 className="font-headline text-2xl font-semibold text-primary mb-2">The Experience</h2>
                 <p className="text-muted-foreground leading-relaxed">{campaign.storyline}</p>
               </section>
+
+              <div className="grid sm:grid-cols-2 gap-6">
+                <section>
+                  <h3 className="font-headline text-xl font-semibold text-primary mb-3 flex items-center"><Activity className="mr-2 h-5 w-5"/>Activities</h3>
+                  <ul className="space-y-1 text-muted-foreground list-disc list-inside">
+                    {campaign.activities.map(activity => <li key={activity}>{activity}</li>)}
+                  </ul>
+                </section>
+                <section>
+                  <h3 className="font-headline text-xl font-semibold text-primary mb-3 flex items-center"><BedDouble className="mr-2 h-5 w-5"/>Accommodation</h3>
+                  <p className="text-muted-foreground">{campaign.accommodation}</p>
+                </section>
+              </div>
+
+               <section>
+                <h3 className="font-headline text-xl font-semibold text-primary mb-3 flex items-center"><UtensilsCrossed className="mr-2 h-5 w-5"/>Meals</h3>
+                <p className="text-muted-foreground">{campaign.meals}</p>
+              </section>
+              
               {campaign.tags && campaign.tags.length > 0 && (
                 <section>
                    <h3 className="font-headline text-lg font-semibold text-primary mb-2">Highlights</h3>
@@ -209,7 +246,7 @@ export default function CampaignDetailPage({ params }: { params: { id: string } 
                 </section>
               )}
             </div>
-            <aside className="space-y-6">
+            <aside className="space-y-6 md:sticky md:top-24">
               <CampaignActionsCard
                 campaignTitle={campaign.title}
                 currentAmount={campaign.currentAmount}
@@ -223,8 +260,8 @@ export default function CampaignDetailPage({ params }: { params: { id: string } 
                   <CardTitle className="font-headline text-xl text-primary flex items-center"><Compass className="mr-2 h-5 w-5"/>Tour Operator</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-foreground">{campaign.organizer}</p>
-                  {/* Add link to organizer profile if available */}
+                  <p className="text-foreground font-semibold">{campaign.organizer}</p>
+                  <p className="text-xs text-muted-foreground">We are committed to responsible and authentic travel experiences.</p>
                 </CardContent>
               </Card>
             </aside>
