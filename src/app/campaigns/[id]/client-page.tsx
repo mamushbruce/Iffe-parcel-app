@@ -138,13 +138,6 @@ export default function CampaignDetailClientPage({ campaign }: CampaignDetailCli
                 </div>
               </AnimatedSection>
 
-              <div className="text-center pt-4">
-                <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    <Link href="/gallery">
-                        <Camera className="mr-2 h-4 w-4" /> View Full Gallery
-                    </Link>
-                </Button>
-              </div>
               
               {campaign.tags && campaign.tags.length > 0 && (
                 <section>
