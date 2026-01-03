@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Summarizer from '@/components/summarizer';
-import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass, Activity, BedDouble, UtensilsCrossed } from 'lucide-react';
+import { ArrowLeft, ExternalLink, MessageSquare, Share2, Tag, Compass, Activity, BedDouble, UtensilsCrossed, Camera } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import CampaignActionsCard from '@/components/campaign/campaign-actions-card';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
@@ -41,6 +41,47 @@ interface Campaign {
 interface CampaignDetailClientPageProps {
   campaign: Campaign;
 }
+
+const PhotoGallerySection = () => {
+    const galleryItems = [
+        { title: 'The Experience', image: placeholderImages.gallerySafariGroup, id: 'exp' },
+        { title: 'Activities', image: placeholderImages.ideaWalkingSafari, id: 'act' },
+        { title: 'Accommodation', image: placeholderImages.pkgAdventurer, id: 'acc' },
+        { title: 'Local Cuisine', image: placeholderImages.videoThumbTestimonial, id: ' cui' }
+    ];
+
+    const [ref, isVisible] = useScrollAnimation();
+
+    return (
+        <section ref={ref} className={cn('space-y-6 scroll-animate', isVisible && 'scroll-animate-in')}>
+            <h2 className="font-headline text-2xl font-semibold text-primary text-center">A Glimpse of Your Adventure</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+                {galleryItems.map(item => (
+                    <div key={item.id} className="relative aspect-square md:aspect-[4/5] rounded-lg overflow-hidden group shadow-lg">
+                        <Image 
+                            src={item.image.src} 
+                            alt={item.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            data-ai-hint={item.image.hint}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end justify-start p-3">
+                            <h3 className="font-headline text-white text-sm md:text-lg font-bold">{item.title}</h3>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="text-center mt-4">
+                <Button asChild className="bg-accent text-accent-foreground hover:bg-accent/90">
+                    <Link href="/gallery">
+                        <Camera className="mr-2 h-4 w-4" /> View Full Gallery
+                    </Link>
+                </Button>
+            </div>
+        </section>
+    );
+};
+
 
 export default function CampaignDetailClientPage({ campaign }: CampaignDetailClientPageProps) {
   const [ref, isVisible] = useScrollAnimation();
@@ -86,6 +127,8 @@ export default function CampaignDetailClientPage({ campaign }: CampaignDetailCli
                 <h2 className="font-headline text-2xl font-semibold text-primary mb-2">The Experience</h2>
                 <p className="text-muted-foreground leading-relaxed">{campaign.storyline}</p>
               </section>
+              
+              <PhotoGallerySection />
 
               <div className="grid sm:grid-cols-2 gap-6">
                 <section>
