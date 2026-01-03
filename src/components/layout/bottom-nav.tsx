@@ -10,7 +10,7 @@ const navItems = [
   { href: '/campaigns', label: 'Trips', icon: Compass },
   { href: '/blog', label: 'Journal', icon: Edit3 },
   { href: '/gallery', label: 'Media', icon: ImageIcon },
-  { href: '/profile', label: 'Profile', icon: UserCircle },
+  { href: '/dashboard', label: 'Profile', icon: UserCircle },
 ];
 
 const BottomNav = () => {

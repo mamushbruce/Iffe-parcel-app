@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function WhatsAppCTA() {
   // Replace with your actual WhatsApp number
-  const whatsappNumber = "1234567890";
+  const whatsappNumber = "256705398510";
   const whatsappLink = `https://wa.me/${whatsappNumber}`;
 
   return (

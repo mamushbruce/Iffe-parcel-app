@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
@@ -122,7 +122,7 @@ export default function Hero() {
               <span className="block">Explore the</span>
               <span className="block">PEARL</span>
             </h1>
-            <p className={cn("text-white/90 max-w-md transition-opacity duration-500", hasScrolled ? "h-12 text-sm line-clamp-2" : "h-16 text-base")} key={currentBg.description}>
+            <p className={cn("text-muted-foreground max-w-md transition-opacity duration-500", hasScrolled ? "h-12 text-sm line-clamp-2" : "h-16 text-base")} key={currentBg.description}>
                 {currentBg.description}
             </p>
             <div className="space-y-4">
@@ -145,7 +145,7 @@ export default function Hero() {
           )}
           style={{backdropFilter: 'blur(8px)'}}
         >
-          <div className="mix-blend-multiply dark:mix-blend-screen">
+          <div>
             <p className={cn("font-semibold text-primary uppercase tracking-widest transition-all duration-500", hasScrolled ? 'text-xs mb-1' : 'text-sm mb-2')}>Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
              <div className={cn("font-black mb-4 tracking-[3px] uppercase transition-all duration-500", hasScrolled ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl lg:text-6xl")}>
                 <DockTextEffect text="Explore the" className="font-headline dock-text-container" animationTrigger={animationTrigger} />
