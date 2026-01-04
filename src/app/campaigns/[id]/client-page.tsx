@@ -102,30 +102,40 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
         </section>
     );
   };
-
-  const InfoSectionWithImage = ({ title, icon: Icon, text, imageUrl, imageHint, imagePosition = 'left' }: { title: string, icon: React.ElementType, text: string, imageUrl: string, imageHint?: string, imagePosition?: 'left' | 'right' }) => {
+  
+  const ImageGridInfoSection = ({ title, icon: Icon, text, images, imagePosition = 'left' }: { title: string, icon: React.ElementType, text: string, images: {src: string, hint?: string}[], imagePosition?: 'left' | 'right' }) => {
     return (
-      <AnimatedSection>
-        <div className={cn("grid md:grid-cols-2 gap-8 items-center")}>
-          <div className={cn("relative aspect-video rounded-lg overflow-hidden shadow-lg group", imagePosition === 'right' && 'md:order-last')}>
-            <Image src={imageUrl} alt={title} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={imageHint} />
-          </div>
-          <div>
-            <h3 className="font-headline text-xl font-semibold text-primary flex items-center mb-2">
-              <Icon className="mr-2 h-5 w-5" />
-              {title}
-            </h3>
-            {text.split(',').length > 1 && !['Accommodation', 'Meals'].includes(title) ? (
-                 <ul className="space-y-1 text-muted-foreground list-disc list-inside">
-                    {text.split(',').map(item => <li key={item}>{item.trim()}</li>)}
-                </ul>
-            ) : (
-                <p className="text-muted-foreground">{text}</p>
-            )}
-          </div>
-        </div>
-      </AnimatedSection>
-    );
+        <AnimatedSection>
+            <div className="space-y-4">
+                <h3 className="font-headline text-xl font-semibold text-primary flex items-center mb-2">
+                    <Icon className="mr-2 h-5 w-5" />
+                    {title}
+                </h3>
+                <div className={cn("grid md:grid-cols-2 gap-8 items-center")}>
+                    <div className={cn(imagePosition === 'right' && 'md:order-last')}>
+                         {text.split(',').length > 1 && !['Accommodation', 'Meals'].includes(title) ? (
+                            <ul className="space-y-1 text-muted-foreground list-disc list-inside">
+                                {text.split(',').map(item => <li key={item}>{item.trim()}</li>)}
+                            </ul>
+                        ) : (
+                            <p className="text-muted-foreground">{text}</p>
+                        )}
+                    </div>
+                    <div className="grid grid-cols-2 grid-rows-2 gap-2 h-64 md:h-80">
+                        <div className="col-span-2 row-span-1 relative rounded-lg overflow-hidden shadow-lg group">
+                            <Image src={images[0].src} alt={`${title} large view`} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={images[0].hint} />
+                        </div>
+                        <div className="col-span-1 row-span-1 relative rounded-lg overflow-hidden shadow-lg group">
+                            <Image src={images[1].src} alt={`${title} small view 1`} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={images[1].hint} />
+                        </div>
+                        <div className="col-span-1 row-span-1 relative rounded-lg overflow-hidden shadow-lg group">
+                           <Image src={images[2].src} alt={`${title} small view 2`} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={images[2].hint} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AnimatedSection>
+    )
   };
 
   return (
@@ -159,39 +169,51 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                 <p className="text-muted-foreground leading-relaxed">{campaign.description}</p>
               </AnimatedSection>
 
-               <InfoSectionWithImage 
+               <ImageGridInfoSection
                 title="The Experience"
                 icon={Star}
                 text={campaign.storyline}
-                imageUrl={placeholderImages.gallerySafariGroup.src}
-                imageHint={placeholderImages.gallerySafariGroup.hint}
+                images={[
+                  { src: placeholderImages.gallerySafariGroup.src, hint: placeholderImages.gallerySafariGroup.hint },
+                  { src: placeholderImages.blogLionPride.src, hint: placeholderImages.blogLionPride.hint },
+                  { src: placeholderImages.fifaCardGorilla.src, hint: placeholderImages.fifaCardGorilla.hint },
+                ]}
                 imagePosition="left"
               />
               
-              <InfoSectionWithImage 
+              <ImageGridInfoSection
                 title="Activities"
                 icon={Activity}
                 text={campaign.activities.join(', ')}
-                imageUrl={placeholderImages.ideaWalkingSafari.src}
-                imageHint={placeholderImages.ideaWalkingSafari.hint}
+                images={[
+                  { src: placeholderImages.ideaWalkingSafari.src, hint: placeholderImages.ideaWalkingSafari.hint },
+                  { src: placeholderImages.campaignRafting.src, hint: placeholderImages.campaignRafting.hint },
+                  { src: placeholderImages.blogPhotographer.src, hint: placeholderImages.blogPhotographer.hint },
+                ]}
                 imagePosition="right"
               />
               
-              <InfoSectionWithImage 
+              <ImageGridInfoSection
                 title="Accommodation"
                 icon={BedDouble}
                 text={campaign.accommodation}
-                imageUrl={placeholderImages.pkgAdventurer.src}
-                imageHint={placeholderImages.pkgAdventurer.hint}
+                images={[
+                  { src: placeholderImages.pkgAdventurer.src, hint: placeholderImages.pkgAdventurer.hint },
+                  { src: placeholderImages.pkgUltimate.src, hint: placeholderImages.pkgUltimate.hint },
+                  { src: placeholderImages.pkgExplorer.src, hint: placeholderImages.pkgExplorer.hint },
+                ]}
                 imagePosition="left"
               />
 
-              <InfoSectionWithImage 
+              <ImageGridInfoSection
                 title="Meals"
                 icon={UtensilsCrossed}
                 text={campaign.meals}
-                imageUrl={placeholderImages.videoThumbTestimonial.src}
-                imageHint={placeholderImages.videoThumbTestimonial.hint}
+                images={[
+                  { src: placeholderImages.videoThumbTestimonial.src, hint: placeholderImages.videoThumbTestimonial.hint },
+                  { src: "https://picsum.photos/seed/meals2/600/400", hint: "outdoor dining" },
+                  { src: "https://picsum.photos/seed/meals3/600/400", hint: "local food" },
+                ]}
                 imagePosition="right"
               />
               
