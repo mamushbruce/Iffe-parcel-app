@@ -14,6 +14,8 @@ const Summarizer: React.FC<SummarizerProps> = ({ campaignDescription, campaignTi
   const bookingTips = [
     "Book permits well in advance, especially for gorilla and chimp trekking, as they sell out months ahead.",
     "Consider the season. The dry seasons (June-August and December-February) are best for wildlife viewing.",
+    "Staying in the same sector as your trekking permit (Buhoma, Rushaga, Ruhija, Nkuringo) makes your morning departure smoother.",
+    "Many lodges include full-board meals and trekking support—check before booking to compare value.",
     "Pack light, versatile clothing. Include layers for cool mornings and evenings.",
     "Don't forget essentials like sunscreen, insect repellent, a good hat, and comfortable walking shoes.",
     "Talk to us about your interests! We can customize any itinerary to match your dream adventure."
