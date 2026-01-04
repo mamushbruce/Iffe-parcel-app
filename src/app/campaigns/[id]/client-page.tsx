@@ -33,7 +33,7 @@ interface Campaign {
   endDate: string;
   volunteersNeeded: number;
   volunteersSignedUp: number;
-  activities: string[];
+  activities: { title: string; description: string; image: keyof typeof placeholderImages }[];
   accommodation: string[];
   meals: string[];
   shortDescription?: string;
@@ -175,18 +175,31 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                     <Activity className="mr-2 h-5 w-5" />
                     Activities
                 </h3>
-                <ul className="space-y-4">
+                <div className="grid grid-cols-1 gap-6">
                     {campaign.activities.map((activity, index) => {
-                        const [title, ...descriptionParts] = activity.split('\n');
-                        const description = descriptionParts.join('\n');
+                        const activityImage = placeholderImages[activity.image];
                         return (
-                            <li key={index} className="grid md:grid-cols-5 gap-4 items-start">
-                                <div className="md:col-span-2 font-semibold text-foreground">{title}</div>
-                                <div className="md:col-span-3 text-muted-foreground text-sm">{description}</div>
-                            </li>
+                            <Card key={index} className="overflow-hidden shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 group">
+                                <div className="relative w-full aspect-[16/9] bg-muted">
+                                    <Image 
+                                        src={activityImage.src} 
+                                        alt={activity.title} 
+                                        layout="fill" 
+                                        objectFit="cover" 
+                                        data-ai-hint={activityImage.hint} 
+                                        className="transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
+                                <CardHeader>
+                                    <CardTitle className="text-lg font-semibold">{activity.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-muted-foreground">{activity.description}</p>
+                                </CardContent>
+                            </Card>
                         );
                     })}
-                </ul>
+                </div>
               </AnimatedSection>
               
               <ImageGridInfoSection

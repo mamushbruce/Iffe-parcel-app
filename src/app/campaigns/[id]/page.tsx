@@ -21,7 +21,7 @@ interface Campaign {
   endDate: string;
   volunteersNeeded: number;
   volunteersSignedUp: number;
-  activities: string[];
+  activities: { title: string; description: string; image: keyof typeof placeholderImages }[];
   accommodation: string[];
   meals: string[];
   shortDescription?: string;
@@ -52,9 +52,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 20000, goal: 100, currentAmount: 98, organizer: 'iffe-travels', tags: ['#Gorilla', '#UNESCO', '#Uganda'], startDate: '2024-09-01', endDate: '2024-09-04', volunteersNeeded: 8, volunteersSignedUp: 6,
         activities: [
-            'Gorilla Trekking (Permit Included)\nA fully guided trek with official permits, ensuring a safe, ethical, and regulated encounter.',
-            'Community Walk\nA guided visit to nearby communities to learn how conservation tourism supports local livelihoods, culture, and education.',
-            'Bird Watching Experience\nBwindi is home to over 350 bird species, making it a rewarding destination for bird enthusiasts and nature lovers alike.'
+            { title: 'Gorilla Trekking (Permit Included)', description: 'A fully guided trek with official permits, ensuring a safe, ethical, and regulated encounter.', image: 'fifaCardGorilla' },
+            { title: 'Community Walk', description: 'A guided visit to nearby communities to learn how conservation tourism supports local livelihoods, culture, and education.', image: 'ideaFamilySafari' },
+            { title: 'Bird Watching Experience', description: 'Bwindi is home to over 350 bird species, making it a rewarding destination for bird enthusiasts and nature lovers alike.', image: 'blogShoebill' }
         ],
         accommodation: [
             'Comfortable eco-lodges with stunning forest views.',
@@ -83,9 +83,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 15000, goal: 100, currentAmount: 92, organizer: 'iffe-travels', tags: ['#Wildlife', '#Lions', '#Uganda'], startDate: '2024-07-15', endDate: '2024-07-22', volunteersNeeded: 12, volunteersSignedUp: 8,
         activities: [
-            'Game Drives (Ishasha & Kasenyi): Search for tree-climbing lions and other big game.',
-            'Kazinga Channel Boat Cruise: Get up close with hippos, crocodiles, and elephants.',
-            'Crater Lake Drive: Explore the scenic crater lakes of the park.'
+            { title: 'Game Drives (Ishasha & Kasenyi)', description: 'Search for tree-climbing lions and other big game.', image: 'galleryLioness' },
+            { title: 'Kazinga Channel Boat Cruise', description: 'Get up close with hippos, crocodiles, and elephants.', image: 'galleryElephant' },
+            { title: 'Crater Lake Drive', description: 'Explore the scenic crater lakes of the park.', image: 'campaignFortPortal' }
         ],
         accommodation: [
             'Selection of safari lodges and camps overlooking the savannah or channel.',
@@ -114,9 +114,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 8000, goal: 100, currentAmount: 88, organizer: 'iffe-travels', tags: ['#Wildlife', '#Waterfalls', '#Uganda'], startDate: '2024-10-05', endDate: '2024-10-10', volunteersNeeded: 10, volunteersSignedUp: 10,
         activities: [
-            'Hike to the top of the falls for a spectacular view.',
-            'Nile River Boat Safari to the base of the falls.',
-            'Game Drives to spot the diverse wildlife of the park.'
+            { title: 'Hike to the top of the falls', description: 'A spectacular view awaits at the top of the falls.', image: 'campaignMurchison' },
+            { title: 'Nile River Boat Safari', description: 'A boat trip to the base of the falls for incredible wildlife viewing.', image: 'fifaCardNile' },
+            { title: 'Game Drives', description: 'Spot the diverse wildlife of the park on guided game drives.', image: 'galleryGiraffe' }
         ],
         accommodation: [
             'Riverside lodges and safari tents with stunning views.',
@@ -142,9 +142,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 12000, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Chimpanzee', '#Primates', '#Uganda'], startDate: '2024-08-10', endDate: '2024-08-13', volunteersNeeded: 6, volunteersSignedUp: 4,
         activities: [
-            'Chimpanzee Trekking with expert guides.',
-            'Bigodi Wetland Sanctuary Walk for bird and monkey viewing.',
-            'Bird Watching in one of Africa\'s premier birding spots.'
+            { title: 'Chimpanzee Trekking', description: 'Expert guides lead you to find and observe chimpanzees.', image: 'campaignKibale' },
+            { title: 'Bigodi Wetland Sanctuary Walk', description: 'A walk for bird and monkey viewing in the Bigodi Wetland.', image: 'blogShoebill' },
+            { title: 'Bird Watching', description: 'Kibale is one of Africa\'s premier birding spots.', image: 'blogShoebill' }
         ],
         accommodation: [
             'Forest lodges and camps, some with views of the forest canopy.',
@@ -169,9 +169,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 25000, goal: 100, currentAmount: 75, organizer: 'iffe-travels', tags: ['#Hiking', '#Mountains', '#Uganda'], startDate: '2025-01-10', endDate: '2025-01-20', volunteersNeeded: 8, volunteersSignedUp: 2,
         activities: [
-            'Multi-day trekking circuits for all levels of fitness.',
-            'Acclimatization hikes to prepare for the summit.',
-            'Summit attempts on Margherita Peak, the highest point.'
+            { title: 'Multi-day trekking circuits', description: 'Circuits for all levels of fitness.', image: 'campaignRwenzori' },
+            { title: 'Acclimatization hikes', description: 'Prepare for the summit with acclimatization hikes.', image: 'sipiHiking' },
+            { title: 'Summit attempts on Margherita Peak', description: 'Attempt to summit the highest point, Margherita Peak.', image: 'fifaCardKili' }
         ],
         accommodation: [
             'Basic but comfortable mountain huts along the trekking routes.',
@@ -196,9 +196,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 5000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Relaxation', '#Scenery', '#Uganda'], startDate: '2024-09-05', endDate: '2024-09-08', volunteersNeeded: 15, volunteersSignedUp: 15,
         activities: [
-            'Canoeing on the calm waters of the lake.',
-            'Island hopping to discover the history of each island.',
-            'Swimming in the bilge-free waters of the lake.'
+            { title: 'Canoeing on the calm waters', description: 'Explore the lake by canoe.', image: 'campaignBunyonyi' },
+            { title: 'Island hopping', description: 'Discover the history of each island.', image: 'campaignSsese' },
+            { title: 'Swimming in the bilge-free waters', description: 'Enjoy a refreshing swim in the lake.', image: 'campaignBunyonyi' }
         ],
         accommodation: [
             'A range of lakeside resorts, cottages, and campsites.',
@@ -223,9 +223,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 6000, goal: 100, currentAmount: 82, organizer: 'iffe-travels', tags: ['#Cycling', '#Zebras', '#Uganda'], startDate: '2024-11-01', endDate: '2024-11-03', volunteersNeeded: 20, volunteersSignedUp: 18,
         activities: [
-            'Guided cycling safaris on scenic trails.',
-            'Walking safaris to get even closer to the wildlife.',
-            'Boat trips on the lake to see hippos and crocodiles.'
+            { title: 'Guided cycling safaris', description: 'Scenic trails for a unique safari experience.', image: 'campaignMburo' },
+            { title: 'Walking safaris', description: 'Get even closer to the wildlife on foot.', image: 'ideaWalkingSafari' },
+            { title: 'Boat trips on the lake', description: 'See hippos and crocodiles on a boat trip.', image: 'galleryElephant' }
         ],
         accommodation: [
             'Safari lodges and luxury tented camps.',
@@ -250,9 +250,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Jinja', '#RiverNile', '#Uganda'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
-            'Boat trip to the Source of the Nile.',
-            'Visit local craft markets for souvenirs.',
-            'Explore the colonial architecture of Jinja town.'
+            { title: 'Boat trip to the Source of the Nile', description: 'A boat trip to the exact spot where the Nile begins.', image: 'campaignSourceNile' },
+            { title: 'Visit local craft markets', description: 'Shop for souvenirs at local craft markets.', image: 'ideaFamilySafari' },
+            { title: 'Explore the colonial architecture', description: 'Discover the historic architecture of Jinja town.', image: 'campaignBusoga' }
         ],
         accommodation: [
             'Hotels and guesthouses in Jinja.',
@@ -277,9 +277,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#Uganda'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
         activities: [
-            'White-water rafting on Grade 5 rapids.',
-            'Kayaking for a different perspective of the river.',
-            'River bugging for a unique solo adventure.'
+            { title: 'White-water rafting on Grade 5 rapids', description: 'An adrenaline-pumping experience.', image: 'campaignRafting' },
+            { title: 'Kayaking', description: 'A different perspective of the river.', image: 'fifaCardOkavango' },
+            { title: 'River bugging', description: 'A unique solo adventure on the river.', image: 'campaignRafting' }
         ],
         accommodation: [
             'Riverside camps and lodges.',
@@ -304,9 +304,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 9000, goal: 100, currentAmount: 78, organizer: 'iffe-travels', tags: ['#Hiking', '#Volcano', '#Uganda'], startDate: '2025-02-01', endDate: '2025-02-05', volunteersNeeded: 12, volunteersSignedUp: 7,
         activities: [
-            'Hiking to the caldera and peaks.',
-            'Cave exploration to see ancient rock art.',
-            'Bird watching in the forested slopes.'
+            { title: 'Hiking to the caldera and peaks', description: 'Explore the volcanic crater.', image: 'campaignElgon' },
+            { title: 'Cave exploration', description: 'See ancient rock art in the caves.', image: 'campaignFortPortal' },
+            { title: 'Bird watching in the forested slopes', description: 'Discover the diverse birdlife of the park.', image: 'blogShoebill' }
         ],
         accommodation: [
             'Guesthouses and campsites near the park entrance.',
@@ -331,9 +331,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 4500, goal: 100, currentAmount: 88, organizer: 'iffe-travels', tags: ['#Waterfalls', '#Coffee', '#Uganda'], startDate: '2024-11-20', endDate: '2024-11-22', volunteersNeeded: 15, volunteersSignedUp: 11,
         activities: [
-            'Waterfall hikes to see all three falls.',
-            'Abseiling down the side of a waterfall.',
-            'Coffee tours to learn about the local coffee industry.'
+            { title: 'Waterfall hikes', description: 'See all three stunning waterfalls.', image: 'campaignSipi' },
+            { title: 'Abseiling down a waterfall', description: 'An adrenaline-pumping experience.', image: 'sipiAbseiling' },
+            { title: 'Coffee tours', description: 'Learn about the local coffee industry.', image: 'sipiCoffee' }
         ],
         accommodation: [
             'Lodges and community-run guesthouses with incredible views.',
@@ -358,9 +358,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 2500, goal: 100, currentAmount: 65, organizer: 'iffe-travels', tags: ['#Culture', '#History', '#Uganda'], startDate: '2024-12-05', endDate: '2024-12-06', volunteersNeeded: 25, volunteersSignedUp: 10,
         activities: [
-            'Visit to the Kyabazinga\'s palace.',
-            'Cultural performances of traditional music and dance.',
-            'Local craft workshops to learn traditional skills.'
+            { title: 'Visit to the Kyabazinga\'s palace', description: 'See the royal palace of the Busoga Kingdom.', image: 'campaignBusoga' },
+            { title: 'Cultural performances', description: 'Enjoy traditional music and dance.', image: 'ideaFamilySafari' },
+            { title: 'Local craft workshops', description: 'Learn traditional skills from local artisans.', image: 'ideaFamilySafari' }
         ],
         accommodation: [
             'Hotels in Jinja or nearby towns.',
@@ -385,9 +385,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 18000, goal: 100, currentAmount: 70, organizer: 'iffe-travels', tags: ['#Remote', '#Wilderness', '#Uganda'], startDate: '2025-03-10', endDate: '2025-03-15', volunteersNeeded: 8, volunteersSignedUp: 3,
         activities: [
-            'Game drives to see the park\'s unique wildlife.',
-            'Cultural visits to Karamojong communities.',
-            'Hiking in the rugged landscapes of the park.'
+            { title: 'Game drives', description: 'See the park\'s unique wildlife on game drives.', image: 'campaignKidepo' },
+            { title: 'Cultural visits to Karamojong communities', description: 'Learn about the local culture.', image: 'ideaFamilySafari' },
+            { title: 'Hiking in the rugged landscapes', description: 'Explore the park on foot.', image: 'ideaWalkingSafari' }
         ],
         accommodation: [
             'Luxury lodges and basic campsites within the park.',
@@ -412,9 +412,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 5500, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Wildlife', '#NationalPark', '#Uganda'], startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
         activities: [
-            'Wildlife viewing near the falls.',
-            'Visiting the falls to witness their power.',
-            'Bird watching in the surrounding area.'
+            { title: 'Wildlife viewing near the falls', description: 'See the wildlife attracted by the falls.', image: 'campaignKaruma' },
+            { title: 'Visiting the falls', description: 'Witness the power of the falls.', image: 'campaignMurchison' },
+            { title: 'Bird watching in the surrounding area', description: 'Discover the diverse birdlife.', image: 'blogShoebill' }
         ],
         accommodation: [
             'Lodges near the falls.',
@@ -439,9 +439,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 13000, goal: 100, currentAmount: 60, organizer: 'iffe-travels', tags: ['#RareWildlife', '#Savannah', '#Uganda'], startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
         activities: [
-            'Game drives to spot rare wildlife.',
-            'Nature walks to explore the savannah on foot.',
-            'Cultural encounters with the local Karamojong people.'
+            { title: 'Game drives', description: 'Spot rare wildlife on game drives.', image: 'campaignPianUpe' },
+            { title: 'Nature walks', description: 'Explore the savannah on foot.', image: 'ideaWalkingSafari' },
+            { title: 'Cultural encounters', description: 'Meet the local Karamojong people.', image: 'ideaFamilySafari' }
         ],
         accommodation: [
             'Basic camping facilities and nearby guesthouses.',
@@ -466,9 +466,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', tags: ['#CityTour', '#Culture', '#Uganda'], startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
         activities: [
-            'Visiting historical sites like the Kasubi Tombs.',
-            'Shopping in craft markets for souvenirs.',
-            'Trying local street food.'
+            { title: 'Visiting historical sites', description: 'See the Kasubi Tombs and other historic sites.', image: 'campaignBusoga' },
+            { title: 'Shopping in craft markets', description: 'Find unique souvenirs.', image: 'ideaFamilySafari' },
+            { title: 'Trying local street food', description: 'A taste of Ugandan street food.', image: 'videoThumbTestimonial' }
         ],
         accommodation: [
             'N/A (Day tour).',
@@ -493,9 +493,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', tags: ['#Gardens', '#Relaxation', '#Uganda'], startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
         activities: [
-            'A tour of the beautiful Botanical Gardens.',
-            'A visit to the Uganda Wildlife Education Centre.',
-            'Lunch by the shores of Lake Victoria.'
+            { title: 'A tour of the Botanical Gardens', description: 'Explore the lush gardens.', image: 'campaignEntebbe' },
+            { title: 'A visit to the Wildlife Centre', description: 'See a variety of Ugandan wildlife.', image: 'galleryElephant' },
+            { title: 'Lunch by Lake Victoria', description: 'Enjoy a meal with a view.', image: 'videoThumbTestimonial' }
         ],
         accommodation: [
             'N/A (Day tour).',
@@ -520,9 +520,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', tags: ['#Conservation', '#Chimpanzee', '#Uganda'], startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
         activities: [
-            'Boat trip on Lake Victoria to Ngamba Island.',
-            'Chimpanzee viewing during feeding time.',
-            'Educational talks about chimpanzee conservation.'
+            { title: 'Boat trip on Lake Victoria', description: 'A scenic boat trip to Ngamba Island.', image: 'campaignSourceNile' },
+            { title: 'Chimpanzee viewing', description: 'Watch the chimpanzees during their feeding time.', image: 'campaignNgamba' },
+            { title: 'Educational talks on conservation', description: 'Learn about chimpanzee conservation efforts.', image: 'homeCreatorTom' }
         ],
         accommodation: [
             'N/A (Day trip).',
@@ -547,9 +547,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 2800, goal: 100, currentAmount: 86, organizer: 'iffe-travels', tags: ['#Adventure', '#Forest', '#Uganda'], startDate: '2024-11-17', endDate: '2024-11-17', volunteersNeeded: 25, volunteersSignedUp: 20,
         activities: [
-            'Zip-lining through the forest canopy.',
-            'Forest walks to see the flora and fauna up close.',
-            'Bird watching for the numerous bird species in the forest.'
+            { title: 'Zip-lining through the forest canopy', description: 'An exhilarating experience.', image: 'campaignMabira' },
+            { title: 'Forest walks', description: 'Explore the flora and fauna up close.', image: 'ideaWalkingSafari' },
+            { title: 'Bird watching', description: 'Discover the numerous bird species in the forest.', image: 'blogShoebill' }
         ],
         accommodation: [
             'N/A (Day trip).',
@@ -574,9 +574,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 6500, goal: 100, currentAmount: 93, organizer: 'iffe-travels', tags: ['#Beach', '#Relaxation', '#Uganda'], startDate: '2024-12-10', endDate: '2024-12-13', volunteersNeeded: 15, volunteersSignedUp: 14,
         activities: [
-            'Beach relaxation and swimming.',
-            'Canoeing and kayaking on the lake.',
-            'Fishing for tilapia and Nile perch.'
+            { title: 'Beach relaxation and swimming', description: 'Enjoy the sandy beaches.', image: 'campaignSsese' },
+            { title: 'Canoeing and kayaking', description: 'Explore the lake at your own pace.', image: 'fifaCardOkavango' },
+            { title: 'Fishing for tilapia and Nile perch', description: 'Try your hand at fishing.', image: 'videoThumbTestimonial' }
         ],
         accommodation: [
             'Beachfront resorts and hotels.',
@@ -601,9 +601,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 7500, goal: 100, currentAmount: 77, organizer: 'iffe-travels', tags: ['#BirdWatching', '#HotSprings', '#Uganda'], startDate: '2025-03-01', endDate: '2025-03-04', volunteersNeeded: 10, volunteersSignedUp: 6,
         activities: [
-            'Bird watching with an expert guide.',
-            'Visiting the hot springs and boiling eggs in the water.',
-            'Nature walks to explore the rainforest.'
+            { title: 'Bird watching', description: 'An expert guide will help you spot unique bird species.', image: 'blogShoebill' },
+            { title: 'Visiting the hot springs', description: 'Boil eggs in the hot springs.', image: 'campaignSemuliki' },
+            { title: 'Nature walks', description: 'Explore the rainforest on foot.', image: 'ideaWalkingSafari' }
         ],
         accommodation: [
             'Lodges and campsites near the park.',
@@ -628,9 +628,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 5000, goal: 100, currentAmount: 81, organizer: 'iffe-travels', tags: ['#Culture', '#Scenery', '#Uganda'], startDate: '2024-11-25', endDate: '2024-11-27', volunteersNeeded: 20, volunteersSignedUp: 15,
         activities: [
-            'Crater lake hikes with stunning views.',
-            'Visit to the Toro Kingdom palace.',
-            'Exploring the Amabere ga Nyina Mwiru caves.'
+            { title: 'Crater lake hikes', description: 'Hikes with stunning views of the crater lakes.', image: 'campaignFortPortal' },
+            { title: 'Visit to the Toro Kingdom palace', description: 'Learn about the history of the kingdom.', image: 'campaignBusoga' },
+            { title: 'Exploring the Amabere ga Nyina Mwiru caves', description: 'A unique cultural experience.', image: 'campaignElgon' }
         ],
         accommodation: [
             'A wide range of hotels and lodges in and around Fort Portal.',
