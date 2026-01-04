@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useRef, useState, type MouseEvent, useEffect } from 'react';
