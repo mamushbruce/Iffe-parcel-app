@@ -175,7 +175,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                     <Activity className="mr-2 h-5 w-5" />
                     Activities
                 </h3>
-                <div className="grid grid-cols-1 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     {campaign.activities.map((activity, index) => {
                         const activityImage = placeholderImages[activity.image];
                         return (
