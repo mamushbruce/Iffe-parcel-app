@@ -52,9 +52,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 20000, goal: 100, currentAmount: 98, organizer: 'iffe-travels', tags: ['#Gorilla', '#UNESCO', '#Uganda'], startDate: '2024-09-01', endDate: '2024-09-04', volunteersNeeded: 8, volunteersSignedUp: 6,
         activities: [
-            'Gorilla Trekking (permit included): An intimate encounter with a gorilla family.',
-            'Community Walk: Visit local communities and learn about their culture and traditions.',
-            'Bird Watching Tour: Explore the diverse birdlife of Bwindi with an expert guide.'
+            'Gorilla Trekking (Permit Included)\nA fully guided trek with official permits, ensuring a safe, ethical, and regulated encounter.',
+            'Community Walk\nA guided visit to nearby communities to learn how conservation tourism supports local livelihoods, culture, and education.',
+            'Bird Watching Experience\nBwindi is home to over 350 bird species, making it a rewarding destination for bird enthusiasts and nature lovers alike.'
         ],
         accommodation: [
             'Comfortable eco-lodges with stunning forest views.',

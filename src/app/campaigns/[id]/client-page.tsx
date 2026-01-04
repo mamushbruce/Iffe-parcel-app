@@ -170,16 +170,24 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                 ]}
               />
               
-               <ImageGridInfoSection
-                title="Activities"
-                icon={Activity}
-                texts={campaign.activities}
-                images={[
-                    { src: placeholderImages.ideaWalkingSafari.src, hint: placeholderImages.ideaWalkingSafari.hint },
-                    { src: "https://picsum.photos/seed/activity2/600/400", hint: "community interaction" },
-                    { src: "https://picsum.photos/seed/activity3/600/400", hint: "bird watching" },
-                ]}
-              />
+              <AnimatedSection>
+                <h3 className="font-headline text-xl font-semibold text-primary flex items-center mb-4">
+                    <Activity className="mr-2 h-5 w-5" />
+                    Activities
+                </h3>
+                <ul className="space-y-4">
+                    {campaign.activities.map((activity, index) => {
+                        const [title, ...descriptionParts] = activity.split('\n');
+                        const description = descriptionParts.join('\n');
+                        return (
+                            <li key={index} className="grid md:grid-cols-5 gap-4 items-start">
+                                <div className="md:col-span-2 font-semibold text-foreground">{title}</div>
+                                <div className="md:col-span-3 text-muted-foreground text-sm">{description}</div>
+                            </li>
+                        );
+                    })}
+                </ul>
+              </AnimatedSection>
               
               <ImageGridInfoSection
                 title="Accommodation"
