@@ -209,7 +209,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                 text={campaign.activities.join(', ')}
                 imageUrl={placeholderImages.ideaWalkingSafari.src}
                 imageHint={placeholderImages.ideaWalkingSafari.hint}
-                imagePosition="left"
+                imagePosition="right"
               />
               
               <ImageGridInfoSection
