@@ -59,7 +59,7 @@ const mockCampaignsData: Campaign[] = [
         accommodation: [
             { title: 'Eco-Lodges', description: 'Comfortable eco-lodges with stunning forest views.', image: 'pkgAdventurer' },
             { title: 'Varied Options', description: 'Options range from budget-friendly to luxury accommodations.', image: 'pkgUltimate' },
-            { title: 'Sustainable Stays', description: 'All lodges are selected for their commitment to sustainability and guest comfort.', image: 'pkgExplorer' }
+            { title: 'Luxury & Premium Safari Lodges', description: 'All lodges are selected for their commitment to sustainability and guest comfort.', image: 'pkgExplorer' }
         ],
         meals: [
             { title: 'Full Board', description: 'Full board included: breakfast, packed lunch for the trek, and dinner.', image: 'videoThumbTestimonial' },
