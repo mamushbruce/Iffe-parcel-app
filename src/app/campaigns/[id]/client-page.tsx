@@ -103,7 +103,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
     );
   };
   
-  const ImageGridInfoSection = ({ title, icon: Icon, text, images }: { title: string, icon: React.ElementType, text: string, images: {src: string, hint?: string}[] }) => {
+  const ImageGridInfoSection = ({ title, icon: Icon, texts, images }: { title: string, icon: React.ElementType, texts: string[], images: {src: string, hint?: string}[] }) => {
     return (
         <AnimatedSection>
             <div className="space-y-4">
@@ -111,23 +111,17 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                     <Icon className="mr-2 h-5 w-5" />
                     {title}
                 </h3>
-                <div className="grid md:grid-cols-2 gap-8 items-center">
-                    <div className="flex flex-col space-y-2">
-                        {images.map((image, index) => (
-                            <div key={index} className="relative aspect-[4/3] w-full rounded-lg overflow-hidden shadow-lg group">
-                                <Image src={image.src} alt={`${title} view ${index+1}`} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={image.hint} />
-                            </div>
-                        ))}
-                    </div>
-                     <div>
-                         {text.split(',').length > 1 && !['Accommodation', 'Meals'].includes(title) ? (
-                            <ul className="space-y-2 text-muted-foreground list-disc list-inside">
-                                {text.split(',').map(item => <li key={item}>{item.trim()}</li>)}
-                            </ul>
-                        ) : (
-                            <p className="text-muted-foreground leading-relaxed">{text}</p>
-                        )}
-                    </div>
+                <div className="space-y-8">
+                  {images.map((image, index) => (
+                      <div key={index} className="grid md:grid-cols-2 gap-8 items-center">
+                          <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden shadow-lg group">
+                              <Image src={image.src} alt={`${title} view ${index+1}`} layout="fill" className="object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={image.hint} />
+                          </div>
+                          <div>
+                              <p className="text-muted-foreground leading-relaxed">{texts[index] || ''}</p>
+                          </div>
+                      </div>
+                  ))}
                 </div>
             </div>
         </AnimatedSection>
@@ -195,7 +189,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                <ImageGridInfoSection
                 title="The Experience"
                 icon={Star}
-                text={campaign.storyline}
+                texts={campaign.storyline.split('. ')}
                 images={[
                   { src: placeholderImages.gallerySafariGroup.src, hint: placeholderImages.gallerySafariGroup.hint },
                   { src: placeholderImages.blogLionPride.src, hint: placeholderImages.blogLionPride.hint },
@@ -215,7 +209,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
               <ImageGridInfoSection
                 title="Accommodation"
                 icon={BedDouble}
-                text={campaign.accommodation}
+                texts={campaign.accommodation.split('. ')}
                 images={[
                   { src: placeholderImages.pkgAdventurer.src, hint: placeholderImages.pkgAdventurer.hint },
                   { src: placeholderImages.pkgUltimate.src, hint: placeholderImages.pkgUltimate.hint },
@@ -226,7 +220,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
               <ImageGridInfoSection
                 title="Meals"
                 icon={UtensilsCrossed}
-                text={campaign.meals}
+                texts={campaign.meals.split('. ')}
                 images={[
                   { src: placeholderImages.videoThumbTestimonial.src, hint: placeholderImages.videoThumbTestimonial.hint },
                   { src: "https://picsum.photos/seed/meals2/600/400", hint: "outdoor dining" },
