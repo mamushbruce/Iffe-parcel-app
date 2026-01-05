@@ -106,7 +106,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: placeholderImages.campaignMurchison.width,
         imageHeight: placeholderImages.campaignMurchison.height,
         dataAiHint: placeholderImages.campaignMurchison.hint,
-        description: "The Murchison Falls Safari takes you into the heart of Uganda’s largest and most dramatic national park, where powerful natural forces and rich wildlife coexist along the course of the legendary Nile River. This safari experience is defined by contrast—wide open savannahs, dense riverine forests, and the thunderous spectacle of the Nile squeezing through a narrow gorge before plunging into the Devil’s Cauldron below. This tour is ideal for travelers seeking a classic African safari enriched by unforgettable scenery, abundant wildlife, and one of the most iconic waterfalls on the continent. It combines expertly guided game drives with a scenic boat safari, offering exceptional wildlife viewing both on land and water.",
+        description: "The Murchison Falls Safari takes you into the heart of Uganda’s largest and most dramatic national park, where powerful natural forces and rich wildlife coexist along the course of the legendary Nile River. This safari experience is defined by contrast—wide open savannahs, dense riverine forests, and the thunderous spectacle of the Nile squeezing through a narrow gorge before plunging into the Devil’s Cauldron below.\n\nThis tour is ideal for travelers seeking a classic African safari enriched by unforgettable scenery, abundant wildlife, and one of the most iconic waterfalls on the continent. It combines expertly guided game drives with a scenic boat safari, offering exceptional wildlife viewing both on land and water.",
         storyline: [
             "Stand in awe at the top of Murchison Falls, where the Nile River narrows to just a few meters before crashing through the gorge with immense force—a humbling display of nature’s raw power.",
             "Enjoy classic game drives across the northern plains, where rolling savannahs provide excellent visibility for spotting lions, giraffes, elephants, hartebeest, and large herds of buffalo.",
@@ -134,27 +134,27 @@ const mockCampaignsData: Campaign[] = [
         id: '4', title: 'Kibale Forest Chimpanzee Trekking',
         shortDescription: 'Trek chimpanzees in the primate capital of East Africa.',
         imageUrl: placeholderImages.campaignKibale.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'chimpanzee forest',
-        description: 'Immerse yourself in Kibale Forest, home to the highest concentration of primates in Africa. The main attraction is trekking to find and observe chimpanzees in their natural habitat.',
+        description: 'Immerse yourself in the lush tropical rainforest of Kibale Forest National Park, widely regarded as the primate capital of Africa. This exceptional tour offers a rare opportunity to trek through dense forest in search of wild chimpanzees, our closest relatives in the animal kingdom, and observe them in their natural habitat.\n\nKibale Forest is home to the highest concentration of primates in Africa, with over 13 primate species recorded. The highlight of this experience is a guided chimpanzee trek led by expert trackers and park rangers, providing an intimate and educational encounter that combines adventure, conservation, and deep connection with nature.\n\nThis tour is ideal for travelers seeking a meaningful wildlife experience rooted in research, sustainability, and authentic forest exploration.',
         storyline: [
-            'An intimate encounter with our closest relatives in the animal kingdom.',
-            'The forest is a magical place, filled with the sounds of primates and birds.',
-            'Learn about the conservation efforts to protect these intelligent creatures.'
+            'Come face-to-face with wild chimpanzees as they move through the forest canopy—feeding, calling, grooming, and interacting in complex social groups. Observing their intelligence and behavior at close range is both thrilling and humbling.',
+            'Kibale Forest is a living soundscape. As you trek beneath towering trees, the forest comes alive with the calls of primates, birds, and insects, creating a truly immersive rainforest atmosphere.',
+            'Throughout the experience, guides share insights into ongoing conservation and research efforts aimed at protecting chimpanzees and preserving Kibale’s rich biodiversity for future generations.'
         ],
         budget: 12000, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Chimpanzee', '#Primates', '#Uganda'], startDate: '2024-08-10', endDate: '2024-08-13', volunteersNeeded: 6, volunteersSignedUp: 4,
         activities: [
-            { title: 'Chimpanzee Trekking', description: 'Expert guides lead you to find and observe chimpanzees.', image: 'campaignKibale' },
-            { title: 'Bigodi Wetland Sanctuary Walk', description: 'A walk for bird and monkey viewing in the Bigodi Wetland.', image: 'blogShoebill' },
-            { title: 'Bird Watching', description: 'Kibale is one of Africa\'s premier birding spots.', image: 'blogShoebill' }
+            { title: 'Chimpanzee Trekking', description: 'Led by expert guides and Uganda Wildlife Authority rangers, this guided trek takes you deep into the forest to locate and observe chimpanzees in the wild. Permits ensure ethical, controlled encounters.', image: 'campaignKibale' },
+            { title: 'Bigodi Wetland Sanctuary Walk', description: 'A guided community-run walk through Bigodi Wetland, renowned for birdlife, monkeys, and cultural interaction. Proceeds directly support local conservation and development projects.', image: 'blogShoebill' },
+            { title: 'Bird Watching', description: 'With over 370 recorded bird species, Kibale is one of Africa’s premier birding destinations, ideal for both casual bird lovers and serious birders.', image: 'blogShoebill' }
         ],
         accommodation: [
-            { title: 'Forest Lodges', description: 'Forest lodges and camps, some with views of the forest canopy.', image: 'pkgAdventurer' },
-            { title: 'Forest Sounds', description: 'Wake up to the sounds of the forest.', image: 'pkgUltimate' },
-            { title: 'Eco-Friendly', description: 'Eco-friendly accommodations that blend with the natural environment.', image: 'pkgExplorer' }
+            { title: 'Forest Lodges', description: 'Stay in carefully selected forest lodges and eco-camps located close to the park, offering comfort while maintaining a strong connection to the natural environment.', image: 'pkgAdventurer' },
+            { title: 'Forest Sounds', description: 'Wake up to the natural sounds of the rainforest—bird calls, rustling leaves, and distant primate movement.', image: 'pkgUltimate' },
+            { title: 'Eco-Friendly', description: 'Accommodations emphasize sustainability, blending seamlessly with the forest and supporting responsible tourism practices.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'All Meals Included', description: 'Packages typically include all meals during your stay.', image: 'videoThumbTestimonial' },
-            { title: 'Local Food', description: 'Enjoy fresh, locally sourced food.', image: 'sipiCoffee' },
-            { title: 'Forest Dining', description: 'Dine in a unique forest setting.', image: 'ideaFamilySafari' }
+            { title: 'All Meals Included', description: 'Tour packages typically include breakfast, lunch, and dinner for a seamless and relaxed stay.', image: 'videoThumbTestimonial' },
+            { title: 'Local Food', description: 'Enjoy freshly prepared meals using locally sourced ingredients, supporting nearby farmers and communities.', image: 'sipiCoffee' },
+            { title: 'Forest Dining', description: 'Dine in a tranquil forest setting that enhances the immersive nature experience.', image: 'ideaFamilySafari' }
         ]
     },
     {
@@ -613,7 +613,7 @@ const mockCampaignsData: Campaign[] = [
         meals: [
             { title: 'Lodge Dining', description: 'Provided by accommodation.', image: 'videoThumbTestimonial' },
             { title: 'Forest Views', description: 'Enjoy meals with a view of the forest.', image: 'sipiCoffee' },
-            { title: 'Varied Options', description: 'A variety of dining options.', image: 'ideaFamilySafari' }
+            { title: 'Varied Options', description: 'A variety of dining options available.', image: 'ideaFamilySafari' }
         ]
     },
     {
