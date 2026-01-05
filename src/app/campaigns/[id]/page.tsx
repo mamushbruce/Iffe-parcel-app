@@ -83,9 +83,9 @@ const mockCampaignsData: Campaign[] = [
         ],
         budget: 15000, goal: 100, currentAmount: 92, organizer: 'iffe-travels', tags: ['#Wildlife', '#Lions', '#Uganda'], startDate: '2024-07-15', endDate: '2024-07-22', volunteersNeeded: 12, volunteersSignedUp: 8,
         activities: [
-            { title: 'Game Drives (Ishasha & Kasenyi)', description: 'Search for tree-climbing lions and other big game.', image: 'galleryLioness' },
-            { title: 'Kazinga Channel Boat Cruise', description: 'Get up close with hippos, crocodiles, and elephants.', image: 'galleryElephant' },
-            { title: 'Crater Lake Drive', description: 'Explore the scenic crater lakes of the park.', image: 'campaignFortPortal' }
+            { title: 'Game Drives (Ishasha & Kasenyi)', description: 'Search for tree-climbing lions, large herds of elephants and buffalo, Uganda kob, warthogs, and other plains game across open savannahs.', image: 'galleryLioness' },
+            { title: 'Kazinga Channel Boat Cruise', description: 'One of Africa’s best boat safaris. Cruise along the channel and get remarkably close to hippos, Nile crocodiles, elephants, and countless water birds.', image: 'galleryElephant' },
+            { title: 'Crater Lake Drive', description: 'Explore the park’s stunning volcanic crater lakes, offering panoramic views and insight into the region’s geological history.', image: 'campaignFortPortal' }
         ],
         accommodation: [
             { title: 'Safari Lodges', description: 'Selection of safari lodges and camps overlooking the savannah or channel.', image: 'pkgAdventurer' },
@@ -703,3 +703,4 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
 
     
 
+    
