@@ -224,10 +224,10 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                         <p className="text-foreground font-semibold">{campaign.organizer}</p>
                     </CardContent>
                     <CardHeader className='pt-0'>
-                        <CardTitle className="font-headline text-xl text-primary flex items-center"><ShieldCheck className="mr-2 h-5 w-5"/>Responsible & Authentic Travel</CardTitle>
+                        <CardTitle className="font-headline text-xl text-primary flex items-center"><ShieldCheck className="mr-2 h-5 w-5"/>Responsible &amp; Authentic Travel</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-xs text-muted-foreground">We are committed to responsible tourism practices that protect wildlife, support conservation efforts, and benefit local communities. Your visit contributes to the preservation of Queen Elizabeth National Park and supports livelihoods connected to sustainable tourism.</p>
+                        <p className="text-xs text-muted-foreground">We are committed to responsible tourism practices that protect wildlife, support conservation efforts, and benefit local communities.</p>
                     </CardContent>
                 </Card>
                 <RelatedToursCard tours={relatedTours} />
