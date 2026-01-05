@@ -100,32 +100,32 @@ const mockCampaignsData: Campaign[] = [
     },
     {
         id: '3',
-        title: 'Murchison Falls Safari',
+        title: 'Murchison Falls Safari – Uganda',
         shortDescription: 'See the powerful falls and diverse wildlife of Murchison.',
         imageUrl: placeholderImages.campaignMurchison.src,
         imageWidth: placeholderImages.campaignMurchison.width,
         imageHeight: placeholderImages.campaignMurchison.height,
         dataAiHint: placeholderImages.campaignMurchison.hint,
-        description: 'Discover the dramatic Murchison Falls, where the Nile river explodes through a narrow gorge. The park is home to lions, giraffes, elephants, and vast herds of antelope. A boat trip to the base of the falls is a highlight.',
+        description: "The Murchison Falls Safari takes you into the heart of Uganda’s largest and most dramatic national park, where powerful natural forces and rich wildlife coexist along the course of the legendary Nile River. This safari experience is defined by contrast—wide open savannahs, dense riverine forests, and the thunderous spectacle of the Nile squeezing through a narrow gorge before plunging into the Devil’s Cauldron below. This tour is ideal for travelers seeking a classic African safari enriched by unforgettable scenery, abundant wildlife, and one of the most iconic waterfalls on the continent. It combines expertly guided game drives with a scenic boat safari, offering exceptional wildlife viewing both on land and water.",
         storyline: [
-            "Feel the power of nature at the world's most powerful waterfall.",
-            "Explore the vast savannah teeming with life, including giraffes, elephants, and lions.",
-            "The boat safari on the Nile offers incredible wildlife viewing opportunities."
+            "Stand in awe at the top of Murchison Falls, where the Nile River narrows to just a few meters before crashing through the gorge with immense force—a humbling display of nature’s raw power.",
+            "Enjoy classic game drives across the northern plains, where rolling savannahs provide excellent visibility for spotting lions, giraffes, elephants, hartebeest, and large herds of buffalo.",
+            "Cruise upstream along the Nile beneath towering riverbanks, encountering hippos, Nile crocodiles, elephants, and a remarkable variety of birdlife in a calm, immersive setting."
         ],
         budget: 8000, goal: 100, currentAmount: 88, organizer: 'iffe-travels', tags: ['#Wildlife', '#Waterfalls', '#Uganda'], startDate: '2024-10-05', endDate: '2024-10-10', volunteersNeeded: 10, volunteersSignedUp: 10,
         activities: [
-            { title: 'Hike to the top of the falls', description: 'A spectacular view awaits at the top of the falls.', image: 'campaignMurchison' },
-            { title: 'Nile River Boat Safari', description: 'A boat trip to the base of the falls for incredible wildlife viewing.', image: 'fifaCardNile' },
-            { title: 'Game Drives', description: 'Spot the diverse wildlife of the park on guided game drives.', image: 'galleryGiraffe' }
+            { title: 'Game Drives', description: 'Morning and afternoon game drives in the park’s prime wildlife areas, guided by experienced safari guides who understand animal behavior and tracking techniques.', image: 'galleryGiraffe' },
+            { title: 'Nile Boat Safari', description: 'A highlight of the tour, the boat cruise takes you along the Nile to the base of the falls, offering unmatched wildlife viewing and photography opportunities.', image: 'fifaCardNile' },
+            { title: 'Murchison Falls Hike (Optional)', description: 'A guided hike from the base to the top of the falls for travelers who wish to experience the landscape up close and capture panoramic views.', image: 'campaignMurchison' }
         ],
         accommodation: [
-            { title: 'Riverside Lodges', description: 'Riverside lodges and safari tents with stunning views.', image: 'pkgAdventurer' },
-            { title: 'Nile Sounds', description: 'Enjoy the sounds of the Nile from your accommodation.', image: 'pkgUltimate' },
-            { title: 'Budget Options', description: 'Options available for all budgets.', image: 'pkgExplorer' }
+            { title: 'Safari Lodges & Tented Camps', description: 'Accommodation options range from comfortable safari lodges to well-appointed tented camps, all strategically located near wildlife areas or along the Nile.', image: 'pkgAdventurer' },
+            { title: 'Unique Views', description: 'Many lodges offer river views, savannah outlooks, and frequent wildlife sightings directly from the property.', image: 'pkgUltimate' },
+            { title: 'Sounds of the Wild', description: 'Evenings are accompanied by the natural sounds of the African bush, creating an authentic safari atmosphere without compromising comfort or safety.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Full Board', description: 'Full board available.', image: 'videoThumbTestimonial' },
-            { title: 'River Views', description: 'Enjoy meals with a view of the river or savannah.', image: 'sipiCoffee' },
+            { title: 'Full-Board Dining', description: 'Most accommodations operate on a full-board basis, including breakfast, lunch, and dinner.', image: 'videoThumbTestimonial' },
+            { title: 'Dining with a View', description: 'Enjoy freshly prepared meals served with views of the Nile River or open plains, enhancing the overall safari experience.', image: 'sipiCoffee' },
             { title: 'Bush Dining', description: 'Options for bush breakfasts and dinners.', image: 'ideaFamilySafari' }
         ],
     },
