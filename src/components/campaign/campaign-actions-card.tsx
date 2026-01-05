@@ -71,7 +71,6 @@ export default function CampaignActionsCard({
             >
               <HeartHandshake className="mr-2 h-5 w-5" /> {spotsLeft > 0 ? 'Book This Tour' : 'Tour Full'}
             </Button>
-            <p className="text-xs text-muted-foreground text-center">Secure your place on one of Uganda’s most iconic safari experiences.</p>
         </div>
       </CardContent>
        <CardFooter>
