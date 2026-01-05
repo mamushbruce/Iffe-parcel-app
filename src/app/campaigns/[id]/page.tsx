@@ -93,9 +93,9 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Sounds of the Wild', description: 'Fall asleep to the natural sounds of the African wilderness while enjoying comfort, safety, and warm hospitality.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'All-Inclusive', description: 'All-inclusive options available.', image: 'videoThumbTestimonial' },
-            { title: 'Dining with a View', description: 'Enjoy meals with a view of the park.', image: 'sipiCoffee' },
-            { title: 'Bush Dining', description: 'Bush breakfasts and dinners can be arranged for a special experience.', image: 'ideaFamilySafari' }
+            { title: 'All-Inclusive Options', description: 'Most accommodations offer full-board or all-inclusive meal plans for a seamless safari experience.', image: 'videoThumbTestimonial' },
+            { title: 'Dining with a View', description: 'Enjoy freshly prepared meals while overlooking the park, channel, or savannah.', image: 'sipiCoffee' },
+            { title: 'Bush Dining Experiences', description: 'Special bush breakfasts or dinners can be arranged for a memorable and intimate safari moment.', image: 'ideaFamilySafari' }
         ],
     },
     {
