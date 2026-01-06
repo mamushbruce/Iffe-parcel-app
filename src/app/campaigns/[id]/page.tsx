@@ -248,7 +248,8 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
      {
-        id: '7', title: 'Explore Uganda’s Savannah on Two Wheels',
+        id: '7',
+        title: 'Explore Uganda’s Savannah on Two Wheels',
         shortDescription: 'The closest park to Kampala, perfect for cycling among zebras.',
         imageUrl: placeholderImages.campaignMburo.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'zebra safari',
         description: 'Lake Mburo National Park offers one of the most unique safari experiences in East Africa — a guided cycling safari through open savannah landscapes, where wildlife moves freely and encounters happen at ground level.\n\nAs Uganda’s closest national park to Kampala, Lake Mburo is ideal for travelers seeking an active, immersive safari without long travel times. The park is home to zebras, impalas, buffalo, eland, warthogs, giraffes, and a rich variety of birdlife, all set within rolling hills, acacia woodland, and seasonal lakes.\n\nThis cycling safari allows you to experience wildlife without vehicles, creating a more intimate and environmentally friendly way to explore the park. It is suitable for travelers with moderate fitness levels and a sense of adventure.',
@@ -295,7 +296,7 @@ const mockCampaignsData: Campaign[] = [
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
         budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels',
-        tags: ['#RiverNile', '#Jinja', '#Culture', '#History'],
+        tags: ['#RiverNile', '#Jinja', '#Culture', '#History', '#Day-Trip', '#Uganda'],
         startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
@@ -398,30 +399,41 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '11', title: 'Sipi Falls Adventure',
-        shortDescription: 'Explore a series of beautiful waterfalls with coffee tours and hikes.',
+        id: '11', 
+        title: 'Sipi Falls Adventure',
+        shortDescription: 'Waterfalls, Coffee Trails & Scenic Highland Hikes',
         imageUrl: placeholderImages.campaignSipi.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'sipi falls',
-        description: 'Discover the beauty of Sipi Falls, a series of three stunning waterfalls in eastern Uganda. Enjoy guided hikes, abseiling, and a fascinating tour of a local coffee plantation.',
+        description: 'Sipi Falls is one of eastern Uganda’s most scenic destinations, famous for its series of three dramatic waterfalls cascading down the foothills of Mount Elgon. Set within rolling hills, fertile farmlands, and wide-open views across the Karamoja plains, Sipi offers a perfect blend of nature, culture, and gentle adventure.\n\nThis tour combines guided waterfall hikes, Arabica coffee experiences, and highland nature walks, making it ideal for travelers who enjoy scenic landscapes, cultural interaction, and active exploration without extreme physical demands.\n\nSipi Falls is best experienced at a relaxed pace, allowing time to appreciate its natural beauty, local traditions, and peaceful mountain atmosphere.',
         storyline: [
-            'A journey into the heart of coffee country, with spectacular waterfall views.',
-            'The falls are a beautiful and refreshing sight.',
-            'Learn about the local culture and way of life.'
+            'Walk along scenic trails that lead to Sipi’s three waterfalls, each offering a different perspective and dramatic views of plunging water and cliffs.',
+            'Join a guided coffee tour through local farms to learn how Arabica coffee is grown, harvested, processed, and brewed in the highlands.',
+            'Hike across open hills and ridgelines with panoramic views stretching toward Mount Elgon and the plains below.'
         ],
-        budget: 4500, goal: 100, currentAmount: 88, organizer: 'iffe-travels', tags: ['#Waterfalls', '#Coffee', '#Uganda'], startDate: '2024-11-20', endDate: '2024-11-22', volunteersNeeded: 15, volunteersSignedUp: 11,
+        budget: 4500, goal: 100, currentAmount: 88, organizer: 'iffe-travels', 
+        tags: ['#SipiFalls', '#WaterfallHiking', '#ArabicaCoffee', '#ScenicHighlands', '#EasternUganda'], 
+        startDate: '2024-11-20', endDate: '2024-11-22', volunteersNeeded: 15, volunteersSignedUp: 11,
         activities: [
-            { title: 'Waterfall hikes', description: 'See all three stunning waterfalls.', image: 'campaignSipi' },
-            { title: 'Abseiling down a waterfall', description: 'An adrenaline-pumping experience.', image: 'sipiAbseiling' },
-            { title: 'Coffee tours', description: 'Learn about the local coffee industry.', image: 'sipiCoffee' }
+            { title: 'Waterfall Hikes', description: 'Guided hikes connect all three Sipi Falls, ranging from gentle walks to more challenging routes, with time for photography and rest.', image: 'campaignSipi' },
+            { title: 'Arabica Coffee Tour', description: 'Experience the full coffee journey — from farm to cup — guided by local farmers who share generations of knowledge and tradition.', image: 'sipiCoffee' },
+            { title: 'Scenic Nature Walks', description: 'Explore the surrounding hills, villages, and farmlands on guided walks that highlight local life and landscape.', image: 'sipiHiking' },
+            { title: 'Cultural Encounters', description: 'Interact with local communities, learn about traditional practices, and gain insight into daily life in the Sipi region.', image: 'ideaFamilySafari' }
         ],
         accommodation: [
-            { title: 'Lodges with Views', description: 'Lodges and community-run guesthouses with incredible views.', image: 'pkgAdventurer' },
-            { title: 'Sound of Falls', description: 'Enjoy the sound of the falls from your room.', image: 'pkgUltimate' },
-            { title: 'Peaceful Stay', description: 'A peaceful and relaxing place to stay.', image: 'pkgExplorer' }
+            { title: 'Highland Lodges & Eco-Retreats', description: 'Accommodation is arranged at carefully selected lodges and eco-retreats near Sipi Falls, offering easy access to trails and viewpoints.', image: 'pkgAdventurer' },
+            { title: 'Comfort with Exceptional Views', description: 'Rooms are designed for comfort and relaxation, often featuring terraces or outdoor seating with views of waterfalls, hills, or gardens.', image: 'pkgUltimate' },
+            { title: 'Sustainable & Locally Operated', description: 'Many lodges emphasize sustainability, local employment, and low-impact operations aligned with responsible tourism values.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Local Dishes', description: 'Taste local dishes and freshly brewed coffee.', image: 'videoThumbTestimonial' },
-            { title: 'Dining with a View', description: 'Enjoy a meal with a view of the falls.', image: 'sipiCoffee' },
-            { title: 'Vegetarian Options', description: 'Vegetarian options available.', image: 'ideaFamilySafari' }
+            { title: 'Fresh, Farm-Based Cuisine', description: 'Meals feature locally sourced produce from the fertile Mount Elgon region, prepared simply and thoughtfully.', image: 'videoThumbTestimonial' },
+            { title: 'Coffee-Inspired Experiences', description: 'Enjoy freshly brewed local Arabica coffee as part of your stay, often served during or after guided coffee tours.', image: 'sipiCoffee' },
+            { title: 'Scenic Dining Settings', description: 'Meals are commonly enjoyed with views of the surrounding hills or waterfalls, adding to the overall experience.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Sipi Falls can be visited year-round, but drier months offer easier hiking conditions.",
+            "Comfortable walking shoes are recommended for waterfall trails.",
+            "Combine this tour with Mount Elgon National Park for a richer highland experience.",
+            "Photography lovers should plan early morning or late afternoon walks.",
+            "Let us know your pace preference — routes can be adjusted accordingly."
         ]
     },
     {
@@ -782,6 +794,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 
