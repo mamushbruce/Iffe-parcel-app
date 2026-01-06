@@ -298,7 +298,7 @@ const mockCampaignsData: Campaign[] = [
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
         budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels',
-        tags: ['#SourceOfTheNile', '#ScenicBoatCruises', '#CulturalExploration', '#Jinja', '#Uganda', '#Day-Trip', '#Culture'],
+        tags: ['#SourceOfTheNile', '#ScenicBoatCruises', '#CulturalExploration', '#Jinja', '#Uganda', '#Day-Trip'],
         startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
@@ -374,7 +374,7 @@ const mockCampaignsData: Campaign[] = [
             'Discover the dramatic scenery of Sipi Falls, where water cascades down sheer cliffs framed by green highland landscapes.'
         ],
         budget: 9000, goal: 100, currentAmount: 78, organizer: 'iffe-travels',
-        tags: ['#MountElgon', '#VolcanicCaves', '#SipiFalls', '#ScenicHiking', '#EasternUganda'],
+        tags: ['#MountElgon', '#VolcanicCaves', '#SipiFalls', '#ScenicHiking', '#EasternUganda', '#NorthernUganda'],
         startDate: '2025-02-01', endDate: '2025-02-05', volunteersNeeded: 12, volunteersSignedUp: 7,
         activities: [
             { title: 'Guided Mountain Hiking', description: 'Follow well-established trails through forest, moorland, and volcanic terrain, suitable for both day hikes and extended treks.', image: 'campaignElgon' },
@@ -450,7 +450,7 @@ const mockCampaignsData: Campaign[] = [
             'Engage with artisans and local communities to discover traditional crafts, food practices, and everyday life in Busoga.'
         ],
         budget: 2500, goal: 100, currentAmount: 65, organizer: 'iffe-travels', 
-        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#EasternUganda', '#Culture', '#Jinja', '#Day-Trip'], 
+        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#EasternUganda', '#Jinja', '#Day-Trip'], 
         startDate: '2024-12-05', endDate: '2024-12-06', volunteersNeeded: 25, volunteersSignedUp: 10,
         activities: [
             { title: 'Royal & Cultural Heritage Visits', description: 'Explore cultural sites connected to Busoga leadership, clan systems, and historical narratives guided by knowledgeable locals.', image: 'campaignBusoga' },
@@ -564,30 +564,41 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '14', title: 'Karuma Falls Wildlife Tour',
-        shortDescription: 'Spot wildlife near the stunning Karuma Falls on the Nile.',
+        id: '14', 
+        title: 'Karuma Falls Wildlife Tour',
+        shortDescription: 'Where the Nile Roars Through Uganda’s Wild North',
         imageUrl: placeholderImages.campaignKaruma.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'karuma falls',
-        description: 'Visit the impressive Karuma Falls, a cascade of roaring rapids on the Victoria Nile. The area is part of Murchison Falls National Park and is a great place to spot wildlife.',
+        description: 'The Karuma Falls Wildlife Tour combines dramatic natural power with rewarding wildlife encounters along the Nile in northern Uganda. Located near the boundary of Murchison Falls Conservation Area, Karuma Falls is one of the most impressive sections of the River Nile, where enormous volumes of water force their way through narrow rock channels, creating thunderous rapids and mist-filled gorges.\n\nThis tour offers a unique blend of scenic exploration, wildlife viewing, and cultural context, making it an ideal addition to northern Uganda itineraries. Visitors experience the raw energy of the falls while exploring surrounding habitats that support diverse birdlife and wildlife.\n\nKaruma is both a natural landmark and a gateway to Uganda’s wild north.',
         storyline: [
-            'Witness the Nile\'s power and the wildlife it attracts.',
-            'A great addition to a Murchison Falls safari.',
-            'See a different side of the Nile.'
+            'Stand above the roaring Nile as it crashes through the Karuma gorge, creating one of Uganda’s most powerful and photogenic waterfalls.',
+            'Explore surrounding wildlife areas where elephants, giraffes, antelope, and primates are often seen moving along the river corridor.',
+            'Enjoy quiet moments along the riverbanks, where bird calls, flowing water, and wide skies define the atmosphere.'
         ],
-        budget: 5500, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Wildlife', '#NationalPark', '#Uganda', '#NorthernUganda'], startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
+        budget: 5500, goal: 100, currentAmount: 84, organizer: 'iffe-travels', 
+        tags: ['#KarumaFalls', '#RiverNile', '#NorthernUganda', '#ScenicLandscapes', '#WildlifeViewing'], 
+        startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
         activities: [
-            { title: 'Wildlife viewing near the falls', description: 'See the wildlife attracted by the falls.', image: 'campaignKaruma' },
-            { title: 'Visiting the falls', description: 'Witness the power of the falls.', image: 'campaignMurchison' },
-            { title: 'Bird watching in the surrounding area', description: 'Discover the diverse birdlife.', image: 'blogShoebill' }
+            { title: 'Karuma Falls Exploration', description: 'Walk along designated viewpoints to safely experience the scale, sound, and power of the Nile at Karuma Falls.', image: 'campaignMurchison' },
+            { title: 'Wildlife Viewing', description: 'The surrounding areas provide opportunities to spot wildlife, particularly along the riverbanks and forested patches.', image: 'galleryElephant' },
+            { title: 'Bird Watching', description: 'Karuma is rich in birdlife, with riverine and savannah species making it a rewarding stop for bird lovers.', image: 'blogShoebill' },
+            { title: 'Scenic Photography', description: 'The contrast between water, rock formations, and open skies makes Karuma an excellent destination for landscape photography.', image: 'campaignKaruma' }
         ],
         accommodation: [
-            { title: 'Nearby Lodges', description: 'Lodges near the falls.', image: 'pkgAdventurer' },
-            { title: 'Scenic Location', description: 'Enjoy a comfortable stay in a scenic location.', image: 'pkgUltimate' },
-            { title: 'All Budgets', description: 'Options available for all budgets.', image: 'pkgExplorer' }
+            { title: 'Nearby Lodges & Camps', description: 'Accommodation is arranged in comfortable lodges and camps near Karuma or within nearby parks, ensuring easy access to the falls.', image: 'pkgAdventurer' },
+            { title: 'Peaceful Natural Settings', description: 'Lodges are selected for their quiet surroundings, scenic views, and relaxed atmosphere.', image: 'pkgUltimate' },
+            { title: 'Flexible Comfort Levels', description: 'Options range from mid-range lodges to more exclusive safari accommodations when combined with nearby parks.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Lodge Dining', description: 'Provided by the lodges.', image: 'videoThumbTestimonial' },
-            { title: 'River Views', description: 'Enjoy a meal with a view of the river.', image: 'sipiCoffee' },
-            { title: 'Varied Options', description: 'A variety of dining options available.', image: 'ideaFamilySafari' }
+            { title: 'Full-Board Options Available', description: 'Most tour packages include meals, especially when combined with Murchison Falls or multi-day northern circuits.', image: 'videoThumbTestimonial' },
+            { title: 'Fresh, Local Ingredients', description: 'Meals emphasize fresh produce and regional flavors, prepared to suit international travelers.', image: 'sipiCoffee' },
+            { title: 'Riverside Dining', description: 'Some lodges offer dining with views of the Nile, adding atmosphere to every meal.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Karuma Falls is accessible year-round, but water levels are most dramatic during rainy seasons.",
+            "Early morning and late afternoon offer the best light for photography.",
+            "Combine Karuma with Murchison Falls for a complete Nile experience.",
+            "Wear comfortable walking shoes and bring sun protection.",
+            "Let us know if you prefer a relaxed scenic visit or a more wildlife-focused itinerary."
         ]
     },
     {
@@ -600,7 +611,9 @@ const mockCampaignsData: Campaign[] = [
             'See rare wildlife that you won\'t find in other parks.',
             'A true wilderness experience.'
         ],
-        budget: 13000, goal: 100, currentAmount: 60, organizer: 'iffe-travels', tags: ['#RareWildlife', '#Savannah', '#Uganda', '#NorthernUganda'], startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
+        budget: 13000, goal: 100, currentAmount: 60, organizer: 'iffe-travels', 
+        tags: ['#RareWildlife', '#Savannah', '#Uganda', '#NorthernUganda'], 
+        startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
         activities: [
             { title: 'Game drives', description: 'Spot rare wildlife on game drives.', image: 'campaignPianUpe' },
             { title: 'Nature walks', description: 'Explore the savannah on foot.', image: 'ideaWalkingSafari' },
@@ -627,7 +640,9 @@ const mockCampaignsData: Campaign[] = [
             'Experience the energy and vibrancy of Kampala.',
             'Learn about the history and culture of the city.'
         ],
-        budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', tags: ['#CityTour', '#Culture', '#Uganda', '#Day-Trip', '#Jinja', '#Entebbe', '#CulturalHeritage'], startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
+        budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', 
+        tags: ['#CityTour', '#Culture', '#Uganda', '#Day-Trip', '#Jinja'], 
+        startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
         activities: [
             { title: 'Visiting historical sites', description: 'See the Kasubi Tombs and other historic sites.', image: 'campaignBusoga' },
             { title: 'Shopping in craft markets', description: 'Find unique souvenirs.', image: 'ideaFamilySafari' },
@@ -654,7 +669,9 @@ const mockCampaignsData: Campaign[] = [
             'A great way to spend a day before or after a flight.',
             'Relax and unwind in a beautiful setting.'
         ],
-        budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip', '#Jinja', '#Kampala'], startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
+        budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', 
+        tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip', '#Jinja', '#Kampala'], 
+        startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
         activities: [
             { title: 'A tour of the Botanical Gardens', description: 'Explore the lush gardens.', image: 'campaignEntebbe' },
             { title: 'A visit to the Wildlife Centre', description: 'See a variety of Ugandan wildlife.', image: 'galleryElephant' },
@@ -681,7 +698,9 @@ const mockCampaignsData: Campaign[] = [
             'Get up close with our closest relatives.',
             'A great day trip from Entebbe or Kampala.'
         ],
-        budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', tags: ['#Conservation', '#Chimpanzee', '#Uganda', '#Day-Trip', '#Kampala', '#CulturalHeritage'], startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
+        budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', 
+        tags: ['#Conservation', '#Chimpanzee', '#Uganda', '#Day-Trip', '#Kampala', '#CulturalHeritage'], 
+        startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
         activities: [
             { title: 'Boat trip on Lake Victoria', description: 'A scenic boat trip to Ngamba Island.', image: 'campaignSourceNile' },
             { title: 'Chimpanzee viewing', description: 'Watch the chimpanzees during their feeding time.', image: 'campaignNgamba' },
@@ -881,3 +900,4 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
 
 
     
+
