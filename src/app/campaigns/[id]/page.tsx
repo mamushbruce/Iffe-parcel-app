@@ -257,7 +257,7 @@ const mockCampaignsData: Campaign[] = [
             'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
-        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Jinja', '#RiverNile', '#Uganda'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
+        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Source of the River Nile', '#Scenic Boat Cruises', '#Cultural & Historical Exploration', '#Jinja, Uganda'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
             { title: 'Nile River Cruises', description: 'Relaxing boat cruises allow you to enjoy calm stretches of the river, ideal for photography, bird watching, and reflection.', image: 'fifaCardNile' },
@@ -714,6 +714,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 
