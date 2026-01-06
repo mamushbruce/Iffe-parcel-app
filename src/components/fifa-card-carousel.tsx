@@ -32,15 +32,23 @@ interface FifaCardCarouselProps {
 }
 
 const CardImage = ({ card }: { card: CardData }) => {
-    const imageData = placeholderImages[card.image] || placeholderImages.campaignDetailWildebeest;
+    const imageData = placeholderImages[card.image as keyof typeof placeholderImages] || placeholderImages.campaignDetailWildebeest;
     const [imgSrc, setImgSrc] = useState(imageData.src);
+
+    useEffect(() => {
+        const newImageData = placeholderImages[card.image as keyof typeof placeholderImages] || placeholderImages.campaignDetailWildebeest;
+        setImgSrc(newImageData.src);
+    }, [card.image]);
+
     return (
         <Image 
             src={imgSrc} 
             alt={card.title} 
             layout="fill" 
             objectFit="cover" 
+            data-ai-hint={card.dataAiHint}
             onError={() => setImgSrc(placeholderImages.campaignDetailWildebeest.src)}
+            key={card.id}
         />
     );
 };
