@@ -298,7 +298,7 @@ const mockCampaignsData: Campaign[] = [
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
         budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels',
-        tags: ['#SourceOfTheNile', '#ScenicBoatCruises', '#CulturalExploration', '#Jinja', '#Uganda', '#Day-Trip'],
+        tags: ['#SourceOfTheNile', '#ScenicBoatCruises', '#CulturalExploration', '#Jinja', '#Uganda', '#Day-Trip', '#Kampala'],
         startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
@@ -325,19 +325,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '9', 
+        id: '9',
         title: 'White-Water Rafting in Jinja',
         shortDescription: 'Experience the thrill of Grade 5 rapids on the Nile.',
-        imageUrl: placeholderImages.campaignRafting.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'white water rafting',
+        imageUrl: placeholderImages.campaignRafting.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'white water rafting',
         description: 'White-water rafting in Jinja is one of Africa’s most celebrated adventure experiences and ranks among the best Grade 5 rafting trips in the world. Set on the powerful yet scenic stretches of the River Nile, this tour offers an adrenaline-filled journey through thundering rapids, calm interludes, and dramatic river landscapes.\n\nGuided by internationally certified rafting professionals, the experience balances high-intensity adventure with strict safety standards, making it suitable for both first-time rafters and seasoned thrill-seekers. Between rapids, the river slows, allowing moments to float, swim, and appreciate the beauty of the Nile’s riverbanks.\n\nThis tour can be enjoyed as a full-day adventure or combined with other Jinja experiences for a complete river-based itinerary.',
         storyline: [
             'Launch into powerful Grade 5 rapids that challenge your limits and deliver pure adrenaline on Africa’s most iconic river.',
             'Float through calm stretches between rapids, surrounded by lush riverbanks, birdlife, and wide open skies.',
             'Celebrate each successful rapid with your team, guided by expert rafters who prioritize safety, teamwork, and enjoyment.'
         ],
-        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels',
+        budget: 4000,
+        goal: 100,
+        currentAmount: 95,
+        organizer: 'iffe-travels',
         tags: ['#Grade5Rafting', '#RiverNileAdventure', '#ProfessionalGuides', '#Jinja', '#Uganda'],
-        startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
+        startDate: '2024-12-03',
+        endDate: '2024-12-03',
+        volunteersNeeded: 40,
+        volunteersSignedUp: 40,
         activities: [
             { title: 'Grade 5 White-Water Rafting', description: 'Tackle some of the Nile’s most famous rapids, including powerful drops and technical sections that define world-class rafting.', image: 'campaignRafting' },
             { title: 'Milder Rafting Options', description: 'For those seeking less intensity, alternative routes with Grade 3–4 rapids are available, offering excitement with a more relaxed pace.', image: 'campaignRafting' },
@@ -363,19 +372,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '10', 
+        id: '10',
         title: 'Mount Elgon National Park',
         shortDescription: 'Hike a volcanic mountain and explore caves near Sipi Falls.',
-        imageUrl: placeholderImages.campaignElgon.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'mount elgon',
+        imageUrl: placeholderImages.campaignElgon.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'mount elgon',
         description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations.\n\nThis tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands.\n\nMount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
         storyline: [
             'Hike through montane forest and open ridgelines shaped by ancient volcanic activity, with sweeping views across eastern Uganda.',
             'Explore vast volcanic caves carved by lava flows and human use over centuries, guided by local experts who share their history.',
             'Discover the dramatic scenery of Sipi Falls, where water cascades down sheer cliffs framed by green highland landscapes.'
         ],
-        budget: 9000, goal: 100, currentAmount: 78, organizer: 'iffe-travels',
+        budget: 9000,
+        goal: 100,
+        currentAmount: 78,
+        organizer: 'iffe-travels',
         tags: ['#MountElgon', '#VolcanicCaves', '#SipiFalls', '#ScenicHiking', '#EasternUganda'],
-        startDate: '2025-02-01', endDate: '2025-02-05', volunteersNeeded: 12, volunteersSignedUp: 7,
+        startDate: '2025-02-01',
+        endDate: '2025-02-05',
+        volunteersNeeded: 12,
+        volunteersSignedUp: 7,
         activities: [
             { title: 'Guided Mountain Hiking', description: 'Follow well-established trails through forest, moorland, and volcanic terrain, suitable for both day hikes and extended treks.', image: 'campaignElgon' },
             { title: 'Volcanic Cave Exploration', description: 'Visit impressive cave systems such as Kapkwai and Chepnyali, shaped by lava flows and used historically by local communities.', image: 'campaignFortPortal' },
@@ -401,19 +419,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '11', 
+        id: '11',
         title: 'Sipi Falls Adventure',
         shortDescription: 'Waterfalls, Coffee Trails & Scenic Highland Hikes',
-        imageUrl: placeholderImages.campaignSipi.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'sipi falls',
+        imageUrl: placeholderImages.campaignSipi.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'sipi falls',
         description: 'Sipi Falls is one of eastern Uganda’s most scenic destinations, famous for its series of three dramatic waterfalls cascading down the foothills of Mount Elgon. Set within rolling hills, fertile farmlands, and wide-open views across the Karamoja plains, Sipi offers a perfect blend of nature, culture, and gentle adventure.\n\nThis tour combines guided waterfall hikes, Arabica coffee experiences, and highland nature walks, making it ideal for travelers who enjoy scenic landscapes, cultural interaction, and active exploration without extreme physical demands.\n\nSipi Falls is best experienced at a relaxed pace, allowing time to appreciate its natural beauty, local traditions, and peaceful mountain atmosphere.',
         storyline: [
             'Walk along scenic trails that lead to Sipi’s three waterfalls, each offering a different perspective and dramatic views of plunging water and cliffs.',
             'Join a guided coffee tour through local farms to learn how Arabica coffee is grown, harvested, processed, and brewed in the highlands.',
             'Hike across open hills and ridgelines with panoramic views stretching toward Mount Elgon and the plains below.'
         ],
-        budget: 4500, goal: 100, currentAmount: 88, organizer: 'iffe-travels', 
-        tags: ['#SipiFalls', '#WaterfallHiking', '#ArabicaCoffee', '#ScenicHighlands', '#EasternUganda'], 
-        startDate: '2024-11-20', endDate: '2024-11-22', volunteersNeeded: 15, volunteersSignedUp: 11,
+        budget: 4500,
+        goal: 100,
+        currentAmount: 88,
+        organizer: 'iffe-travels',
+        tags: ['#SipiFalls', '#WaterfallHiking', '#ArabicaCoffee', '#ScenicHighlands', '#EasternUganda'],
+        startDate: '2024-11-20',
+        endDate: '2024-11-22',
+        volunteersNeeded: 15,
+        volunteersSignedUp: 11,
         activities: [
             { title: 'Waterfall Hikes', description: 'Guided hikes connect all three Sipi Falls, ranging from gentle walks to more challenging routes, with time for photography and rest.', image: 'campaignSipi' },
             { title: 'Arabica Coffee Tour', description: 'Experience the full coffee journey — from farm to cup — guided by local farmers who share generations of knowledge and tradition.', image: 'sipiCoffee' },
@@ -439,19 +466,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '12', 
+        id: '12',
         title: 'Busoga Kingdom Cultural Tour',
         shortDescription: 'Immerse yourself in the royal heritage and traditions of Busoga.',
-        imageUrl: placeholderImages.campaignBusoga.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'cultural kingdom',
+        imageUrl: placeholderImages.campaignBusoga.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'cultural kingdom',
         description: 'The Busoga Kingdom Cultural Tour offers a deep and authentic introduction to one of Uganda’s most historically rich and culturally vibrant regions. Centered around Jinja and surrounding Busoga communities, this experience explores the traditions, leadership systems, and daily life of the Basoga people.\n\nVisitors are introduced to royal heritage, clan traditions, music, dance, storytelling, and crafts, while learning how culture continues to shape modern Busoga society. This tour is ideal for travelers seeking meaningful cultural engagement beyond wildlife and landscapes.\n\nBusoga is not only a kingdom of history, but a living culture — proud, evolving, and welcoming.',
         storyline: [
             'Learn about the Busoga Kingdom’s royal structure, history, and traditions through guided cultural interpretation and community visits.',
             'Experience traditional music, dance, and storytelling that reflect the identity, values, and social life of the Basoga people.',
             'Engage with artisans and local communities to discover traditional crafts, food practices, and everyday life in Busoga.'
         ],
-        budget: 2500, goal: 100, currentAmount: 82, organizer: 'iffe-travels', 
-        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#Jinja', '#Day-Trip'], 
-        startDate: '2024-12-05', endDate: '2024-12-06', volunteersNeeded: 25, volunteersSignedUp: 10,
+        budget: 2500,
+        goal: 100,
+        currentAmount: 82,
+        organizer: 'iffe-travels',
+        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#Jinja', '#EasternUganda'],
+        startDate: '2024-12-05',
+        endDate: '2024-12-06',
+        volunteersNeeded: 25,
+        volunteersSignedUp: 10,
         activities: [
             { title: 'Royal & Cultural Heritage Visits', description: 'Explore cultural sites connected to Busoga leadership, clan systems, and historical narratives guided by knowledgeable locals.', image: 'campaignBusoga' },
             { title: 'Traditional Music & Dance', description: 'Witness or participate in cultural performances that express storytelling, celebration, and community identity.', image: 'ideaFamilySafari' },
@@ -564,19 +600,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '14', 
+        id: '14',
         title: 'Karuma Falls Wildlife Tour',
         shortDescription: 'Where the Nile Roars Through Uganda’s Wild North',
-        imageUrl: placeholderImages.campaignKaruma.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'karuma falls',
+        imageUrl: placeholderImages.campaignKaruma.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'karuma falls',
         description: 'The Karuma Falls Wildlife Tour combines dramatic natural power with rewarding wildlife encounters along the Nile in northern Uganda. Located near the boundary of Murchison Falls Conservation Area, Karuma Falls is one of the most impressive sections of the River Nile, where enormous volumes of water force their way through narrow rock channels, creating thunderous rapids and mist-filled gorges.\n\nThis tour offers a unique blend of scenic exploration, wildlife viewing, and cultural context, making it an ideal addition to northern Uganda itineraries. Visitors experience the raw energy of the falls while exploring surrounding habitats that support diverse birdlife and wildlife.\n\nKaruma is both a natural landmark and a gateway to Uganda’s wild north.',
         storyline: [
             'Stand above the roaring Nile as it crashes through the Karuma gorge, creating one of Uganda’s most powerful and photogenic waterfalls.',
             'Explore surrounding wildlife areas where elephants, giraffes, antelope, and primates are often seen moving along the river corridor.',
             'Enjoy quiet moments along the riverbanks, where bird calls, flowing water, and wide skies define the atmosphere.'
         ],
-        budget: 5500, goal: 100, currentAmount: 84, organizer: 'iffe-travels', 
-        tags: ['#KarumaFalls', '#RiverNile', '#NorthernUganda', '#ScenicLandscapes', '#WildlifeViewing'], 
-        startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
+        budget: 5500,
+        goal: 100,
+        currentAmount: 84,
+        organizer: 'iffe-travels',
+        tags: ['#KarumaFalls', '#RiverNile', '#NorthernUganda', '#ScenicLandscapes', '#WildlifeViewing'],
+        startDate: '2024-10-15',
+        endDate: '2024-10-17',
+        volunteersNeeded: 15,
+        volunteersSignedUp: 10,
         activities: [
             { title: 'Karuma Falls Exploration', description: 'Walk along designated viewpoints to safely experience the scale, sound, and power of the Nile at Karuma Falls.', image: 'campaignMurchison' },
             { title: 'Wildlife Viewing', description: 'The surrounding areas provide opportunities to spot wildlife, particularly along the riverbanks and forested patches.', image: 'galleryElephant' },
@@ -602,19 +647,28 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '15', 
+        id: '15',
         title: 'Pian Upe Wildlife Reserve',
         shortDescription: 'Discover rare wildlife species in a semi-arid savannah.',
-        imageUrl: placeholderImages.campaignPianUpe.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'savannah reserve',
+        imageUrl: placeholderImages.campaignPianUpe.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'savannah reserve',
         description: 'Pian Upe Wildlife Reserve is Uganda’s second-largest protected area and one of its most underrated wilderness destinations. Located in the semi-arid plains of northeastern Uganda, Pian Upe offers vast open landscapes, dramatic rocky outcrops, and wildlife species rarely seen elsewhere in the country.\n\nThis reserve is defined by its wide horizons, quiet isolation, and raw, unfiltered nature. Unlike busier national parks, Pian Upe provides a sense of true exploration, where game drives unfold without crowds and every sighting feels personal and unexpected.\n\nFor travelers seeking authenticity, solitude, and rare species, Pian Upe is a rewarding off-the-beaten-path experience.',
         storyline: [
             'Endless savannah plains stretch beneath open skies, framed by rolling hills and ancient rock formations that define Pian Upe’s dramatic scenery.',
             'Wildlife encounters feel intimate and unscripted, with sightings often unfolding in complete silence and wide open space.',
             'Cultural interactions with nearby pastoral communities add context and meaning to the landscape and its conservation story.'
         ],
-        budget: 13000, goal: 100, currentAmount: 81, organizer: 'iffe-travels', 
-        tags: ['#PianUpe', '#RareWildlife', '#SemiAridSavannah', '#NorthernUganda', '#OffTheBeatenPath'], 
-        startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
+        budget: 13000,
+        goal: 100,
+        currentAmount: 81,
+        organizer: 'iffe-travels',
+        tags: ['#PianUpe', '#RareWildlife', '#SemiAridSavannah', '#NorthernUganda', '#OffTheBeatenPath'],
+        startDate: '2025-04-01',
+        endDate: '2025-04-05',
+        volunteersNeeded: 10,
+        volunteersSignedUp: 2,
         activities: [
             { title: 'Game Drives', description: 'Explore vast savannahs home to species such as roan antelope, eland, ostrich, cheetah, and leopard — many rarely seen in other Ugandan parks.', image: 'campaignPianUpe' },
             { title: 'Bird Watching', description: 'With over 240 bird species, including dry-land and raptor species, Pian Upe is a hidden gem for bird enthusiasts.', image: 'blogShoebill' },
@@ -640,32 +694,41 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '16', title: 'Kampala City Tour',
-        shortDescription: 'Explore museums, mosques, and cultural centres in Uganda\'s capital.',
+        id: '16', 
+        title: 'Kampala City Tour',
+        shortDescription: 'Culture, History & the Pulse of Uganda’s Capital',
         imageUrl: placeholderImages.campaignKampala.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'kampala city',
-        description: 'Discover the vibrant capital city of Kampala. Visit historic sites like the Kasubi Tombs, the Gaddafi National Mosque, and the Uganda Museum. Experience the bustling markets and the lively culture of the city.',
+        description: 'The Kampala City Tour offers an immersive introduction to Uganda’s vibrant capital — a city built on seven historic hills, rich in culture, faith, history, and everyday life. This experience blends heritage sites, modern city energy, traditional markets, and panoramic viewpoints, providing a balanced understanding of Kampala’s past and present.\n\nFrom royal history and religious landmarks to bustling streets and quiet hilltop views, Kampala reveals itself as a city of contrasts — energetic yet welcoming, traditional yet evolving. This tour is ideal for travelers who want to understand Uganda beyond wildlife and landscapes.\n\nKampala is not just a stopover — it is the heart of the nation.',
         storyline: [
-            'A day in the heart of Uganda.',
-            'Experience the energy and vibrancy of Kampala.',
-            'Learn about the history and culture of the city.'
+            'Explore Kampala’s historic hills, each offering unique stories, cultural landmarks, and sweeping views over the city.',
+            'Move through lively markets and streets where daily life unfolds in color, sound, and rhythm.',
+            'Discover Uganda’s political, cultural, and spiritual history through guided visits to iconic sites.'
         ],
         budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', 
-        tags: ['#CityTour', '#Culture', '#Uganda', '#Day-Trip', '#Jinja', '#CulturalHeritage'], 
+        tags: ['#Kampala', '#CulturalHeritage', '#HistoricLandmarks', '#LocalMarkets', '#UrbanUganda', '#Day-Trip'], 
         startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
         activities: [
-            { title: 'Visiting historical sites', description: 'See the Kasubi Tombs and other historic sites.', image: 'campaignBusoga' },
-            { title: 'Shopping in craft markets', description: 'Find unique souvenirs.', image: 'ideaFamilySafari' },
-            { title: 'Trying local street food', description: 'A taste of Ugandan street food.', image: 'videoThumbTestimonial' }
+            { title: 'Cultural & Historical Landmarks', description: 'Visit key sites such as the Kasubi Royal Tombs, religious monuments, and historic buildings that shaped Uganda’s identity.', image: 'campaignBusoga' },
+            { title: 'City Life & Local Markets', description: 'Explore vibrant markets where food, crafts, and daily commerce offer insight into Kampala’s living culture.', image: 'ideaFamilySafari' },
+            { title: 'Panoramic City Views', description: 'Enjoy elevated viewpoints from Kampala’s hills, perfect for photography and orientation.', image: 'campaignKampala' },
+            { title: 'Optional Museum Visits', description: 'Museums and cultural centers can be included for deeper historical and artistic context.', image: 'homeCreatorTom'}
         ],
         accommodation: [
-            { title: 'N/A', description: 'Day tour, no accommodation provided.', image: 'pkgAdventurer' },
-            { title: 'Can be Arranged', description: 'Can be arranged upon request.', image: 'pkgUltimate' },
-            { title: 'Contact Us', description: 'Contact us for more details.', image: 'pkgExplorer' }
+            { title: 'City Hotels & Boutique Stays', description: 'Accommodation is arranged in well-located hotels and boutique lodges offering comfort and easy access to tour sites.', image: 'pkgAdventurer' },
+            { title: 'Modern Comfort', description: 'Expect clean, comfortable rooms with reliable amenities suited for urban travel.', image: 'pkgUltimate' },
+            { title: 'Flexible Options', description: 'From budget-friendly hotels to premium city stays, accommodation can be tailored to your preference.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Traditional Lunch', description: 'Includes a traditional Ugandan lunch.', image: 'videoThumbTestimonial' },
-            { title: 'Local Dishes', description: 'Try local dishes like matoke and luwombo.', image: 'sipiCoffee' },
-            { title: 'A Taste of Uganda', description: 'A taste of Ugandan cuisine.', image: 'ideaFamilySafari' }
+            { title: 'Local & International Cuisine', description: 'Enjoy meals at selected restaurants offering a mix of traditional Ugandan dishes and international favorites.', image: 'videoThumbTestimonial' },
+            { title: 'Cultural Dining Stops', description: 'Opportunities to taste popular local foods such as street snacks or traditional meals during the tour.', image: 'sipiCoffee' },
+            { title: 'Flexible Meal Plans', description: 'Meals can be included or left open depending on tour duration and traveler preference.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Morning tours offer cooler temperatures and smoother traffic flow.",
+            "Dress modestly when visiting cultural or religious sites.",
+            "Comfortable walking shoes are recommended.",
+            "Kampala pairs well with Entebbe, Jinja, or Ngamba Island for short itineraries.",
+            "Let us know if you prefer history-focused, cultural, or lifestyle-oriented experiences."
         ]
     },
     {
@@ -679,7 +742,7 @@ const mockCampaignsData: Campaign[] = [
             'Relax and unwind in a beautiful setting.'
         ],
         budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', 
-        tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip', '#Jinja', '#Kampala'], 
+        tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip', '#Kampala'], 
         startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
         activities: [
             { title: 'A tour of the Botanical Gardens', description: 'Explore the lush gardens.', image: 'campaignEntebbe' },
@@ -708,7 +771,7 @@ const mockCampaignsData: Campaign[] = [
             'A great day trip from Entebbe or Kampala.'
         ],
         budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', 
-        tags: ['#Conservation', '#Chimpanzee', '#Uganda', '#Day-Trip', '#Kampala', '#CulturalHeritage'], 
+        tags: ['#Conservation', '#Chimpanzee', '#Uganda', '#Day-Trip', '#Kampala'], 
         startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
         activities: [
             { title: 'Boat trip on Lake Victoria', description: 'A scenic boat trip to Ngamba Island.', image: 'campaignSourceNile' },
