@@ -25,6 +25,7 @@ interface Campaign {
   accommodation: { title: string; description: string; image: keyof typeof placeholderImages }[];
   meals: { title: string; description: string; image: keyof typeof placeholderImages }[];
   shortDescription?: string;
+  bookingTips?: string[];
 }
 
 export interface RelatedTour {
@@ -128,6 +129,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Dining with a View', description: 'Enjoy freshly prepared meals served with views of the Nile River or open plains, enhancing the overall safari experience.', image: 'sipiCoffee' },
             { title: 'Bush Dining', description: 'Options for bush breakfasts and dinners can be arranged for a special experience.', image: 'ideaFamilySafari' }
         ],
+        bookingTips: [
+          "Book wildlife permits early, especially when combining this safari with gorilla or chimpanzee trekking.",
+          "The best wildlife viewing seasons are June–August and December–February.",
+          "Pack light layers for early mornings and evenings.",
+          "Bring sunscreen, insect repellent, a hat, and comfortable walking shoes.",
+          "Share your interests with us—we can tailor this safari to match your travel goals."
+        ]
     },
     {
         id: '4', 
@@ -155,6 +163,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'All Meals Included', description: 'Tour packages typically include breakfast, lunch, and dinner for a seamless and relaxed stay.', image: 'videoThumbTestimonial' },
             { title: 'Local Food', description: 'Enjoy freshly prepared meals using locally sourced ingredients, supporting nearby farmers and communities.', image: 'sipiCoffee' },
             { title: 'Forest Dining', description: 'Dine in a tranquil forest setting that enhances the immersive nature experience.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Book chimpanzee trekking permits early, especially during peak seasons.",
+            "The best trekking periods are June–August and December–February.",
+            "Pack light layers for cool mornings and humid forest conditions.",
+            "Bring insect repellent, sunscreen, a hat, and comfortable walking shoes.",
+            "Share your interests with us — we can tailor this tour to match your travel goals."
         ]
     },
     {
@@ -183,6 +198,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Full Board on the Mountain', description: 'All hiking packages include meals prepared by trained support teams, designed to provide energy and recovery during strenuous activity.', image: 'videoThumbTestimonial' },
             { title: 'Nutritious & Practical Menus', description: 'Meals focus on balanced nutrition, hydration support, and dietary needs, adapted for high-altitude conditions.', image: 'sipiCoffee' },
             { title: 'Hot Drinks', description: 'Hot drinks and snacks are provided throughout the day.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "The best hiking seasons are June–August and December–February, when trail conditions are most stable.",
+            "Physical preparation is strongly recommended; this is a demanding hike.",
+            "Proper hiking boots, waterproof gear, and layered clothing are essential.",
+            "Porters and guides are mandatory and included for safety and environmental protection.",
+            "Let us know your experience level — routes and durations can be tailored accordingly."
         ]
     },
     {
@@ -216,6 +238,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Fresh Crayfish', description: 'Freshly prepared meals, including local crayfish, a specialty of the lake.', image: 'videoThumbTestimonial' },
             { title: 'Dining with a View', description: 'Enjoy a meal with a view of the lake.', image: 'sipiCoffee' },
             { title: 'All Diets', description: 'Options for all dietary needs.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Lake Bunyonyi is ideal after Bwindi gorilla trekking for recovery and relaxation.",
+            "Longer stays (2–3 nights) allow you to fully experience the lake’s calm pace.",
+            "Evenings can be cool — light layers are recommended.",
+            "Swimming, canoeing, and walking are suitable for all fitness levels.",
+            "Let us know if you prefer mainland lodges or island stays — each offers a different atmosphere."
         ]
     },
      {
@@ -245,6 +274,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Full Board Options Available', description: 'Most safari packages include breakfast, lunch, and dinner, allowing guests to focus fully on activities and relaxation.', image: 'videoThumbTestimonial' },
             { title: 'Fresh & Safari-Style Dining', description: 'Meals feature a mix of local and international cuisine, served in lodge dining areas or outdoor settings overlooking the park.', image: 'sipiCoffee' },
             { title: 'Bush Dinners', description: 'Bush dinners can be arranged for a special experience.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Cycling safaris are suitable for travelers with moderate fitness levels.",
+            "Helmets, bicycles, and safety gear are provided.",
+            "Early morning and late afternoon rides offer the best wildlife encounters.",
+            "Combine cycling with a boat cruise or walking safari for a well-rounded experience.",
+            "Lake Mburo is ideal as a short safari or stopover between Kampala and southwestern Uganda."
         ]
     },
     {
@@ -257,7 +293,7 @@ const mockCampaignsData: Campaign[] = [
             'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
-        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Source of the River Nile', '#Scenic Boat Cruises', '#Cultural & Historical Exploration', '#Jinja, Uganda'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
+        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Source of the River Nile', '#Scenic Boat Cruises', '#Cultural & Historical Exploration', '#Jinja, Uganda', '#Day-Trip'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
             { title: 'Nile River Cruises', description: 'Relaxing boat cruises allow you to enjoy calm stretches of the river, ideal for photography, bird watching, and reflection.', image: 'fifaCardNile' },
@@ -273,6 +309,13 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Riverside Dining Experiences', description: 'Enjoy meals in carefully selected restaurants and lodges set along the River Nile, where open-air dining and river views turn every meal into part of the experience. The relaxed setting allows you to unwind while taking in the sights and sounds of the water.', image: 'videoThumbTestimonial' },
             { title: 'Authentic Local Flavours', description: 'Sample Uganda’s culinary heritage through dishes such as fresh Nile fish, matoke, luwombo, and seasonal local produce. These meals reflect the region’s fishing traditions and agricultural roots, offering a genuine taste of eastern Uganda.', image: 'sipiCoffee' },
             { title: 'Flexible & Refined Options', description: 'From casual lunches after visiting the source to more refined evening dining, meal options range from traditional Ugandan cuisine to well-prepared international dishes, ensuring comfort, variety, and quality throughout your stay.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "This tour works well as a day trip or 1–2 night stay.",
+            "Morning visits offer the best light and quieter river conditions.",
+            "Combine with adventure activities for a more dynamic itinerary.",
+            "Comfortable clothing and sun protection are recommended.",
+            "Let us know your priorities — Jinja is highly flexible."
         ]
     },
     {
@@ -285,7 +328,7 @@ const mockCampaignsData: Campaign[] = [
             'Rafting on the Nile is a thrilling and unforgettable experience.',
             'No prior experience is necessary.'
         ],
-        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#Uganda'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
+        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#Uganda', '#Day-Trip'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
         activities: [
             { title: 'White-water rafting on Grade 5 rapids', description: 'An adrenaline-pumping experience.', image: 'campaignRafting' },
             { title: 'Kayaking', description: 'A different perspective of the river.', image: 'fifaCardOkavango' },
@@ -474,7 +517,7 @@ const mockCampaignsData: Campaign[] = [
             'Experience the energy and vibrancy of Kampala.',
             'Learn about the history and culture of the city.'
         ],
-        budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', tags: ['#CityTour', '#Culture', '#Uganda'], startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
+        budget: 2000, goal: 100, currentAmount: 91, organizer: 'iffe-travels', tags: ['#CityTour', '#Culture', '#Uganda', '#Day-Trip'], startDate: '2024-11-15', endDate: '2024-11-15', volunteersNeeded: 50, volunteersSignedUp: 45,
         activities: [
             { title: 'Visiting historical sites', description: 'See the Kasubi Tombs and other historic sites.', image: 'campaignBusoga' },
             { title: 'Shopping in craft markets', description: 'Find unique souvenirs.', image: 'ideaFamilySafari' },
@@ -501,7 +544,7 @@ const mockCampaignsData: Campaign[] = [
             'A great way to spend a day before or after a flight.',
             'Relax and unwind in a beautiful setting.'
         ],
-        budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', tags: ['#Gardens', '#Relaxation', '#Uganda'], startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
+        budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip'], startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
         activities: [
             { title: 'A tour of the Botanical Gardens', description: 'Explore the lush gardens.', image: 'campaignEntebbe' },
             { title: 'A visit to the Wildlife Centre', description: 'See a variety of Ugandan wildlife.', image: 'galleryElephant' },
@@ -528,7 +571,7 @@ const mockCampaignsData: Campaign[] = [
             'Get up close with our closest relatives.',
             'A great day trip from Entebbe or Kampala.'
         ],
-        budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', tags: ['#Conservation', '#Chimpanzee', '#Uganda'], startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
+        budget: 3500, goal: 100, currentAmount: 94, organizer: 'iffe-travels', tags: ['#Conservation', '#Chimpanzee', '#Uganda', '#Day-Trip'], startDate: '2024-11-16', endDate: '2024-11-16', volunteersNeeded: 20, volunteersSignedUp: 19,
         activities: [
             { title: 'Boat trip on Lake Victoria', description: 'A scenic boat trip to Ngamba Island.', image: 'campaignSourceNile' },
             { title: 'Chimpanzee viewing', description: 'Watch the chimpanzees during their feeding time.', image: 'campaignNgamba' },
@@ -555,7 +598,7 @@ const mockCampaignsData: Campaign[] = [
             'An adrenaline-pumping adventure.',
             'A great way to experience the beauty of the forest.'
         ],
-        budget: 2800, goal: 100, currentAmount: 86, organizer: 'iffe-travels', tags: ['#Adventure', '#Forest', '#Uganda'], startDate: '2024-11-17', endDate: '2024-11-17', volunteersNeeded: 25, volunteersSignedUp: 20,
+        budget: 2800, goal: 100, currentAmount: 86, organizer: 'iffe-travels', tags: ['#Adventure', '#Forest', '#Uganda', '#Day-Trip'], startDate: '2024-11-17', endDate: '2024-11-17', volunteersNeeded: 25, volunteersSignedUp: 20,
         activities: [
             { title: 'Zip-lining through the forest canopy', description: 'An exhilarating experience.', image: 'campaignMabira' },
             { title: 'Forest walks', description: 'Explore the flora and fauna up close.', image: 'ideaWalkingSafari' },
@@ -714,6 +757,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 

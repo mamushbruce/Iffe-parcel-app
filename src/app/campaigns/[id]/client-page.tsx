@@ -38,6 +38,7 @@ interface Campaign {
   accommodation: { title: string; description: string; image: keyof typeof placeholderImages }[];
   meals: { title: string; description: string; image: keyof typeof placeholderImages }[];
   shortDescription?: string;
+  bookingTips?: string[];
 }
 
 interface CampaignDetailClientPageProps {
@@ -286,7 +287,11 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
               )}
           </div>
           
-          <Summarizer campaignDescription={campaign.description} campaignTitle={campaign.title} />
+          <Summarizer 
+            campaignDescription={campaign.description} 
+            campaignTitle={campaign.title} 
+            bookingTips={campaign.bookingTips} 
+          />
         </div>
         
         <CardFooter className="border-t p-6 flex flex-col sm:flex-row justify-between items-center gap-4">
