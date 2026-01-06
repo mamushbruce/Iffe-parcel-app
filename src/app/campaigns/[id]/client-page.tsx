@@ -56,24 +56,11 @@ const RelatedToursCard: React.FC<{ tours: RelatedTour[] }> = ({ tours }) => {
                     <Users className="mr-2 h-5 w-5"/>Related Tours
                 </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-2">
                 {tours.map(tour => (
-                    <Link key={tour.id} href={`/campaigns/${tour.id}`} className="block group">
-                        <div className="flex items-center space-x-3 p-2 rounded-md hover:bg-card/50 transition-colors">
-                            <div className="relative w-16 h-16 rounded-md overflow-hidden shrink-0">
-                                <Image 
-                                    src={tour.imageUrl} 
-                                    alt={tour.title} 
-                                    fill 
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105" 
-                                    data-ai-hint={tour.dataAiHint}
-                                />
-                            </div>
-                            <div>
-                                <p className="text-sm font-semibold text-foreground line-clamp-2 leading-tight group-hover:text-primary transition-colors">{tour.title}</p>
-                            </div>
-                        </div>
-                    </Link>
+                    <Button key={tour.id} variant="link" asChild className="p-0 text-foreground hover:text-primary justify-start">
+                        <Link href={`/campaigns/${tour.id}`}>{tour.title}</Link>
+                    </Button>
                 ))}
             </CardContent>
              <CardFooter>
@@ -111,12 +98,12 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
             {items.map((item, index) => {
                 const itemImage = placeholderImages[item.image];
                 if (!itemImage) {
-                    return null; // Don't render if image doesn't exist
+                    return null;
                 }
                 return (
                     <Card key={index} className={cn(
                         "overflow-hidden shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 group",
-                        scrollable && "w-[300px] flex-shrink-0" // Fixed width for scrollable cards
+                        scrollable && "w-[300px] flex-shrink-0"
                     )}>
                         <div className="relative w-full aspect-[16/9] bg-muted">
                             <Image 
@@ -245,7 +232,7 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
                         <p className="text-foreground font-semibold">{campaign.organizer}</p>
                     </CardContent>
                     <CardHeader className='pt-0'>
-                        <CardTitle className="font-headline text-xl text-primary flex items-center"><ShieldCheck className="mr-2 h-5 w-5"/>Responsible &amp; Authentic Travel</CardTitle>
+                        <CardTitle className="font-headline text-xl text-primary flex items-center"><ShieldCheck className="mr-2 h-5 w-5"/>Responsible & Authentic Travel</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-sm text-muted-foreground">We are committed to responsible tourism practices that protect wildlife, support conservation efforts, and benefit local communities.</p>
@@ -309,3 +296,5 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
     </div>
   );
 }
+
+    
