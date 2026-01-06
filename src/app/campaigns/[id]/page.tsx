@@ -126,7 +126,7 @@ const mockCampaignsData: Campaign[] = [
         meals: [
             { title: 'Full-Board Dining', description: 'Most accommodations operate on a full-board basis, including breakfast, lunch, and dinner.', image: 'videoThumbTestimonial' },
             { title: 'Dining with a View', description: 'Enjoy freshly prepared meals served with views of the Nile River or open plains, enhancing the overall safari experience.', image: 'sipiCoffee' },
-            { title: 'Bush Dining', description: 'Options for bush breakfasts and dinners.', image: 'ideaFamilySafari' }
+            { title: 'Bush Dining', description: 'Options for bush breakfasts and dinners can be arranged for a special experience.' }
         ],
     },
     {
@@ -182,7 +182,7 @@ const mockCampaignsData: Campaign[] = [
         meals: [
             { title: 'Full Board on the Mountain', description: 'All hiking packages include meals prepared by trained support teams, designed to provide energy and recovery during strenuous activity.', image: 'videoThumbTestimonial' },
             { title: 'Nutritious & Practical Menus', description: 'Meals focus on balanced nutrition, hydration support, and dietary needs, adapted for high-altitude conditions.', image: 'sipiCoffee' },
-            { title: 'Hot Drinks', description: 'Hot drinks and snacks are provided throughout the day.', image: 'ideaFamilySafari' }
+            { title: 'Hot Drinks', description: 'Hot drinks and snacks are provided throughout the day.' }
         ]
     },
     {
@@ -215,7 +215,7 @@ const mockCampaignsData: Campaign[] = [
         meals: [
             { title: 'Fresh Crayfish', description: 'Freshly prepared meals, including local crayfish, a specialty of the lake.', image: 'videoThumbTestimonial' },
             { title: 'Dining with a View', description: 'Enjoy a meal with a view of the lake.', image: 'sipiCoffee' },
-            { title: 'All Diets', description: 'Options for all dietary needs.', image: 'ideaFamilySafari' }
+            { title: 'All Diets', description: 'Options for all dietary needs.' }
         ]
     },
      {
@@ -244,34 +244,35 @@ const mockCampaignsData: Campaign[] = [
         meals: [
             { title: 'Full Board Options Available', description: 'Most safari packages include breakfast, lunch, and dinner, allowing guests to focus fully on activities and relaxation.', image: 'videoThumbTestimonial' },
             { title: 'Fresh & Safari-Style Dining', description: 'Meals feature a mix of local and international cuisine, served in lodge dining areas or outdoor settings overlooking the park.', image: 'sipiCoffee' },
-            { title: 'Bush Dinners', description: 'Bush dinners can be arranged for a special experience.', image: 'ideaFamilySafari' }
+            { title: 'Bush Dinners', description: 'Bush dinners can be arranged for a special experience.' }
         ]
     },
     {
-        id: '8', title: 'Jinja - Source of the Nile',
+        id: '8', title: 'Jinja – Source of the Nile',
         shortDescription: 'Discover the legendary source of the world\'s longest river.',
         imageUrl: placeholderImages.campaignSourceNile.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'source of nile',
-        description: 'Visit Jinja, the historic town famous as the source of the River Nile. Take a boat trip to the exact spot where the river begins its long journey to the Mediterranean.',
+        description: 'Jinja holds a unique place in global geography and African history as the official source of the River Nile. Located on the northern shores of Lake Victoria, this riverside town marks the beginning of a journey that carries the Nile through eleven countries to the Mediterranean Sea.\n\nThis tour offers a guided exploration of the source itself, combined with scenic river experiences and cultural discovery. Jinja’s calm river stretches, historic landmarks, and vibrant local life make it a destination that balances meaning, scenery, and optional adventure.\n\nIdeal for travelers seeking insight rather than intensity, the experience can be enjoyed as a relaxed day tour or expanded into a multi-day stay with added activities.',
         storyline: [
-            'Stand at the beginning of one of the world\'s great rivers.',
-            'Learn about the history and geography of the Nile.',
-            'A must-do experience for any visitor to Uganda.'
+            'Visit the exact point where the Nile emerges from Lake Victoria, guided by local experts who explain its historical and geographical significance.',
+            'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
+            'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
         budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Jinja', '#RiverNile', '#Uganda'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
-            { title: 'Boat trip to the Source of the Nile', description: 'A boat trip to the exact spot where the Nile begins.', image: 'campaignSourceNile' },
-            { title: 'Visit local craft markets', description: 'Shop for souvenirs at local craft markets.', image: 'ideaFamilySafari' },
-            { title: 'Explore the colonial architecture', description: 'Discover the historic architecture of Jinja town.', image: 'campaignBusoga' }
+            { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
+            { title: 'Nile River Cruises', description: 'Relaxing boat cruises allow you to enjoy calm stretches of the river, ideal for photography, bird watching, and reflection.', image: 'fifaCardNile' },
+            { title: 'Cultural & Historical Walks', description: 'Guided walks through Jinja reveal colonial architecture, local markets, and community life along the river.', image: 'campaignBusoga' },
+            { title: 'Optional Adventure Add-Ons', description: 'For those interested, Jinja offers world-class white-water rafting, kayaking, tubing, and cycling excursions that can be added seamlessly to this tour.', image: 'campaignRafting' }
         ],
         accommodation: [
-            { title: 'Jinja Hotels', description: 'Hotels and guesthouses in Jinja.', image: 'pkgAdventurer' },
-            { title: 'Comfortable Stay', description: 'Enjoy a comfortable stay in this historic town.', image: 'pkgUltimate' },
-            { title: 'All Budgets', description: 'Options available for all budgets.', image: 'pkgExplorer' }
+            { title: 'Riverside Lodges & Quality Hotels', description: 'Accommodation is arranged at carefully selected riverside lodges and boutique hotels, chosen for comfort, location, and consistent service standards.', image: 'pkgAdventurer' },
+            { title: 'Comfort & Accessibility', description: 'Rooms offer modern amenities, private facilities, and easy access to river activities and town attractions.', image: 'pkgUltimate' },
+            { title: 'Community-Aware Hospitality', description: 'Many properties support local employment and sustainable practices, aligning with responsible tourism principles.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Fresh Fish', description: 'Enjoy fresh fish from Lake Victoria.', image: 'videoThumbTestimonial' },
-            { title: 'Local Cuisine', description: 'Try local Ugandan cuisine.', image: 'sipiCoffee' },
-            { title: 'Jinja Restaurants', description: 'A variety of restaurants and cafes in Jinja.', image: 'ideaFamilySafari' }
+            { title: 'Flexible Meal Plans', description: 'Depending on your itinerary and lodge selection, meals may be included or arranged at quality local and international restaurants.', image: 'videoThumbTestimonial' },
+            { title: 'Scenic Dining Options', description: 'Several dining locations offer outdoor seating with views of the Nile, enhancing the overall experience.', image: 'sipiCoffee' },
+            { title: 'Local Cuisine', description: 'Try local Ugandan cuisine.' }
         ]
     },
     {
@@ -713,6 +714,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 
