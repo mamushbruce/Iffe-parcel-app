@@ -1,73 +1,73 @@
 
 {
   "adminAvatar": {
-    "src": "https://picsum.photos/seed/adminAvatar/40/40",
+    "src": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
     "hint": "professional avatar"
   },
   "userAlice": {
-    "src": "https://picsum.photos/seed/userAlice/40/40",
+    "src": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
     "hint": "woman profile"
   },
   "userBob": {
-    "src": "https://picsum.photos/seed/userBob/40/40",
+    "src": "https://images.unsplash.com/photo-1593104547489-5cfb3839a3b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
-    "hint": "construction worker"
+    "hint": "man smiling"
   },
   "userCharlie": {
-    "src": "https://picsum.photos/seed/userCharlie/40/40",
+    "src": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
-    "hint": "classic film"
+    "hint": "man portrait"
   },
   "userDiana": {
-    "src": "https://picsum.photos/seed/userDiana/40/40",
+    "src": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
     "hint": "heroic woman"
   },
   "userEdward": {
-    "src": "https://picsum.photos/seed/userEdward/40/40",
+    "src": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=80&h=80",
     "width": 40,
     "height": 40,
-    "hint": "gothic man"
+    "hint": "thoughtful man"
   },
   "blogPostDefault": {
-    "src": "https://picsum.photos/seed/blogPostDefault/800/400",
+    "src": "https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 400,
     "hint": "safari landscape"
   },
   "blogShoebill": {
-    "src": "https://picsum.photos/seed/shoebill/600/400",
+    "src": "https://images.unsplash.com/photo-1623953875359-50a1843b4a45?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "shoebill stork"
   },
   "blogPhotographer": {
-    "src": "https://picsum.photos/seed/photographer/600/400",
+    "src": "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "camera wildlife"
   },
   "blogLionPride": {
-    "src": "https://picsum.photos/seed/lionPride/600/400",
+    "src": "https://images.unsplash.com/photo-1549429355-2070c1b4122d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "lion pride"
   },
   "eventSafariJeep": {
-    "src": "https://picsum.photos/seed/safariJeep/600/400",
+    "src": "https://images.unsplash.com/photo-1521635343834-3564c4c47b59?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "safari jeep"
   },
   "eventWebinar": {
-    "src": "https://picsum.photos/seed/webinar/600/400",
+    "src": "https://images.unsplash.com/photo-1587825140708-df876c12b44e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "online seminar"
@@ -91,37 +91,37 @@
     "hint": "mokoro canoe"
   },
   "campaignKruger": {
-    "src": "https://picsum.photos/seed/kruger/600/350",
+    "src": "https://images.unsplash.com/photo-1549643272-045334c36315?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "safari lodge"
   },
   "dashboardAvatar": {
-    "src": "https://picsum.photos/seed/dashboardAvatar/100/100",
+    "src": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
     "width": 100,
     "height": 100,
     "hint": "smiling person"
   },
   "eventDetailDefault": {
-    "src": "https://picsum.photos/seed/eventDetailDefault/800/400",
+    "src": "https://images.unsplash.com/photo-1534327429-13834be34268?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 400,
     "hint": "safari group"
   },
   "gallerySafariGroup": {
-    "src": "https://picsum.photos/seed/gallerySafariGroup/600/400",
+    "src": "https://images.unsplash.com/photo-1534327429-13834be34268?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "safari group"
   },
   "galleryElephant": {
-    "src": "https://picsum.photos/seed/galleryElephant/400/600",
+    "src": "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
     "width": 400,
     "height": 600,
     "hint": "elephant river"
   },
   "galleryLioness": {
-    "src": "https://picsum.photos/seed/galleryLioness/600/600",
+    "src": "https://images.unsplash.com/photo-1614027164847-1b28acc1b11a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 600,
     "hint": "lioness cubs"
@@ -139,353 +139,351 @@
     "hint": "giraffe sunset"
   },
   "galleryGorilla": {
-    "src": "https://picsum.photos/seed/galleryGorilla/600/400",
+    "src": "https://images.unsplash.com/photo-1589530414115-a835b0b23ad4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "gorilla mist"
   },
   "ideaWalkingSafari": {
-    "src": "https://picsum.photos/seed/ideaWalkingSafari/600/400",
+    "src": "https://images.unsplash.com/photo-1620356793136-e8284558c353?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "walking safari"
   },
   "ideaFamilySafari": {
-    "src": "https://picsum.photos/seed/ideaFamilySafari/600/400",
+    "src": "https://images.unsplash.com/photo-1530541930197-58b36e3c14d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "safari family"
   },
   "ideaPhotoHide": {
-    "src": "https://picsum.photos/seed/ideaPhotoHide/600/400",
+    "src": "https://images.unsplash.com/photo-1603228222899-04351307b22d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "photo hide"
   },
   "homeCreatorJane": {
-    "src": "https://picsum.photos/seed/homeCreatorJane/100/100",
+    "src": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
     "width": 100,
     "height": 100,
     "hint": "safari guide"
   },
   "homeCreatorTom": {
-    "src": "https://picsum.photos/seed/homeCreatorTom/100/100",
+    "src": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
     "width": 100,
     "height": 100,
     "hint": "park ranger"
   },
   "chatUserCurrent": {
-    "src": "https://picsum.photos/seed/chatUserCurrent/40/40",
+    "src": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80",
     "width": 40,
     "height": 40,
     "hint": "person avatar"
   },
   "chatUserBot": {
-    "src": "https://picsum.photos/seed/chatUserBot/40/40",
+    "src": "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80",
     "width": 40,
     "height": 40,
     "hint": "friendly bot"
   },
   "videoPlaceholder": {
-    "src": "https://picsum.photos/seed/videoPlaceholder/320/180",
+    "src": "https://images.unsplash.com/photo-1553531384-411a247ccd78?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&q=80",
     "width": 320,
     "height": 180,
-    "hint": "video placeholder"
+    "hint": "video library"
   },
   "uploadedVideoPlaceholder": {
-    "src": "https://picsum.photos/seed/uploadedVideoPlaceholder/320/180",
+    "src": "https://images.unsplash.com/photo-1526938549149-6a31ixlib=rb-4.0.3&auto=format&fit=crop&w=320&q=80",
     "width": 320,
     "height": 180,
     "hint": "uploaded video"
   },
   "teamJane": {
-    "src": "https://picsum.photos/seed/teamJane/64/64",
+    "src": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&q=80",
     "width": 64,
     "height": 64,
     "hint": "woman portrait"
   },
   "teamJohn": {
-    "src": "https://picsum.photos/seed/teamJohn/64/64",
+    "src": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&q=80",
     "width": 64,
     "height": 64,
     "hint": "man portrait"
   },
   "teamAlice": {
-    "src": "https://picsum.photos/seed/teamAlice/64/64",
+    "src": "https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&q=80",
     "width": 64,
     "height": 64,
     "hint": "person smiling"
   },
   "teamDavid": {
-    "src": "https://picsum.photos/seed/teamDavid/64/64",
+    "src": "https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&q=80",
     "width": 64,
     "height": 64,
     "hint": "photographer portrait"
   },
   "teamEmily": {
-    "src": "https://picsum.photos/seed/teamEmily/64/64",
+    "src": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=64&q=80",
     "width": 64,
     "height": 64,
     "hint": "logistics coordinator"
   },
   "fifaCardGorilla": {
-    "src": "https://picsum.photos/seed/fifaGorilla/800/800",
+    "src": "https://images.unsplash.com/photo-1534567154991-285b0d346453?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 800,
     "hint": "mountain gorilla"
   },
   "fifaCardMasai": {
-    "src": "https://picsum.photos/seed/fifaMasai/800/800",
+    "src": "https://images.unsplash.com/photo-1534749303573-0f72da05891e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 800,
     "hint": "safari group"
   },
   "fifaCardOkavango": {
-    "src": "https://picsum.photos/seed/fifaOkavango/800/800",
+    "src": "https://images.unsplash.com/photo-1583923269213-97b78996251b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 800,
     "hint": "mokoro canoe"
   },
   "fifaCardNile": {
-    "src": "https://picsum.photos/seed/fifaNile/800/800",
+    "src": "https://images.unsplash.com/photo-1568940059539-0a693721b585?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 800,
     "hint": "nile river"
   },
   "fifaCardKili": {
-    "src": "https://picsum.photos/seed/fifaKili/800/800",
+    "src": "https://images.unsplash.com/photo-1589182332698-2c2a41a4a1a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 800,
     "hint": "mount kilimanjaro"
   },
   "pkgExplorer": {
-    "src": "https://picsum.photos/seed/pkg1/600/400",
+    "src": "https://images.unsplash.com/photo-1534327429-13834be34268?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "safari group"
   },
   "pkgAdventurer": {
-    "src": "https://picsum.photos/seed/pkg2/600/400",
+    "src": "https://images.unsplash.com/photo-1587587878385-a77372b395e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "luxury tent"
   },
   "pkgUltimate": {
-    "src": "https://picsum.photos/seed/pkg3/600/400",
+    "src": "https://images.unsplash.com/photo-1534749303573-0f72da05891e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "safari sunset"
   },
   "videoThumbConference": {
-    "src": "https://picsum.photos/seed/vidConf/600/338",
+    "src": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "conference stage"
+    "hint": "Serengeti sunrise"
   },
   "videoThumbTraining": {
-    "src": "https://picsum.photos/seed/vidTrain/600/338",
+    "src": "https://images.unsplash.com/photo-1534567154991-285b0d346453?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "training presentation"
+    "hint": "gorilla family"
   },
   "videoThumbWater": {
-    "src": "https://picsum.photos/seed/vidWater/600/338",
+    "src": "https://images.unsplash.com/photo-1561019895-79567954b542?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "water pump"
+    "hint": "wildebeest river"
   },
   "videoThumbTestimonial": {
-    "src": "https://picsum.photos/seed/vidTest/600/338",
+    "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "person interview"
+    "hint": "tourist testimonial"
   },
   "videoThumbYouth": {
-    "src": "https://picsum.photos/seed/vidYouth/600/338",
+    "src": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "youth event"
+    "hint": "safari packing"
   },
   "videoThumbPlanning": {
-    "src": "https://picsum.photos/seed/vidPlan/600/338",
+    "src": "https://images.unsplash.com/photo-1583923269213-97b78996251b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 338,
-    "hint": "planning board"
+    "hint": "mokoro canoe"
   },
   "contactMap": {
-    "src": "https://picsum.photos/seed/map/800/600",
+    "src": "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     "width": 800,
     "height": 600,
     "hint": "city map"
   },
   "sipiHero": {
-    "src": "https://picsum.photos/seed/sipi-falls-hero/1920/1080",
+    "src": "https://images.unsplash.com/photo-1605333140632-619234190c60?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
     "width": 1920,
     "height": 1080,
-    "hint": "sipi falls uganda"
+    "hint": "sipi falls"
   },
   "sipiHiking": {
-    "src": "https://picsum.photos/seed/sipi-hiking/600/400",
+    "src": "https://images.unsplash.com/photo-1605333140596-1c5c64574992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "hiking mount elgon"
   },
   "sipiAbseiling": {
-    "src": "https://picsum.photos/seed/sipi-abseiling/600/400",
+    "src": "https://images.unsplash.com/photo-1599497581786-2135a4209503?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "abseiling waterfall"
   },
   "sipiCoffee": {
-    "src": "https://picsum.photos/seed/sipi-coffee/600/400",
+    "src": "https://images.unsplash.com/photo-1551030173-122aabc2428f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 400,
     "hint": "coffee beans uganda"
   },
    "campaignBwindi": {
-    "src": "https://images.unsplash.com/photo-1599818454238-149f78a74e50?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1599818454238-149f78a74e50?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "bwindi forest"
   },
   "campaignQueenElizabeth": {
-    "src": "https://images.unsplash.com/photo-1592994801196-17a41760920f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1592994801196-17a41760920f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "tree climbing lion"
   },
   "campaignMurchison": {
-    "src": "https://images.unsplash.com/photo-1618422629636-b53e8e4e6c6e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1618422629636-b53e8e4e6c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "murchison falls"
   },
   "campaignKibale": {
-    "src": "https://images.unsplash.com/photo-1629813244911-482436449a2a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1629813244911-482436449a2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "chimpanzee forest"
   },
   "campaignRwenzori": {
-    "src": "https://images.unsplash.com/photo-1629989025348-18c7c9c0b115?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1629989025348-18c7c9c0b115?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "rwenzori mountains"
   },
   "campaignBunyonyi": {
-    "src": "https://images.unsplash.com/photo-1596763953456-9d2a3a5f2e8d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1596763953456-9d2a3a5f2e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "lake bunyonyi"
   },
   "campaignMburo": {
-    "src": "https://images.unsplash.com/photo-1598335036720-911855b34a62?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1598335036720-911855b34a62?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "zebra safari"
   },
   "campaignSourceNile": {
-    "src": "https://images.unsplash.com/photo-1604754742461-32943801f93e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1604754742461-32943801f93e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "source of nile"
   },
   "campaignRafting": {
-    "src": "https://images.unsplash.com/photo-1565985800588-4687d60a4f5f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1565985800588-4687d60a4f5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "white water rafting"
   },
   "campaignElgon": {
-    "src": "https://images.unsplash.com/photo-1605333140596-1c5c64574992?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1605333140596-1c5c64574992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "mount elgon"
   },
   "campaignSipi": {
-    "src": "https://images.unsplash.com/photo-1605333140632-619234190c60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1605333140632-619234190c60?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "sipi falls"
   },
   "campaignBusoga": {
-    "src": "https://picsum.photos/seed/busoga/600/350",
+    "src": "https://images.unsplash.com/photo-1582103232742-83d39031f135?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "cultural kingdom"
   },
   "campaignKidepo": {
-    "src": "https://images.unsplash.com/photo-1587576595503-f327a34cff3f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1587576595503-f327a34cff3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "kidepo valley"
   },
   "campaignKaruma": {
-    "src": "https://picsum.photos/seed/karuma/600/350",
+    "src": "https://images.unsplash.com/photo-1618422629636-b53e8e4e6c6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "karuma falls"
   },
   "campaignPianUpe": {
-    "src": "https://picsum.photos/seed/pian-upe/600/350",
+    "src": "https://images.unsplash.com/photo-1580221299949-b3a693f4164b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "savannah reserve"
   },
   "campaignKampala": {
-    "src": "https://images.unsplash.com/photo-1580554336357-123351583324?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80",
+    "src": "https://images.unsplash.com/photo-1580554336357-123351583324?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "kampala city"
   },
   "campaignEntebbe": {
-    "src": "https://picsum.photos/seed/entebbe/600/350",
+    "src": "https://images.unsplash.com/photo-1596763953456-9d2a3a5f2e8d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "entebbe botanical"
   },
   "campaignNgamba": {
-    "src": "https://picsum.photos/seed/ngamba/600/350",
+    "src": "https://images.unsplash.com/photo-1629813244911-482436449a2a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "chimpanzee sanctuary"
   },
   "campaignMabira": {
-    "src": "https://picsum.photos/seed/mabira/600/350",
+    "src": "https://images.unsplash.com/photo-1533460004989-cef01064af7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "rainforest zip"
   },
   "campaignSsese": {
-    "src": "https://picsum.photos/seed/ssese/600/350",
+    "src": "https://images.unsplash.com/photo-1604754742461-32943801f93e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "lake victoria island"
   },
   "campaignSemuliki": {
-    "src": "https://picsum.photos/seed/semuliki/600/350",
+    "src": "https://images.unsplash.com/photo-1620356793136-e8284558c353?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "semuliki hot springs"
   },
   "campaignFortPortal": {
-    "src": "https://picsum.photos/seed/fort-portal/600/350",
+    "src": "https://images.unsplash.com/photo-1605333140596-1c5c64574992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
     "width": 600,
     "height": 350,
     "hint": "crater lake"
   },
    "campaignNileCruise": {
-    "src": "https://images.unsplash.com/photo-1568940059539-0a693721b585?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+    "src": "https://images.unsplash.com/photo-1568940059539-0a693721b585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     "width": 1200,
     "height": 600,
     "hint": "nile river cruise"
   },
   "campaignKilimanjaro": {
-    "src": "https://images.unsplash.com/photo-1589182332698-2c2a41a4a1a0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&q=80",
+    "src": "https://images.unsplash.com/photo-1589182332698-2c2a41a4a1a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     "width": 1200,
     "height": 600,
     "hint": "mount kilimanjaro"
   }
 }
-
-    
