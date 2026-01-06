@@ -72,82 +72,95 @@ const RelatedToursCard: React.FC<{ tours: RelatedTour[] }> = ({ tours }) => {
     );
 };
 
-
-export default function CampaignDetailClientPage({ campaign, relatedTours }: CampaignDetailClientPageProps) {
-  const [ref, isVisible] = useScrollAnimation();
-  const [endDate, setEndDate] = useState('');
-
-  useEffect(() => {
-    if (campaign?.endDate) {
-      setEndDate(new Date(campaign.endDate).toLocaleDateString())
-    }
-  }, [campaign?.endDate]);
-  
-  const AnimatedSection = ({ children, className }: { children: React.ReactNode, className?: string }) => {
+const AnimatedSection = ({ children, className }: { children: React.ReactNode, className?: string }) => {
     const [ref, isVisible] = useScrollAnimation();
     return (
         <section ref={ref} className={cn('scroll-animate space-y-4', isVisible && 'scroll-animate-in', className)}>
             {children}
         </section>
     );
-  };
-  
- const ImageGridInfoSection = ({ title, icon: Icon, items, scrollable = false }: { title: string, icon: React.ElementType, items: {title: string, description: string, image: keyof typeof placeholderImages}[], scrollable?: boolean }) => {
-    const renderGrid = (
-        <div className={cn("grid gap-6", scrollable ? "flex" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3")}>
-            {items.map((item, index) => {
-                const itemImage = placeholderImages[item.image];
-                if (!itemImage) {
-                    return null;
-                }
-                return (
-                    <Card key={index} className={cn(
-                        "overflow-hidden shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 group",
-                        scrollable && "min-w-[300px] flex-shrink-0"
-                    )}>
-                        <div className="relative w-full aspect-[16/9] bg-muted">
-                            <Image 
-                                src={itemImage.src} 
-                                alt={item.title} 
-                                layout="fill" 
-                                objectFit="cover" 
-                                data-ai-hint={itemImage.hint} 
-                                className="transition-transform duration-300 group-hover:scale-105"
-                            />
-                        </div>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-semibold">{item.title}</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-sm text-muted-foreground">{item.description}</p>
-                        </CardContent>
-                    </Card>
-                );
-            })}
-        </div>
-    );
-    
+};
+
+const ScrollableImageGrid = ({ title, icon: Icon, items }: { title: string, icon: React.ElementType, items: {title: string, description: string, image: keyof typeof placeholderImages}[]}) => {
     return (
         <AnimatedSection>
             <h3 className="font-headline text-xl font-semibold text-primary flex items-center mb-4">
                 <Icon className="mr-2 h-5 w-5" />
                 {title}
             </h3>
-            {scrollable ? (
-                <ScrollArea>
-                    <div className="pb-4">
-                        {renderGrid}
-                    </div>
-                    <ScrollBar orientation="horizontal" />
-                </ScrollArea>
-            ) : (
-                renderGrid
-            )}
+            <ScrollArea>
+                <div className="flex space-x-6 pb-4">
+                    {items.map((item, index) => {
+                        const itemImage = placeholderImages[item.image];
+                        if (!itemImage) return null;
+                        return (
+                            <Card key={index} className="overflow-hidden shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 group w-[300px] flex-shrink-0">
+                                <div className="relative w-full aspect-[16/9] bg-muted">
+                                    <Image 
+                                        src={itemImage.src} 
+                                        alt={item.title} 
+                                        layout="fill" 
+                                        objectFit="cover" 
+                                        data-ai-hint={itemImage.hint} 
+                                        className="transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
+                                <CardHeader>
+                                    <CardTitle className="text-lg font-semibold">{item.title}</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                                </CardContent>
+                            </Card>
+                        );
+                    })}
+                </div>
+                <ScrollBar orientation="horizontal" />
+            </ScrollArea>
         </AnimatedSection>
     );
-  };
+};
 
-  const ExperienceSection = ({ title, icon: Icon, texts, images }: { title: string, icon: React.ElementType, texts: string[], images: {src: string, hint?: string}[] }) => {
+
+const StaticImageGrid = ({ title, icon: Icon, items }: { title: string, icon: React.ElementType, items: {title: string, description: string, image: keyof typeof placeholderImages}[] }) => {
+    return (
+        <AnimatedSection>
+            <h3 className="font-headline text-xl font-semibold text-primary flex items-center mb-4">
+                <Icon className="mr-2 h-5 w-5" />
+                {title}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {items.map((item, index) => {
+                    const itemImage = placeholderImages[item.image];
+                    if (!itemImage) return null;
+                    return (
+                        <Card key={index} className="overflow-hidden shadow-md transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1 group">
+                            <div className="relative w-full aspect-[16/9] bg-muted">
+                                <Image 
+                                    src={itemImage.src} 
+                                    alt={item.title} 
+                                    layout="fill" 
+                                    objectFit="cover" 
+                                    data-ai-hint={itemImage.hint} 
+                                    className="transition-transform duration-300 group-hover:scale-105"
+                                />
+                            </div>
+                            <CardHeader>
+                                <CardTitle className="text-lg font-semibold">{item.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-muted-foreground">{item.description}</p>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
+            </div>
+        </AnimatedSection>
+    );
+};
+
+
+const ExperienceSection = ({ title, icon: Icon, texts, images }: { title: string, icon: React.ElementType, texts: string[], images: {src: string, hint?: string}[] }) => {
     return (
         <AnimatedSection>
             <div className="space-y-4">
@@ -170,8 +183,18 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
             </div>
         </AnimatedSection>
     )
-  };
+};
 
+export default function CampaignDetailClientPage({ campaign, relatedTours }: CampaignDetailClientPageProps) {
+  const [ref, isVisible] = useScrollAnimation();
+  const [endDate, setEndDate] = useState('');
+
+  useEffect(() => {
+    if (campaign?.endDate) {
+      setEndDate(new Date(campaign.endDate).toLocaleDateString())
+    }
+  }, [campaign?.endDate]);
+  
   return (
     <div ref={ref} className={cn('space-y-8 scroll-animate', isVisible && 'scroll-animate-in')}>
       <Button variant="ghost" asChild className="mb-2">
@@ -243,20 +266,19 @@ export default function CampaignDetailClientPage({ campaign, relatedTours }: Cam
           </div>
 
           <div className="mt-8 space-y-8">
-              <ImageGridInfoSection
+              <ScrollableImageGrid
                 title="Activities"
                 icon={Activity}
                 items={campaign.activities}
-                scrollable={true}
               />
               
-              <ImageGridInfoSection
+              <StaticImageGrid
                 title="Accommodation"
                 icon={BedDouble}
                 items={campaign.accommodation}
               />
 
-              <ImageGridInfoSection
+              <StaticImageGrid
                 title="Meals"
                 icon={UtensilsCrossed}
                 items={campaign.meals}
