@@ -336,7 +336,7 @@ const mockCampaignsData: Campaign[] = [
             'Celebrate each successful rapid with your team, guided by expert rafters who prioritize safety, teamwork, and enjoyment.'
         ],
         budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels',
-        tags: ['#Grade5Rafting', '#RiverNile', '#ProfessionalGuides', '#Jinja', '#Uganda'],
+        tags: ['#Grade5Rafting', '#RiverNileAdventure', '#ProfessionalGuides', '#Jinja', '#Uganda'],
         startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
         activities: [
             { title: 'Grade 5 White-Water Rafting', description: 'Tackle some of the Nile’s most famous rapids, including powerful drops and technical sections that define world-class rafting.', image: 'campaignRafting' },
@@ -363,7 +363,7 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '10',
+        id: '10', 
         title: 'Mount Elgon National Park',
         shortDescription: 'Hike a volcanic mountain and explore caves near Sipi Falls.',
         imageUrl: placeholderImages.campaignElgon.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'mount elgon',
@@ -450,7 +450,7 @@ const mockCampaignsData: Campaign[] = [
             'Engage with artisans and local communities to discover traditional crafts, food practices, and everyday life in Busoga.'
         ],
         budget: 2500, goal: 100, currentAmount: 65, organizer: 'iffe-travels', 
-        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#EasternUganda', '#Culture'], 
+        tags: ['#BusogaKingdom', '#CulturalHeritage', '#TraditionalMusic', '#CommunityExperiences', '#EasternUganda', '#Culture', '#Jinja', '#Day-Trip'], 
         startDate: '2024-12-05', endDate: '2024-12-06', volunteersNeeded: 25, volunteersSignedUp: 10,
         activities: [
             { title: 'Royal & Cultural Heritage Visits', description: 'Explore cultural sites connected to Busoga leadership, clan systems, and historical narratives guided by knowledgeable locals.', image: 'campaignBusoga' },
@@ -477,30 +477,90 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '13', title: 'Kidepo Valley National Park',
+        id: '13',
+        title: 'Kidepo Valley National Park',
         shortDescription: 'Explore remote, rugged landscapes with unique wildlife.',
-        imageUrl: placeholderImages.campaignKidepo.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'kidepo valley',
-        description: 'Venture to the remote and wild Kidepo Valley National Park in the far north of Uganda. This park offers a true wilderness experience, with wildlife you won\'t see anywhere else in the country, like cheetahs and ostriches.',
+        imageUrl: placeholderImages.campaignKidepo.src,
+        imageWidth: 600,
+        imageHeight: 350,
+        dataAiHint: 'kidepo valley',
+        description: 'Kidepo Valley National Park is Uganda’s most remote and least explored safari destination — a place of raw beauty, dramatic landscapes, and rare wildlife encounters. Located in the far northeastern corner of the country, Kidepo offers an authentic wilderness experience untouched by mass tourism.\n\nThis park is defined by vast open savannahs, rugged mountain backdrops, seasonal rivers, and endless horizons. Wildlife sightings are intimate and uncrowded, making every game drive feel exclusive. For travelers seeking solitude, adventure, and a deeper connection to nature, Kidepo is unlike anywhere else in East Africa.\n\nOften described as Uganda’s most spectacular park, Kidepo rewards those willing to go the distance.',
         storyline: [
-            'A journey to one of Africa\'s last great wildernesses.',
-            'The park is remote and untouched, offering a unique safari experience.',
-            'See wildlife that you won\'t find anywhere else in Uganda.'
+            'Vast, open plains stretch as far as the eye can see, framed by the Morungole and Narus Valley landscapes that define Kidepo’s dramatic beauty.',
+            'Game drives feel private and immersive, with wildlife encounters unfolding in complete silence and wide-open space.',
+            'Cultural interactions with the Karamojong people add depth to the journey, offering insight into one of Uganda’s most resilient communities.'
         ],
-        budget: 18000, goal: 100, currentAmount: 70, organizer: 'iffe-travels', tags: ['#Remote', '#Wilderness', '#Uganda'], startDate: '2025-03-10', endDate: '2025-03-15', volunteersNeeded: 8, volunteersSignedUp: 3,
+        budget: 18000,
+        goal: 100,
+        currentAmount: 87,
+        organizer: 'iffe-travels',
+        tags: ['#KidepoValley', '#RemoteWilderness', '#RareWildlife', '#KaramojongCulture', '#NorthernUganda'],
+        startDate: '2025-03-10',
+        endDate: '2025-03-15',
+        volunteersNeeded: 8,
+        volunteersSignedUp: 3,
         activities: [
-            { title: 'Game drives', description: 'See the park\'s unique wildlife on game drives.', image: 'campaignKidepo' },
-            { title: 'Cultural visits to Karamojong communities', description: 'Learn about the local culture.', image: 'ideaFamilySafari' },
-            { title: 'Hiking in the rugged landscapes', description: 'Explore the park on foot.', image: 'ideaWalkingSafari' }
+            {
+                title: 'Game Drives (Narus & Kidepo Valleys)',
+                description: 'Explore two distinct ecosystems on guided game drives, home to lions, elephants, giraffes, buffaloes, cheetahs, and species rarely found elsewhere in Uganda.',
+                image: 'campaignKidepo'
+            },
+            {
+                title: 'Bird Watching',
+                description: 'With over 470 bird species, including many unique to semi-arid regions, Kidepo is a rewarding destination for bird enthusiasts.',
+                image: 'blogShoebill'
+            },
+            {
+                title: 'Nature Walks',
+                description: 'Guided walks offer close-up exploration of the park’s landscapes, plant life, and smaller wildlife.',
+                image: 'ideaWalkingSafari'
+            },
+             {
+                title: 'Cultural Encounters',
+                description: 'Visit nearby Karamojong communities to learn about traditional pastoral life, customs, and survival in a harsh environment.',
+                image: 'ideaFamilySafari'
+            }
         ],
         accommodation: [
-            { title: 'Luxury Lodges', description: 'Luxury lodges and basic campsites within the park.', image: 'pkgAdventurer' },
-            { title: 'Wilderness Peace', description: 'Enjoy the peace and quiet of the wilderness.', image: 'pkgUltimate' },
-            { title: 'All Budgets', description: 'Options available for all budgets.', image: 'pkgExplorer' }
+            {
+                title: 'Safari Lodges & Tented Camps',
+                description: 'Stay in carefully selected lodges and tented camps overlooking vast plains or rocky outcrops, designed to blend seamlessly with the landscape.',
+                image: 'pkgAdventurer'
+            },
+            {
+                title: 'Remote Comfort',
+                description: 'Despite its isolation, accommodations offer excellent service, comfortable rooms, and breathtaking views.',
+                image: 'pkgUltimate'
+            },
+            {
+                title: 'Unmatched Scenery',
+                description: 'Wake up to uninterrupted wilderness — no fences, no crowds, just nature at its purest.',
+                image: 'pkgExplorer'
+            }
         ],
         meals: [
-            { title: 'All-Inclusive', description: 'All-inclusive packages available.', image: 'videoThumbTestimonial' },
-            { title: 'Scenic Dining', description: 'Enjoy meals with a view of the park\'s stunning landscapes.', image: 'sipiCoffee' },
-            { title: 'Bush Dinners', description: 'Bush dinners can be arranged for a special experience.', image: 'ideaFamilySafari' }
+            {
+                title: 'Full-Board Dining',
+                description: 'Most lodges offer full-board meal plans, ensuring hearty and satisfying meals after long game drives.',
+                image: 'videoThumbTestimonial'
+            },
+            {
+                title: 'Fresh & Wholesome Cuisine',
+                description: 'Meals are prepared using fresh ingredients, with menus designed to suit both local and international tastes.',
+                image: 'sipiCoffee'
+            },
+            {
+                title: 'Bush Dining Experiences',
+                description: 'Depending on the lodge, bush breakfasts or sundowners can be arranged for a truly memorable wilderness moment.',
+                image: 'ideaFamilySafari'
+            }
+        ],
+        bookingTips: [
+            "Kidepo is best suited for travelers comfortable with long drives or internal flights.",
+            "The dry seasons (December–March and June–September) offer excellent wildlife viewing.",
+            "Pack light but include sun protection and layers for cool evenings.",
+            "Photography enthusiasts should bring zoom lenses — the landscapes are vast and dramatic.",
+            "Combining Kidepo with Karuma Falls or Pian Upe creates a unique northern Uganda circuit."
         ]
     },
     {
@@ -513,7 +573,7 @@ const mockCampaignsData: Campaign[] = [
             'A great addition to a Murchison Falls safari.',
             'See a different side of the Nile.'
         ],
-        budget: 5500, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Wildlife', '#NationalPark', '#Uganda'], startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
+        budget: 5500, goal: 100, currentAmount: 85, organizer: 'iffe-travels', tags: ['#Wildlife', '#NationalPark', '#Uganda', '#NorthernUganda'], startDate: '2024-10-15', endDate: '2024-10-17', volunteersNeeded: 15, volunteersSignedUp: 10,
         activities: [
             { title: 'Wildlife viewing near the falls', description: 'See the wildlife attracted by the falls.', image: 'campaignKaruma' },
             { title: 'Visiting the falls', description: 'Witness the power of the falls.', image: 'campaignMurchison' },
@@ -540,7 +600,7 @@ const mockCampaignsData: Campaign[] = [
             'See rare wildlife that you won\'t find in other parks.',
             'A true wilderness experience.'
         ],
-        budget: 13000, goal: 100, currentAmount: 60, organizer: 'iffe-travels', tags: ['#RareWildlife', '#Savannah', '#Uganda'], startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
+        budget: 13000, goal: 100, currentAmount: 60, organizer: 'iffe-travels', tags: ['#RareWildlife', '#Savannah', '#Uganda', '#NorthernUganda'], startDate: '2025-04-01', endDate: '2025-04-05', volunteersNeeded: 10, volunteersSignedUp: 2,
         activities: [
             { title: 'Game drives', description: 'Spot rare wildlife on game drives.', image: 'campaignPianUpe' },
             { title: 'Nature walks', description: 'Explore the savannah on foot.', image: 'ideaWalkingSafari' },
