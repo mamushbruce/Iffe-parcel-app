@@ -257,7 +257,7 @@ const mockCampaignsData: Campaign[] = [
             'Enjoy the freedom of moving silently through the savannah, guided by experienced rangers who interpret animal behavior and landscapes.',
             'Pause at scenic viewpoints and waterholes to observe wildlife activity and capture expansive views of Lake Mburo’s rolling terrain.'
         ],
-        budget: 6000, goal: 100, currentAmount: 82, organizer: 'iffe-travels', tags: ['#Cycling', '#Zebras', '#Uganda'], startDate: '2024-11-01', endDate: '2024-11-03', volunteersNeeded: 20, volunteersSignedUp: 18,
+        budget: 6000, goal: 100, currentAmount: 82, organizer: 'iffe-travels', tags: ['#Cycling', '#Zebras', '#Uganda', '#WalkingSafari'], startDate: '2024-11-01', endDate: '2024-11-03', volunteersNeeded: 20, volunteersSignedUp: 18,
         activities: [
             { title: 'Guided Cycling Safari', description: 'Cycle through designated park routes accompanied by armed park rangers and professional guides, ensuring safety while allowing close wildlife observation.', image: 'campaignMburo' },
             { title: 'Walking Safari', description: 'Lake Mburo is one of the few Ugandan parks that permits walking safaris, offering a deeper understanding of tracks, plants, and animal behavior.', image: 'ideaWalkingSafari' },
@@ -293,7 +293,7 @@ const mockCampaignsData: Campaign[] = [
             'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
-        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#Source of the River Nile', '#Scenic Boat Cruises', '#Cultural & Historical Exploration', '#Jinja, Uganda', '#Day-Trip'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
+        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#RiverNile', '#Jinja', '#Uganda', '#Culture', '#History', '#Day-Trip'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
             { title: 'Nile River Cruises', description: 'Relaxing boat cruises allow you to enjoy calm stretches of the river, ideal for photography, bird watching, and reflection.', image: 'fifaCardNile' },
@@ -319,30 +319,39 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '9', title: 'White-Water Rafting in Jinja',
+        id: '9', 
+        title: 'White-Water Rafting in Jinja',
         shortDescription: 'Experience the thrill of Grade 5 rapids on the Nile.',
         imageUrl: placeholderImages.campaignRafting.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'white water rafting',
-        description: 'Get your adrenaline pumping with a white-water rafting adventure on the powerful rapids of the Nile River near Jinja. Full-day and half-day trips are available for all experience levels.',
+        description: 'White-water rafting in Jinja is one of Africa’s most celebrated adventure experiences and ranks among the best Grade 5 rafting trips in the world. Set on the powerful yet scenic stretches of the River Nile, this tour offers an adrenaline-filled journey through thundering rapids, calm interludes, and dramatic river landscapes.\n\nGuided by internationally certified rafting professionals, the experience balances high-intensity adventure with strict safety standards, making it suitable for both first-time rafters and seasoned thrill-seekers. Between rapids, the river slows, allowing moments to float, swim, and appreciate the beauty of the Nile’s riverbanks.\n\nThis tour can be enjoyed as a full-day adventure or combined with other Jinja experiences for a complete river-based itinerary.',
         storyline: [
-            'An action-packed day of adventure on one of the world\'s most famous rivers.',
-            'Rafting on the Nile is a thrilling and unforgettable experience.',
-            'No prior experience is necessary.'
+            'Launch into powerful Grade 5 rapids that challenge your limits and deliver pure adrenaline on Africa’s most iconic river.',
+            'Float through calm stretches between rapids, surrounded by lush riverbanks, birdlife, and wide open skies.',
+            'Celebrate each successful rapid with your team, guided by expert rafters who prioritize safety, teamwork, and enjoyment.'
         ],
-        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#Uganda', '#Day-Trip'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
+        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#RiverNile', '#Day-Trip'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
         activities: [
-            { title: 'White-water rafting on Grade 5 rapids', description: 'An adrenaline-pumping experience.', image: 'campaignRafting' },
-            { title: 'Kayaking', description: 'A different perspective of the river.', image: 'fifaCardOkavango' },
-            { title: 'River bugging', description: 'A unique solo adventure on the river.', image: 'campaignRafting' }
+            { title: 'Grade 5 White-Water Rafting', description: 'Tackle some of the Nile’s most famous rapids, including powerful drops and technical sections that define world-class rafting.', image: 'campaignRafting' },
+            { title: 'Milder Rafting Options', description: 'For those seeking less intensity, alternative routes with Grade 3–4 rapids are available, offering excitement with a more relaxed pace.', image: 'campaignRafting' },
+            { title: 'River Floating & Swimming', description: 'Enjoy safe swimming and floating sections between rapids, providing moments of recovery and scenic appreciation.', image: 'campaignRafting' },
+            { title: 'Optional Add-Ons', description: 'Combine rafting with kayaking, tubing, or a visit to the Source of the Nile for a full Jinja adventure experience.', image: 'fifaCardOkavango' }
         ],
         accommodation: [
-            { title: 'Riverside Camps', description: 'Riverside camps and lodges.', image: 'pkgAdventurer' },
-            { title: 'Relax by the River', description: 'Relax by the river after a day of adventure.', image: 'pkgUltimate' },
-            { title: 'All Budgets', description: 'Options available for all budgets.', image: 'pkgExplorer' }
+            { title: 'Riverside Lodges & Adventure Camps', description: 'Accommodation is arranged at carefully selected lodges and camps near the Nile, offering easy access to rafting departure points.', image: 'pkgAdventurer' },
+            { title: 'Comfort After the Rapids', description: 'Rooms provide clean, comfortable spaces to rest and recover after a physically demanding day, with options ranging from simple adventure lodges to more refined riverside stays.', image: 'pkgUltimate' },
+            { title: 'Sustainable & Community-Driven Stays', description: 'Many properties support local employment and environmental conservation initiatives along the river.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'BBQ Lunch', description: 'Includes a BBQ lunch and celebratory drinks after the rafting.', image: 'videoThumbTestimonial' },
-            { title: 'Group Dining', description: 'Enjoy a meal with your fellow adventurers.', image: 'sipiCoffee' },
-            { title: 'Vegetarian Options', description: 'Vegetarian options available.', image: 'ideaFamilySafari' }
+            { title: 'Post-Raft Recovery Dining', description: 'Meals are arranged to support energy recovery after rafting, often served in relaxed riverside settings.', image: 'videoThumbTestimonial' },
+            { title: 'Local & International Cuisine', description: 'Enjoy fresh Nile fish, Ugandan specialties, and international dishes, with vegetarian options available.', image: 'sipiCoffee' },
+            { title: 'Scenic & Social Atmosphere', description: 'Dining often becomes part of the adventure — sharing stories with fellow rafters over meals overlooking the river.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "No prior rafting experience is required — professional instruction is provided.",
+            "Participants should be comfortable in water and in good general health.",
+            "Secure footwear and quick-dry clothing are recommended.",
+            "Dry seasons (June–August, December–February) offer ideal river conditions.",
+            "This tour pairs perfectly with Source of the Nile or Jinja town experiences."
         ]
     },
     {
@@ -757,6 +766,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 
