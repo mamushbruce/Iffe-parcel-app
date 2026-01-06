@@ -291,7 +291,7 @@ const mockCampaignsData: Campaign[] = [
         title: 'Jinja – Source of the Nile',
         shortDescription: 'Discover the legendary source of the world\'s longest river.',
         imageUrl: placeholderImages.campaignSourceNile.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'source of nile',
-        description: 'Jinja holds a unique place in global geography and African history as the official source of the River Nile. Located on the northern shores of Lake Victoria, this riverside town marks the beginning of a journey that carries the Nile through eleven countries to the Mediterranean Sea.\n\nThis tour offers a guided exploration of the source itself, combined with scenic river experiences and cultural discovery. Jinja’s calm river stretches, historic landmarks, and vibrant local life make it a destination that balances meaning, scenery, and optional adventure.\n\nIdeal for travelers seeking insight rather than intensity, the experience can be enjoyed as a relaxed day tour or expanded into a multi-day stay with added activities.',
+        description: 'The Jinja tour offers a guided exploration of the official source of the River Nile, combined with scenic river experiences and cultural discovery. Located on the northern shores of Lake Victoria, this riverside town marks the beginning of a journey that carries the Nile through eleven countries to the Mediterranean Sea. Jinja’s calm river stretches, historic landmarks, and vibrant local life make it a destination that balances meaning, scenery, and optional adventure. Ideal for travelers seeking insight rather than intensity, the experience can be enjoyed as a relaxed day tour or expanded into a multi-day stay with added activities.',
         storyline: [
             'Visit the exact point where the Nile emerges from Lake Victoria, guided by local experts who explain its historical and geographical significance.',
             'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
@@ -332,7 +332,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'white water rafting',
-        description: 'White-water rafting in Jinja is one of Africa’s most celebrated adventure experiences and ranks among the best Grade 5 rafting trips in the world. Set on the powerful yet scenic stretches of the River Nile, this tour offers an adrenaline-filled journey through thundering rapids, calm interludes, and dramatic river landscapes.\n\nGuided by internationally certified rafting professionals, the experience balances high-intensity adventure with strict safety standards, making it suitable for both first-time rafters and seasoned thrill-seekers. Between rapids, the river slows, allowing moments to float, swim, and appreciate the beauty of the Nile’s riverbanks.\n\nThis tour can be enjoyed as a full-day adventure or combined with other Jinja experiences for a complete river-based itinerary.',
+        description: 'White-water rafting in Jinja is one of Africa’s most celebrated adventure experiences and ranks among the best Grade 5 rafting trips in the world. Set on the powerful yet scenic stretches of the River Nile, this tour offers an adrenaline-filled journey through thundering rapids, calm interludes, and dramatic river landscapes. Guided by internationally certified rafting professionals, the experience balances high-intensity adventure with strict safety standards, making it suitable for both first-time rafters and seasoned thrill-seekers. Between rapids, the river slows, allowing moments to float, swim, and appreciate the beauty of the Nile’s riverbanks. This tour can be enjoyed as a full-day adventure or combined with other Jinja experiences for a complete river-based itinerary.',
         storyline: [
             'Launch into powerful Grade 5 rapids that challenge your limits and deliver pure adrenaline on Africa’s most iconic river.',
             'Float through calm stretches between rapids, surrounded by lush riverbanks, birdlife, and wide open skies.',
@@ -379,7 +379,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'mount elgon',
-        description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations.\n\nThis tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands.\n\nMount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
+        description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations. This tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands. Mount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
         storyline: [
             'Hike through montane forest and open ridgelines shaped by ancient volcanic activity, with sweeping views across eastern Uganda.',
             'Explore vast volcanic caves carved by lava flows and human use over centuries, guided by local experts who share their history.',
@@ -426,7 +426,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'sipi falls',
-        description: 'Sipi Falls is one of eastern Uganda’s most scenic destinations, famous for its series of three dramatic waterfalls cascading down the foothills of Mount Elgon. Set within rolling hills, fertile farmlands, and wide-open views across the Karamoja plains, Sipi offers a perfect blend of nature, culture, and gentle adventure.\n\nThis tour combines guided waterfall hikes, Arabica coffee experiences, and highland nature walks, making it ideal for travelers who enjoy scenic landscapes, cultural interaction, and active exploration without extreme physical demands.\n\nSipi Falls is best experienced at a relaxed pace, allowing time to appreciate its natural beauty, local traditions, and peaceful mountain atmosphere.',
+        description: 'Sipi Falls is one of eastern Uganda’s most scenic destinations, famous for its series of three dramatic waterfalls cascading down the foothills of Mount Elgon. Set within rolling hills, fertile farmlands, and wide-open views across the Karamoja plains, Sipi offers a perfect blend of nature, culture, and gentle adventure. This tour combines guided waterfall hikes, Arabica coffee experiences, and highland nature walks, making it ideal for travelers who enjoy scenic landscapes, cultural interaction, and active exploration without extreme physical demands. Sipi Falls is best experienced at a relaxed pace, allowing time to appreciate its natural beauty, local traditions, and peaceful mountain atmosphere.',
         storyline: [
             'Walk along scenic trails that lead to Sipi’s three waterfalls, each offering a different perspective and dramatic views of plunging water and cliffs.',
             'Join a guided coffee tour through local farms to learn how Arabica coffee is grown, harvested, processed, and brewed in the highlands.',
@@ -473,7 +473,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'cultural kingdom',
-        description: 'The Busoga Kingdom Cultural Tour offers a deep and authentic introduction to one of Uganda’s most historically rich and culturally vibrant regions. Centered around Jinja and surrounding Busoga communities, this experience explores the traditions, leadership systems, and daily life of the Basoga people.\n\nVisitors are introduced to royal heritage, clan traditions, music, dance, storytelling, and crafts, while learning how culture continues to shape modern Busoga society. This tour is ideal for travelers seeking meaningful cultural engagement beyond wildlife and landscapes.\n\nBusoga is not only a kingdom of history, but a living culture — proud, evolving, and welcoming.',
+        description: 'The Busoga Kingdom Cultural Tour offers a deep and authentic introduction to one of Uganda’s most historically rich and culturally vibrant regions. Centered around Jinja and surrounding Busoga communities, this experience explores the traditions, leadership systems, and daily life of the Basoga people. Visitors are introduced to royal heritage, clan traditions, music, dance, storytelling, and crafts, while learning how culture continues to shape modern Busoga society. This tour is ideal for travelers seeking meaningful cultural engagement beyond wildlife and landscapes. Busoga is not only a kingdom of history, but a living culture — proud, evolving, and welcoming.',
         storyline: [
             'Learn about the Busoga Kingdom’s royal structure, history, and traditions through guided cultural interpretation and community visits.',
             'Experience traditional music, dance, and storytelling that reflect the identity, values, and social life of the Basoga people.',
@@ -520,7 +520,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'kidepo valley',
-        description: 'Kidepo Valley National Park is Uganda’s most remote and least explored safari destination — a place of raw beauty, dramatic landscapes, and rare wildlife encounters. Located in the far northeastern corner of the country, Kidepo offers an authentic wilderness experience untouched by mass tourism.\n\nThis park is defined by vast open savannahs, rugged mountain backdrops, seasonal rivers, and endless horizons. Wildlife sightings are intimate and uncrowded, making every game drive feel exclusive. For travelers seeking solitude, adventure, and a deeper connection to nature, Kidepo is unlike anywhere else in East Africa.\n\nOften described as Uganda’s most spectacular park, Kidepo rewards those willing to go the distance.',
+        description: 'Kidepo Valley National Park is Uganda’s most remote and least explored safari destination — a place of raw beauty, dramatic landscapes, and rare wildlife encounters. Located in the far northeastern corner of the country, Kidepo offers an authentic wilderness experience untouched by mass tourism. This park is defined by vast open savannahs, rugged mountain backdrops, seasonal rivers, and endless horizons. Wildlife sightings are intimate and uncrowded, making every game drive feel exclusive. For travelers seeking solitude, adventure, and a deeper connection to nature, Kidepo is unlike anywhere else in East Africa. Often described as Uganda’s most spectacular park, Kidepo rewards those willing to go the distance.',
         storyline: [
             'Vast, open plains stretch as far as the eye can see, framed by the Morungole and Narus Valley landscapes that define Kidepo’s dramatic beauty.',
             'Game drives feel private and immersive, with wildlife encounters unfolding in complete silence and wide-open space.',
@@ -607,7 +607,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'karuma falls',
-        description: 'The Karuma Falls Wildlife Tour combines dramatic natural power with rewarding wildlife encounters along the Nile in northern Uganda. Located near the boundary of Murchison Falls Conservation Area, Karuma Falls is one of the most impressive sections of the River Nile, where enormous volumes of water force their way through narrow rock channels, creating thunderous rapids and mist-filled gorges.\n\nThis tour offers a unique blend of scenic exploration, wildlife viewing, and cultural context, making it an ideal addition to northern Uganda itineraries. Visitors experience the raw energy of the falls while exploring surrounding habitats that support diverse birdlife and wildlife.\n\nKaruma is both a natural landmark and a gateway to Uganda’s wild north.',
+        description: 'The Karuma Falls Wildlife Tour combines dramatic natural power with rewarding wildlife encounters along the Nile in northern Uganda. Located near the boundary of Murchison Falls Conservation Area, Karuma Falls is one of the most impressive sections of the River Nile, where enormous volumes of water force their way through narrow rock channels, creating thunderous rapids and mist-filled gorges. This tour offers a unique blend of scenic exploration, wildlife viewing, and cultural context, making it an ideal addition to northern Uganda itineraries. Visitors experience the raw energy of the falls while exploring surrounding habitats that support diverse birdlife and wildlife. Karuma is both a natural landmark and a gateway to Uganda’s wild north.',
         storyline: [
             'Stand above the roaring Nile as it crashes through the Karuma gorge, creating one of Uganda’s most powerful and photogenic waterfalls.',
             'Explore surrounding wildlife areas where elephants, giraffes, antelope, and primates are often seen moving along the river corridor.',
@@ -654,7 +654,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'savannah reserve',
-        description: 'Pian Upe Wildlife Reserve is Uganda’s second-largest protected area and one of its most underrated wilderness destinations. Located in the semi-arid plains of northeastern Uganda, Pian Upe offers vast open landscapes, dramatic rocky outcrops, and wildlife species rarely seen elsewhere in the country.\n\nThis reserve is defined by its wide horizons, quiet isolation, and raw, unfiltered nature. Unlike busier national parks, Pian Upe provides a sense of true exploration, where game drives unfold without crowds and every sighting feels personal and unexpected.\n\nFor travelers seeking authenticity, solitude, and rare species, Pian Upe is a rewarding off-the-beaten-path experience.',
+        description: 'Pian Upe Wildlife Reserve is Uganda’s second-largest protected area and one of its most underrated wilderness destinations. Located in the semi-arid plains of northeastern Uganda, Pian Upe offers vast open landscapes, dramatic rocky outcrops, and wildlife species rarely seen elsewhere in the country. This reserve is defined by its wide horizons, quiet isolation, and raw, unfiltered nature. Unlike busier national parks, Pian Upe provides a sense of true exploration, where game drives unfold without crowds and every sighting feels personal and unexpected. For travelers seeking authenticity, solitude, and rare species, Pian Upe is a rewarding off-the-beaten-path experience.',
         storyline: [
             'Endless savannah plains stretch beneath open skies, framed by rolling hills and ancient rock formations that define Pian Upe’s dramatic scenery.',
             'Wildlife encounters feel intimate and unscripted, with sightings often unfolding in complete silence and wide open space.',
@@ -698,7 +698,7 @@ const mockCampaignsData: Campaign[] = [
         title: 'Kampala City Tour',
         shortDescription: 'Culture, History & the Pulse of Uganda’s Capital',
         imageUrl: placeholderImages.campaignKampala.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'kampala city',
-        description: 'The Kampala City Tour offers an immersive introduction to Uganda’s vibrant capital — a city built on seven historic hills, rich in culture, faith, history, and everyday life. This experience blends heritage sites, modern city energy, traditional markets, and panoramic viewpoints, providing a balanced understanding of Kampala’s past and present.\n\nFrom royal history and religious landmarks to bustling streets and quiet hilltop views, Kampala reveals itself as a city of contrasts — energetic yet welcoming, traditional yet evolving. This tour is ideal for travelers who want to understand Uganda beyond wildlife and landscapes.\n\nKampala is not just a stopover — it is the heart of the nation.',
+        description: 'The Kampala City Tour offers an immersive introduction to Uganda’s vibrant capital — a city built on seven historic hills, rich in culture, faith, history, and everyday life. This experience blends heritage sites, modern city energy, traditional markets, and panoramic viewpoints, providing a balanced understanding of Kampala’s past and present. From royal history and religious landmarks to bustling streets and quiet hilltop views, Kampala reveals itself as a city of contrasts — energetic yet welcoming, traditional yet evolving. This tour is ideal for travelers who want to understand Uganda beyond wildlife and landscapes. Kampala is not just a stopover — it is the heart of the nation.',
         storyline: [
             'Explore Kampala’s historic hills, each offering unique stories, cultural landmarks, and sweeping views over the city.',
             'Move through lively markets and streets where daily life unfolds in color, sound, and rhythm.',
@@ -732,32 +732,41 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '17', title: 'Entebbe Botanical Gardens',
-        shortDescription: 'Visit the Wildlife Centre and relax by Lake Victoria.',
+        id: '17',
+        title: 'Entebbe Botanical Gardens',
+        shortDescription: 'Nature, wildlife, and relaxation by Africa’s largest lake.',
         imageUrl: placeholderImages.campaignEntebbe.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'entebbe botanical',
-        description: 'Enjoy a relaxing day in Entebbe. Explore the lush Botanical Gardens, visit the Uganda Wildlife Education Centre, and enjoy the shores of Lake Victoria.',
+        description: 'The Entebbe Botanical Gardens tour offers a peaceful escape into nature at the edge of Lake Victoria, blending botanical discovery, wildlife encounters, and lakeside relaxation. Established in 1898, the gardens are one of Uganda’s oldest conservation spaces and play an important role in plant research, education, and urban biodiversity. This experience is ideal for travelers seeking a slower pace, nature lovers, bird watchers, and anyone looking to unwind after long journeys or busy safaris. With shaded walking paths, towering trees, and views across Africa’s largest lake, the gardens provide a calm and refreshing contrast to city life.',
         storyline: [
-            'A peaceful introduction to Uganda\'s nature and wildlife.',
-            'A great way to spend a day before or after a flight.',
-            'Relax and unwind in a beautiful setting.'
+            'Walk through lush botanical landscapes featuring indigenous and exotic plant species, guided by knowledgeable local experts.',
+            'Encounter resident wildlife including vervet monkeys, colobus monkeys, birds, and butterflies within a natural setting.',
+            'Relax along the shores of Lake Victoria, where gentle breezes, open water views, and birdlife define the atmosphere.'
         ],
         budget: 1500, goal: 100, currentAmount: 89, organizer: 'iffe-travels', 
-        tags: ['#Gardens', '#Relaxation', '#Uganda', '#Day-Trip', '#Kampala'], 
+        tags: ['#Gardens', '#Relaxation', '#LakeVictoria', '#Wildlife', '#Day-Trip', '#Kampala'], 
         startDate: '2024-11-14', endDate: '2024-11-14', volunteersNeeded: 40, volunteersSignedUp: 30,
         activities: [
-            { title: 'A tour of the Botanical Gardens', description: 'Explore the lush gardens.', image: 'campaignEntebbe' },
-            { title: 'A visit to the Wildlife Centre', description: 'See a variety of Ugandan wildlife.', image: 'galleryElephant' },
-            { title: 'Lunch by Lake Victoria', description: 'Enjoy a meal with a view.', image: 'videoThumbTestimonial' }
+            { title: 'Guided Botanical Walks', description: 'Learn about medicinal plants, indigenous trees, and exotic species introduced during the colonial era.', image: 'campaignEntebbe' },
+            { title: 'Wildlife Viewing', description: 'Spot monkeys, reptiles, and diverse bird species that thrive within the gardens’ protected environment.', image: 'galleryElephant' },
+            { title: 'Lake Victoria Walks', description: 'Enjoy leisurely walks and scenic viewpoints along the lake’s edge, ideal for photography and relaxation.', image: 'videoThumbTestimonial' },
+            { title: 'Optional Wildlife Centre Visit', description: 'Combine the gardens with a visit to the nearby Uganda Wildlife Education Centre for deeper conservation insight.', 'image': 'homeCreatorTom' }
         ],
         accommodation: [
-            { title: 'N/A', description: 'Day tour, no accommodation provided.', image: 'pkgAdventurer' },
-            { title: 'Can be Arranged', description: 'Can be arranged upon request.', image: 'pkgUltimate' },
-            { title: 'Contact Us', description: 'Contact us for more details.', image: 'pkgExplorer' }
+            { title: 'Entebbe Hotels & Guesthouses', description: 'Accommodation is arranged in well-located Entebbe hotels and lodges, close to the gardens and Lake Victoria.', image: 'pkgAdventurer' },
+            { title: 'Quiet & Comfortable Stays', description: 'Expect relaxed environments with gardens, lake breezes, and easy airport access.', image: 'pkgUltimate' },
+            { title: 'Flexible Comfort Levels', description: 'Options range from budget-friendly guesthouses to upscale lakefront hotels.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Lakeside Lunch', description: 'Includes lunch at a lakeside restaurant.', image: 'videoThumbTestimonial' },
-            { title: 'Fresh Fish', description: 'Enjoy fresh fish from Lake Victoria.', image: 'sipiCoffee' },
-            { title: 'Relaxing Meal', description: 'A relaxing meal with a view.', image: 'ideaFamilySafari' }
+            { title: 'Lakeside Dining', description: 'Enjoy meals at restaurants overlooking Lake Victoria, offering fresh fish, tropical fruits, and international cuisine.', image: 'videoThumbTestimonial' },
+            { title: 'Light Refreshments', description: 'Cafés and picnic options are available within or near the gardens for a casual dining experience.', image: 'sipiCoffee' },
+            { title: 'Custom Meal Plans', description: 'Meals can be included or arranged separately depending on tour duration and preference.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Morning visits offer cooler temperatures and active wildlife sightings.",
+            "Comfortable walking shoes and sun protection are recommended.",
+            "The gardens are suitable for all ages and fitness levels.",
+            "Combine with Kampala, Ngamba Island, or Ssese Islands for a well-rounded itinerary.",
+            "Photography is welcome — wildlife is best captured quietly and respectfully."
         ]
     },
     {
@@ -974,5 +983,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
 
+
+    
 
     
