@@ -377,7 +377,7 @@ const mockCampaignsData: Campaign[] = [
         imageWidth: 600,
         imageHeight: 350,
         dataAiHint: 'mount elgon',
-        description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations. This tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands. Mount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
+        description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations.\n\nThis tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands.\n\nMount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
         storyline: [
             'Hike through montane forest and open ridgelines shaped by ancient volcanic activity, with sweeping views across eastern Uganda.',
             'Explore vast volcanic caves carved by lava flows and human use over centuries, guided by local experts who share their history.',
@@ -806,30 +806,40 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '19', title: 'Mabira Forest Zip-Lining',
+        id: '19', 
+        title: 'Mabira Forest Zip-Lining',
         shortDescription: 'Experience the thrill of zip-lining through a lush rainforest.',
         imageUrl: placeholderImages.campaignMabira.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'rainforest zip',
-        description: 'Soar through the canopy of the ancient Mabira Forest on a thrilling zip-lining adventure. A great day trip from Kampala or Jinja for adventure seekers.',
+        description: 'Mabira Forest Zip-Lining offers an exhilarating adventure through one of Uganda’s largest tropical rainforests. Located between Jinja and Kampala, Mabira is a biodiversity hotspot, home to rare birds, monkeys, butterflies, and lush vegetation. This tour combines adrenaline-packed zip-lining experiences with an immersive nature encounter, perfect for thrill-seekers and eco-adventurers alike. Travelers will glide above the treetops, exploring the forest from a unique aerial perspective, while learning about the rich ecology, conservation efforts, and local flora and fauna. Mabira Forest Zip-Lining is ideal for families, groups, and solo travelers seeking fun, education, and adventure in one experience.',
         storyline: [
-            'See the rainforest from a unique, bird\'s-eye perspective.',
-            'An adrenaline-pumping adventure.',
-            'A great way to experience the beauty of the forest.'
+            'Soar above the dense canopy of Mabira Forest, taking in breathtaking views and the vibrant greenery below.',
+            'Feel the thrill of zip-lining across multiple platforms, with guides ensuring safety and providing instructions for beginners and experienced participants alike.',
+            'Discover forest biodiversity from above and on foot, spotting monkeys, exotic birds, and native plant species during guided forest walks.'
         ],
-        budget: 2800, goal: 100, currentAmount: 86, organizer: 'iffe-travels', tags: ['#Adventure', '#Forest', '#Uganda', '#Day-Trip'], startDate: '2024-11-17', endDate: '2024-11-17', volunteersNeeded: 25, volunteersSignedUp: 20,
+        budget: 2800, goal: 100, currentAmount: 86, organizer: 'iffe-travels', 
+        tags: ['#MabiraForest', '#CanopyZip-Lining', '#TropicalRainforest', '#RareBirds', '#Family-Friendly'], 
+        startDate: '2024-11-17', endDate: '2024-11-17', volunteersNeeded: 25, volunteersSignedUp: 20,
         activities: [
-            { title: 'Zip-lining through the forest canopy', description: 'An exhilarating experience.', image: 'campaignMabira' },
-            { title: 'Forest walks', description: 'Explore the flora and fauna up close.', image: 'ideaWalkingSafari' },
-            { title: 'Bird watching', description: 'Discover the numerous bird species in the forest.', image: 'blogShoebill' }
+            { title: 'Canopy Zip-Lining', description: 'Experience multiple zip-lines across forest platforms, ranging in height and length, suitable for beginners and adrenaline enthusiasts.', image: 'campaignMabira' },
+            { title: 'Guided Nature Walks', description: 'Walk the forest trails with an experienced guide to learn about Mabira’s rich biodiversity, medicinal plants, and birdlife.', image: 'ideaWalkingSafari' },
+            { title: 'Bird Watching & Wildlife Spotting', description: 'Look for rare species such as hornbills, turacos, monkeys, and butterflies while exploring the forest.', image: 'blogShoebill' }
         ],
         accommodation: [
-            { title: 'N/A', description: 'Day trip, no accommodation provided.', image: 'pkgAdventurer' },
-            { title: 'Can be Arranged', description: 'Can be arranged upon request.', image: 'pkgUltimate' },
-            { title: 'Contact Us', description: 'Contact us for more details.', image: 'pkgExplorer' }
+            { title: 'Nearby Lodges & Guesthouses', description: 'Accommodation is arranged in comfortable lodges near Mabira Forest, providing easy access for early starts and evening relaxation.', image: 'pkgAdventurer' },
+            { title: 'Forest & Lakeside Options', description: 'Select from mid-range lodges or boutique guesthouses offering scenic views and quiet surroundings.', image: 'pkgUltimate' },
+            { title: 'Flexible Stays', description: 'Options for single-night stays, extended adventure weekends, or multi-activity packages are available.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Forest Lunch', description: 'Lunch included in the package.', image: 'videoThumbTestimonial' },
-            { title: 'Adventure Refuel', description: 'Enjoy a meal in a forest setting.', image: 'sipiCoffee' },
-            { title: 'Refuel', description: 'A chance to refuel after your adventure.', image: 'ideaFamilySafari' }
+            { title: 'Fresh & Energizing Cuisine', description: 'Enjoy meals prepared with fresh local ingredients to fuel your adventure.', image: 'videoThumbTestimonial' },
+            { title: 'Forest Picnic Options', description: 'Optional packed lunches or bush picnics can be arranged for participants during longer zip-line sessions.', image: 'sipiCoffee' },
+            { title: 'Full-Board Choices', description: 'When combined with overnight stays, full-board meals with both local and international menus are provided.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Wear comfortable, close-fitting clothing suitable for zip-lining.",
+            "Closed-toe shoes are required.",
+            "Morning slots are recommended for cooler temperatures and calmer winds.",
+            "Inform guides of any health or mobility restrictions.",
+            "Combine this experience with Jinja’s White-Water Rafting or Source of the Nile tours for a complete adventure day."
         ]
     },
     {
