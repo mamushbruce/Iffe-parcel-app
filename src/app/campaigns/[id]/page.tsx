@@ -129,9 +129,9 @@ const mockCampaignsData: Campaign[] = [
             { title: 'Bush Dining', description: 'Options for bush breakfasts and dinners.', image: 'ideaFamilySafari' }
         ],
     },
-    // Adding more campaigns from the main page
-     {
-        id: '4', title: 'Kibale Forest Chimpanzee Trekking',
+    {
+        id: '4', 
+        title: 'Kibale Forest Chimpanzee Trekking',
         shortDescription: 'Trek chimpanzees in the primate capital of East Africa.',
         imageUrl: placeholderImages.campaignKibale.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'chimpanzee forest',
         description: 'Immerse yourself in the lush tropical rainforest of Kibale Forest National Park, widely regarded as the primate capital of Africa. This exceptional tour offers a rare opportunity to trek through dense forest in search of wild chimpanzees, our closest relatives in the animal kingdom, and observe them in their natural habitat.\n\nKibale Forest is home to the highest concentration of primates in Africa, with over 13 primate species recorded. The highlight of this experience is a guided chimpanzee trek led by expert trackers and park rangers, providing an intimate and educational encounter that combines adventure, conservation, and deep connection with nature.\n\nThis tour is ideal for travelers seeking a meaningful wildlife experience rooted in research, sustainability, and authentic forest exploration.',
@@ -158,7 +158,8 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '5', title: 'Rwenzori Mountains Hiking',
+        id: '5',
+        title: 'Rwenzori Mountains Hiking',
         shortDescription: 'Hike the snow-capped "Mountains of the Moon".',
         imageUrl: placeholderImages.campaignRwenzori.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'rwenzori mountains',
         description: 'The Rwenzori Mountains offer one of Africa’s most dramatic and rewarding hiking experiences. Rising along Uganda’s western border, this UNESCO World Heritage Site is defined by mist-covered peaks, alpine valleys, glacial rivers, and rare high-altitude vegetation found nowhere else on Earth.\n\nThis multi-day hiking adventure takes you deep into the heart of the Rwenzoris, following established trails through tropical rainforest, bamboo zones, heather moorlands, and Afro-alpine ecosystems. Whether you are aiming for scenic lower-altitude treks or challenging summit attempts, this experience is designed for travelers seeking adventure, achievement, and raw natural beauty.\n\nUnlike typical mountain hikes, the Rwenzoris offer a constantly changing landscape, making every day on the trail distinct and unforgettable.',
@@ -185,25 +186,31 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '6', title: 'Relax at Lake Bunyonyi',
+        id: '6',
+        title: 'Relax at Lake Bunyonyi',
         shortDescription: 'Relax by one of Africa’s deepest and most scenic lakes.',
         imageUrl: placeholderImages.campaignBunyonyi.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'lake bunyonyi',
-        description: 'Unwind at the beautiful Lake Bunyonyi, known for its 29 islands and terraced hillsides. It\'s a perfect place to relax after a gorilla trek, with activities like canoeing, swimming, and hiking.',
+        description: 'Lake Bunyonyi is one of Uganda’s most peaceful and visually captivating destinations, set among rolling terraced hills near the border of Bwindi Impenetrable Forest. With over 20 small islands scattered across its calm waters, the lake offers a rare combination of natural beauty, cultural depth, and safe, relaxed exploration.\n\nOften described as one of Africa’s most scenic lakes, Lake Bunyonyi is free from dangerous wildlife, making it ideal for swimming, canoeing, and extended lakeside stays. This tour is designed for travelers seeking rest, reflection, light adventure, and authentic local experiences, either as a standalone retreat or as a perfect complement to gorilla trekking.\n\nThe pace here is intentionally slow, allowing visitors to disconnect from routine and fully appreciate Uganda’s quieter, more intimate landscapes.',
         storyline: [
-            'A tranquil escape into one of Uganda\'s most picturesque landscapes.',
-            'The lake is a place of peace and beauty, perfect for relaxation.',
-            'Explore the islands and learn about the local culture.'
+            'Drift across mirror-calm waters by canoe or boat, passing mist-covered hills and island silhouettes as the lake reveals its serene rhythm.',
+            'Spend unhurried time at the lakeshore, enjoying panoramic views, warm afternoons, and dramatic sunsets that reflect across the water.',
+            'Discover the cultural stories of the lake through guided island visits and village walks that reveal traditions shaped by generations of lakeside living.'
         ],
         budget: 5000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Relaxation', '#Scenery', '#Uganda'], startDate: '2024-09-05', endDate: '2024-09-08', volunteersNeeded: 15, volunteersSignedUp: 15,
         activities: [
-            { title: 'Canoeing on the calm waters', description: 'Explore the lake by canoe.', image: 'campaignBunyonyi' },
-            { title: 'Island hopping', description: 'Discover the history of each island.', image: 'campaignSsese' },
-            { title: 'Swimming in the bilge-free waters', description: 'Enjoy a refreshing swim in the lake.', image: 'campaignBunyonyi' }
+            { title: 'Island Boat & Canoe Excursions', description: 'Explore Lake Bunyonyi’s islands by traditional canoe or guided boat tour. Visit culturally significant sites such as Punishment Island, or enjoy quiet, scenic islands ideal for photography and nature walks.', image: 'campaignBunyonyi' },
+            { title: 'Canoeing & Kayaking', description: 'Paddle across the lake at your own pace, discovering hidden bays and enjoying uninterrupted views of the surrounding highlands. Early mornings and sunset sessions are especially rewarding.', image: 'fifaCardOkavango' },
+            { title: 'Bird Watching', description: 'Home to more than 200 bird species, Lake Bunyonyi is a premier birding destination. Look out for African Fish Eagles, Malachite Kingfishers, Grey-Crowned Cranes, and many water-associated species.', image: 'blogShoebill' },
+            { title: 'Cultural & Village Walks', description: 'Guided walks introduce you to local Bakiga communities, showcasing terraced farming practices, daily life, and cultural traditions deeply connected to the lake environment.', image: 'ideaFamilySafari' },
+            { title: 'Zip-Lining Over the Lake', description: 'For travelers seeking light adventure, zip-lining offers a unique aerial perspective of the lake and surrounding hills, combining scenic views with an adrenaline rush.', image: 'campaignMabira' },
+            { title: 'Swimming & Lakeside Leisure', description: 'Lake Bunyonyi is one of the few lakes in East Africa safe for swimming. Enjoy refreshing dips, floating relaxation, or quiet lakeside afternoons.', image: 'campaignBunyonyi' },
+            { title: 'Scenic Hiking & Nature Walks', description: 'Walk along ridges and village paths that offer sweeping views of the lake, terraced hills, and islands below. Routes range from gentle strolls to more energetic hikes.', image: 'sipiHiking' },
+            { title: 'Fishing & Sunset Experiences', description: 'Join local fishermen or enjoy peaceful fishing sessions from the shore. Sunset picnics by the lake can be arranged for a memorable evening experience.', image: 'videoThumbTestimonial' }
         ],
         accommodation: [
-            { title: 'Lakeside Resorts', description: 'A range of lakeside resorts, cottages, and campsites.', image: 'pkgAdventurer' },
-            { title: 'Stunning Views', description: 'Wake up to stunning views of the lake.', image: 'pkgUltimate' },
-            { title: 'Peace and Quiet', description: 'Enjoy the peace and quiet of this beautiful location.', image: 'pkgExplorer' }
+            { title: 'Lakeside Lodges & Island Retreats', description: 'Accommodation is arranged at carefully selected lakeside lodges and island retreats, chosen for their location, comfort standards, and views over the water.', image: 'pkgAdventurer' },
+            { title: 'Comfort, Privacy & Scenic Design', description: 'Rooms range from comfortable to high-end, offering private balconies, spacious interiors, and peaceful surroundings designed for rest and uninterrupted lake views.', image: 'pkgUltimate' },
+            { title: 'Sustainable & Community-Focused Stays', description: 'Many lodges emphasize sustainability, local sourcing, and community employment, ensuring your stay contributes positively to the region.', image: 'pkgExplorer' }
         ],
         meals: [
             { title: 'Local Crayfish', description: 'Freshly prepared meals, including local crayfish, a specialty of the lake.', image: 'videoThumbTestimonial' },
@@ -704,4 +711,5 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
