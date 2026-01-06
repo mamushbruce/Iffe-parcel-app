@@ -85,9 +85,6 @@ const NextStepsCard: React.FC = () => {
                     <Link href="/contact"><HelpCircle className="mr-2 h-4 w-4"/> Ask a Question</Link>
                 </Button>
                 <Button variant="outline" className="w-full justify-start" asChild>
-                    <Link href="/campaigns/new"><FilePen className="mr-2 h-4 w-4"/> Get a Custom Quote</Link>
-                </Button>
-                <Button variant="outline" className="w-full justify-start" asChild>
                     <Link href="/campaigns"><Map className="mr-2 h-4 w-4"/> View All Tours</Link>
                 </Button>
             </CardContent>
