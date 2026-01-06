@@ -284,7 +284,8 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '8', title: 'Jinja – Source of the Nile',
+        id: '8',
+        title: 'Jinja – Source of the Nile',
         shortDescription: 'Discover the legendary source of the world\'s longest river.',
         imageUrl: placeholderImages.campaignSourceNile.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'source of nile',
         description: 'Jinja holds a unique place in global geography and African history as the official source of the River Nile. Located on the northern shores of Lake Victoria, this riverside town marks the beginning of a journey that carries the Nile through eleven countries to the Mediterranean Sea.\n\nThis tour offers a guided exploration of the source itself, combined with scenic river experiences and cultural discovery. Jinja’s calm river stretches, historic landmarks, and vibrant local life make it a destination that balances meaning, scenery, and optional adventure.\n\nIdeal for travelers seeking insight rather than intensity, the experience can be enjoyed as a relaxed day tour or expanded into a multi-day stay with added activities.',
@@ -293,7 +294,9 @@ const mockCampaignsData: Campaign[] = [
             'Enjoy scenic river views from boats and riverbanks, where birdlife, flowing water, and open skies define the landscape.',
             'Explore Jinja’s cultural character through its streets, markets, and landmarks shaped by colonial history and modern Ugandan life.'
         ],
-        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels', tags: ['#RiverNile', '#Jinja', '#Uganda', '#Culture', '#History', '#Day-Trip'], startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
+        budget: 3000, goal: 100, currentAmount: 90, organizer: 'iffe-travels',
+        tags: ['#RiverNile', '#Jinja', '#Culture', '#History'],
+        startDate: '2024-12-01', endDate: '2024-12-02', volunteersNeeded: 30, volunteersSignedUp: 25,
         activities: [
             { title: 'Source of the Nile Boat Visit', description: 'A guided boat ride leads you to the official source marker, accompanied by storytelling on exploration history, local beliefs, and the Nile’s global importance.', image: 'campaignSourceNile' },
             { title: 'Nile River Cruises', description: 'Relaxing boat cruises allow you to enjoy calm stretches of the river, ideal for photography, bird watching, and reflection.', image: 'fifaCardNile' },
@@ -329,7 +332,9 @@ const mockCampaignsData: Campaign[] = [
             'Float through calm stretches between rapids, surrounded by lush riverbanks, birdlife, and wide open skies.',
             'Celebrate each successful rapid with your team, guided by expert rafters who prioritize safety, teamwork, and enjoyment.'
         ],
-        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels', tags: ['#Adventure', '#Jinja', '#RiverNile', '#Day-Trip'], startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
+        budget: 4000, goal: 100, currentAmount: 95, organizer: 'iffe-travels',
+        tags: ['#Adventure', '#Jinja', '#RiverNile', '#Day-Trip'],
+        startDate: '2024-12-03', endDate: '2024-12-03', volunteersNeeded: 40, volunteersSignedUp: 40,
         activities: [
             { title: 'Grade 5 White-Water Rafting', description: 'Tackle some of the Nile’s most famous rapids, including powerful drops and technical sections that define world-class rafting.', image: 'campaignRafting' },
             { title: 'Milder Rafting Options', description: 'For those seeking less intensity, alternative routes with Grade 3–4 rapids are available, offering excitement with a more relaxed pace.', image: 'campaignRafting' },
@@ -355,30 +360,41 @@ const mockCampaignsData: Campaign[] = [
         ]
     },
     {
-        id: '10', title: 'Mount Elgon National Park',
+        id: '10',
+        title: 'Mount Elgon National Park',
         shortDescription: 'Hike a volcanic mountain and explore caves near Sipi Falls.',
         imageUrl: placeholderImages.campaignElgon.src, imageWidth: 600, imageHeight: 350, dataAiHint: 'mount elgon',
-        description: 'Hike the slopes of Mount Elgon, an extinct shield volcano. The park offers varied trekking options, from day hikes to multi-day expeditions to the caldera.',
+        description: 'Mount Elgon National Park is home to one of the oldest volcanic mountains in East Africa, offering a distinctive hiking experience defined by vast calderas, dramatic cliffs, waterfalls, and extensive cave systems. Located on Uganda’s eastern border, the park provides a quieter, less crowded alternative to other mountain destinations.\n\nThis tour combines guided hiking on Mount Elgon’s lower and mid-altitude trails with exploration of nearby volcanic caves and landscapes around Sipi Falls. The terrain is varied but accessible, making it suitable for travelers seeking adventure without extreme altitude demands.\n\nMount Elgon’s ecological diversity, geological significance, and cultural connections make it a rewarding destination for hikers, nature lovers, and photographers alike.',
         storyline: [
-            'Explore a unique ecosystem on the slopes of one of Africa\'s largest volcanic bases.',
-            'The views from the top are spectacular.',
-            'A great alternative to more strenuous mountain treks.'
+            'Hike through montane forest and open ridgelines shaped by ancient volcanic activity, with sweeping views across eastern Uganda.',
+            'Explore vast volcanic caves carved by lava flows and human use over centuries, guided by local experts who share their history.',
+            'Discover the dramatic scenery of Sipi Falls, where water cascades down sheer cliffs framed by green highland landscapes.'
         ],
-        budget: 9000, goal: 100, currentAmount: 78, organizer: 'iffe-travels', tags: ['#Hiking', '#Volcano', '#Uganda'], startDate: '2025-02-01', endDate: '2025-02-05', volunteersNeeded: 12, volunteersSignedUp: 7,
+        budget: 9000, goal: 100, currentAmount: 78, organizer: 'iffe-travels',
+        tags: ['#Hiking', '#Volcano', '#Caves', '#SipiFalls', '#Uganda'],
+        startDate: '2025-02-01', endDate: '2025-02-05', volunteersNeeded: 12, volunteersSignedUp: 7,
         activities: [
-            { title: 'Hiking to the caldera and peaks', description: 'Explore the volcanic crater.', image: 'campaignElgon' },
-            { title: 'Cave exploration', description: 'See ancient rock art in the caves.', image: 'campaignFortPortal' },
-            { title: 'Bird watching in the forested slopes', description: 'Discover the diverse birdlife of the park.', image: 'blogShoebill' }
+            { title: 'Guided Mountain Hiking', description: 'Follow well-established trails through forest, moorland, and volcanic terrain, suitable for both day hikes and extended treks.', image: 'campaignElgon' },
+            { title: 'Volcanic Cave Exploration', description: 'Visit impressive cave systems such as Kapkwai and Chepnyali, shaped by lava flows and used historically by local communities.', image: 'campaignFortPortal' },
+            { title: 'Sipi Falls Exploration', description: 'Enjoy guided walks around Sipi Falls, including viewpoints, photography stops, and optional village interactions.', image: 'campaignSipi' },
+            { title: 'Bird Watching', description: 'Mount Elgon hosts a rich variety of birdlife, including endemic and highland species, making it a rewarding destination for bird enthusiasts.', image: 'blogShoebill' }
         ],
         accommodation: [
-            { title: 'Guesthouses', description: 'Guesthouses and campsites near the park entrance.', image: 'pkgAdventurer' },
-            { title: 'Mountain Air', description: 'Enjoy the fresh mountain air.', image: 'pkgUltimate' },
-            { title: 'Basic Lodging', description: 'Basic but comfortable lodging.', image: 'pkgExplorer' }
+            { title: 'Highland Lodges & Nature Camps', description: 'Accommodation is arranged at carefully selected lodges and camps near Mount Elgon and Sipi Falls, offering convenient access to hiking trails.', image: 'pkgAdventurer' },
+            { title: 'Comfort with Scenic Surroundings', description: 'Rooms provide comfortable facilities, peaceful settings, and views of the surrounding highlands or forested slopes.', image: 'pkgUltimate' },
+            { title: 'Sustainability-Oriented Stays', description: 'Many properties support local employment, environmental conservation, and community development initiatives.', image: 'pkgExplorer' }
         ],
         meals: [
-            { title: 'Trekking Meals', description: 'Meals provided on multi-day treks.', image: 'videoThumbTestimonial' },
-            { title: 'High-Energy Food', description: 'High-energy food to fuel your hike.', image: 'sipiCoffee' },
-            { title: 'Post-Hike Meal', description: 'Enjoy a hot meal after a day of trekking.', image: 'ideaFamilySafari' }
+            { title: 'Fresh & Locally Inspired Dining', description: 'Meals are prepared using fresh local produce from the fertile slopes of Mount Elgon, reflecting the region’s agricultural richness.', image: 'videoThumbTestimonial' },
+            { title: 'Flexible Meal Arrangements', description: 'Depending on your lodge, meals may be served on-site or arranged at nearby restaurants.', image: 'sipiCoffee' },
+            { title: 'Scenic Dining Settings', description: 'Enjoy meals with views of waterfalls, hills, or gardens, enhancing the overall experience.', image: 'ideaFamilySafari' }
+        ],
+        bookingTips: [
+            "Mount Elgon is suitable for travelers seeking moderate hiking without extreme altitude.",
+            "Comfortable hiking shoes and rain protection are recommended.",
+            "The area can be visited year-round, though drier months offer easier trail conditions.",
+            "Combine this tour with Sipi Falls for a fuller experience.",
+            "Let us know your fitness level — routes can be adjusted accordingly."
         ]
     },
     {
@@ -766,6 +782,7 @@ export default async function CampaignDetailPage({ params }: { params: { id: str
     
 
     
+
 
 
 
