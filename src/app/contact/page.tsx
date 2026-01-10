@@ -37,7 +37,7 @@ const teamMembers = [
     avatar: placeholderImages.teamJane,
   },
   {
-    name: "John Smith",
+    name: "Ben",
     role: "Head of Operations",
     avatar: placeholderImages.teamJohn,
   },

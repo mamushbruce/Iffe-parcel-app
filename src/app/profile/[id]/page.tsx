@@ -81,11 +81,11 @@ const profilesData: Profile[] = [
     guidedTours: [],
   },
   {
-    id: 'john-smith',
-    name: 'John Smith',
+    id: 'ben',
+    name: 'Ben',
     title: 'Head of Operations',
     avatar: 'teamJohn',
-    bio: `John is the logistical mastermind behind every seamless iffe-travels journey. With a decade in operations, he ensures that every detail, from airport transfers to lodge bookings, is perfectly coordinated. His dedication to excellence allows our guests to relax and immerse themselves fully in their adventure.`,
+    bio: `Ben is the logistical mastermind behind every seamless iffe-travels journey. With a decade in operations, he ensures that every detail, from airport transfers to lodge bookings, is perfectly coordinated. His dedication to excellence allows our guests to relax and immerse themselves fully in their adventure.`,
     stats: [
       { label: 'Experience', value: '10 Yrs' },
       { label: 'Tours Managed', value: '500+' },

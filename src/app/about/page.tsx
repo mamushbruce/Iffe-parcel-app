@@ -25,14 +25,14 @@ const teamMembers = [
   },
   {
     id: "team2",
-    title: "John Smith",
+    title: "Ben",
     country: "Head of Operations",
     rating: "99",
     speed: "10 Yrs",
     skill: "500+ Tours",
     image: "teamJohn" as keyof typeof placeholderImages,
     dataAiHint: "operations manager portrait",
-    link: "/profile/john-smith"
+    link: "/profile/ben"
   },
   {
     id: "team3",
