@@ -36,7 +36,7 @@ interface ManagedComment {
 }
 
 const mockPosts: ManagedPost[] = [
-  { id: 'p1', title: 'The Future of Waste Management', authorName: 'Jane Doe', status: 'Published', publishDate: '2023-10-26', lastActivityDate: '2023-11-01', reportCount: 0 },
+  { id: 'p1', title: 'The Future of Waste Management', authorName: 'Ian Mudembula', status: 'Published', publishDate: '2023-10-26', lastActivityDate: '2023-11-01', reportCount: 0 },
   { id: 'p2', title: 'Youth Voices: Leading Change', authorName: 'John Smith', status: 'Reported', publishDate: '2023-10-22', lastActivityDate: '2023-10-30', reportCount: 3 },
   { id: 'p3', title: 'Community Water Projects', authorName: 'Alice Green', status: 'Hidden', publishDate: '2023-10-18', lastActivityDate: '2023-10-20', reportCount: 0 },
   { id: 'p4', title: 'Tech for Good Initiatives', authorName: 'Bob The Builder', status: 'Published', publishDate: '2023-09-05', lastActivityDate: '2023-09-10', reportCount: 0 },

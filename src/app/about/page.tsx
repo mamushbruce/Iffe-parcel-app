@@ -14,14 +14,14 @@ import TestimonialSection from "@/components/testimonial-section";
 const teamMembers = [
   {
     id: "team1",
-    title: "Jane Doe",
+    title: "Ian Mudembula",
     country: "Founder & Lead Guide",
     rating: "98",
     speed: "15 Yrs", 
     skill: "300+ Tours",
     image: "teamJane" as keyof typeof placeholderImages,
     dataAiHint: "safari guide portrait",
-    link: "/profile/jane-doe"
+    link: "/profile/ian-mudembula"
   },
   {
     id: "team2",

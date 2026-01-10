@@ -32,7 +32,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 const teamMembers = [
   {
-    name: "Jane Doe",
+    name: "Ian Mudembula",
     role: "Founder & Lead Guide",
     avatar: placeholderImages.teamJane,
   },

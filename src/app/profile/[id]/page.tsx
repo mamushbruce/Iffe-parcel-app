@@ -59,18 +59,18 @@ const profilesData: Profile[] = [
     ],
     isVerified: true,
     blogPosts: [
-      { id: 'b1', title: 'A Lion\'s Tale: A Close Encounter', author: 'Ian Ivan', date: 'Nov 05, 2023', excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.', imageUrl: 'https://picsum.photos/seed/lionPride/600/400', dataAiHint: 'lion pride', tags: ['#BigCats', '#Serengeti'], commentCount: 18 },
+      { id: 'b1', title: 'A Lion\'s Tale: A Close Encounter', author: 'Ian Ivan', date: 'Nov 05, 2023', excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.', imageUrl: 'https://images.unsplash.com/photo-1549429355-2070c1b4122d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', dataAiHint: 'lion pride', tags: ['#BigCats', '#Serengeti'], commentCount: 18 },
     ],
     guidedTours: [
       { id: '1', title: 'Serengeti Great Migration', shortDescription: 'Witness the epic annual migration of over a million wildebeest across the Serengeti plains.', image: 'campaignDetailWildebeest' },
     ],
   },
   {
-    id: 'jane-doe',
-    name: 'Jane Doe',
+    id: 'ian-mudembula',
+    name: 'Ian Mudembula',
     title: 'Founder & Lead Guide',
     avatar: 'teamJane',
-    bio: `Jane founded iffe-travels with a singular vision: to share the magic of Africa with the world in a responsible and authentic way. With 15 years of guiding experience, her knowledge of the continent's ecosystems is unparalleled. She is passionate about community-based tourism and works tirelessly to ensure that local communities benefit from every tour.`,
+    bio: `Ian founded iffe-travels with a singular vision: to share the magic of Africa with the world in a responsible and authentic way. With 15 years of guiding experience, his knowledge of the continent's ecosystems is unparalleled. He is passionate about community-based tourism and works tirelessly to ensure that local communities benefit from every tour.`,
     stats: [
       { label: 'Experience', value: '15 Yrs' },
       { label: 'Tours Guided', value: '300+' },
