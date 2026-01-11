@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, UserCircle, MapPin } from 'lucide-react';
@@ -32,11 +32,11 @@ interface FifaCardCarouselProps {
 }
 
 const CardImage = ({ card }: { card: CardData }) => {
-    const imageData = placeholderImages[card.image as keyof typeof placeholderImages] || placeholderImages.campaignDetailWildebeest;
+    const imageData = placeholderImages[card.image] || placeholderImages.campaignDetailWildebeest;
     const [imgSrc, setImgSrc] = useState(imageData.src);
 
     useEffect(() => {
-        const newImageData = placeholderImages[card.image as keyof typeof placeholderImages] || placeholderImages.campaignDetailWildebeest;
+        const newImageData = placeholderImages[card.image] || placeholderImages.campaignDetailWildebeest;
         setImgSrc(newImageData.src);
     }, [card.image]);
 
@@ -60,6 +60,7 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [clientRendered, setClientRendered] = useState(false);
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setClientRendered(true);
@@ -98,6 +99,24 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
       }
       setTouchStart(null);
       setTouchEnd(null);
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        
+        if (wheelTimeoutRef.current) {
+            clearTimeout(wheelTimeoutRef.current);
+        }
+
+        wheelTimeoutRef.current = setTimeout(() => {
+            if (e.deltaX > 0) {
+                handleNext();
+            } else if (e.deltaX < 0) {
+                handlePrev();
+            }
+        }, 50); // Throttle wheel events
+    }
   };
 
   useEffect(() => {
@@ -143,7 +162,13 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
 
 
   return (
-     <div className="carousel-container" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+     <div 
+        className="carousel-container" 
+        onTouchStart={onTouchStart} 
+        onTouchMove={onTouchMove} 
+        onTouchEnd={onTouchEnd}
+        onWheel={handleWheel}
+      >
         <h1 className="font-headline text-4xl font-bold text-white mb-6 text-center">{title}</h1>
         
         <div className="carousel">
