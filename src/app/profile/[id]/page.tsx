@@ -54,7 +54,7 @@ const profilesData: Profile[] = [
     bio: `About Ivan Ian Ivan seamlessly blends his technical photography skills with a deep, ancestral connection to the Pearl of Africa. With over four years of professional experience navigating Uganda’s diverse landscapes, he specializes in guiding travelers through the rhythmic pulse of our cities and the serenity of our wild spaces.  Whether you are exploring the source of the Nile in Jinja, trekking the highlands of Kapchorwa, or navigating the vibrant streets of Kampala, Ivan ensures you don't just see the sights—you capture them perfectly. His tours are defined by a "storyteller’s lens," combining vast knowledge of Ugandan wildlife with intimate insights into the local cultures that make this country unique. From technical photography workshops in the field to expert navigation of Uganda’s hidden gems, Ivan is dedicated to creating an immersive, safe, and visually stunning journey for every traveler.`,
     stats: [
       { label: 'Experience', value: '4+ Years' },
-      { label: 'Tours Guided', value: '79' },
+      { label: 'Tours Guided', value: '79+' },
       { label: 'Specialties', value: 'Photography, Big Cats' },
     ],
     isVerified: true,
@@ -261,5 +261,3 @@ export default function RangerProfilePage() {
     </div>
   );
 }
-
-    
