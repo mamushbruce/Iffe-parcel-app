@@ -35,16 +35,19 @@ const teamMembers = [
     name: "Ian Mudembula",
     role: "Founder & Lead Guide",
     avatar: placeholderImages.teamJane,
+    link: "/profile/ian-mudembula",
   },
   {
     name: "Ben",
     role: "Head of Operations",
     avatar: placeholderImages.teamJohn,
+    link: "/profile/ben",
   },
   {
     name: "Alice Green",
     role: "Customer Relations",
     avatar: placeholderImages.teamAlice,
+    link: "/profile/alice-green",
   },
 ];
 
@@ -121,7 +124,8 @@ export default function ContactPage() {
             <h2 className="font-headline text-2xl font-bold text-primary flex items-center"><Users className="mr-2 h-6 w-6 text-accent"/>Meet Our Team</h2>
             <div className="space-y-4">
             {teamMembers.map((member) => (
-                <AnimatedCard key={member.name} className="p-4 flex items-center space-x-4">
+              <Link href={member.link} key={member.name} className="block">
+                <AnimatedCard className="p-4 flex items-center space-x-4">
                     <Avatar className="h-16 w-16">
                         <AvatarImage asChild src={member.avatar.src}>
                             <Image src={member.avatar.src} alt={member.name} width={member.avatar.width} height={member.avatar.height} data-ai-hint={member.avatar.hint}/>
@@ -133,6 +137,7 @@ export default function ContactPage() {
                         <p className="text-sm text-muted-foreground">{member.role}</p>
                     </div>
                 </AnimatedCard>
+              </Link>
             ))}
             </div>
         </div>
