@@ -1,15 +1,14 @@
-
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Globe, Award, Compass, Briefcase } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from 'next/image';
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
-import HeroSection from "@/components/layout/hero-section";
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import FifaCardCarousel from "@/components/fifa-card-carousel";
 import TestimonialSection from "@/components/testimonial-section";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const teamMembers = [
   {
@@ -71,6 +70,9 @@ const teamMembers = [
 
 
 export default function AboutPage() {
+    const [headerRef, isHeaderVisible] = useScrollAnimation();
+    const heroImage = placeholderImages.gallerySafariGroup;
+
     const AnimatedCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
         const [ref, isVisible] = useScrollAnimation();
         return (
@@ -82,13 +84,49 @@ export default function AboutPage() {
 
   return (
     <div className="space-y-12">
-        <HeroSection
-            title="Our Mission: Your Adventure"
-            subtitle="We are a team of passionate explorers dedicated to crafting unforgettable and responsible travel experiences in the heart of Africa."
-            iconName="Globe"
-            imageUrl={placeholderImages.gallerySafariGroup.src}
-            dataAiHint={placeholderImages.gallerySafariGroup.hint}
-        />
+        <section ref={headerRef} className={cn('relative w-full h-[80vh] min-h-[600px] overflow-hidden rounded-lg shadow-lg scroll-animate flex items-center', isHeaderVisible && 'scroll-animate-in')}>
+            <Image
+                src={heroImage.src}
+                alt="Our Mission: Your Adventure"
+                layout="fill"
+                objectFit="cover"
+                className="z-0"
+                data-ai-hint={heroImage.hint}
+                priority
+            />
+            <div className="absolute inset-0 bg-stone-900/30 z-10"></div>
+            
+            <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
+                    <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">About iffe-travels</p>
+                    <h1
+                        className="font-headline text-4xl md:text-5xl font-black mb-4 pb-4 relative uppercase tracking-widest"
+                        style={{
+                        color: 'hsl(var(--primary-foreground))',
+                        WebkitTextStroke: '1px hsl(var(--primary))',
+                        }}
+                    >
+                        Our Mission: Your Adventure
+                        <span className="absolute bottom-0 left-0 w-20 h-0.5 bg-gradient-to-r from-yellow-400 to-transparent"></span>
+                    </h1>
+                    <p className="text-lg text-slate-300 max-w-md mb-8">
+                        We are a team of passionate explorers dedicated to crafting unforgettable and responsible travel experiences in the heart of Africa.
+                    </p>
+                    <div className="flex flex-wrap items-center gap-4">
+                        <Button size="lg" asChild className="bg-gradient-to-r from-yellow-400 to-orange-400 text-stone-900 font-bold hover:opacity-90 transition-transform hover:scale-105">
+                        <Link href="/packages">
+                            View Our Packages
+                        </Link>
+                        </Button>
+                        <Button variant="link" asChild className="text-yellow-400 hover:text-yellow-300">
+                            <Link href="/contact">
+                                Contact Us
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <AnimatedCard>
              <Card className="bg-card/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
