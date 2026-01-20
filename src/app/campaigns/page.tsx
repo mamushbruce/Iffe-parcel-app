@@ -1,5 +1,4 @@
 
-
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -147,7 +146,7 @@ export default function CampaignsPage() {
         </div>
       )}
 
-      <div className="text-center mt-12 space-y-4">
+      <div className="text-center mt-12 space-y-4 pb-12">
         {visibleCount < mockCampaignsData.length && (
             <Button size="lg" variant="secondary" onClick={handleLoadMore} disabled={isLoadingMore}>
                 {isLoadingMore ? (
