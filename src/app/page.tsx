@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck } from 'lucide-react';
+import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck, Package } from 'lucide-react';
 import BlogCard, { type BlogCardProps } from '@/components/blog-card';
 import EventCard, { type EventCardProps } from '@/components/event-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -152,8 +152,8 @@ export default function Home() {
                 </Link>
               </Button>
               <Button size="lg" variant="secondary" className="w-full py-6 text-base bg-accent text-accent-foreground hover:bg-accent/90" asChild>
-                <Link href="/create">
-                  <Edit3 className="mr-2 h-5 w-5" /> Share & Create
+                <Link href="/packages">
+                  <Package className="mr-2 h-5 w-5" /> Browse All Packages
                 </Link>
               </Button>
                <Button size="lg" className="w-full py-6 text-base bg-primary hover:bg-primary/90" asChild>
