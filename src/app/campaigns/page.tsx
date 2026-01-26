@@ -163,7 +163,7 @@ export default function CampaignsPage() {
                 <Input 
                     type="search" 
                     placeholder="e.g., 'Gorilla', 'Lions', '#Hiking'..." 
-                    className="w-full max-w-md h-12 text-base rounded-full border-0 shadow-inner focus-visible:ring-2 focus-visible:ring-accent"
+                    className="w-full max-w-md h-12 text-base rounded-full border focus-visible:ring-2 focus-visible:ring-accent"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -185,7 +185,7 @@ export default function CampaignsPage() {
         </div>
       )}
 
-      <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4 pb-12">
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-12">
         {visibleCount < filteredCampaigns.length && (
             <Button size="lg" variant="secondary" onClick={handleLoadMore} disabled={isLoadingMore}>
                 {isLoadingMore ? (
