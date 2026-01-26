@@ -2,8 +2,8 @@
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link';
+import Image from 'next/image';
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from 'react';
@@ -64,7 +64,7 @@ const mockPackages: PackageTier[] = [
 // Adding the Super Combi to the list of packages.
 const superCombiPackage: PackageTier = {
     id: 'super-combi',
-    title: 'Super Combi Safari',
+    title: 'Super Combo & Safari',
     price: '$12,000',
     priceDescription: 'per person',
     features: ['14-Day Grand Ugandan Tour', 'All Major Parks Included', 'Gorillas, Chimps, & Big Game', 'The Complete Experience'],
