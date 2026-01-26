@@ -156,17 +156,17 @@ export default function CampaignsPage() {
 
       <AnimatedSection>
         <Card className="bg-card/80 backdrop-blur-sm">
-            <CardHeader>
+            <CardHeader className="text-center">
                 <CardTitle className="font-headline text-xl">Search Tours</CardTitle>
                 <CardDescription>Find your next adventure using a title, keyword, or tag.</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="relative w-full">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <div className="flex justify-center items-center gap-4">
+                    <Search className="h-7 w-7 text-primary animate-slow-bounce" />
                     <Input 
                         type="search" 
                         placeholder="e.g., 'Gorilla', 'Lions', '#Hiking'..." 
-                        className="pl-12 w-full h-12 text-base rounded-full"
+                        className="w-full max-w-md h-12 text-base rounded-full border-0 shadow-inner focus-visible:ring-2 focus-visible:ring-accent"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
