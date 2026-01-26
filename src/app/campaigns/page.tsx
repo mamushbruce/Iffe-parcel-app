@@ -155,24 +155,20 @@ export default function CampaignsPage() {
       />
 
       <AnimatedSection>
-        <Card className="bg-card/80 backdrop-blur-sm">
-            <CardHeader className="text-center">
-                <CardTitle className="font-headline text-xl">Search Tours</CardTitle>
-                <CardDescription>Find your next adventure using a title, keyword, or tag.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <div className="flex justify-center items-center gap-4">
-                    <Search className="h-7 w-7 text-primary animate-slow-bounce" />
-                    <Input 
-                        type="search" 
-                        placeholder="e.g., 'Gorilla', 'Lions', '#Hiking'..." 
-                        className="w-full max-w-md h-12 text-base rounded-full border-0 shadow-inner focus-visible:ring-2 focus-visible:ring-accent"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-            </CardContent>
-        </Card>
+        <div className="text-center">
+            <h2 className="font-headline text-xl font-bold text-primary mb-2">Search Tours</h2>
+            <p className="text-sm text-muted-foreground mb-4">Find your next adventure using a title, keyword, or tag.</p>
+            <div className="flex justify-center items-center gap-4">
+                <Search className="h-7 w-7 text-primary animate-slow-bounce" />
+                <Input 
+                    type="search" 
+                    placeholder="e.g., 'Gorilla', 'Lions', '#Hiking'..." 
+                    className="w-full max-w-md h-12 text-base rounded-full border-0 shadow-inner focus-visible:ring-2 focus-visible:ring-accent"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+        </div>
       </AnimatedSection>
 
       {campaignsToShow.length > 0 ? (
@@ -189,7 +185,7 @@ export default function CampaignsPage() {
         </div>
       )}
 
-      <div className="text-center mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 pb-12">
+      <div className="text-center flex flex-col sm:flex-row items-center justify-center gap-4 pb-12">
         {visibleCount < filteredCampaigns.length && (
             <Button size="lg" variant="secondary" onClick={handleLoadMore} disabled={isLoadingMore}>
                 {isLoadingMore ? (
