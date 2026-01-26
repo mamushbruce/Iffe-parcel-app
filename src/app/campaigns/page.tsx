@@ -5,13 +5,15 @@ import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Tag, ArrowRight, PlusCircle, Loader2 } from 'lucide-react';
+import { Tag, ArrowRight, PlusCircle, Loader2, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/app/lib/placeholder-images.json';
-import { useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import HeroSection from '@/components/layout/hero-section';
+import { Input } from '@/components/ui/input';
+import AnimatedSection from '@/components/animated-section';
 
 interface CampaignTeaser {
   id: string;
@@ -59,6 +61,24 @@ const ITEMS_PER_PAGE = 6;
 export default function CampaignsPage() {
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredCampaigns = useMemo(() => {
+    if (!searchTerm) {
+      return mockCampaignsData;
+    }
+    const term = searchTerm.toLowerCase();
+    return mockCampaignsData.filter(campaign => {
+      const inTitle = campaign.title.toLowerCase().includes(term);
+      const inDescription = campaign.shortDescription.toLowerCase().includes(term);
+      const inTags = campaign.tags.some(tag => tag.toLowerCase().replace('#', '').includes(term));
+      return inTitle || inDescription || inTags;
+    });
+  }, [searchTerm]);
+  
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [searchTerm]);
 
   const handleLoadMore = () => {
     setIsLoadingMore(true);
@@ -68,7 +88,7 @@ export default function CampaignsPage() {
     }, 500); // Simulate network delay
   };
 
-  const campaignsToShow = mockCampaignsData.slice(0, visibleCount);
+  const campaignsToShow = filteredCampaigns.slice(0, visibleCount);
 
   const AnimatedCard = ({ campaign }: { campaign: CampaignTeaser }) => {
     const [ref, isVisible] = useScrollAnimation();
@@ -134,6 +154,26 @@ export default function CampaignsPage() {
         dataAiHint={placeholderImages.campaignDetailWildebeest.hint}
       />
 
+      <AnimatedSection>
+        <Card className="bg-card/80 backdrop-blur-sm">
+            <CardHeader>
+                <CardTitle className="font-headline text-xl flex items-center"><Search className="mr-2 h-5 w-5 text-accent"/>Search Tours</CardTitle>
+                <CardDescription>Find your next adventure using a title, keyword, or tag.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="relative w-full">
+                    <Input 
+                        type="search" 
+                        placeholder="e.g., 'Gorilla', 'Lions', '#Hiking'..." 
+                        className="pl-4 w-full h-12 text-base"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+            </CardContent>
+        </Card>
+      </AnimatedSection>
+
       {campaignsToShow.length > 0 ? (
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {campaignsToShow.map(campaign => (
@@ -142,12 +182,14 @@ export default function CampaignsPage() {
         </section>
       ) : (
         <div className="text-center py-12">
-          <p className="text-xl text-muted-foreground">No tours found. Check back later or suggest a new one!</p>
+          <p className="text-xl text-muted-foreground">
+            {searchTerm ? `No tours found for "${searchTerm}".` : "No tours found. Check back later!"}
+          </p>
         </div>
       )}
 
       <div className="text-center mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 pb-12">
-        {visibleCount < mockCampaignsData.length && (
+        {visibleCount < filteredCampaigns.length && (
             <Button size="lg" variant="secondary" onClick={handleLoadMore} disabled={isLoadingMore}>
                 {isLoadingMore ? (
                     <>
