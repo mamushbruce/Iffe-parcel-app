@@ -26,24 +26,19 @@ interface Profile {
 
 const profilesData: Profile[] = [
   {
-    id: 'ranger-ben',
-    name: 'Ranger Ben',
-    title: 'Conservation & Tracking Specialist',
-    avatar: 'homeCreatorTom',
-    bio: `With over 15 years of experience in the African bush, Ranger Ben is a master tracker and a passionate conservationist. His deep understanding of animal behavior and the delicate balance of the ecosystem provides a safari experience that is both thrilling and educational. Ben specializes in walking safaris and has a keen eye for spotting the most elusive wildlife. He believes that true conservation comes from a place of respect and understanding, a philosophy he shares with every traveler he guides.`,
+    id: 'reuben-traveller',
+    name: 'Reuben Traveller',
+    title: 'Experienced Tour Guide',
+    avatar: 'userEdward',
+    bio: `Reuben, nicknamed "Traveller," is an experienced tour guide who combines his camping setup and socialising skills with tourists to give them a better experience while in East Africa. He knows all the best spots in the region where you can create unforgettable moments with your family, friends, and maybe workmates. His socialising skills include making a client know the rich history of the region as you spend time together on campfires, hikes, boat cruises, and many more.`,
     stats: [
-      { label: 'Experience', value: '15+ Years' },
+      { label: 'Experience', value: '12+ Years' },
       { label: 'Tours Guided', value: '400+' },
-      { label: 'Specialty', value: 'Tracking, Conservation' },
+      { label: 'Specialty', value: 'Campsite Setup, Socialising' },
     ],
     isVerified: true,
-    blogPosts: [
-      { id: '2', title: 'Birdwatcher\'s Paradise: The Shoebill of Mabamba Swamp', author: 'Ranger Ben', date: 'Oct 22, 2023', excerpt: 'Journey into the swamps of Uganda to find one of the world\'s most prehistoric and sought-after birds.', imageUrl: placeholderImages.blogShoebill.src, dataAiHint: 'shoebill stork', tags: ['#Birdwatching', '#Uganda'], commentCount: 8 },
-    ],
-    guidedTours: [
-      { id: '2', title: 'Queen Elizabeth National Park', shortDescription: 'Spot tree-climbing lions and enjoy Kazinga Channel boat safaris.', image: 'campaignQueenElizabeth' },
-      { id: '4', title: 'Kibale Forest Chimpanzee Trekking', shortDescription: 'Trek chimpanzees in the primate capital of East Africa.', image: 'campaignKibale' },
-    ],
+    blogPosts: [],
+    guidedTours: [],
   },
   {
     id: 'ian-ivan',
@@ -134,21 +129,6 @@ const profilesData: Profile[] = [
       { label: 'Experience', value: '5 Yrs' },
       { label: 'Trips Coordinated', value: '200+' },
       { label: 'Specialty', value: 'Ground Operations' },
-    ],
-    isVerified: true,
-    blogPosts: [],
-    guidedTours: [],
-  },
-  {
-    id: 'reuben-ben-traveller',
-    name: 'Reuben (Ben) Traveller',
-    title: 'Experienced Tour Guide',
-    avatar: 'userEdward',
-    bio: `Reuben, nicknamed "Traveller," is an experienced tour guide who combines his camping setup and socialising skills with tourists to give them a better experience while in East Africa. He knows all the best spots in the region where you can create unforgettable moments with your family, friends, and maybe workmates. His socialising skills include making a client know the rich history of the region as you spend time together on campfires, hikes, boat cruises, and many more.`,
-    stats: [
-      { label: 'Experience', value: '12+ Years' },
-      { label: 'Tours Guided', value: '400+' },
-      { label: 'Specialty', value: 'Campsite Setup, Socialising' },
     ],
     isVerified: true,
     blogPosts: [],
