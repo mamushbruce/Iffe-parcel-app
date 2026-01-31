@@ -108,13 +108,13 @@ const initialFeedItems: FeedItem[] = [
   {
     id: 'creator-2',
     type: 'creator',
-    name: 'Ranger Ben',
-    avatarUrl: placeholderImages.homeCreatorTom.src,
-    avatarWidth: placeholderImages.homeCreatorTom.width,
-    avatarHeight: placeholderImages.homeCreatorTom.height,
-    dataAiHint: placeholderImages.homeCreatorTom.hint,
-    specialty: 'Conservation & Tracking Specialist',
-    profileLink: '/profile/ranger-ben', 
+    name: 'Reuben Traveller',
+    avatarUrl: placeholderImages.userEdward.src,
+    avatarWidth: placeholderImages.userEdward.width,
+    avatarHeight: placeholderImages.userEdward.height,
+    dataAiHint: placeholderImages.userEdward.hint,
+    specialty: 'Experienced Tour Guide',
+    profileLink: '/profile/reuben-traveller',
   },
 ];
 
