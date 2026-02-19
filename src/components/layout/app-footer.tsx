@@ -1,7 +1,6 @@
-
 'use client';
 import Link from 'next/link';
-import { Globe, Facebook, Twitter, Instagram, Waves, Mountain, MapPin } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, Youtube, Waves, Mountain, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
@@ -70,6 +69,16 @@ export default function AppFooter() {
                     <Link href="#" aria-label="Twitter">
                     <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
                         <Twitter className="h-5 w-5" />
+                    </Button>
+                    </Link>
+                    <Link href="#" aria-label="LinkedIn">
+                    <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
+                        <Linkedin className="h-5 w-5" />
+                    </Button>
+                    </Link>
+                    <Link href="#" aria-label="YouTube">
+                    <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
+                        <Youtube className="h-5 w-5" />
                     </Button>
                     </Link>
                 </div>
