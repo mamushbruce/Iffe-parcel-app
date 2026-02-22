@@ -7,66 +7,31 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Smile } from 'lucide-react';
+import { Send, Smile, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import HeroSection from '@/components/layout/hero-section';
-
-interface ChatMessage {
-  id: string;
-  text: string;
-  sender: 'user' | 'other';
-  timestamp: string; // Store as string to avoid date object issues
-  avatarUrl?: string;
-  avatarWidth?: number;
-  avatarHeight?: number;
-  dataAiHint?: string;
-  userName?: string;
-}
-
-const currentUser = {
-  id: 'currentUser',
-  name: 'You',
-  avatarUrl: placeholderImages.chatUserCurrent.src,
-  avatarWidth: placeholderImages.chatUserCurrent.width,
-  avatarHeight: placeholderImages.chatUserCurrent.height,
-  dataAiHint: placeholderImages.chatUserCurrent.hint,
-};
-
-const otherUserMock = {
-  id: 'otherUser1',
-  name: 'Travel Bot',
-  avatarUrl: placeholderImages.chatUserBot.src,
-  avatarWidth: placeholderImages.chatUserBot.width,
-  avatarHeight: placeholderImages.chatUserBot.height,
-  dataAiHint: placeholderImages.chatUserBot.hint,
-};
+import { useSession } from 'next-auth/react';
+import { sendMessage, subscribeToMessages, type ChatMessage } from '@/lib/services/cms-service';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ChatPage() {
+  const { data: session } = useSession();
+  const { toast } = useToast();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [ref, isVisible] = useScrollAnimation();
 
   useEffect(() => {
-    // This effect runs only on the client, ensuring dates are handled correctly
-    setMessages([
-      {
-        id: '1',
-        text: 'Welcome to the traveler\'s chat! Have questions about a tour? Ask away!',
-        sender: 'other',
-        timestamp: new Date(Date.now() - 1000 * 60 * 5).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-        ...otherUserMock,
-      },
-      {
-        id: '2',
-        text: 'Hello! I\'m interested in the Gorilla Trekking tour.',
-        sender: 'user',
-        timestamp: new Date(Date.now() - 1000 * 60 * 3).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-        ...currentUser,
-      },
-    ]);
+    const unsubscribe = subscribeToMessages((msgs) => {
+      setMessages(msgs);
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   const scrollToBottom = () => {
@@ -77,101 +42,100 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim() === '') return;
+    
+    if (!session?.user) {
+      toast({ title: "Login Required", description: "Please sign in to join the conversation.", variant: "destructive" });
+      return;
+    }
   
-    const sentTime = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-  
-    const userMessage: ChatMessage = {
-      id: String(Date.now()),
-      text: newMessage,
-      sender: 'user',
-      timestamp: sentTime,
-      ...currentUser,
-    };
-  
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setNewMessage('');
-  
-    // Simulate a bot response for demo purposes
-    setTimeout(() => {
-      const responseTime = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
-      const botResponse: ChatMessage = {
-        id: String(Date.now() + 1),
-        text: `Thanks for your message about: "${userMessage.text.substring(0, 30)}${userMessage.text.length > 30 ? "..." : ""}". I am a mock assistant. A real guide will be with you shortly!`,
-        sender: 'other',
-        timestamp: responseTime,
-        ...otherUserMock,
-      };
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
-    }, 1500);
+    const msgText = newMessage;
+    setNewMessage(''); // Clear input immediately for better UX
+
+    try {
+      await sendMessage({
+        text: msgText,
+        senderId: session.user.id,
+        senderName: session.user.name || 'Explorer',
+        senderAvatar: session.user.image || undefined,
+      });
+    } catch (err) {
+      toast({ title: "Failed to send message", variant: "destructive" });
+      setNewMessage(msgText); // Restore text on failure
+    }
   };
 
   return (
     <div className="space-y-8">
       <HeroSection 
         title="Traveler Chat"
-        subtitle="Connect with our team and other travelers."
+        subtitle="Connect with our team and other travelers in real-time."
         iconName="MessageCircle"
       />
       <div ref={ref} className={cn('flex flex-col h-[60vh] bg-background scroll-animate border rounded-lg shadow-lg transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1', isVisible && 'scroll-animate-in')}>
         <ScrollArea className="flex-grow bg-muted/20">
           <div className="p-4 space-y-4">
-            {messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={cn(
-                  'flex items-start space-x-2 max-w-[80%] sm:max-w-[70%]',
-                  msg.sender === 'user' ? 'ml-auto flex-row-reverse space-x-reverse' : 'mr-auto'
-                )}
-              >
-                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 shrink-0">
-                  {msg.avatarUrl && <AvatarImage asChild src={msg.avatarUrl} alt={msg.userName ?? undefined}>
-                      <Image src={msg.avatarUrl} alt={msg.userName || 'avatar'} width={msg.avatarWidth || 40} height={msg.avatarHeight || 40} data-ai-hint={msg.dataAiHint} />
-                  </AvatarImage>}
-                  <AvatarFallback>{msg.userName?.substring(0, 1).toUpperCase()}</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col">
+            {isLoading ? (
+              <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
+            ) : (
+              messages.map((msg) => {
+                const isOwn = session?.user?.id === msg.senderId;
+                return (
                   <div
+                    key={msg.id}
                     className={cn(
-                      'p-2 sm:p-3 rounded-lg shadow',
-                      msg.sender === 'user'
-                        ? 'bg-primary text-primary-foreground rounded-br-none'
-                        : 'bg-card text-card-foreground border rounded-bl-none'
+                      'flex items-start space-x-2 max-w-[80%] sm:max-w-[70%]',
+                      isOwn ? 'ml-auto flex-row-reverse space-x-reverse' : 'mr-auto'
                     )}
                   >
-                    <p className="text-sm">{msg.text}</p>
+                    <Avatar className="h-8 w-8 shrink-0">
+                      <AvatarImage asChild src={msg.senderAvatar}>
+                          <Image src={msg.senderAvatar || placeholderImages.dashboardAvatar.src} alt={msg.senderName} width={32} height={32} />
+                      </AvatarImage>
+                      <AvatarFallback>{msg.senderName.substring(0, 1).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <div
+                        className={cn(
+                          'p-2 sm:p-3 rounded-lg shadow text-sm',
+                          isOwn
+                            ? 'bg-primary text-primary-foreground rounded-br-none'
+                            : 'bg-card text-card-foreground border rounded-bl-none'
+                        )}
+                      >
+                        <p className="font-bold text-[10px] mb-1 opacity-70 uppercase tracking-tighter">{msg.senderName}</p>
+                        <p>{msg.text}</p>
+                      </div>
+                      <p className={cn(
+                          "text-[10px] mt-1 px-1 text-muted-foreground",
+                          isOwn ? 'text-right' : 'text-left'
+                        )}
+                      >
+                        {msg.timestamp}
+                      </p>
+                    </div>
                   </div>
-                  <p className={cn(
-                      "text-xs mt-1 px-1",
-                      msg.sender === 'user' ? 'text-muted-foreground text-right' : 'text-muted-foreground text-left'
-                    )}
-                  >
-                    {msg.timestamp}
-                  </p>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            )}
             <div ref={messagesEndRef} />
           </div>
         </ScrollArea>
         
         <div className="p-3 sm:p-4 border-t bg-card z-10">
           <form onSubmit={handleSendMessage} className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" type="button" className="text-muted-foreground hover:text-accent shrink-0">
-              <Smile className="h-5 w-5 sm:h-6 sm:w-6" />
-              <span className="sr-only">Add emoji</span>
-            </Button>
             <Input
               type="text"
-              placeholder="Type a message..."
+              placeholder={session?.user ? "Type a message..." : "Please log in to chat"}
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               className="flex-grow h-10 sm:h-11"
               autoComplete="off"
+              disabled={!session?.user}
             />
-            <Button type="submit" size="icon" className="bg-accent text-accent-foreground hover:bg-accent/90 shrink-0 h-10 w-10 sm:h-11 sm:w-11">
+            <Button type="submit" size="icon" className="bg-accent text-accent-foreground hover:bg-accent/90 shrink-0 h-10 w-10 sm:h-11 sm:w-11" disabled={!session?.user}>
               <Send className="h-4 w-4 sm:h-5 sm:w-5" />
               <span className="sr-only">Send message</span>
             </Button>

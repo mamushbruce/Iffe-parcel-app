@@ -1,5 +1,4 @@
 
-
 'use client';
 import { useState, useEffect } from 'react';
 import IdeaCard, { type IdeaCardProps } from '@/components/idea-card';
@@ -12,11 +11,13 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useToast } from '@/hooks/use-toast';
-import { PlusCircle, UploadCloud } from 'lucide-react';
+import { PlusCircle, UploadCloud, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import placeholderImages from '@/app/lib/placeholder-images.json';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
+import { useSession } from 'next-auth/react';
+import { fetchIdeas, submitIdea, voteForIdea, type Idea } from '@/lib/services/cms-service';
 
 const ideaSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters.'),
@@ -26,58 +27,30 @@ const ideaSchema = z.object({
 });
 type IdeaFormValues = z.infer<typeof ideaSchema>;
 
-// Mock data
-const initialIdeas: Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[] = [
-  { 
-    id: '1', 
-    title: 'Walking Safari in Zambia', 
-    description: 'Develop a new tour focused on immersive walking safaris in South Luangwa National Park, known for its incredible leopard sightings and on-foot tracking experiences. This would be for more adventurous, fit clients seeking a deeper connection with the bush.', 
-    submittedBy: 'Adventurous Al', 
-    dateSubmitted: 'Oct 10, 2023', 
-    votes: 42, 
-    commentsCount: 5, 
-    status: 'Approved',
-    imageUrl: placeholderImages.ideaWalkingSafari.src,
-    dataAiHint: placeholderImages.ideaWalkingSafari.hint,
-  },
-  { 
-    id: '2', 
-    title: 'Family-Friendly Safari Package', 
-    description: 'Create a dedicated package for families with young children, including kid-friendly lodges, special activities like animal tracking for kids, and shorter game drives. The goal is to make safari accessible and fun for all ages.', 
-    submittedBy: 'Family-First Fiona', 
-    dateSubmitted: 'Sep 25, 2023', 
-    votes: 78, 
-    commentsCount: 12, 
-    status: 'Under Review',
-    imageUrl: placeholderImages.ideaFamilySafari.src,
-    dataAiHint: placeholderImages.ideaFamilySafari.hint,
-  },
-  { 
-    id: '3', 
-    title: 'Photographic Hide at a Waterhole', 
-    description: 'Build a permanent photographic hide at a key waterhole, offering photographers a unique, low-angle perspective for stunning wildlife shots, especially during the dry season. This could be an add-on activity.', 
-    submittedBy: 'Shutterbug Sam', 
-    dateSubmitted: 'Nov 01, 2023', 
-    votes: 15, 
-    commentsCount: 2, 
-    status: 'New',
-    imageUrl: placeholderImages.ideaPhotoHide.src,
-    dataAiHint: placeholderImages.ideaPhotoHide.hint,
-  },
-];
-
 export default function IdeaBoxPage() {
-  const [ideas, setIdeas] = useState<Omit<IdeaCardProps, 'onVote' | 'hasVoted'>[]>([]);
-  const [votedIdeas, setVotedIdeas] = useState<Set<string>>(new Set());
+  const { data: session } = useSession();
+  const [ideas, setIdeas] = useState<Idea[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
-    // This client-side effect populates the ideas
-    setIdeas(initialIdeas);
+    loadIdeas();
   }, []);
+
+  const loadIdeas = async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchIdeas();
+      setIdeas(data);
+    } catch (err) {
+      toast({ title: "Failed to load ideas", variant: "destructive" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const { register, handleSubmit, reset, formState: { errors }, setValue, watch } = useForm<IdeaFormValues>({
     resolver: zodResolver(ideaSchema),
@@ -89,13 +62,6 @@ export default function IdeaBoxPage() {
   
   const currentImageUrl = watch('imageUrl');
 
-  useEffect(() => {
-    // If the dialog is closed, reset the image preview
-    if (!isDialogOpen) {
-      setImagePreviewUrl(null);
-    }
-  }, [isDialogOpen]);
-
   const handleImageFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -106,72 +72,79 @@ export default function IdeaBoxPage() {
         setValue('imageUrl', result, { shouldValidate: true }); 
       };
       reader.readAsDataURL(file);
-    } else {
-      setImagePreviewUrl(null);
-      setValue('imageUrl', '', { shouldValidate: true }); // Clear if no file selected
     }
   };
 
-  const handleVote = (id: string) => {
-    setIdeas(prevIdeas =>
-      prevIdeas.map(idea => {
-        if (idea.id === id) {
-          if (votedIdeas.has(id)) {
-            setVotedIdeas(prevVoted => {
-              const newVoted = new Set(prevVoted);
-              newVoted.delete(id);
-              return newVoted;
-            });
-            toast({ title: "Vote Removed.", description: `Your vote for "${idea.title}" has been removed.`});
-            return { ...idea, votes: idea.votes - 1 };
-          } else {
-            setVotedIdeas(prevVoted => new Set(prevVoted).add(id));
-            toast({ title: "Vote Cast!", description: `Thank you for voting for "${idea.title}".`});
-            return { ...idea, votes: idea.votes + 1 };
-          }
-        }
-        return idea;
-      })
-    );
+  const handleVote = async (id: string) => {
+    if (!session?.user) {
+      toast({ title: "Login Required", description: "Please sign in to vote for ideas.", variant: "destructive" });
+      return;
+    }
+
+    const idea = ideas.find(i => i.id === id);
+    if (!idea) return;
+
+    const hasVoted = idea.voters.includes(session.user.id);
+    
+    try {
+      await voteForIdea(id, session.user.id, hasVoted);
+      loadIdeas(); // Refresh list
+      toast({ 
+        title: hasVoted ? "Vote Removed" : "Vote Cast!", 
+        description: hasVoted ? `You unvoted for "${idea.title}"` : `Thank you for supporting "${idea.title}"`
+      });
+    } catch (err) {
+      toast({ title: "Voting Failed", variant: "destructive" });
+    }
   };
 
   const onSubmitIdea: SubmitHandler<IdeaFormValues> = async (data) => {
+    if (!session?.user) {
+      toast({ title: "Login Required", description: "Please sign in to submit a trip idea.", variant: "destructive" });
+      return;
+    }
+
     setIsSubmitting(true);
-    // This client-side only operation avoids hydration errors
-    const submissionDate = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const newIdea = {
-      id: String(ideas.length + 1 + Date.now()),
-      title: data.title,
-      description: data.description,
-      submittedBy: 'CurrentUser', 
-      dateSubmitted: submissionDate,
-      votes: 0,
-      commentsCount: 0,
-      status: 'New' as 'New',
-      imageUrl: data.imageUrl || placeholderImages.ideaWalkingSafari.src, 
-      dataAiHint: data.dataAiHint || 'innovative idea',
-    };
-    
-    setIdeas(prevIdeas => [newIdea, ...prevIdeas]);
-    toast({ title: "Trip Idea Submitted!", description: "Your suggestion has been added."});
-    reset();
-    setImagePreviewUrl(null); // Reset preview after submission
-    setIsSubmitting(false);
-    setIsDialogOpen(false);
+    try {
+      await submitIdea({
+        title: data.title,
+        description: data.description,
+        submittedBy: session.user.name || 'Anonymous',
+        imageUrl: data.imageUrl,
+        dataAiHint: data.dataAiHint,
+      });
+      
+      toast({ title: "Trip Idea Submitted!", description: "Your suggestion has been added to the database."});
+      loadIdeas();
+      reset();
+      setImagePreviewUrl(null);
+      setIsDialogOpen(false);
+    } catch (err) {
+      toast({ title: "Submission Failed", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
-    const AnimatedIdeaCard = ({ idea }: { idea: Omit<IdeaCardProps, 'onVote' | 'hasVoted'> }) => {
+    const AnimatedIdeaCard = ({ idea }: { idea: Idea }) => {
         const [ref, isVisible] = useScrollAnimation();
+        const hasVoted = session?.user ? idea.voters.includes(session.user.id) : false;
+
         return (
             <div ref={ref} className={cn('scroll-animate', isVisible && 'scroll-animate-in')}>
                 <IdeaCard 
-                    key={idea.id} 
-                    {...idea} 
+                    id={idea.id}
+                    title={idea.title}
+                    description={idea.description}
+                    submittedBy={idea.submittedBy}
+                    dateSubmitted={idea.dateSubmitted}
+                    votes={idea.votes}
+                    commentsCount={idea.commentsCount}
+                    status={idea.status}
+                    imageUrl={idea.imageUrl}
+                    dataAiHint={idea.dataAiHint}
                     onVote={handleVote} 
-                    hasVoted={votedIdeas.has(idea.id)}
+                    hasVoted={hasVoted}
                 />
             </div>
         );
@@ -213,13 +186,7 @@ export default function IdeaBoxPage() {
                 Suggest new destinations and vote on where we should go next!
               </p>
               <div className="flex flex-wrap items-center gap-4">
-                 <Dialog open={isDialogOpen} onOpenChange={(isOpen) => {
-                     setIsDialogOpen(isOpen);
-                     if (!isOpen) {
-                        reset();
-                        setImagePreviewUrl(null);
-                     }
-                }}>
+                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
                     <Button size="lg" className="bg-gradient-to-r from-yellow-400 to-orange-400 text-stone-900 font-bold hover:opacity-90 transition-transform hover:scale-105">
                         <PlusCircle className="mr-2 h-5 w-5" /> Suggest a Trip Idea
@@ -265,7 +232,7 @@ export default function IdeaBoxPage() {
                         <div className="mt-2 col-span-3">
                           <Label className="font-semibold">Image Preview:</Label>
                           <div className="relative w-full aspect-video mt-1 border rounded-md overflow-hidden bg-muted">
-                            <Image src={imagePreviewUrl || currentImageUrl || ''} alt="Idea preview" fill objectFit="contain" />
+                            <Image src={imagePreviewUrl || currentImageUrl || ''} alt="Idea preview" fill style={{ objectFit: 'contain' }} />
                           </div>
                         </div>
                       )}
@@ -281,11 +248,6 @@ export default function IdeaBoxPage() {
                         {errors.imageUrl && <p className="text-sm text-destructive mt-1">{errors.imageUrl.message}</p>}
                       </div>
 
-                      <div>
-                        <Label htmlFor="dataAiHint" className="text-right font-semibold">Image Keywords (for AI)</Label>
-                        <Input id="dataAiHint" {...register('dataAiHint')} className="col-span-3 mt-1" placeholder="e.g., nature community (max 2 words)" />
-                        {errors.dataAiHint && <p className="text-sm text-destructive mt-1">{errors.dataAiHint.message}</p>}
-                      </div>
                       <DialogFooter>
                         <Button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90">
                           {isSubmitting ? 'Submitting...' : 'Submit Idea'}
@@ -299,13 +261,17 @@ export default function IdeaBoxPage() {
           </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8">
-        {ideas.map(idea => (
-          <AnimatedIdeaCard key={idea.id} idea={idea} />
-        ))}
-      </section>
+      {isLoading ? (
+        <div className="flex justify-center py-20"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>
+      ) : (
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8">
+          {ideas.map(idea => (
+            <AnimatedIdeaCard key={idea.id} idea={idea} />
+          ))}
+        </section>
+      )}
 
-      {ideas.length === 0 && (
+      {!isLoading && ideas.length === 0 && (
         <div className="text-center py-12">
           <p className="text-xl text-muted-foreground">The suggestion box is empty. Be the first to suggest a dream trip!</p>
         </div>

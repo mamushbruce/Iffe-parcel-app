@@ -12,7 +12,12 @@ import {
   updateDoc,
   where,
   getDoc,
-  limit
+  limit,
+  onSnapshot,
+  increment,
+  arrayUnion,
+  arrayRemove,
+  type DocumentData
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 
@@ -66,6 +71,30 @@ export interface Campaign {
   currentAmount: number;
   tags: string[];
   featured?: boolean;
+}
+
+export interface Idea {
+  id: string;
+  title: string;
+  description: string;
+  submittedBy: string;
+  dateSubmitted: string;
+  votes: number;
+  voters: string[]; // UIDs of users who voted
+  status: 'New' | 'Under Review' | 'Approved' | 'Implemented';
+  imageUrl?: string;
+  dataAiHint?: string;
+  commentsCount: number;
+}
+
+export interface ChatMessage {
+  id: string;
+  text: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar?: string;
+  timestamp: string;
+  createdAt: any;
 }
 
 // --- GALLERY ---
@@ -213,4 +242,71 @@ export async function getCampaign(id: string): Promise<Campaign | null> {
     return { id: docSnap.id, ...docSnap.data() } as Campaign;
   }
   return null;
+}
+
+// --- IDEAS ---
+
+export async function submitIdea(data: Omit<Idea, 'id' | 'dateSubmitted' | 'votes' | 'voters' | 'status' | 'commentsCount'>) {
+  const docRef = await addDoc(collection(db, 'ideas'), {
+    ...data,
+    votes: 0,
+    voters: [],
+    status: 'New',
+    commentsCount: 0,
+    createdAt: serverTimestamp(),
+  });
+  return docRef.id;
+}
+
+export async function fetchIdeas(): Promise<Idea[]> {
+  const q = query(collection(db, 'ideas'), orderBy('createdAt', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      dateSubmitted: data.createdAt?.toDate?.()?.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) || 'Recently',
+    } as Idea;
+  });
+}
+
+export async function voteForIdea(ideaId: string, userId: string, hasVoted: boolean) {
+  const ideaRef = doc(db, 'ideas', ideaId);
+  if (hasVoted) {
+    await updateDoc(ideaRef, {
+      votes: increment(-1),
+      voters: arrayRemove(userId)
+    });
+  } else {
+    await updateDoc(ideaRef, {
+      votes: increment(1),
+      voters: arrayUnion(userId)
+    });
+  }
+}
+
+// --- CHAT ---
+
+export async function sendMessage(message: Omit<ChatMessage, 'id' | 'timestamp' | 'createdAt'>) {
+  await addDoc(collection(db, 'chats'), {
+    ...message,
+    createdAt: serverTimestamp(),
+  });
+}
+
+export function subscribeToMessages(callback: (messages: ChatMessage[]) => void) {
+  const q = query(collection(db, 'chats'), orderBy('createdAt', 'asc'), limit(50));
+  
+  return onSnapshot(q, (snapshot) => {
+    const messages = snapshot.docs.map(doc => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        timestamp: data.createdAt?.toDate?.()?.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) || 'Just now',
+      } as ChatMessage;
+    });
+    callback(messages);
+  });
 }
