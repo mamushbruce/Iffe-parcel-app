@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
@@ -29,17 +31,27 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     setIsLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
+      // 1. Sign in to Firebase (for real-time features like chat/voting later)
+      await signInWithEmailAndPassword(auth, email, password);
+
+      // 2. Sign in to NextAuth (for session management and middleware)
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        throw new Error(result.error);
+      }
 
       toast({
         title: "Login Successful!",
-        description: `Welcome back, ${user.email}`,
+        description: `Welcome back!`,
       });
 
-      // Simple Admin check for the prototype
-      // In production, we would use Firebase Custom Claims
-      if (email.includes('admin')) {
+      // Redirect based on role (simple client-side check for immediate UX)
+      if (email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
         router.push('/admin');
       } else {
         router.push('/dashboard');
@@ -52,7 +64,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       console.error("Login error:", error);
       toast({
         title: "Login Failed",
-        description: error.message || "Invalid email or password.",
+        description: "Invalid email or password. Please make sure you have enabled the Email/Password provider in the Firebase Console.",
         variant: "destructive",
       });
     } finally {
@@ -63,11 +75,11 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const handleTabChange = (newTabValue: string) => {
     setActiveTab(newTabValue);
     if (newTabValue === 'admin') {
-      setEmail('admin@iffe-travels.com');
+      setEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@iffe-travels.com');
     } else {
       setEmail('');
     }
-    password && setPassword('');
+    setPassword('');
   };
 
   return (

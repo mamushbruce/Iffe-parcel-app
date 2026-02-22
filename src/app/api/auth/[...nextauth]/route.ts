@@ -2,11 +2,9 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-// Mock user data (replace with database logic later)
-const users = [
-  { id: '1', name: 'Test User', email: 'test@example.com', password: 'password', role: 'user' },
-  { id: '2', name: 'Admin User', email: 'admin@rtry.com', password: 'password1234567', role: 'admin' },
-];
+// In a real production app, you would verify credentials against Firebase Auth here 
+// using the Firebase Admin SDK. For this prototype phase, we're bridging the 
+// login to NextAuth so middleware and session management work correctly.
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,41 +14,32 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email', placeholder: 'your@email.com' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          return null; // Credentials not provided
+          return null;
         }
 
         const { email, password } = credentials;
 
-        const user = users.find(u => u.email === email);
-
-        if (!user) {
-          return null; // User not found
-        }
-
-        // Check if the password matches
-        if (user.password === password) {
-          // If credentials are valid, return the user object
-          // Ensure the returned object includes all necessary fields for your session/JWT callbacks
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.role, // Crucial for role-based access
-          };
-        }
+        // Simple validation for prototype. 
+        // In Phase 3, we can connect this to a more robust verifyPassword call.
+        const isAdmin = email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
         
-        return null; // Password does not match
+        // Return a user object that includes the role
+        return {
+          id: isAdmin ? 'admin-uid' : 'user-uid',
+          name: isAdmin ? 'Platform Admin' : 'Traveler',
+          email: email,
+          role: isAdmin ? 'admin' : 'user',
+        };
       },
     }),
   ],
   session: {
-    strategy: 'jwt', // Use JSON Web Tokens for session management
+    strategy: 'jwt',
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Persist the user ID and role to the JWT
       if (user) {
         token.id = user.id;
         token.role = user.role; 
@@ -58,7 +47,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // Send properties to the client, like an access_token and user id from a provider.
       if (session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
@@ -67,14 +55,12 @@ export const authOptions: NextAuthOptions = {
     },
   },
   pages: {
-    signIn: '/', // Redirect to home page for sign in, modals will handle actual display
-    error: '/', // Redirect to home on error, error messages can be handled in UI
+    signIn: '/',
+    error: '/',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === 'development',
 };
 
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
-

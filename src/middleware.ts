@@ -1,34 +1,32 @@
 
 import { NextResponse, type NextRequest } from 'next/server';
-// import { getToken } from 'next-auth/jwt'; // No longer needed for bypassed auth
+import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
-  // !!! AUTHENTICATION BYPASSED FOR ADMIN ROUTES FOR TESTING PURPOSES !!!
-  // TODO: Re-enable authentication checks before production.
-  // const { pathname } = req.nextUrl;
+  const { pathname } = req.nextUrl;
 
-  // // Protect /admin routes
-  // if (pathname.startsWith('/admin')) {
-  //   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  // Protect /admin routes
+  if (pathname.startsWith('/admin')) {
+    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  //   if (!token) {
-  //     // Not logged in, redirect to home (login modal can be triggered there)
-  //     const url = req.nextUrl.clone();
-  //     url.pathname = '/';
-  //     return NextResponse.redirect(url);
-  //   }
+    if (!token) {
+      // Not logged in, redirect to home
+      const url = req.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
 
-  //   if (token.role !== 'admin') {
-  //     // Logged in but not an admin, redirect to home or an unauthorized page
-  //     const url = req.nextUrl.clone();
-  //     url.pathname = '/'; // Or a dedicated /unauthorized page
-  //     return NextResponse.redirect(url);
-  //   }
-  // }
+    if (token.role !== 'admin') {
+      // Logged in but not an admin, redirect to home
+      const url = req.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*'], // Keep matcher so it still runs, but does nothing to block.
+  matcher: ['/admin/:path*'],
 };
