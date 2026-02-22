@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,27 +11,25 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { UploadCloud, Video as VideoIcon, Film } from "lucide-react";
+import { UploadCloud, Video as VideoIcon, Film, Trash2 } from "lucide-react";
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
-import placeholderImages from '@/app/lib/placeholder-images.json';
-import { getMockVideoData, type VideoItem } from '../videos/data';
 import Link from 'next/link';
-
-interface GalleryImage {
-  id: string;
-  src: string;
-  alt: string;
-  dataAiHint: string;
-  caption?: string;
-  date?: string;
-  tags: string[];
-}
+import { 
+  uploadGalleryImage, 
+  fetchGalleryImages, 
+  deleteGalleryImage, 
+  addVideo, 
+  fetchVideos, 
+  deleteVideo,
+  type GalleryImage,
+  type VideoItem 
+} from '@/lib/services/cms-service';
 
 const imageMediaSchema = z.object({
   caption: z.string().max(100, "Caption cannot exceed 100 characters.").optional(),
   tags: z.string().optional(),
-  imageUrl: z.string().min(1, 'Image is required.'),
+  imageUrl: z.string().optional(), // Used for preview
   dataAiHint: z.string().max(50, 'Keywords cannot exceed 50 characters.').optional(),
 });
 type ImageMediaFormValues = z.infer<typeof imageMediaSchema>;
@@ -78,32 +76,61 @@ export default function AdminMediaPage() {
   
   const [isSubmittingImage, setIsSubmittingImage] = useState(false);
   const [isSubmittingVideo, setIsSubmittingVideo] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const { toast } = useToast();
   const [adminGalleryImages, setAdminGalleryImages] = useState<GalleryImage[]>([]); 
-  const [adminVideoItems, setAdminVideoItems] = useState<VideoItem[]>(getMockVideoData());
+  const [adminVideoItems, setAdminVideoItems] = useState<VideoItem[]>([]);
 
-  const imageForm = useForm<ImageMediaFormValues>({ resolver: zodResolver(imageMediaSchema), defaultValues: { caption: '', tags: '', imageUrl: '', dataAiHint: '' } });
-  const videoForm = useForm<VideoMediaFormValues>({ resolver: zodResolver(videoMediaSchema), defaultValues: { youtubeUrl: '', title: '', description: '', category: 'Destination Highlights' } });
+  const imageForm = useForm<ImageMediaFormValues>({ resolver: zodResolver(imageMediaSchema) });
+  const videoForm = useForm<VideoMediaFormValues>({ resolver: zodResolver(videoMediaSchema), defaultValues: { category: 'Destination Highlights' } });
 
   const watchedImageUrl = imageForm.watch('imageUrl');
+
+  useEffect(() => {
+    const loadData = async () => {
+      const [images, videos] = await Promise.all([fetchGalleryImages(), fetchVideos()]);
+      setAdminGalleryImages(images);
+      setAdminVideoItems(videos);
+    };
+    loadData();
+  }, []);
 
   const handleImageFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        imageForm.setValue('imageUrl', reader.result as string, { shouldValidate: true }); 
+        imageForm.setValue('imageUrl', reader.result as string); 
       };
       reader.readAsDataURL(file);
     }
   };
 
   const onSubmitImageMedia: SubmitHandler<ImageMediaFormValues> = async (data) => {
+    if (!imageFile) {
+      toast({ title: "No file selected", variant: "destructive" });
+      return;
+    }
     setIsSubmittingImage(true);
-    // ... submission logic
-    setIsSubmittingImage(false);
-    setIsUploadImageDialogOpen(false);
+    try {
+      await uploadGalleryImage(imageFile, { 
+        caption: data.caption, 
+        tags: data.tags, 
+        dataAiHint: data.dataAiHint 
+      });
+      const updatedImages = await fetchGalleryImages();
+      setAdminGalleryImages(updatedImages);
+      toast({ title: "Image Uploaded Successfully!" });
+      setIsUploadImageDialogOpen(false);
+      imageForm.reset();
+      setImageFile(null);
+    } catch (error) {
+      toast({ title: "Upload Failed", description: "Make sure you have enabled Storage in Firebase Console.", variant: "destructive" });
+    } finally {
+      setIsSubmittingImage(false);
+    }
   };
 
   const onSubmitVideoMedia: SubmitHandler<VideoMediaFormValues> = async (data) => {
@@ -111,27 +138,53 @@ export default function AdminMediaPage() {
     const videoId = getYoutubeVideoId(data.youtubeUrl);
 
     if (!videoId) {
-        toast({ title: "Invalid YouTube URL", description: "Could not extract video ID.", variant: "destructive" });
+        toast({ title: "Invalid YouTube URL", variant: "destructive" });
         setIsSubmittingVideo(false);
         return;
     }
 
-    const newVideo: VideoItem = {
-      id: `admin-vid-${Date.now()}`,
-      title: data.title,
-      description: data.description || '',
-      category: data.category,
-      duration: data.duration,
-      youtubeVideoId: videoId,
-      thumbnailUrl: `https://i3.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
-      dataAiHint: 'youtube video',
-    };
-    
-    setAdminVideoItems(prev => [newVideo, ...prev]);
-    toast({ title: "Video Added!", description: `"${data.title}" has been added to your library.` });
-    videoForm.reset();
-    setIsSubmittingVideo(false);
-    setIsAddVideoDialogOpen(false);
+    try {
+      await addVideo({
+        title: data.title,
+        description: data.description || '',
+        category: data.category,
+        duration: data.duration,
+        youtubeVideoId: videoId,
+        thumbnailUrl: `https://i3.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+        dataAiHint: 'youtube video',
+      });
+      const updatedVideos = await fetchVideos();
+      setAdminVideoItems(updatedVideos);
+      toast({ title: "Video Added!" });
+      videoForm.reset();
+      setIsAddVideoDialogOpen(false);
+    } catch (error) {
+      toast({ title: "Error", description: "Check your Firestore settings.", variant: "destructive" });
+    } finally {
+      setIsSubmittingVideo(false);
+    }
+  };
+
+  const handleDeleteImage = async (id: string, storagePath?: string) => {
+    if (!confirm("Are you sure you want to delete this image?")) return;
+    try {
+      await deleteGalleryImage(id, storagePath);
+      setAdminGalleryImages(prev => prev.filter(img => img.id !== id));
+      toast({ title: "Image Deleted" });
+    } catch (err) {
+      toast({ title: "Delete Failed", variant: "destructive" });
+    }
+  };
+
+  const handleDeleteVideoItem = async (id: string) => {
+    if (!confirm("Delete this video?")) return;
+    try {
+      await deleteVideo(id);
+      setAdminVideoItems(prev => prev.filter(v => v.id !== id));
+      toast({ title: "Video Deleted" });
+    } catch (err) {
+      toast({ title: "Delete Failed", variant: "destructive" });
+    }
   };
 
   return (
@@ -139,68 +192,109 @@ export default function AdminMediaPage() {
       <Card className="transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1">
         <CardHeader>
           <CardTitle className="font-headline text-2xl">Media Library Management</CardTitle>
-          <CardDescription>Manage images and videos for your website.</CardDescription>
+          <CardDescription>Manage images and videos using live Firebase integration.</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-8">
           
           {/* IMAGE SECTION */}
           <div>
-            <h3 className="font-semibold text-lg mb-2">Image Gallery</h3>
-            <div className="flex gap-2">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-lg">Image Gallery</h3>
               <Dialog open={isUploadImageDialogOpen} onOpenChange={setIsUploadImageDialogOpen}>
                 <DialogTrigger asChild><Button><UploadCloud className="mr-2 h-4 w-4" /> Upload Image</Button></DialogTrigger>
                 <DialogContent className="sm:max-w-lg">
-                  {/* Image Upload Form */}
+                  <DialogHeader>
+                    <DialogTitle className="font-headline text-2xl text-primary">Upload Gallery Image</DialogTitle>
+                    <DialogDescription>Add a new photo to the public gallery.</DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={imageForm.handleSubmit(onSubmitImageMedia)} className="grid gap-4 py-4">
+                    <div>
+                      <Label htmlFor="imageFile">Image File</Label>
+                      <Input id="imageFile" type="file" accept="image/*" onChange={handleImageFileChange} disabled={isSubmittingImage} />
+                    </div>
+                    {watchedImageUrl && (
+                      <div className="relative w-full aspect-video border rounded-md overflow-hidden bg-muted">
+                        <Image src={watchedImageUrl} alt="Preview" fill style={{ objectFit: 'contain' }} />
+                      </div>
+                    )}
+                    <div>
+                      <Label htmlFor="caption">Caption</Label>
+                      <Input id="caption" {...imageForm.register('caption')} placeholder="Brief description..." disabled={isSubmittingImage} />
+                    </div>
+                    <div>
+                      <Label htmlFor="tags">Tags (comma separated)</Label>
+                      <Input id="tags" {...imageForm.register('tags')} placeholder="#Safari, #Gorillas" disabled={isSubmittingImage} />
+                    </div>
+                    <div>
+                      <Label htmlFor="dataAiHint">AI Search Keywords (max 2 words)</Label>
+                      <Input id="dataAiHint" {...imageForm.register('dataAiHint')} placeholder="gorilla forest" disabled={isSubmittingImage} />
+                    </div>
+                    <DialogFooter>
+                      <Button type="button" variant="outline" onClick={() => setIsUploadImageDialogOpen(false)} disabled={isSubmittingImage}>Cancel</Button>
+                      <Button type="submit" disabled={isSubmittingImage} className="bg-primary hover:bg-primary/90">
+                        {isSubmittingImage ? 'Uploading...' : 'Upload to Firebase'}
+                      </Button>
+                    </DialogFooter>
+                  </form>
                 </DialogContent>
               </Dialog>
             </div>
-            {adminGalleryImages.length > 0 && <div className="mt-6 border-t pt-4">...</div>}
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {adminGalleryImages.map(img => (
+                <div key={img.id} className="relative group aspect-square rounded-md overflow-hidden bg-muted border">
+                  <Image src={img.src} alt={img.alt} fill objectFit="cover" />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <Button size="icon" variant="destructive" onClick={() => handleDeleteImage(img.id, img.storagePath)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {adminGalleryImages.length === 0 && <p className="text-center text-muted-foreground py-8 border-2 border-dashed rounded-lg">No images in gallery.</p>}
           </div>
 
-          <hr className="my-6"/>
+          <hr />
 
           {/* VIDEO SECTION */}
           <div>
-            <h3 className="font-semibold text-lg mb-2">Video Library</h3>
-            <div className="flex gap-2">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-semibold text-lg">Video Library</h3>
               <Dialog open={isAddVideoDialogOpen} onOpenChange={setIsAddVideoDialogOpen}>
                 <DialogTrigger asChild><Button><VideoIcon className="mr-2 h-4 w-4" /> Add YouTube Video</Button></DialogTrigger>
                 <DialogContent className="sm:max-w-xl">
                     <DialogHeader>
                         <DialogTitle className="font-headline text-2xl text-primary">Add Video from YouTube</DialogTitle>
-                        <DialogDescription>Paste a YouTube video link to add it to your library.</DialogDescription>
+                        <DialogDescription>Save video details to Firestore.</DialogDescription>
                     </DialogHeader>
                     <form onSubmit={videoForm.handleSubmit(onSubmitVideoMedia)} className="grid gap-4 py-4">
                         <div>
-                            <Label htmlFor="youtubeUrl" className="font-semibold">YouTube Video URL</Label>
+                            <Label htmlFor="youtubeUrl">YouTube Video URL</Label>
                             <Input id="youtubeUrl" {...videoForm.register('youtubeUrl')} placeholder="https://www.youtube.com/watch?v=..." disabled={isSubmittingVideo} />
-                            {videoForm.formState.errors.youtubeUrl && <p className="text-sm text-destructive mt-1">{videoForm.formState.errors.youtubeUrl.message}</p>}
                         </div>
                         <div>
-                            <Label htmlFor="video-title" className="font-semibold">Video Title</Label>
-                            <Input id="video-title" {...videoForm.register('title')} placeholder="e.g., Sunrise Over the Serengeti" disabled={isSubmittingVideo} />
-                            {videoForm.formState.errors.title && <p className="text-sm text-destructive mt-1">{videoForm.formState.errors.title.message}</p>}
+                            <Label htmlFor="video-title">Video Title</Label>
+                            <Input id="video-title" {...videoForm.register('title')} disabled={isSubmittingVideo} />
                         </div>
                         <div>
-                            <Label htmlFor="video-desc" className="font-semibold">Description (Optional)</Label>
-                            <Input id="video-desc" {...videoForm.register('description')} placeholder="A brief summary of the video" disabled={isSubmittingVideo} />
+                            <Label htmlFor="video-desc">Description</Label>
+                            <Input id="video-desc" {...videoForm.register('description')} disabled={isSubmittingVideo} />
                         </div>
                          <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <Label htmlFor="video-category" className="font-semibold">Category</Label>
-                                <Input id="video-category" {...videoForm.register('category')} placeholder="e.g., Destination Highlight" disabled={isSubmittingVideo} />
-                                {videoForm.formState.errors.category && <p className="text-sm text-destructive mt-1">{videoForm.formState.errors.category.message}</p>}
+                                <Label htmlFor="video-category">Category</Label>
+                                <Input id="video-category" {...videoForm.register('category')} disabled={isSubmittingVideo} />
                             </div>
                             <div>
-                                <Label htmlFor="video-duration" className="font-semibold">Duration (mm:ss)</Label>
-                                <Input id="video-duration" {...videoForm.register('duration')} placeholder="e.g., 04:30" disabled={isSubmittingVideo} />
-                                {videoForm.formState.errors.duration && <p className="text-sm text-destructive mt-1">{videoForm.formState.errors.duration.message}</p>}
+                                <Label htmlFor="video-duration">Duration (mm:ss)</Label>
+                                <Input id="video-duration" {...videoForm.register('duration')} disabled={isSubmittingVideo} />
                             </div>
                         </div>
                         <DialogFooter>
                             <Button type="button" variant="outline" onClick={() => setIsAddVideoDialogOpen(false)} disabled={isSubmittingVideo}>Cancel</Button>
                             <Button type="submit" disabled={isSubmittingVideo} className="bg-primary hover:bg-primary/90">
-                                {isSubmittingVideo ? 'Adding...' : <><VideoIcon className="mr-2 h-4 w-4"/>Add Video</>}
+                                {isSubmittingVideo ? 'Saving...' : 'Add Video'}
                             </Button>
                         </DialogFooter>
                     </form>
@@ -208,30 +302,25 @@ export default function AdminMediaPage() {
               </Dialog>
             </div>
             
-            {adminVideoItems.length > 0 && (
-                <div className="mt-6 border-t pt-4">
-                    <h4 className="font-semibold text-md mb-3">Video Library:</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                        {adminVideoItems.map(video => (
-                            <Card key={video.id} className="overflow-hidden transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1">
-                                <div className="relative w-full aspect-video bg-muted">
-                                    <Image src={video.thumbnailUrl} alt={video.title} fill objectFit="cover" data-ai-hint={video.dataAiHint || 'video content'} />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent flex items-end p-2 pointer-events-none">
-                                      <Film className="h-5 w-5 text-white/80 mr-1" />
-                                      <p className="text-white text-xs font-medium truncate" title={video.title}>{video.title}</p>
-                                    </div>
-                                    <Badge variant="secondary" className="absolute top-2 left-2 text-xs capitalize">YouTube</Badge>
-                                </div>
-                                <CardContent className="p-3 text-xs">
-                                    <Link href={`/videos/${video.id}`} className="text-primary hover:underline truncate block" title={video.title}>{video.title}</Link>
-                                    <p className="text-muted-foreground mt-1 line-clamp-2" title={video.description}>{video.description || 'No description.'}</p>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </div>
-                </div>
-            )}
-            {adminVideoItems.length === 0 && <p className="text-sm text-muted-foreground mt-4">No videos added yet.</p>}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {adminVideoItems.map(video => (
+                    <Card key={video.id} className="overflow-hidden group">
+                        <div className="relative aspect-video bg-muted">
+                            <Image src={video.thumbnailUrl} alt={video.title} fill objectFit="cover" />
+                            <div className="absolute top-2 right-2">
+                              <Button size="icon" variant="destructive" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => handleDeleteVideoItem(video.id)}>
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                        </div>
+                        <div className="p-3">
+                            <p className="text-sm font-semibold truncate">{video.title}</p>
+                            <Badge variant="outline" className="mt-1 text-[10px]">{video.category}</Badge>
+                        </div>
+                    </Card>
+                ))}
+            </div>
+            {adminVideoItems.length === 0 && <p className="text-center text-muted-foreground py-8 border-2 border-dashed rounded-lg">No videos in library.</p>}
           </div>
         </CardContent>
       </Card>

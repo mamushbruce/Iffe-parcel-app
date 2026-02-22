@@ -1,6 +1,6 @@
 
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -14,6 +14,8 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
 import { cn } from '@/lib/utils';
+import { submitBlogPost } from '@/lib/services/cms-service';
+import { useSession } from 'next-auth/react';
 
 const blogPostSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters long'),
@@ -25,6 +27,7 @@ const blogPostSchema = z.object({
 type BlogPostFormValues = z.infer<typeof blogPostSchema>;
 
 export default function SubmitBlogPage() {
+  const { data: session } = useSession();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [ref, isVisible] = useScrollAnimation();
@@ -35,16 +38,29 @@ export default function SubmitBlogPage() {
 
   const onSubmit: SubmitHandler<BlogPostFormValues> = async (data) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log('Blog post submitted:', data);
-    toast({
-      title: "Story Submitted!",
-      description: "Your travel story has been sent for review.",
-      variant: "default",
-    });
-    reset();
-    setIsSubmitting(false);
+    try {
+      const tagsArray = data.tags ? data.tags.split(',').map(t => t.trim().startsWith('#') ? t.trim() : `#${t.trim()}`) : [];
+      
+      await submitBlogPost({
+        title: data.title,
+        content: data.content,
+        excerpt: data.content.substring(0, 150) + '...',
+        author: session?.user?.name || 'Explorer',
+        tags: tagsArray,
+        imageUrl: data.imageUrl,
+        dataAiHint: 'safari story',
+      });
+
+      toast({
+        title: "Story Published!",
+        description: "Your travel story is now live in the journal.",
+      });
+      reset();
+    } catch (err) {
+      toast({ title: "Submission Failed", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -57,19 +73,19 @@ export default function SubmitBlogPage() {
       <Card className="shadow-xl transition-all duration-300 ease-out hover:shadow-2xl hover:-translate-y-1">
         <CardHeader>
           <CardTitle className="font-headline text-3xl text-primary">Share a Travel Story</CardTitle>
-          <CardDescription>Share your adventures and photos with the community. Stories will be reviewed before publishing.</CardDescription>
+          <CardDescription>Your story will be saved directly to the iffe-travels database.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
               <Label htmlFor="title" className="font-semibold">Title</Label>
-              <Input id="title" {...register('title')} className="mt-1" />
+              <Input id="title" {...register('title')} className="mt-1" placeholder="e.g., My magical morning at Sipi Falls" />
               {errors.title && <p className="text-sm text-destructive mt-1">{errors.title.message}</p>}
             </div>
 
             <div>
               <Label htmlFor="content" className="font-semibold">Your Story</Label>
-              <Textarea id="content" {...register('content')} rows={10} className="mt-1" placeholder="Write your story here... Supports Markdown." />
+              <Textarea id="content" {...register('content')} rows={10} className="mt-1" placeholder="Tell us everything..." />
               {errors.content && <p className="text-sm text-destructive mt-1">{errors.content.message}</p>}
             </div>
 
@@ -86,7 +102,7 @@ export default function SubmitBlogPage() {
             </div>
 
             <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 py-3 text-base" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit for Review'}
+              {isSubmitting ? 'Publishing...' : 'Publish to Journal'}
             </Button>
           </form>
         </CardContent>
