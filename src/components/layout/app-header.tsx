@@ -1,8 +1,7 @@
-
 'use client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock, Map, Waves } from 'lucide-react';
+import { Home, MessageCircle, CalendarDays, PlusCircle, UserCircle, BarChart3, Edit3, Lightbulb, Image as ImageIcon, PlayCircle, LogIn, UserPlus, Menu, X, LogOut, MountainSnow, Telescope, Globe, ChevronDown, User, LogInIcon, LogOutIcon, Package, Mail, Info, Compass, CalendarClock, Map, Waves, LayoutDashboard } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import LoginModal from '@/components/auth/login-modal';
 import SignupModal from '@/components/auth/signup-modal';
@@ -197,6 +196,17 @@ const AppHeader = () => {
                         <MountainSnow className="mr-2 h-4 w-4" /> My Trips
                        </Link>
                     </DropdownMenuItem>
+                    {session.user.role === 'admin' && (
+                      <>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuLabel>Admin Tools</DropdownMenuLabel>
+                        <DropdownMenuItem asChild>
+                          <Link href="/admin" className="text-primary font-bold">
+                            <LayoutDashboard className="mr-2 h-4 w-4" /> Admin Panel
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
                         <LogOutIcon className="mr-2 h-4 w-4" /> Sign Out
@@ -265,6 +275,17 @@ const AppHeader = () => {
                               </Link>
                             </SheetClose>
                         ))}
+                        {session.user.role === 'admin' && (
+                          <SheetClose asChild>
+                            <Link
+                              href="/admin"
+                              className="flex items-center p-3 rounded-md text-base font-bold text-primary hover:bg-muted transition-colors"
+                            >
+                              <LayoutDashboard className="mr-3 h-5 w-5 text-primary" />
+                              Admin Panel
+                            </Link>
+                          </SheetClose>
+                        )}
                       </>
                   )}
                 </nav>
