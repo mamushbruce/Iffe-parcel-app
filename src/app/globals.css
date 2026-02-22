@@ -323,19 +323,6 @@ body {
     z-index: 3;
   }
 
-  /* Sailing Boat Preloader Animations */
-  .boat-rock {
-    @apply animate-boat-rock;
-  }
-  .waves-move {
-    @apply animate-waves-move;
-  }
-
-  /* PiP Animation */
-  .animate-pip-in {
-    @apply animate-pip-in;
-  }
-
   /* Dock Text Effect */
   .dock-text-container {
     -webkit-text-stroke: 1px hsl(var(--primary));
@@ -346,9 +333,8 @@ body {
     transition: transform 0.1s ease-out;
   }
 
-  /* Typing animation */
-  .animate-typing {
-    @apply animate-typing;
+  /* Typing effect styling */
+  .typing-effect {
     white-space: nowrap;
     overflow: hidden;
     border-right: 3px solid;
