@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation"; 
 
@@ -22,62 +22,37 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [activeTab, setActiveTab] = useState('user'); // Added state for active tab
+  const [activeTab, setActiveTab] = useState('user');
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    // If the active tab is 'admin', bypass authentication for testing
-    if (activeTab === 'admin') {
-      toast({
-        title: "Admin Panel Access (Bypassed Auth)",
-        description: "Redirecting to admin panel for testing. Authentication is disabled for this path.",
-        variant: "default",
-      });
-      onOpenChange(false);
-      router.push('/admin');
-      setEmail(''); 
-      setPassword('');
-      return; 
-    }
-    
     setIsLoading(true);
-    const currentEmail = email;
-    const currentPassword = password;
 
     try {
-      const result = await signIn('credentials', {
-        redirect: false, 
-        email: currentEmail,
-        password: currentPassword,
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      toast({
+        title: "Login Successful!",
+        description: `Welcome back, ${user.email}`,
       });
 
-      if (result?.error) {
-        toast({
-          title: "Login Failed",
-          description: result.error === "CredentialsSignin" ? "Invalid email or password." : result.error,
-          variant: "destructive",
-        });
-      } else if (result?.ok) {
-        toast({
-          title: "Login Successful!",
-          description: "Welcome back!",
-        });
-        onOpenChange(false); 
-        
-        // This part is now handled by the activeTab check above for direct redirect.
-        // if (currentEmail === 'admin@rtry.com') {
-        //   router.push('/admin');
-        // }
-        
-        setEmail(''); 
-        setPassword('');
+      // Simple Admin check for the prototype
+      // In production, we would use Firebase Custom Claims
+      if (email.includes('admin')) {
+        router.push('/admin');
+      } else {
+        router.push('/dashboard');
       }
-    } catch (error) {
+
+      onOpenChange(false);
+      setEmail('');
+      setPassword('');
+    } catch (error: any) {
       console.error("Login error:", error);
       toast({
-        title: "Login Error",
-        description: "An unexpected error occurred. Please try again.",
+        title: "Login Failed",
+        description: error.message || "Invalid email or password.",
         variant: "destructive",
       });
     } finally {
@@ -86,35 +61,32 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
   };
 
   const handleTabChange = (newTabValue: string) => {
-    setActiveTab(newTabValue); // Update active tab state
-    setIsLoading(false); 
+    setActiveTab(newTabValue);
     if (newTabValue === 'admin') {
-      setEmail('admin@rtry.com');
-      setPassword('password1234567');
+      setEmail('admin@iffe-travels.com');
     } else {
       setEmail('');
-      setPassword('');
     }
+    password && setPassword('');
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle className="font-headline text-2xl text-primary">Login to e-Rotary Hub</DialogTitle>
+          <DialogTitle className="font-headline text-2xl text-primary">Login to iffe-travels</DialogTitle>
           <DialogDescription>
-            Access your account or log in as a community member/admin.
+            Access your account to manage your trips and stories.
           </DialogDescription>
         </DialogHeader>
         <Tabs defaultValue="user" className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="user" disabled={isLoading}>User</TabsTrigger>
-            <TabsTrigger value="community" disabled={isLoading}>Community</TabsTrigger> 
-            <TabsTrigger value="admin" disabled={isLoading}>Admin</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="user" disabled={isLoading}>Traveler</TabsTrigger>
+            <TabsTrigger value="admin" disabled={isLoading}>Administrator</TabsTrigger>
           </TabsList>
           
           <TabsContent value="user">
-            <form id="user-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
+            <form onSubmit={handleSubmit} className="space-y-4 py-4">
               <div>
                 <Label htmlFor="user-email">Email</Label>
                 <Input 
@@ -124,7 +96,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required 
-                  disabled={isLoading || activeTab === 'admin'}
+                  disabled={isLoading}
                 />
               </div>
               <div>
@@ -136,55 +108,23 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required 
-                  disabled={isLoading || activeTab === 'admin'}
+                  disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading || activeTab === 'admin'}>
-                {isLoading ? "Logging in..." : "Login as User"}
-              </Button>
-            </form>
-          </TabsContent>
-          
-          <TabsContent value="community">
-             <form id="community-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
-              <div>
-                <Label htmlFor="community-email">Email</Label>
-                <Input 
-                  id="community-email" 
-                  type="email" 
-                  placeholder="member@example.com" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)}
-                  required 
-                  disabled={isLoading || activeTab === 'admin'}
-                />
-              </div>
-              <div>
-                <Label htmlFor="community-password">Password</Label>
-                <Input 
-                  id="community-password" 
-                  type="password" 
-                  placeholder="Your password"
-                  value={password} 
-                  onChange={(e) => setPassword(e.target.value)}
-                  required 
-                  disabled={isLoading || activeTab === 'admin'}
-                />
-              </div>
-              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading || activeTab === 'admin'}>
-                {isLoading ? "Logging in..." : "Login as Community Member"}
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
+                {isLoading ? "Verifying..." : "Login as Traveler"}
               </Button>
             </form>
           </TabsContent>
           
           <TabsContent value="admin">
-             <form id="admin-login-form" onSubmit={handleSubmit} className="space-y-4 py-4">
+             <form onSubmit={handleSubmit} className="space-y-4 py-4">
               <div>
                 <Label htmlFor="admin-email">Admin Email</Label>
                 <Input 
                   id="admin-email" 
                   type="email" 
-                  placeholder="admin@rtry.com" 
+                  placeholder="admin@iffe-travels.com" 
                   value={email} 
                   onChange={(e) => setEmail(e.target.value)}
                   required 
@@ -197,15 +137,14 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   id="admin-password" 
                   type="password" 
                   placeholder="Admin password"
-                  value={password}
+                  value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
                   disabled={isLoading}
                 />
               </div>
               <Button type="submit" className="w-full bg-destructive hover:bg-destructive/90" disabled={isLoading}>
-                {/* Text will be "Login as Admin", but behavior is now direct redirect */}
-                {isLoading ? "Redirecting..." : "Access Admin Panel (Test)"} 
+                {isLoading ? "Accessing Secure Area..." : "Login to Admin Panel"}
               </Button>
             </form>
           </TabsContent>
