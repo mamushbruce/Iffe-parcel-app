@@ -1,4 +1,3 @@
-
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -9,7 +8,7 @@ export default {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens: { // Adding xxs, xs for finer control if needed, though not used in BrandLoader directly now
+    screens: {
       'xxs': '360px',
       'xs': '480px',
       'sm': '640px',
@@ -84,47 +83,51 @@ export default {
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
         'fade-in': {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
         'slide-up': {
-          '0%': { transform: 'translateY(20px)', opacity: '0'},
-          '100%': { transform: 'translateY(0)', opacity: '1'},
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-        'pulse-slow': { // New pulse animation
+        'pulse-slow': {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.6' },
         },
         'slow-bounce': {
-          '0%, 100%': {
-            transform: 'translateY(-5%)',
-            animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)',
-          },
-          '50%': {
-            transform: 'translateY(0)',
-            animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
-          },
+          '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+          '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
         },
         'background-fade': {
           '0%, 100%': { opacity: '0' },
           '10%, 90%': { opacity: '0.3' },
-        }
+        },
+        'rock-boat': {
+          '0%, 100%': { transform: 'rotate(0deg)', transformOrigin: 'bottom center' },
+          '50%': { transform: 'rotate(1.5deg)', transformOrigin: 'bottom center' },
+        },
+        'move-waves': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100px)' },
+        },
+        'pip-in': {
+          from: { transform: 'scale(0.5) translate(100%, 100%)', opacity: '0' },
+          to: { transform: 'scale(1) translate(0, 0)', opacity: '1' },
+        },
+        'typing': {
+          from: { width: '0' },
+        },
+        'blink': {
+          '50%': { borderColor: 'transparent' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -134,6 +137,10 @@ export default {
         'pulse-slow': 'pulse-slow 3s ease-in-out infinite',
         'slow-bounce': 'slow-bounce 2s infinite',
         'background-fade': 'background-fade 7s ease-in-out infinite',
+        'boat-rock': 'rock-boat 4s ease-in-out infinite',
+        'waves-move': 'move-waves 8s linear infinite',
+        'pip-in': 'pip-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
+        'typing': 'typing 2s steps(22), blink .5s step-end infinite alternate',
       },
     },
   },

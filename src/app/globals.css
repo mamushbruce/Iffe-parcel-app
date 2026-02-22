@@ -81,9 +81,7 @@ body {
     --sidebar-border: hsl(var(--border));
     --sidebar-ring: hsl(var(--ring));
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -327,34 +325,15 @@ body {
 
   /* Sailing Boat Preloader Animations */
   .boat-rock {
-    animation: rock-boat 4s ease-in-out infinite;
+    @apply animate-boat-rock;
   }
   .waves-move {
-    animation: move-waves 8s linear infinite;
-  }
-  @keyframes rock-boat {
-    0%, 100% { transform: rotate(0deg); transform-origin: bottom center; }
-    50% { transform: rotate(1.5deg); transform-origin: bottom center; }
-  }
-  @keyframes move-waves {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100px); }
+    @apply animate-waves-move;
   }
 
   /* PiP Animation */
   .animate-pip-in {
-    animation: pip-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  @keyframes pip-in {
-    from {
-      transform: scale(0.5) translate(100%, 100%);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1) translate(0, 0);
-      opacity: 1;
-    }
+    @apply animate-pip-in;
   }
 
   /* Dock Text Effect */
@@ -369,22 +348,10 @@ body {
 
   /* Typing animation */
   .animate-typing {
-    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    @apply animate-typing;
     white-space: nowrap;
     overflow: hidden;
     border-right: 3px solid;
     width: 22ch; /* Corresponds to "Charting Your Course..." */
-  }
-
-  @keyframes typing {
-    from {
-      width: 0;
-    }
-  }
-
-  @keyframes blink {
-    50% {
-      border-color: transparent;
-    }
   }
 }
