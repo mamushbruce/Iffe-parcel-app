@@ -73,6 +73,25 @@ export interface Campaign {
   featured?: boolean;
 }
 
+export interface Package {
+  id: string;
+  name: string;
+  basePrice: number;
+  durationDays: number;
+  features: string[];
+  isPopular?: boolean;
+  isActive: boolean;
+}
+
+export interface Addon {
+  id: string;
+  name: string;
+  price: number;
+  category: 'activity' | 'luxury' | 'extension';
+  bundleEligible?: boolean;
+  isActive: boolean;
+}
+
 export interface Idea {
   id: string;
   title: string;
@@ -80,7 +99,7 @@ export interface Idea {
   submittedBy: string;
   dateSubmitted: string;
   votes: number;
-  voters: string[]; // UIDs of users who voted
+  voters: string[];
   status: 'New' | 'Under Review' | 'Approved' | 'Implemented';
   imageUrl?: string;
   dataAiHint?: string;
@@ -95,6 +114,68 @@ export interface ChatMessage {
   senderAvatar?: string;
   timestamp: string;
   createdAt: any;
+}
+
+// --- BUILDER SERVICES ---
+
+export async function fetchBasePackages(): Promise<Package[]> {
+  const q = query(collection(db, 'packages'), where('isActive', '==', true));
+  const snapshot = await getDocs(q);
+  // If empty, return default seeds for UX consistency
+  if (snapshot.empty) {
+    return [
+      { id: 'explorer', name: 'Explorer Package', basePrice: 750, durationDays: 4, features: ['Short Trip', 'Eastern Uganda'], isActive: true },
+      { id: 'adventurer', name: 'Adventurer Package', basePrice: 4500, durationDays: 7, features: ['Primate Focus', 'Lodge Stays'], isActive: true, isPopular: true },
+      { id: 'ultimate', name: 'Ultimate Safari', basePrice: 8000, durationDays: 10, features: ['All Major Parks', 'Full Circuit'], isActive: true }
+    ];
+  }
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Package));
+}
+
+export async function fetchAddons(): Promise<Addon[]> {
+  const q = query(collection(db, 'addons'), where('isActive', '==', true));
+  const snapshot = await getDocs(q);
+  
+  if (snapshot.empty) {
+    return [
+      { id: 'gorilla', name: 'Gorilla Trekking', price: 700, category: 'activity', bundleEligible: true, isActive: true },
+      { id: 'chimp', name: 'Chimp Tracking', price: 250, category: 'activity', bundleEligible: true, isActive: true },
+      { id: 'rafting', name: 'Nile Rafting', price: 150, category: 'activity', isActive: true },
+      { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
+      { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true },
+      { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },
+      { id: 'extra_2days', name: 'Extra 2 Days', price: 900, category: 'extension', isActive: true },
+      { id: 'zanzibar', name: 'Zanzibar Beach Add-on', price: 2000, category: 'extension', isActive: true }
+    ];
+  }
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Addon));
+}
+
+export function calculatePricing(basePackage: Package, selectedAddons: Addon[]) {
+  const basePrice = basePackage.basePrice;
+  let addonsTotal = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
+  
+  // Bundle Logic: 5% off Gorilla + Chimp
+  let discountAmount = 0;
+  const hasGorilla = selectedAddons.some(a => a.id === 'gorilla');
+  const hasChimp = selectedAddons.some(a => a.id === 'chimp');
+  
+  if (hasGorilla && hasChimp) {
+    const wildlifeItems = selectedAddons.filter(a => a.id === 'gorilla' || a.id === 'chimp');
+    const wildlifeSum = wildlifeItems.reduce((sum, item) => sum + item.price, 0);
+    discountAmount = wildlifeSum * 0.05;
+  }
+
+  const finalTotal = basePrice + addonsTotal - discountAmount;
+  const tier = finalTotal > 10000 ? 'elite' : 'standard';
+
+  return {
+    basePrice,
+    addonsTotal,
+    discountAmount,
+    finalTotal,
+    tier
+  };
 }
 
 // --- GALLERY ---
@@ -122,10 +203,11 @@ export async function uploadGalleryImage(file: File, metadata: { caption?: strin
 }
 
 export async function fetchGalleryImages(count?: number): Promise<GalleryImage[]> {
-  let q = query(collection(db, 'gallery'), orderBy('createdAt', 'desc'));
-  if (count) {
-    q = query(q, limit(count));
-  }
+  const galleryRef = collection(db, 'gallery');
+  const q = count 
+    ? query(galleryRef, orderBy('createdAt', 'desc'), limit(count))
+    : query(galleryRef, orderBy('createdAt', 'desc'));
+    
   const querySnapshot = await getDocs(q);
   
   return querySnapshot.docs.map(doc => {
@@ -164,10 +246,15 @@ export async function submitBlogPost(data: Omit<BlogPost, 'id' | 'date' | 'comme
 }
 
 export async function fetchBlogPosts(status?: string, count?: number): Promise<BlogPost[]> {
-  let q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+  const postsRef = collection(db, 'posts');
+  let q;
+  
   if (status && status !== 'all') {
-    q = query(collection(db, 'posts'), where('status', '==', status), orderBy('createdAt', 'desc'));
+    q = query(postsRef, where('status', '==', status), orderBy('createdAt', 'desc'));
+  } else {
+    q = query(postsRef, orderBy('createdAt', 'desc'));
   }
+  
   if (count) {
     q = query(q, limit(count));
   }
@@ -224,24 +311,17 @@ export async function deleteVideo(id: string) {
   await deleteDoc(doc(db, 'videos', id));
 }
 
-// --- CAMPAIGNS (TOURS) ---
+// --- CAMPAIGNS ---
 
 export async function fetchCampaigns(featuredOnly?: boolean): Promise<Campaign[]> {
-  let q = query(collection(db, 'campaigns'), orderBy('createdAt', 'desc'));
+  const campaignsRef = collection(db, 'campaigns');
+  let q = query(campaignsRef, orderBy('createdAt', 'desc'));
   if (featuredOnly) {
     q = query(q, where('featured', '==', true));
   }
   
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Campaign));
-}
-
-export async function getCampaign(id: string): Promise<Campaign | null> {
-  const docSnap = await getDoc(doc(db, 'campaigns', id));
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() } as Campaign;
-  }
-  return null;
 }
 
 // --- IDEAS ---

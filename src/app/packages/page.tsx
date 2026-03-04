@@ -2,15 +2,16 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Package } from "lucide-react";
 import Link from 'next/link';
 import Image from 'next/image';
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import placeholderImages from "@/app/lib/placeholder-images.json";
 import AnimatedSection from "@/components/animated-section";
 import TestimonialSection from "@/components/testimonial-section";
+import CustomSafariBuilder from "@/components/custom-safari-builder/custom-safari-builder";
 
 interface PackageTier {
     id: string;
@@ -62,7 +63,6 @@ const mockPackages: PackageTier[] = [
     }
 ];
 
-// Adding the Super Combi to the list of packages.
 const superCombiPackage: PackageTier = {
     id: 'super-combi',
     title: 'Super Combo & Safari',
@@ -154,7 +154,7 @@ export default function PackagesPage() {
         <div className="absolute inset-0 bg-stone-900/30 z-10"></div>
         
         <div className="absolute inset-0 h-full flex items-center z-10 min-h-[400px]">
-            <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-gradient-to-r from-stone-900/80 via-stone-900/80 to-transparent text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
+            <div className="relative w-full md:w-1/2 lg:w-[45%] flex flex-col justify-center bg-stone-900/70 text-white backdrop-blur-md p-8 md:p-12 rounded-lg">
               <p className="font-semibold text-yellow-400 uppercase tracking-widest text-sm mb-2">Tour, Travel & Adventure Camping Across Uganda and East Africa</p>
               <h1
                 className="font-headline text-4xl md:text-5xl font-black mb-4 pb-4 relative uppercase tracking-widest"
@@ -176,7 +176,7 @@ export default function PackagesPage() {
                    </Link>
                  </Button>
                  <Button variant="link" asChild className="text-yellow-400 hover:text-yellow-300">
-                    <Link href="/campaigns/new">
+                    <Link href="#custom-builder">
                         Customize Your Trip
                     </Link>
                  </Button>
@@ -193,16 +193,8 @@ export default function PackagesPage() {
         </div>
       </section>
 
-      <AnimatedSection className="container mx-auto">
-        <div className={cn('text-center p-8 bg-card/80 backdrop-blur-sm rounded-lg shadow-inner transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1')}>
-            <h2 className="font-headline text-2xl font-bold text-primary mb-4">Can't find the perfect package?</h2>
-            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">Let us create a bespoke journey just for you. From family adventures to photographic expeditions, we can tailor every detail to your desires.</p>
-            <Button size="lg" asChild>
-                <Link href="/campaigns/new">
-                    Plan a Custom Tour
-                </Link>
-            </Button>
-        </div>
+      <AnimatedSection id="custom-builder" className="container mx-auto px-4">
+        <CustomSafariBuilder />
       </AnimatedSection>
       
       <TestimonialSection />
