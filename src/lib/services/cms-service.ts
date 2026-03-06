@@ -88,6 +88,7 @@ export interface Addon {
   name: string;
   price: number;
   category: 'activity' | 'luxury' | 'extension';
+  subCategory?: string; // New field for sub-grouping activities
   bundleEligible?: boolean;
   isActive: boolean;
 }
@@ -138,9 +139,12 @@ export async function fetchAddons(): Promise<Addon[]> {
   
   if (snapshot.empty) {
     return [
-      { id: 'gorilla', name: 'Gorilla Trekking', price: 700, category: 'activity', bundleEligible: true, isActive: true },
-      { id: 'chimp', name: 'Chimp Tracking', price: 250, category: 'activity', bundleEligible: true, isActive: true },
-      { id: 'rafting', name: 'Nile Rafting', price: 150, category: 'activity', isActive: true },
+      { id: 'gorilla', name: 'Gorilla Trekking', price: 700, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+      { id: 'chimp', name: 'Chimp Tracking', price: 250, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+      { id: 'rafting', name: 'Nile Rafting', price: 150, category: 'activity', subCategory: 'Adventure', isActive: true },
+      { id: 'zipline', name: 'Mabira Ziplining', price: 80, category: 'activity', subCategory: 'Adventure', isActive: true },
+      { id: 'kampala_tour', name: 'Kampala City Tour', price: 50, category: 'activity', subCategory: 'Culture', isActive: true },
+      { id: 'jinja_tour', name: 'Source of the Nile', price: 100, category: 'activity', subCategory: 'Culture', isActive: true },
       { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
       { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true },
       { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },

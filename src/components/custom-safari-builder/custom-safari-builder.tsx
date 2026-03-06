@@ -1,3 +1,4 @@
+
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
@@ -6,9 +7,16 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { Sparkles, Map, Package, ListChecks, Trophy, ArrowRight, Info } from 'lucide-react';
+import { Sparkles, Map, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star } from 'lucide-react';
 import { fetchBasePackages, fetchAddons, calculatePricing, type Package as BuilderPackage, type Addon } from '@/lib/services/cms-service';
 import { useToast } from '@/hooks/use-toast';
+
+const categoryIcons: Record<string, any> = {
+  'Wildlife': Bird,
+  'Adventure': Zap,
+  'Culture': UsersIcon,
+  'Default': Star
+};
 
 export default function CustomSafariBuilder() {
   const { toast } = useToast();
@@ -17,6 +25,7 @@ export default function CustomSafariBuilder() {
   const [selectedPackage, setSelectedPackage] = useState<BuilderPackage | null>(null);
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [expandedActivityCategory, setExpandedActivityCategory] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
@@ -46,9 +55,19 @@ export default function CustomSafariBuilder() {
     return calculatePricing(selectedPackage, selectedAddons);
   }, [selectedPackage, selectedAddons]);
 
-  const groupedAddons = useMemo(() => {
+  const groupedActivities = useMemo(() => {
+    const activities = addons.filter(a => a.category === 'activity');
+    const groups: Record<string, Addon[]> = {};
+    activities.forEach(a => {
+      const cat = a.subCategory || 'Other Activities';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(a);
+    });
+    return groups;
+  }, [addons]);
+
+  const otherAddons = useMemo(() => {
     return {
-      activity: addons.filter(a => a.category === 'activity'),
       luxury: addons.filter(a => a.category === 'luxury'),
       extension: addons.filter(a => a.category === 'extension'),
     };
@@ -135,15 +154,86 @@ export default function CustomSafariBuilder() {
               )}
             </div>
 
-            {/* Step 2: Add-ons */}
+            {/* Step 2: Activities (Category Tiles) */}
             <div className="space-y-10">
               <h3 className="font-headline text-2xl font-bold text-white flex items-center gap-4">
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-xl"><ListChecks className="h-6 w-6 text-accent" /></div>
-                Step 2: Add Your Experiences
+                Step 2: Add Your Activities
               </h3>
 
-              {/* Grouped Addons */}
-              {Object.entries(groupedAddons).map(([category, items]) => (
+              <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {Object.entries(groupedActivities).map(([category, items]) => {
+                  const Icon = categoryIcons[category] || categoryIcons.Default;
+                  const isExpanded = expandedActivityCategory === category;
+                  const selectedCount = items.filter(item => selectedAddonIds.includes(item.id)).length;
+
+                  return (
+                    <div key={category} className="space-y-4">
+                      <div 
+                        className={cn(
+                          "p-6 rounded-3xl border transition-all duration-500 cursor-pointer group relative overflow-hidden text-center",
+                          isExpanded ? "bg-accent/20 border-accent/60 shadow-[0_0_20px_rgba(251,191,36,0.2)]" : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
+                        )}
+                        onClick={() => setExpandedActivityCategory(isExpanded ? null : category)}
+                      >
+                        <div className="flex flex-col items-center gap-3 relative z-10">
+                          <div className={cn(
+                            "p-3 rounded-2xl transition-all duration-500",
+                            isExpanded ? "bg-accent text-stone-900 scale-110" : "bg-white/10 text-accent group-hover:scale-110"
+                          )}>
+                            <Icon className="h-6 w-6" />
+                          </div>
+                          <span className="text-sm font-black text-white uppercase tracking-widest">{category}</span>
+                          {selectedCount > 0 && (
+                            <Badge className="bg-accent text-stone-900 font-black px-2 py-0.5 rounded-full text-[10px]">
+                              {selectedCount} SELECTED
+                            </Badge>
+                          )}
+                          <ChevronDown className={cn("h-4 w-4 text-stone-500 transition-transform duration-500", isExpanded && "rotate-180 text-accent")} />
+                        </div>
+                      </div>
+
+                      {/* Dropdown List */}
+                      {isExpanded && (
+                        <div className="bg-stone-900/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 space-y-2">
+                          {items.map((item) => (
+                            <div 
+                              key={item.id}
+                              className={cn(
+                                "flex items-center justify-between p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5",
+                                selectedAddonIds.includes(item.id) && "bg-white/10"
+                              )}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleAddon(item.id);
+                              }}
+                            >
+                              <div className="flex items-center gap-3">
+                                <Checkbox 
+                                  checked={selectedAddonIds.includes(item.id)}
+                                  className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
+                                />
+                                <span className="text-xs font-bold text-stone-300 group-hover:text-white">{item.name}</span>
+                              </div>
+                              <span className="text-xs font-black text-accent">+${item.price}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Step 3: Luxury & Extensions */}
+            <div className="space-y-10 pt-8 border-t border-white/10">
+              <h3 className="font-headline text-2xl font-bold text-white flex items-center gap-4">
+                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-xl"><Sparkles className="h-6 w-6 text-accent" /></div>
+                Step 3: Enhance Your Comfort
+              </h3>
+
+              {Object.entries(otherAddons).map(([category, items]) => (
                 <div key={category} className="space-y-6">
                   <h4 className="text-xs font-black text-stone-500 uppercase tracking-[0.3em] pl-1">{category}s</h4>
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -176,7 +266,7 @@ export default function CustomSafariBuilder() {
             </div>
           </div>
 
-          {/* Step 3: Sticky Summary */}
+          {/* Step 4: Sticky Summary */}
           <aside className="lg:sticky lg:top-24 space-y-8">
             <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] overflow-hidden relative rounded-[2rem] transition-all duration-500">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80" />
