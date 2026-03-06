@@ -193,29 +193,29 @@ export default function CustomSafariBuilder() {
                         </div>
                       </div>
 
-                      {/* Dropdown List */}
+                      {/* Dropdown List (Horizontal Version) */}
                       {isExpanded && (
-                        <div className="bg-stone-900/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 space-y-2">
+                        <div className="bg-stone-900/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 flex overflow-x-auto gap-3 custom-scrollbar">
                           {items.map((item) => (
                             <div 
                               key={item.id}
                               className={cn(
-                                "flex items-center justify-between p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5",
-                                selectedAddonIds.includes(item.id) && "bg-white/10"
+                                "flex flex-col items-center gap-3 p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5 border border-white/5 shrink-0 w-32 text-center",
+                                selectedAddonIds.includes(item.id) && "bg-white/10 border-accent/30"
                               )}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleAddon(item.id);
                               }}
                             >
-                              <div className="flex items-center gap-3">
-                                <Checkbox 
-                                  checked={selectedAddonIds.includes(item.id)}
-                                  className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
-                                />
-                                <span className="text-xs font-bold text-stone-300 group-hover:text-white">{item.name}</span>
+                              <Checkbox 
+                                checked={selectedAddonIds.includes(item.id)}
+                                className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
+                              />
+                              <div className="flex flex-col items-center gap-1">
+                                <span className="text-[10px] font-bold text-stone-300 group-hover:text-white leading-tight min-h-[2.5rem] flex items-center justify-center">{item.name}</span>
+                                <span className="text-[10px] font-black text-accent">+${item.price}</span>
                               </div>
-                              <span className="text-xs font-black text-accent">+${item.price}</span>
                             </div>
                           ))}
                         </div>
