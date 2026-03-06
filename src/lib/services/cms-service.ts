@@ -228,10 +228,17 @@ export async function fetchAddons(): Promise<Addon[]> {
     { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
     { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true },
     { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },
+    { id: 'heli_tour', name: 'Helicopter Scenic Tour', price: 2500, category: 'luxury', isActive: true },
+    { id: 'vip_transfer', name: 'VIP Airport Transfer', price: 150, category: 'luxury', isActive: true },
+    { id: 'bush_dinner', name: 'Luxury Bush Dinner', price: 200, category: 'luxury', isActive: true },
     
     // Extensions
-    { id: 'extra_2days', name: 'Extra 2 Days', price: 900, category: 'extension', isActive: true },
-    { id: 'zanzibar', name: 'Zanzibar Beach Add-on', price: 2000, category: 'extension', isActive: true }
+    { id: 'extra_2days', name: 'Extra 2 Days Safari', price: 900, category: 'extension', isActive: true },
+    { id: 'zanzibar_ext', name: 'Zanzibar Beach Extension', price: 2000, category: 'extension', isActive: true },
+    { id: 'serengeti_ext', name: 'Serengeti Extension', price: 2500, category: 'extension', isActive: true },
+    { id: 'gorilla_combo', name: 'Gorilla & Safari Combo', price: 3000, category: 'extension', isActive: true },
+    { id: 'multi_country', name: 'Multi-Country Safari (Kenya/Tanzania)', price: 4500, category: 'extension', isActive: true },
+    { id: 'beach_relax', name: 'Beach Relaxation Package', price: 1500, category: 'extension', isActive: true }
   ];
 
   if (snapshot.empty) {

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { Sparkles, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star, MapPin, Mountain } from 'lucide-react';
+import { Sparkles, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star, MapPin, Mountain, Gem, MapPlus } from 'lucide-react';
 import { calculatePricing, type Package as BuilderPackage, type Addon } from '@/lib/services/cms-service';
 import { useToast } from '@/hooks/use-toast';
 
@@ -16,7 +16,19 @@ const categoryIcons: Record<string, any> = {
   'Adventure': Zap,
   'Culture': UsersIcon,
   'Nature & Scenic': Mountain,
+  'Luxury Upgrades': Gem,
+  'Trip Extensions': MapPlus,
   'Default': Star
+};
+
+const categoryLabels: Record<string, string> = {
+  'luxury': 'Luxury Upgrades',
+  'extension': 'Trip Extensions'
+};
+
+const categoryFocus: Record<string, string> = {
+  'luxury': 'premium comfort and exclusivity',
+  'extension': 'extending the journey'
 };
 
 interface CustomSafariBuilderProps {
@@ -28,7 +40,7 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
   const { toast } = useToast();
   const [selectedPackage, setSelectedPackage] = useState<BuilderPackage | null>(initialPackages[1] || initialPackages[0] || null);
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
-  const [expandedActivityCategory, setExpandedActivityCategory] = useState<string | null>(null);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
 
   const selectedAddons = useMemo(() => 
     initialAddons.filter(a => selectedAddonIds.includes(a.id)),
@@ -55,7 +67,7 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
     return groups;
   }, [initialAddons]);
 
-  const otherAddons = useMemo(() => {
+  const otherAddonsGrouped = useMemo(() => {
     return {
       luxury: initialAddons.filter(a => a.category === 'luxury'),
       extension: initialAddons.filter(a => a.category === 'extension'),
@@ -162,7 +174,7 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
               <div className="grid sm:grid-cols-2 md:grid-cols-2 gap-6">
                 {Object.entries(groupedActivities).map(([category, regions]) => {
                   const Icon = categoryIcons[category] || categoryIcons.Default;
-                  const isExpanded = expandedActivityCategory === category;
+                  const isExpanded = expandedCategory === category;
                   
                   let totalCount = 0;
                   Object.values(regions).forEach(items => {
@@ -176,7 +188,7 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
                           "p-6 rounded-3xl border transition-all duration-500 cursor-pointer group relative overflow-hidden text-center",
                           isExpanded ? "bg-accent/20 border-accent/60 shadow-[0_0_20px_rgba(251,191,36,0.2)]" : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
                         )}
-                        onClick={() => setExpandedActivityCategory(isExpanded ? null : category)}
+                        onClick={() => setExpandedCategory(isExpanded ? null : category)}
                       >
                         <div className="flex flex-col items-center gap-3 relative z-10">
                           <div className={cn(
@@ -258,36 +270,77 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
                 Step 3: Enhance Your Comfort
               </h3>
 
-              {Object.entries(otherAddons).map(([category, items]) => (
-                <div key={category} className="space-y-6">
-                  <h4 className="text-xs font-black text-stone-500 uppercase tracking-[0.3em] pl-1">{category}s</h4>
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {items.map((addon) => (
+              <div className="grid sm:grid-cols-2 gap-6">
+                {Object.entries(otherAddonsGrouped).map(([categoryKey, items]) => {
+                  const label = categoryLabels[categoryKey] || categoryKey;
+                  const focus = categoryFocus[categoryKey] || '';
+                  const Icon = categoryIcons[label] || categoryIcons.Default;
+                  const isExpanded = expandedCategory === categoryKey;
+                  
+                  const selectedCount = items.filter(i => selectedAddonIds.includes(i.id)).length;
+
+                  return (
+                    <div key={categoryKey} className={cn("space-y-4 transition-all duration-500", isExpanded && "col-span-full")}>
                       <div 
-                        key={addon.id}
                         className={cn(
-                          "flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 cursor-pointer group relative overflow-hidden shadow-md",
-                          selectedAddonIds.includes(addon.id) 
-                            ? "bg-accent/10 border-accent/40 shadow-accent/5" 
-                            : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
+                          "p-6 rounded-3xl border transition-all duration-500 cursor-pointer group relative overflow-hidden text-center",
+                          isExpanded ? "bg-accent/20 border-accent/60 shadow-[0_0_20px_rgba(251,191,36,0.2)]" : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
                         )}
-                        onClick={() => toggleAddon(addon.id)}
+                        onClick={() => setExpandedCategory(isExpanded ? null : categoryKey)}
                       >
-                        <div className="flex items-center gap-4 relative z-10">
-                          <Checkbox 
-                            id={addon.id} 
-                            checked={selectedAddonIds.includes(addon.id)}
-                            onCheckedChange={() => toggleAddon(addon.id)}
-                            className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-5 w-5 border-white/30"
-                          />
-                          <label className="text-sm font-bold text-stone-200 cursor-pointer group-hover:text-white transition-colors">{addon.name}</label>
+                        <div className="flex flex-col items-center gap-3 relative z-10">
+                          <div className={cn(
+                            "p-3 rounded-2xl transition-all duration-500",
+                            isExpanded ? "bg-accent text-stone-900 scale-110" : "bg-white/10 text-accent group-hover:scale-110"
+                          )}>
+                            <Icon className="h-6 w-6" />
+                          </div>
+                          <div className="flex flex-col items-center">
+                            <span className="text-sm font-black text-white uppercase tracking-widest">{label}</span>
+                            {focus && <span className="text-[10px] text-stone-500 font-bold uppercase mt-1">Focus: {focus}</span>}
+                          </div>
+                          {selectedCount > 0 && (
+                            <Badge className="bg-accent text-stone-900 font-black px-2 py-0.5 rounded-full text-[10px]">
+                              {selectedCount} SELECTED
+                            </Badge>
+                          )}
+                          <ChevronDown className={cn("h-4 w-4 text-stone-500 transition-transform duration-500", isExpanded && "rotate-180 text-accent")} />
                         </div>
-                        <div className="text-sm font-black text-accent relative z-10 group-hover:scale-110 transition-transform">+${addon.price}</div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+
+                      {isExpanded && (
+                        <div className="bg-stone-950/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-6 animate-in slide-in-from-top-4 fade-in duration-300 w-full">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            {items.map((addon) => (
+                              <div 
+                                key={addon.id}
+                                className={cn(
+                                  "flex items-center justify-between p-5 rounded-2xl border transition-all duration-300 cursor-pointer group relative overflow-hidden shadow-md",
+                                  selectedAddonIds.includes(addon.id) 
+                                    ? "bg-white/10 border-accent/40 shadow-accent/5" 
+                                    : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07]"
+                                )}
+                                onClick={() => toggleAddon(addon.id)}
+                              >
+                                <div className="flex items-center gap-4 relative z-10">
+                                  <Checkbox 
+                                    id={addon.id} 
+                                    checked={selectedAddonIds.includes(addon.id)}
+                                    onCheckedChange={() => toggleAddon(addon.id)}
+                                    className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-5 w-5 border-white/30"
+                                  />
+                                  <label className="text-xs font-bold text-stone-200 cursor-pointer group-hover:text-white transition-colors leading-tight">{addon.name}</label>
+                                </div>
+                                <div className="text-xs font-black text-accent relative z-10 group-hover:scale-110 transition-transform">+${addon.price}</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
