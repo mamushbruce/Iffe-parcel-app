@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { Sparkles, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star } from 'lucide-react';
+import { Sparkles, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star, MapPin } from 'lucide-react';
 import { calculatePricing, type Package as BuilderPackage, type Addon } from '@/lib/services/cms-service';
 import { useToast } from '@/hooks/use-toast';
 
@@ -16,6 +16,13 @@ const categoryIcons: Record<string, any> = {
   'Adventure': Zap,
   'Culture': UsersIcon,
   'Default': Star
+};
+
+const regionIcons: Record<string, any> = {
+  'Central': MapPin,
+  'Western': MapPin,
+  'Eastern': MapPin,
+  'Northern': MapPin
 };
 
 interface CustomSafariBuilderProps {
@@ -41,11 +48,15 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
 
   const groupedActivities = useMemo(() => {
     const activities = initialAddons.filter(a => a.category === 'activity');
-    const groups: Record<string, Addon[]> = {};
+    const groups: Record<string, Record<string, Addon[]>> = {};
+    
     activities.forEach(a => {
       const cat = a.subCategory || 'Other Activities';
-      if (!groups[cat]) groups[cat] = [];
-      groups[cat].push(a);
+      if (!groups[cat]) groups[cat] = {};
+      
+      const region = a.region || 'General';
+      if (!groups[cat][region]) groups[cat][region] = [];
+      groups[cat][region].push(a);
     });
     return groups;
   }, [initialAddons]);
@@ -144,10 +155,14 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
               </h3>
 
               <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {Object.entries(groupedActivities).map(([category, items]) => {
+                {Object.entries(groupedActivities).map(([category, regions]) => {
                   const Icon = categoryIcons[category] || categoryIcons.Default;
                   const isExpanded = expandedActivityCategory === category;
-                  const selectedCount = items.filter(item => selectedAddonIds.includes(item.id)).length;
+                  
+                  let totalCount = 0;
+                  Object.values(regions).forEach(items => {
+                    totalCount += items.filter(item => selectedAddonIds.includes(item.id)).length;
+                  });
 
                   return (
                     <div key={category} className={cn("space-y-4 transition-all duration-500", isExpanded && "col-span-full")}>
@@ -166,9 +181,9 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
                             <Icon className="h-6 w-6" />
                           </div>
                           <span className="text-sm font-black text-white uppercase tracking-widest">{category}</span>
-                          {selectedCount > 0 && (
+                          {totalCount > 0 && (
                             <Badge className="bg-accent text-stone-900 font-black px-2 py-0.5 rounded-full text-[10px]">
-                              {selectedCount} SELECTED
+                              {totalCount} SELECTED
                             </Badge>
                           )}
                           <ChevronDown className={cn("h-4 w-4 text-stone-500 transition-transform duration-500", isExpanded && "rotate-180 text-accent")} />
@@ -176,26 +191,37 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
                       </div>
 
                       {isExpanded && (
-                        <div className="bg-stone-950/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-                          {items.map((item) => (
-                            <div 
-                              key={item.id}
-                              className={cn(
-                                "flex flex-col items-center gap-3 p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5 border border-white/5 text-center",
-                                selectedAddonIds.includes(item.id) && "bg-white/10 border-accent/30"
+                        <div className="bg-stone-950/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-6 animate-in slide-in-from-top-4 fade-in duration-300 w-full space-y-8">
+                          {Object.entries(regions).map(([regionName, items]) => (
+                            <div key={regionName} className="space-y-4">
+                              {regionName !== 'General' && (
+                                <h4 className="text-xs font-black text-stone-500 uppercase tracking-[0.3em] flex items-center gap-2">
+                                  <MapPin className="h-3 w-3 text-accent" /> {regionName} Region
+                                </h4>
                               )}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                toggleAddon(item.id);
-                              }}
-                            >
-                              <Checkbox 
-                                checked={selectedAddonIds.includes(item.id)}
-                                className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
-                              />
-                              <div className="flex flex-col items-center gap-1">
-                                <span className="text-[10px] font-bold text-stone-300 group-hover:text-white leading-tight">{item.name}</span>
-                                <span className="text-[10px] font-black text-accent">+${item.price}</span>
+                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                                {items.map((item) => (
+                                  <div 
+                                    key={item.id}
+                                    className={cn(
+                                      "flex flex-col items-center gap-3 p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5 border border-white/5 text-center",
+                                      selectedAddonIds.includes(item.id) && "bg-white/10 border-accent/30"
+                                    )}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleAddon(item.id);
+                                    }}
+                                  >
+                                    <Checkbox 
+                                      checked={selectedAddonIds.includes(item.id)}
+                                      className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
+                                    />
+                                    <div className="flex flex-col items-center gap-1">
+                                      <span className="text-[10px] font-bold text-stone-300 group-hover:text-white leading-tight">{item.name}</span>
+                                      <span className="text-[10px] font-black text-accent">+${item.price}</span>
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
                             </div>
                           ))}

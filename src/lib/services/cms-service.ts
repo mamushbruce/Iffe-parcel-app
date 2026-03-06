@@ -88,7 +88,8 @@ export interface Addon {
   name: string;
   price: number;
   category: 'activity' | 'luxury' | 'extension';
-  subCategory?: string;
+  subCategory?: 'Wildlife' | 'Adventure' | 'Culture';
+  region?: 'Central' | 'Western' | 'Eastern' | 'Northern';
   bundleEligible?: boolean;
   isActive: boolean;
 }
@@ -164,10 +165,56 @@ export async function fetchAddons(): Promise<Addon[]> {
     { id: 'abseiling', name: 'Abseiling', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
     { id: 'ballooning', name: 'Hot Air Ballooning', price: 450, category: 'activity', subCategory: 'Adventure', isActive: true },
     
-    // Culture Category
-    { id: 'kampala_tour', name: 'Kampala City Tour', price: 50, category: 'activity', subCategory: 'Culture', isActive: true },
-    { id: 'jinja_tour', name: 'Source of the Nile', price: 100, category: 'activity', subCategory: 'Culture', isActive: true },
-    { id: 'batwa_experience', name: 'Batwa Cultural Experience', price: 80, category: 'activity', subCategory: 'Culture', isActive: true },
+    // Culture Category - Central
+    { id: 'kampala', name: 'Kampala City', price: 50, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'entebbe', name: 'Entebbe', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'masaka', name: 'Masaka', price: 70, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'mukono', name: 'Mukono', price: 40, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'wakiso', name: 'Wakiso', price: 40, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'kalangala', name: 'Kalangala', price: 150, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'mubende', name: 'Mubende', price: 80, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'kayunga', name: 'Kayunga', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'luwero', name: 'Luwero', price: 50, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+    { id: 'mityana', name: 'Mityana', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
+
+    // Culture Category - Western
+    { id: 'fort_portal', name: 'Fort Portal', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'mbarara', name: 'Mbarara', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'hoima', name: 'Hoima', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kabale', name: 'Kabale', price: 110, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kisoro', name: 'Kisoro', price: 120, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kasese', name: 'Kasese', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'masindi', name: 'Masindi', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'bushenyi', name: 'Bushenyi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kyenjojo', name: 'Kyenjojo', price: 70, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kamwenge', name: 'Kamwenge', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'kanungu', name: 'Kanungu', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+    { id: 'rubirizi', name: 'Rubirizi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
+
+    // Culture Category - Eastern
+    { id: 'jinja', name: 'Jinja', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'mbale', name: 'Mbale', price: 90, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'soroti', name: 'Soroti', price: 100, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'kapchorwa', name: 'Kapchorwa', price: 110, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'tororo', name: 'Tororo', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'kumi', name: 'Kumi', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'iganga', name: 'Iganga', price: 60, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'kamuli', name: 'Kamuli', price: 70, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'bugiri', name: 'Bugiri', price: 60, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+    { id: 'busia', name: 'Busia', price: 70, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
+
+    // Culture Category - Northern
+    { id: 'gulu', name: 'Gulu', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'lira', name: 'Lira', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'arua', name: 'Arua', price: 110, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'moroto', name: 'Moroto', price: 130, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'kotido', name: 'Kotido', price: 120, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'nebbi', name: 'Nebbi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'pakwach', name: 'Pakwach', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'kitgum', name: 'Kitgum', price: 110, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'moyo', name: 'Moyo', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'adjumani', name: 'Adjumani', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
+    { id: 'koboko', name: 'Koboko', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
     
     // Luxury Options
     { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
