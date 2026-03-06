@@ -1,14 +1,14 @@
 
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
-import { Sparkles, Map, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star } from 'lucide-react';
-import { fetchBasePackages, fetchAddons, calculatePricing, type Package as BuilderPackage, type Addon } from '@/lib/services/cms-service';
+import { Sparkles, Package, ListChecks, Trophy, ArrowRight, Info, ChevronDown, Bird, Zap, Users as UsersIcon, Star } from 'lucide-react';
+import { calculatePricing, type Package as BuilderPackage, type Addon } from '@/lib/services/cms-service';
 import { useToast } from '@/hooks/use-toast';
 
 const categoryIcons: Record<string, any> = {
@@ -18,36 +18,20 @@ const categoryIcons: Record<string, any> = {
   'Default': Star
 };
 
-export default function CustomSafariBuilder() {
+interface CustomSafariBuilderProps {
+  initialPackages: BuilderPackage[];
+  initialAddons: Addon[];
+}
+
+export default function CustomSafariBuilder({ initialPackages, initialAddons }: CustomSafariBuilderProps) {
   const { toast } = useToast();
-  const [packages, setPackages] = useState<BuilderPackage[]>([]);
-  const [addons, setAddons] = useState<Addon[]>([]);
-  const [selectedPackage, setSelectedPackage] = useState<BuilderPackage | null>(null);
+  const [selectedPackage, setSelectedPackage] = useState<BuilderPackage | null>(initialPackages[1] || initialPackages[0] || null);
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [expandedActivityCategory, setExpandedActivityCategory] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [pkgs, ads] = await Promise.all([fetchBasePackages(), fetchAddons()]);
-        setPackages(pkgs);
-        setAddons(ads);
-        // Default to adventurer if it exists
-        const defaultPkg = pkgs.find(p => p.id === 'adventurer') || pkgs[0];
-        setSelectedPackage(defaultPkg || null);
-      } catch (err) {
-        console.error("Builder load error:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadData();
-  }, []);
-
   const selectedAddons = useMemo(() => 
-    addons.filter(a => selectedAddonIds.includes(a.id)),
-    [addons, selectedAddonIds]
+    initialAddons.filter(a => selectedAddonIds.includes(a.id)),
+    [initialAddons, selectedAddonIds]
   );
 
   const pricing = useMemo(() => {
@@ -56,7 +40,7 @@ export default function CustomSafariBuilder() {
   }, [selectedPackage, selectedAddons]);
 
   const groupedActivities = useMemo(() => {
-    const activities = addons.filter(a => a.category === 'activity');
+    const activities = initialAddons.filter(a => a.category === 'activity');
     const groups: Record<string, Addon[]> = {};
     activities.forEach(a => {
       const cat = a.subCategory || 'Other Activities';
@@ -64,14 +48,14 @@ export default function CustomSafariBuilder() {
       groups[cat].push(a);
     });
     return groups;
-  }, [addons]);
+  }, [initialAddons]);
 
   const otherAddons = useMemo(() => {
     return {
-      luxury: addons.filter(a => a.category === 'luxury'),
-      extension: addons.filter(a => a.category === 'extension'),
+      luxury: initialAddons.filter(a => a.category === 'luxury'),
+      extension: initialAddons.filter(a => a.category === 'extension'),
     };
-  }, [addons]);
+  }, [initialAddons]);
 
   const toggleAddon = (id: string) => {
     setSelectedAddonIds(prev => 
@@ -86,12 +70,11 @@ export default function CustomSafariBuilder() {
     });
   };
 
-  if (isLoading) return <div className="py-20 text-center text-muted-foreground">Loading Builder...</div>;
+  if (!selectedPackage) return null;
 
   return (
     <section className="bg-stone-950/30 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 p-6 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden transition-all duration-500">
-      {/* Dynamic Lighting Effects */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       
       <div className="max-w-6xl mx-auto space-y-16 relative z-10">
@@ -108,7 +91,6 @@ export default function CustomSafariBuilder() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-16 items-start">
-          {/* Main Controls */}
           <div className="lg:col-span-2 space-y-16">
             {/* Step 1: Base Package */}
             <div className="space-y-8">
@@ -117,7 +99,7 @@ export default function CustomSafariBuilder() {
                 Step 1: Choose Your Foundation
               </h3>
               <div className="grid sm:grid-cols-3 gap-6">
-                {packages.map((pkg) => (
+                {initialPackages.map((pkg) => (
                   <Card 
                     key={pkg.id}
                     className={cn(
@@ -154,7 +136,7 @@ export default function CustomSafariBuilder() {
               )}
             </div>
 
-            {/* Step 2: Activities (Category Tiles) */}
+            {/* Step 2: Activities */}
             <div className="space-y-10">
               <h3 className="font-headline text-2xl font-bold text-white flex items-center gap-4">
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10 shadow-xl"><ListChecks className="h-6 w-6 text-accent" /></div>
@@ -193,14 +175,13 @@ export default function CustomSafariBuilder() {
                         </div>
                       </div>
 
-                      {/* Dropdown List (Horizontal Version) */}
                       {isExpanded && (
-                        <div className="bg-stone-900/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 flex overflow-x-auto gap-3 custom-scrollbar">
+                        <div className="bg-stone-900/40 backdrop-blur-md border border-white/10 rounded-[2rem] p-4 animate-in slide-in-from-top-4 fade-in duration-300 grid grid-cols-2 gap-3">
                           {items.map((item) => (
                             <div 
                               key={item.id}
                               className={cn(
-                                "flex flex-col items-center gap-3 p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5 border border-white/5 shrink-0 w-32 text-center",
+                                "flex flex-col items-center gap-3 p-4 rounded-2xl transition-all duration-300 cursor-pointer group hover:bg-white/5 border border-white/5 text-center",
                                 selectedAddonIds.includes(item.id) && "bg-white/10 border-accent/30"
                               )}
                               onClick={(e) => {
@@ -213,7 +194,7 @@ export default function CustomSafariBuilder() {
                                 className="data-[state=checked]:bg-accent data-[state=checked]:border-accent h-4 w-4 border-white/30"
                               />
                               <div className="flex flex-col items-center gap-1">
-                                <span className="text-[10px] font-bold text-stone-300 group-hover:text-white leading-tight min-h-[2.5rem] flex items-center justify-center">{item.name}</span>
+                                <span className="text-[10px] font-bold text-stone-300 group-hover:text-white leading-tight">{item.name}</span>
                                 <span className="text-[10px] font-black text-accent">+${item.price}</span>
                               </div>
                             </div>
@@ -266,7 +247,6 @@ export default function CustomSafariBuilder() {
             </div>
           </div>
 
-          {/* Step 4: Sticky Summary */}
           <aside className="lg:sticky lg:top-24 space-y-8">
             <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] overflow-hidden relative rounded-[2rem] transition-all duration-500">
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-80" />
@@ -274,7 +254,7 @@ export default function CustomSafariBuilder() {
                 <div className="flex justify-between items-center mb-4">
                   <CardTitle className="font-headline text-2xl text-white font-black tracking-tight">Summary</CardTitle>
                   {pricing?.tier === 'elite' && (
-                    <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-stone-950 border-none font-black px-3 py-1 shadow-[0_0_15px_rgba(251,191,36,0.4)] animate-pulse">
+                    <Badge className="bg-gradient-to-r from-yellow-400 to-orange-500 text-stone-950 border-none font-black px-3 py-1 shadow-[0_0_15px_rgba(251,191,36,0.4)]">
                       <Trophy className="h-3 w-3 mr-1.5" /> ELITE
                     </Badge>
                   )}
