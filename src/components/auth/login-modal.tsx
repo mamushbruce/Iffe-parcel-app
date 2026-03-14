@@ -34,12 +34,13 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
     try {
       // 1. Sign in to Firebase (Only for standard Travelers during prototype)
-      // Administrators bypass this step to allow access without manual account creation in Firebase Console.
+      // Administrators bypass this step to allow immediate access.
       if (!isAdminEmail) {
         await signInWithEmailAndPassword(auth, email, password);
       }
 
       // 2. Sign in to NextAuth (for session management and role-based access)
+      // The signIn call will use the current origin automatically if NEXTAUTH_URL is unset.
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -52,7 +53,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
       toast({
         title: "Login Successful!",
-        description: isAdminEmail ? "Welcome to the Administrative Engine." : "Welcome back, Traveler!",
+        description: isAdminEmail ? "Welcome to the Administrative Dashboard." : "Welcome back, Traveler!",
       });
 
       // Redirect based on role
@@ -70,7 +71,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       toast({
         title: "Login Failed",
         description: isAdminEmail 
-          ? "Admin bypass encountered an error. Check server logs." 
+          ? "Admin access encountered a configuration error. Check environment variables." 
           : "Invalid email or password. Please try again.",
         variant: "destructive",
       });
@@ -155,7 +156,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <Input 
                   id="admin-password" 
                   type="password" 
-                  placeholder="Any password for prototype bypass"
+                  placeholder="Enter any password for prototype bypass"
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
@@ -163,7 +164,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 />
               </div>
               <Button type="submit" className="w-full bg-destructive hover:bg-destructive/90" disabled={isLoading}>
-                {isLoading ? "Accessing Secure Area..." : "Login to Admin Panel"}
+                {isLoading ? "Accessing Dashboard..." : "Login to Admin Panel"}
               </Button>
             </form>
           </TabsContent>
