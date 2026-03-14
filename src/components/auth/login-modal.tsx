@@ -33,18 +33,17 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     const isAdminEmail = email.toLowerCase() === adminEmail.toLowerCase();
 
     try {
-      // 1. Sign in to Firebase (Only for standard Travelers during prototype)
-      if (!isAdminEmail) {
+      // 1. For Travelers, try Firebase Auth first
+      if (!isAdminEmail && activeTab === 'user') {
         try {
           await signInWithEmailAndPassword(auth, email, password);
         } catch (firebaseError: any) {
           console.error("Firebase Auth Error:", firebaseError);
-          throw new Error("Invalid email or password for traveler account.");
+          throw new Error("Invalid traveler credentials. Please check your email and password.");
         }
       }
 
-      // 2. Sign in to NextAuth (for session management and role-based access)
-      // We use redirect: false to handle the response manually
+      // 2. Sign in to NextAuth session
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -52,7 +51,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       });
 
       if (result?.error) {
-        throw new Error(result.error);
+        throw new Error(result.error === 'CredentialsSignin' ? "Authentication failed. Please check your details." : result.error);
       }
 
       toast({
@@ -60,7 +59,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         description: isAdminEmail ? "Welcome to the Administrative Dashboard." : "Welcome back, Traveler!",
       });
 
-      // Redirect based on role
+      // Navigate based on role
       if (isAdminEmail) {
         router.push('/admin');
       } else {
@@ -71,10 +70,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       setEmail('');
       setPassword('');
     } catch (error: any) {
-      console.error("Login attempt failed:", error);
+      console.error("Login Error:", error);
       toast({
         title: "Login Failed",
-        description: error.message || "An unexpected error occurred during login. Please check your connection.",
+        description: error.message || "An error occurred during login. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -89,7 +88,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     } else {
       setEmail('');
     }
-    password && setPassword('');
+    setPassword('');
   };
 
   return (
@@ -134,7 +133,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 />
               </div>
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isLoading}>
-                {isLoading ? "Verifying..." : "Login as Traveler"}
+                {isLoading ? "Signing in..." : "Login as Traveler"}
               </Button>
             </form>
           </TabsContent>
@@ -158,7 +157,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <Input 
                   id="admin-password" 
                   type="password" 
-                  placeholder="Enter any password for prototype bypass"
+                  placeholder="Enter admin password"
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
@@ -166,7 +165,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 />
               </div>
               <Button type="submit" className="w-full bg-destructive hover:bg-destructive/90" disabled={isLoading}>
-                {isLoading ? "Accessing Dashboard..." : "Login to Admin Panel"}
+                {isLoading ? "Validating Admin..." : "Login to Admin Panel"}
               </Button>
             </form>
           </TabsContent>

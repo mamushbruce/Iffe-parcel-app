@@ -10,6 +10,8 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log("Auth request received for:", credentials?.email);
+        
         if (!credentials?.email || !credentials.password) {
           return null;
         }
@@ -19,10 +21,9 @@ export const authOptions: NextAuthOptions = {
         
         const isAdmin = email.toLowerCase() === adminEmail.toLowerCase();
         
-        console.log(`Auth attempt for: ${email}. Is Admin: ${isAdmin}`);
+        console.log(`Processing auth for: ${email}. Role assigned: ${isAdmin ? 'admin' : 'user'}`);
 
         // Return a user object that includes the role
-        // For the prototype, we allow any password for the admin email to ensure immediate access
         return {
           id: isAdmin ? 'admin-uid' : 'user-uid',
           name: isAdmin ? 'Platform Admin' : 'Traveler',
