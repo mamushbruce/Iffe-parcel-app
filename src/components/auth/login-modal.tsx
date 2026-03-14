@@ -34,13 +34,17 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
     try {
       // 1. Sign in to Firebase (Only for standard Travelers during prototype)
-      // Administrators bypass this step to allow immediate access.
       if (!isAdminEmail) {
-        await signInWithEmailAndPassword(auth, email, password);
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (firebaseError: any) {
+          console.error("Firebase Auth Error:", firebaseError);
+          throw new Error("Invalid email or password for traveler account.");
+        }
       }
 
       // 2. Sign in to NextAuth (for session management and role-based access)
-      // The signIn call will use the current origin automatically if NEXTAUTH_URL is unset.
+      // We use redirect: false to handle the response manually
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -67,12 +71,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       setEmail('');
       setPassword('');
     } catch (error: any) {
-      console.error("Login error:", error);
+      console.error("Login attempt failed:", error);
       toast({
         title: "Login Failed",
-        description: isAdminEmail 
-          ? "Admin access encountered a configuration error. Check environment variables." 
-          : "Invalid email or password. Please try again.",
+        description: error.message || "An unexpected error occurred during login. Please check your connection.",
         variant: "destructive",
       });
     } finally {
@@ -87,7 +89,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     } else {
       setEmail('');
     }
-    setPassword('');
+    password && setPassword('');
   };
 
   return (
