@@ -19,8 +19,10 @@ export const authOptions: NextAuthOptions = {
         
         const isAdmin = email.toLowerCase() === adminEmail.toLowerCase();
         
+        console.log(`Auth attempt for: ${email}. Is Admin: ${isAdmin}`);
+
         // Return a user object that includes the role
-        // For the prototype, we allow any password for the admin email
+        // For the prototype, we allow any password for the admin email to ensure immediate access
         return {
           id: isAdmin ? 'admin-uid' : 'user-uid',
           name: isAdmin ? 'Platform Admin' : 'Traveler',

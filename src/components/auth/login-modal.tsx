@@ -33,19 +33,13 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     const isAdminEmail = email.toLowerCase() === adminEmail.toLowerCase();
 
     try {
-      // 1. Sign in to Firebase (Optional for Admin during prototype to allow immediate access)
+      // 1. Sign in to Firebase (Only for standard Travelers during prototype)
+      // Administrators bypass this step to allow access without manual account creation in Firebase Console.
       if (!isAdminEmail) {
         await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        // Attempt FB login but don't block if it fails (bypass for prototype admin)
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-        } catch (fbError) {
-          console.warn("Firebase Auth bypass active for admin.");
-        }
       }
 
-      // 2. Sign in to NextAuth (for session management and middleware)
+      // 2. Sign in to NextAuth (for session management and role-based access)
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -58,7 +52,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
 
       toast({
         title: "Login Successful!",
-        description: `Welcome back!`,
+        description: isAdminEmail ? "Welcome to the Administrative Engine." : "Welcome back, Traveler!",
       });
 
       // Redirect based on role
@@ -75,7 +69,9 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       console.error("Login error:", error);
       toast({
         title: "Login Failed",
-        description: "Please check your credentials.",
+        description: isAdminEmail 
+          ? "Admin bypass encountered an error. Check server logs." 
+          : "Invalid email or password. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -159,7 +155,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <Input 
                   id="admin-password" 
                   type="password" 
-                  placeholder="Any password for prototype"
+                  placeholder="Any password for prototype bypass"
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
