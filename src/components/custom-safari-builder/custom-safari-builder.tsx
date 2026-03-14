@@ -80,7 +80,10 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
     );
   };
 
-  const toggleRegion = (items: Addon[]) => {
+  const toggleRegion = (items: Addon[], e?: React.MouseEvent) => {
+    if (e) {
+        e.stopPropagation();
+    }
     const itemIds = items.map(i => i.id);
     const allInRegionSelected = itemIds.every(id => selectedAddonIds.includes(id));
     
@@ -216,7 +219,7 @@ export default function CustomSafariBuilder({ initialPackages, initialAddons }: 
                                   <h4 className="text-xs font-black text-stone-500 uppercase tracking-[0.3em] flex items-center gap-2">
                                     <MapPin className="h-3 w-3 text-accent" /> {regionName} Region
                                   </h4>
-                                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group/toggle" onClick={() => toggleRegion(items)}>
+                                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group/toggle" onClick={(e) => toggleRegion(items, e)}>
                                     <Checkbox 
                                       id={`select-all-${regionName}`}
                                       checked={items.every(item => selectedAddonIds.includes(item.id))}
