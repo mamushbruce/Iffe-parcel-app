@@ -2,13 +2,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { 
   Bell, 
   MessageSquare, 
@@ -17,32 +17,37 @@ import {
   ShieldCheck, 
   LogOut, 
   Settings, 
-  User, 
-  Download, 
-  Send,
-  Loader2,
+  User,
   AlertCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
-import placeholderImages from '@/app/lib/placeholder-images.json';
+import { auth } from '@/lib/firebase';
+import { signOut } from 'firebase/auth';
 import { useScrollAnimation } from '@/hooks/use-scroll-animation';
-import { signOut } from 'next-auth/react';
 
-// Sections components defined below for cleaner structure
 import DashboardAnnouncements from '@/components/dashboard/announcements';
 import DashboardDocuments from '@/components/dashboard/documents';
 import DashboardChat from '@/components/dashboard/chat';
 import DashboardTrips from '@/components/dashboard/trips';
 
 export default function DashboardPage() {
-  const { data: session } = useSession();
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('overview');
   const [ref, isVisible] = useScrollAnimation();
 
-  const user = session?.user;
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/');
+    }
+  }, [user, loading, router]);
 
-  if (!user) return null;
+  if (loading || !user) return null;
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push('/');
+  };
 
   return (
     <div className="container mx-auto py-8 px-4 space-y-8 animate-fade-in">
@@ -51,21 +56,21 @@ export default function DashboardPage() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
             <Avatar className="h-24 w-24 border-4 border-accent shadow-lg">
-              <AvatarImage src={user.image || undefined} alt={user.name || 'Traveler'} />
-              <AvatarFallback className="text-2xl">{user.name?.substring(0, 2).toUpperCase()}</AvatarFallback>
+              <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'Traveler'} />
+              <AvatarFallback className="text-2xl">{user.email?.substring(0, 2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
               <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                <h1 className="font-headline text-3xl font-black text-primary">{user.name}</h1>
+                <h1 className="font-headline text-3xl font-black text-primary">{user.displayName || 'Explorer'}</h1>
                 <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
-                  <ShieldCheck className="w-3 h-3 mr-1" /> Explorer
+                  <ShieldCheck className="w-3 h-3 mr-1" /> Verified Traveler
                 </Badge>
               </div>
               <p className="text-muted-foreground font-medium">{user.email}</p>
               <div className="flex flex-wrap gap-2 mt-4 justify-center md:justify-start">
                 <Button variant="outline" size="sm" className="rounded-full"><User className="w-4 h-4 mr-2" /> Profile</Button>
                 <Button variant="outline" size="sm" className="rounded-full"><Settings className="w-4 h-4 mr-2" /> Settings</Button>
-                <Button variant="ghost" size="sm" className="rounded-full text-destructive" onClick={() => signOut({ callbackUrl: '/' })}>
+                <Button variant="ghost" size="sm" className="rounded-full text-destructive" onClick={handleLogout}>
                   <LogOut className="w-4 h-4 mr-2" /> Sign Out
                 </Button>
               </div>

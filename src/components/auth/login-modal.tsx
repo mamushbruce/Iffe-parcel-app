@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useState } from "react";
-import { signIn } from "next-auth/react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
@@ -34,51 +34,30 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     setError(null);
 
     const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@iffe-travels.com';
-    const isAdminEmail = email.toLowerCase() === adminEmail.toLowerCase();
 
     try {
-      // 1. For Travelers, attempt Firebase Auth verification first
-      if (activeTab === 'user' && !isAdminEmail) {
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-        } catch (firebaseError: any) {
-          console.error("Firebase Auth Error:", firebaseError);
-          throw new Error("Login failed. Please check your credentials or create a traveler account.");
-        }
-      }
-
-      // 2. Establish NextAuth session (Admins bypass Firebase check directly to this handshake)
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-
-      if (result?.error) {
-        console.error("NextAuth Error:", result.error);
-        throw new Error(result.error === 'CredentialsSignin' ? "Invalid email or password." : "Authentication service is currently unavailable.");
-      }
-
+      const res = await signInWithEmailAndPassword(auth, email, password);
+      
       toast({
         title: "Login Successful!",
-        description: isAdminEmail ? "Welcome back, Admin." : "Welcome to your Traveler Dashboard.",
+        description: "Welcome to e-Rotary Hub.",
       });
 
       onOpenChange(false);
       
-      // 3. Trigger redirect and a hard refresh to update middleware state
-      if (isAdminEmail) {
-        window.location.href = '/admin';
+      // Role based redirection from reference
+      if (res.user.email?.toLowerCase() === adminEmail.toLowerCase()) {
+        router.push("/admin");
       } else {
-        window.location.href = '/dashboard';
+        router.push("/dashboard");
       }
 
     } catch (err: any) {
-      console.error("Submission Error:", err);
-      setError(err.message);
+      console.error("Auth Error:", err);
+      setError("Login failed. Please check your credentials.");
       toast({
         title: "Login Failed",
-        description: err.message,
+        description: "Invalid email or password.",
         variant: "destructive",
       });
     } finally {

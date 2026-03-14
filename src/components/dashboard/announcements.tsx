@@ -2,6 +2,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Bell, Calendar, Loader2 } from 'lucide-react';
@@ -12,7 +14,7 @@ interface Announcement {
   title: string;
   content: string;
   priority: 'low' | 'medium' | 'high';
-  createdAt: string;
+  createdAt: any;
 }
 
 export default function DashboardAnnouncements() {
@@ -20,26 +22,22 @@ export default function DashboardAnnouncements() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulated fetch - will be wired to Firestore in the next step
-    setTimeout(() => {
-      setAnnouncements([
-        {
-          id: '1',
-          title: 'Upcoming Season Schedule Changes',
-          content: 'Please be advised that due to seasonal migration patterns, some Serengeti departure times have been adjusted. Check your itineraries for updates.',
-          priority: 'high',
-          createdAt: new Date().toLocaleDateString()
-        },
-        {
-          id: '2',
-          title: 'New Eco-Friendly Gear Partner',
-          content: 'We are proud to announce our partnership with "WildGear". All travelers now receive a 15% discount on sustainable safari equipment.',
-          priority: 'medium',
-          createdAt: new Date(Date.now() - 86400000).toLocaleDateString()
-        }
-      ]);
-      setIsLoading(false);
-    }, 800);
+    async function fetchAnnouncements() {
+      try {
+        const q = query(collection(db, "announcements"), orderBy("createdAt", "desc"));
+        const snap = await getDocs(q);
+        const data = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as Announcement[];
+        setAnnouncements(data);
+      } catch (err) {
+        console.error("Fetch announcements error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchAnnouncements();
   }, []);
 
   if (isLoading) {
@@ -63,11 +61,11 @@ export default function DashboardAnnouncements() {
               <div className="flex justify-between items-start">
                 <CardTitle className="text-xl font-bold text-primary">{item.title}</CardTitle>
                 <Badge variant={item.priority === 'high' ? 'destructive' : 'secondary'} className="uppercase text-[10px]">
-                  {item.priority} Priority
+                  {item.priority || 'Medium'} Priority
                 </Badge>
               </div>
               <CardDescription className="flex items-center text-xs mt-1">
-                <Calendar className="w-3 h-3 mr-1" /> Posted on {item.createdAt}
+                <Calendar className="w-3 h-3 mr-1" /> Posted on {item.createdAt?.toDate?.().toLocaleDateString() || 'Recently'}
               </CardDescription>
             </CardHeader>
             <CardContent>

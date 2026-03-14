@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import AppHeader from '@/components/layout/app-header';
-import AppFooter from '@/components/layout/app-footer'; // Import the new footer
+import AppFooter from '@/components/layout/app-footer';
 import { ThemeProviderClient } from '@/components/theme-provider-client';
-import AuthProvider from '@/components/auth-provider';
+import { AuthProvider } from '@/context/AuthContext';
 import WhatsAppCTA from '@/components/layout/whatsapp-cta';
 import BottomNav from '@/components/layout/bottom-nav';
 
@@ -36,9 +36,7 @@ export default function RootLayout({
           <ThemeProviderClient>
             <div className="flex flex-col min-h-screen">
               <AppHeader />
-              <main 
-                className="flex-grow"
-              >
+              <main className="flex-grow">
                 {children}
               </main>
               <AppFooter />
