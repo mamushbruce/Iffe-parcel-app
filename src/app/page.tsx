@@ -96,6 +96,34 @@ export default function Home() {
         dataAiHint: 'sipi falls', 
         shortDescription: 'Hike the stunning waterfalls on the slopes of Mount Elgon.' 
       },
+      { 
+        id: '17', 
+        title: 'Entebbe Botanical Gardens', 
+        imageUrl: placeholderImages.campaignEntebbe.src, 
+        dataAiHint: 'entebbe botanical', 
+        shortDescription: 'Nature, wildlife, and relaxation by Africa’s largest lake.' 
+      },
+      { 
+        id: '18', 
+        title: 'Ngamba Island Sanctuary', 
+        imageUrl: placeholderImages.campaignNgamba.src, 
+        dataAiHint: 'chimpanzee sanctuary', 
+        shortDescription: 'Visit a sanctuary for orphaned chimpanzees on Lake Victoria.' 
+      },
+      { 
+        id: '19', 
+        title: 'Mabira Forest Zip-Lining', 
+        imageUrl: placeholderImages.campaignMabira.src, 
+        dataAiHint: 'rainforest zip', 
+        shortDescription: 'Experience the thrill of zip-lining through a lush rainforest.' 
+      },
+      { 
+        id: '20', 
+        title: 'Ssese Islands Relaxation', 
+        imageUrl: placeholderImages.campaignSsese.src, 
+        dataAiHint: 'lake victoria island', 
+        shortDescription: 'Unwind on the beautiful beaches of the Ssese Islands.' 
+      },
     ];
 
     useEffect(() => {

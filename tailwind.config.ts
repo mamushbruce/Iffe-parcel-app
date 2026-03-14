@@ -128,6 +128,10 @@ export default {
         'blink': {
           '50%': { borderColor: 'transparent' },
         },
+        'marquee': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -141,6 +145,7 @@ export default {
         'waves-move': 'move-waves 8s linear infinite',
         'pip-in': 'pip-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards',
         'typing': 'typing 2s steps(22), blink .5s step-end infinite alternate',
+        'marquee': 'marquee 50s linear infinite',
       },
     },
   },
