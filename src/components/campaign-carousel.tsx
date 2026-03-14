@@ -1,13 +1,13 @@
 
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import placeholderImages from '@/app/lib/placeholder-images.json';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 interface Campaign {
   id: string;
@@ -22,22 +22,6 @@ interface CampaignCarouselProps {
 }
 
 const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex === campaigns.length - 1 ? 0 : prevIndex + 1));
-  }, [campaigns.length]);
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? campaigns.length - 1 : prevIndex - 1));
-  };
-
-  useEffect(() => {
-    if (campaigns.length <= 1) return;
-    const interval = setInterval(nextSlide, 5000); // Auto-scroll every 5 seconds
-    return () => clearInterval(interval);
-  }, [campaigns.length, nextSlide]);
-
   if (!campaigns || campaigns.length === 0) {
     return (
       <Card className="bg-muted/50">
@@ -47,77 +31,65 @@ const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
       </Card>
     );
   }
-  
-  const currentCampaign = campaigns[currentIndex];
-  const [imgSrc, setImgSrc] = useState(currentCampaign.imageUrl);
-
-  useEffect(() => {
-      setImgSrc(campaigns[currentIndex].imageUrl);
-  }, [currentIndex, campaigns]);
 
   return (
-    <Card className="relative w-full overflow-hidden shadow-lg group">
-      <CardContent className="p-0">
-        <div className="aspect-[16/7] relative">
-          <Image
-            src={imgSrc}
-            alt={currentCampaign.title}
-            layout="fill"
-            objectFit="cover"
-            className="transition-transform duration-500 ease-in-out group-hover:scale-105"
-            data-ai-hint={currentCampaign.dataAiHint}
-            onError={() => setImgSrc(placeholderImages.campaignDetailWildebeest.src)}
-            key={currentIndex} // Add key to force re-render on slide change
-          />
-          <div className="absolute inset-0 bg-primary/70 flex flex-col justify-end p-6 md:p-10">
-            <h3 className="font-headline text-2xl md:text-4xl font-bold text-primary-foreground mb-2">
-              {currentCampaign.title}
-            </h3>
-            <p className="text-sm md:text-lg text-primary-foreground/90 mb-4 max-w-3xl">
-              {currentCampaign.shortDescription}
-            </p>
-            <Button variant="secondary" size="lg" asChild className="self-start bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link href={`/campaigns/${currentCampaign.id}`}>Explore Tour</Link>
-            </Button>
-          </div>
+    <div className="w-full space-y-6">
+      <div className="flex items-center justify-between px-2">
+        <div>
+            <h3 className="font-headline text-2xl font-bold text-primary">From the Lens</h3>
+            <p className="text-sm text-muted-foreground">Visual highlights from our top destinations.</p>
         </div>
-      </CardContent>
+        <p className="text-xs font-black text-accent uppercase tracking-widest hidden sm:block animate-pulse">
+            Scroll to explore &rarr;
+        </p>
+      </div>
       
-      {campaigns.length > 1 && (
-        <>
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-card/80 hover:bg-card text-primary opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={prevSlide}
-            aria-label="Previous tour"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-card/80 hover:bg-card text-primary opacity-0 group-hover:opacity-100 transition-opacity"
-            onClick={nextSlide}
-            aria-label="Next tour"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </Button>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-            {campaigns.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  currentIndex === index ? 'bg-accent p-1' : 'bg-primary-foreground/50 hover:bg-primary-foreground/80'
-                }`}
-                aria-label={`Go to tour ${index + 1}`}
-              />
+      {/* Film Strip Container */}
+      <div className="relative group rounded-3xl overflow-hidden shadow-2xl">
+        {/* Top Perforation Strip */}
+        <div className="absolute top-0 left-0 right-0 h-6 bg-stone-950 z-20 flex items-center justify-around overflow-hidden border-b border-white/5">
+            {Array.from({ length: 40 }).map((_, i) => (
+                <div key={i} className="w-3 h-3 bg-stone-900 rounded-sm border border-stone-800 flex-shrink-0" />
+            ))}
+        </div>
+
+        <ScrollArea className="w-full whitespace-nowrap bg-stone-950 p-6 pt-12 pb-12">
+          <div className="flex space-x-4">
+            {campaigns.map((campaign) => (
+              <div key={campaign.id} className="relative w-[280px] md:w-[400px] shrink-0 group/strip border-x-8 border-stone-900 bg-stone-900 overflow-hidden shadow-inner transition-all duration-500 hover:brightness-110">
+                <div className="aspect-[16/10] relative rounded-lg overflow-hidden border border-white/10">
+                  <Image
+                    src={campaign.imageUrl}
+                    alt={campaign.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-700 ease-in-out group-hover/strip:scale-110"
+                    data-ai-hint={campaign.dataAiHint}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent opacity-80" />
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col justify-end h-full">
+                    <h4 className="text-white font-headline text-lg font-bold truncate leading-none mb-1">{campaign.title}</h4>
+                    <p className="text-white/60 text-[10px] line-clamp-1 mb-3 whitespace-normal">{campaign.shortDescription}</p>
+                    <Button variant="secondary" size="sm" asChild className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-7 text-[9px] font-black uppercase tracking-widest self-start rounded-full">
+                      <Link href={`/campaigns/${campaign.id}`}>Explore Tour</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
-        </>
-      )}
-    </Card>
+          <ScrollBar orientation="horizontal" className="bg-stone-900 h-2" />
+        </ScrollArea>
+
+        {/* Bottom Perforation Strip */}
+        <div className="absolute bottom-0 left-0 right-0 h-6 bg-stone-950 z-20 flex items-center justify-around overflow-hidden border-t border-white/5">
+            {Array.from({ length: 40 }).map((_, i) => (
+                <div key={i} className="w-3 h-3 bg-stone-900 rounded-sm border border-stone-800 flex-shrink-0" />
+            ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

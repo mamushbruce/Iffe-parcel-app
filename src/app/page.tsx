@@ -59,21 +59,42 @@ export default function Home() {
         title: 'Bwindi Gorilla Trekking', 
         imageUrl: placeholderImages.campaignDetailGorilla.src, 
         dataAiHint: 'mountain gorilla', 
-        shortDescription: 'An unforgettable encounter with the world\'s last remaining mountain gorillas in the ancient Bwindi Impenetrable Forest.' 
+        shortDescription: 'An unforgettable encounter with the world\'s last remaining mountain gorillas.' 
       },
       { 
         id: '2', 
-        title: 'Queen Elizabeth National Park', 
+        title: 'Queen Elizabeth NP', 
         imageUrl: placeholderImages.campaignQueenElizabeth.src, 
         dataAiHint: 'tree climbing lion', 
-        shortDescription: 'Discover the diverse ecosystems of Uganda\'s most popular park, home to the iconic tree-climbing lions.' 
+        shortDescription: 'Discover diverse ecosystems home to the iconic tree-climbing lions.' 
       },
       { 
         id: '3', 
-        title: 'Murchison Falls Safari', 
+        title: 'Murchison Falls', 
         imageUrl: placeholderImages.campaignMurchison.src, 
         dataAiHint: 'murchison falls', 
-        shortDescription: 'Witness the Nile River explode through a narrow gorge in a thunderous display of nature\'s raw power.' 
+        shortDescription: 'Witness the Nile River explode through a narrow gorge.' 
+      },
+      { 
+        id: '4', 
+        title: 'Kibale Forest', 
+        imageUrl: placeholderImages.campaignKibale.src, 
+        dataAiHint: 'chimpanzee forest', 
+        shortDescription: 'Track our closest relatives in the primate capital of the world.' 
+      },
+      { 
+        id: '8', 
+        title: 'Source of the Nile', 
+        imageUrl: placeholderImages.campaignSourceNile.src, 
+        dataAiHint: 'source of nile', 
+        shortDescription: 'Experience the magic of the beginning of the world\'s longest river.' 
+      },
+      { 
+        id: '11', 
+        title: 'Sipi Falls', 
+        imageUrl: placeholderImages.campaignSipi.src, 
+        dataAiHint: 'sipi falls', 
+        shortDescription: 'Hike the stunning waterfalls on the slopes of Mount Elgon.' 
       },
     ];
 
@@ -91,7 +112,6 @@ export default function Home() {
           posts.forEach(p => items.push({ id: p.id, type: 'blog', post: p }));
           images.forEach(img => items.push({ id: img.id, type: 'gallery', image: img }));
           
-          // Add a few static guides for flavor
           items.push({
             id: 'guide-1',
             type: 'creator',
@@ -101,7 +121,6 @@ export default function Home() {
             profileLink: '/profile/ian-ivan',
           });
 
-          // Shuffle or sort by relevance
           setFeedItems(items.sort(() => Math.random() - 0.5));
         } catch (err) {
           console.error("Feed load error:", err);
@@ -167,7 +186,7 @@ export default function Home() {
 
         {/* Featured Visual Carousel Section */}
         <section>
-          <AnimatedCard className="border-none shadow-none bg-transparent">
+          <AnimatedCard className="border-none shadow-none bg-transparent h-auto">
             <CampaignCarousel campaigns={featuredCampaigns} />
           </AnimatedCard>
         </section>
