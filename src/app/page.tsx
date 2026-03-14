@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -19,6 +20,7 @@ import { fetchBlogPosts, fetchGalleryImages, type BlogPost, type GalleryImage } 
 import TestimonialSection from '@/components/testimonial-section';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import CampaignCarousel from '@/components/campaign-carousel';
 
 interface FeedItemBase {
   id: string;
@@ -50,6 +52,30 @@ export default function Home() {
     const [isLoading, setIsLoading] = useState(true);
     const [activeCarouselImage, setActiveCarouselImage] = useState<string | null>(null);
     const { toast } = useToast();
+
+    const featuredCampaigns = [
+      { 
+        id: '1', 
+        title: 'Bwindi Gorilla Trekking', 
+        imageUrl: placeholderImages.campaignDetailGorilla.src, 
+        dataAiHint: 'mountain gorilla', 
+        shortDescription: 'An unforgettable encounter with the world\'s last remaining mountain gorillas in the ancient Bwindi Impenetrable Forest.' 
+      },
+      { 
+        id: '2', 
+        title: 'Queen Elizabeth National Park', 
+        imageUrl: placeholderImages.campaignQueenElizabeth.src, 
+        dataAiHint: 'tree climbing lion', 
+        shortDescription: 'Discover the diverse ecosystems of Uganda\'s most popular park, home to the iconic tree-climbing lions.' 
+      },
+      { 
+        id: '3', 
+        title: 'Murchison Falls Safari', 
+        imageUrl: placeholderImages.campaignMurchison.src, 
+        dataAiHint: 'murchison falls', 
+        shortDescription: 'Witness the Nile River explode through a narrow gorge in a thunderous display of nature\'s raw power.' 
+      },
+    ];
 
     useEffect(() => {
       const loadFeed = async () => {
@@ -136,6 +162,13 @@ export default function Home() {
               <ERotaractSignupTrigger />
             </CardContent>
           </Card>
+          </AnimatedCard>
+        </section>
+
+        {/* Featured Visual Carousel Section */}
+        <section>
+          <AnimatedCard className="border-none shadow-none bg-transparent">
+            <CampaignCarousel campaigns={featuredCampaigns} />
           </AnimatedCard>
         </section>
 
