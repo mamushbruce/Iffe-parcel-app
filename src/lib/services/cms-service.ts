@@ -1,4 +1,3 @@
-
 import { db, storage } from '@/lib/firebase';
 import { 
   collection, 
@@ -72,6 +71,15 @@ export interface Campaign {
   currentAmount: number;
   tags: string[];
   featured?: boolean;
+  storyline?: string[];
+  organizer?: string;
+  volunteersNeeded?: number;
+  volunteersSignedUp?: number;
+  activities?: any[];
+  accommodation?: any[];
+  meals?: any[];
+  bookingTips?: string[];
+  endDate?: string;
 }
 
 export interface Package {
@@ -136,14 +144,12 @@ export async function fetchBasePackages(): Promise<Package[]> {
   const q = query(collection(db, 'packages'), where('isActive', '==', true));
   const snapshot = await getDocs(q);
   
-  const defaultPkgs: Package[] = [
-    { id: 'explorer', name: 'Explorer Package', basePrice: 750, durationDays: 4, features: ['Short Trip', 'Eastern Uganda'], isActive: true },
-    { id: 'adventurer', name: 'Adventurer Package', basePrice: 4500, durationDays: 7, features: ['Primate Focus', 'Lodge Stays'], isActive: true, isPopular: true },
-    { id: 'ultimate', name: 'Ultimate Safari', basePrice: 8000, durationDays: 10, features: ['All Major Parks', 'Full Circuit'], isActive: true }
-  ];
-
   if (snapshot.empty) {
-    return defaultPkgs;
+    return [
+      { id: 'explorer', name: 'Explorer Package', basePrice: 750, durationDays: 4, features: ['Short Trip', 'Eastern Uganda'], isActive: true },
+      { id: 'adventurer', name: 'Adventurer Package', basePrice: 4500, durationDays: 7, features: ['Primate Focus', 'Lodge Stays'], isActive: true, isPopular: true },
+      { id: 'ultimate', name: 'Ultimate Safari', basePrice: 8000, durationDays: 10, features: ['All Major Parks', 'Full Circuit'], isActive: true }
+    ];
   }
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Package));
 }
@@ -165,42 +171,16 @@ export async function fetchAddons(): Promise<Addon[]> {
   const q = query(collection(db, 'addons'), where('isActive', '==', true));
   const snapshot = await getDocs(q);
   
-  const defaultAddons: Addon[] = [
-    { id: 'gorilla', name: 'Gorilla Trekking', price: 900, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
-    { id: 'chimp', name: 'Chimpanzee Tracking', price: 320, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
-    { id: 'golden_monkey', name: 'Golden Monkey Tracking', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'big_five', name: 'Big Five Game Drive', price: 150, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'rhino_tracking', name: 'Rhino Tracking', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'bird_watching', name: 'Bird Watching Safari', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'night_game', name: 'Night Game Drive', price: 120, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'predator_tracking', name: 'Predator Tracking Experience', price: 200, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'safari_game_drive', name: 'Guided Safari Game Drive', price: 150, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'off_road_adventure', name: 'Off-Road Safari Adventure', price: 180, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'walking_safari', name: 'Walking Safari', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'cycling_safari', name: 'Cycling Safari', price: 80, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'atv_safari', name: 'ATV / Quad Bike Safari', price: 120, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'mtn_hiking', name: 'Mountain Hiking', price: 200, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'volcano_trek', name: 'Volcano Trekking', price: 250, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'nature_trail', name: 'Nature Trail Exploration', price: 60, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'zip_lining', name: 'Zip Lining', price: 80, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'bungee_jumping', name: 'Bungee Jumping', price: 150, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'abseiling', name: 'Abseiling', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'ballooning', name: 'Hot Air Ballooning', price: 450, category: 'activity', subCategory: 'Adventure', isActive: true },
-    { id: 'np_scenic', name: 'National Park Scenic Tour', price: 120, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'waterfall_visit', name: 'Waterfall Visit', price: 50, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'canopy_walk', name: 'Forest Canopy Walk', price: 80, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'botanical_tour', name: 'Botanical Garden Tour', price: 40, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'sun_view', name: 'Sunrise or Sunset Viewing', price: 30, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'photo_safari', name: 'Photography Safari', price: 150, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-    { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
-    { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true },
-    { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },
-    { id: 'extra_2days', name: 'Extra 2 Days Safari', price: 900, category: 'extension', isActive: true },
-    { id: 'zanzibar_ext', name: 'Zanzibar Beach Extension', price: 2000, category: 'extension', isActive: true }
-  ];
-
   if (snapshot.empty) {
-    return defaultAddons;
+    return [
+      { id: 'gorilla', name: 'Gorilla Trekking', price: 900, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+      { id: 'chimp', name: 'Chimpanzee Tracking', price: 320, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+      { id: 'big_five', name: 'Big Five Game Drive', price: 150, category: 'activity', subCategory: 'Wildlife', isActive: true },
+      { id: 'walking_safari', name: 'Walking Safari', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
+      { id: 'cycling_safari', name: 'Cycling Safari', price: 80, category: 'activity', subCategory: 'Adventure', isActive: true },
+      { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
+      { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true }
+    ];
   }
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Addon));
 }
@@ -419,7 +399,18 @@ export async function fetchCampaigns(featuredOnly?: boolean): Promise<Campaign[]
   }
   
   const querySnapshot = await getDocs(q);
+  if (querySnapshot.empty) {
+    return [];
+  }
   return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Campaign));
+}
+
+export async function getCampaignById(id: string): Promise<Campaign | null> {
+  const docSnap = await getDoc(doc(db, 'campaigns', id));
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() } as Campaign;
+  }
+  return null;
 }
 
 export async function saveCampaign(campaign: Partial<Campaign>) {

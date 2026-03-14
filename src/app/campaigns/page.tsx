@@ -1,4 +1,3 @@
-
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,70 +14,45 @@ import HeroSection from '@/components/layout/hero-section';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import AnimatedSection from '@/components/animated-section';
-
-interface CampaignTeaser {
-  id: string;
-  title: string;
-  imageUrl: string;
-  dataAiHint?: string;
-  shortDescription: string;
-  goal: number;
-  currentAmount: number;
-  tags: string[];
-  region: 'Western' | 'Eastern' | 'Northern' | 'Central' | 'Other';
-}
-
-const mockCampaignsData: CampaignTeaser[] = [
-  // Western Uganda
-  { id: '1', title: 'Bwindi Gorilla Trekking', imageUrl: placeholderImages.campaignBwindi.src, dataAiHint: 'bwindi forest', shortDescription: 'World-famous gorilla trekking in a UNESCO World Heritage site.', goal: 100, currentAmount: 98, tags: ['#Gorilla', '#UNESCO'], region: 'Western' },
-  { id: '2', title: 'Queen Elizabeth National Park', imageUrl: placeholderImages.campaignQueenElizabeth.src, dataAiHint: 'tree climbing lion', shortDescription: 'Spot tree-climbing lions and enjoy Kazinga Channel boat safaris.', goal: 100, currentAmount: 92, tags: ['#Wildlife', '#Lions'], region: 'Western' },
-  { id: '3', title: 'Murchison Falls Safari', imageUrl: placeholderImages.campaignMurchison.src, dataAiHint: 'murchison falls', shortDescription: 'See the powerful falls and diverse wildlife of Murchison.', goal: 100, currentAmount: 88, tags: ['#Wildlife', '#Waterfalls'], region: 'Western' },
-  { id: '4', title: 'Kibale Forest Chimpanzee Trekking', imageUrl: placeholderImages.campaignKibale.src, dataAiHint: 'chimpanzee forest', shortDescription: 'Trek chimpanzees in the primate capital of East Africa.', goal: 100, currentAmount: 85, tags: ['#Chimpanzee', '#Primates'], region: 'Western' },
-  { id: '5', title: 'Rwenzori Mountains Hiking', imageUrl: placeholderImages.campaignRwenzori.src, dataAiHint: 'rwenzori mountains', shortDescription: 'Hike the snow-capped "Mountains of the Moon".', goal: 100, currentAmount: 75, tags: ['#Hiking', '#Mountains'], region: 'Western' },
-  { id: '6', title: 'Relax at Lake Bunyonyi', imageUrl: placeholderImages.campaignBunyonyi.src, dataAiHint: 'lake bunyonyi', shortDescription: 'Relax by one of Africa’s deepest and most scenic lakes.', goal: 100, currentAmount: 95, tags: ['#Relaxation', '#Scenery'], region: 'Western' },
-  { id: '7', title: 'Lake Mburo Cycling Safari', imageUrl: placeholderImages.campaignMburo.src, dataAiHint: 'zebra safari', shortDescription: 'The closest park to Kampala, perfect for cycling among zebras.', goal: 100, currentAmount: 82, tags: ['#Cycling', '#Zebras'], region: 'Western' },
-  // Eastern Uganda
-  { id: '8', title: 'Jinja - Source of the Nile', imageUrl: placeholderImages.campaignSourceNile.src, dataAiHint: 'source of nile', shortDescription: 'Discover the legendary source of the world\'s longest river.', goal: 100, currentAmount: 90, tags: ['#Jinja', '#RiverNile'], region: 'Eastern' },
-  { id: '9', title: 'White-Water Rafting in Jinja', imageUrl: placeholderImages.campaignRafting.src, dataAiHint: 'white water rafting', shortDescription: 'Experience the thrill of Grade 5 rapids on the Nile.', goal: 100, currentAmount: 95, tags: ['#Adventure', '#Jinja'], region: 'Eastern' },
-  { id: '10', title: 'Mount Elgon National Park', imageUrl: placeholderImages.campaignElgon.src, dataAiHint: 'mount elgon', shortDescription: 'Hike a volcanic mountain and explore caves near Sipi Falls.', goal: 100, currentAmount: 78, tags: ['#Hiking', '#Volcano'], region: 'Eastern' },
-  { id: '11', title: 'Sipi Falls Adventure', imageUrl: placeholderImages.campaignSipi.src, dataAiHint: 'sipi falls', shortDescription: 'Explore a series of beautiful waterfalls with coffee tours and hikes.', goal: 100, currentAmount: 88, tags: ['#Waterfalls', '#Coffee'], region: 'Eastern' },
-  { id: '12', title: 'Busoga Kingdom Cultural Tour', imageUrl: placeholderImages.campaignBusoga.src, dataAiHint: 'cultural kingdom', shortDescription: 'Immerse yourself in the royal heritage and traditions of Busoga.', goal: 100, currentAmount: 65, tags: ['#Culture', '#History'], region: 'Eastern' },
-  // Northern Uganda
-  { id: '13', title: 'Kidepo Valley National Park', imageUrl: placeholderImages.campaignKidepo.src, dataAiHint: 'kidepo valley', shortDescription: 'Explore remote, rugged landscapes with unique wildlife.', goal: 100, currentAmount: 70, tags: ['#Remote', '#Wilderness'], region: 'Northern' },
-  { id: '14', title: 'Karuma Falls Wildlife Tour', imageUrl: placeholderImages.campaignKaruma.src, dataAiHint: 'karuma falls', shortDescription: 'Spot wildlife near the stunning Karuma Falls on the Nile.', goal: 100, currentAmount: 85, tags: ['#Wildlife', '#NationalPark'], region: 'Northern' },
-  { id: '15', title: 'Pian Upe Wildlife Reserve', imageUrl: placeholderImages.campaignPianUpe.src, dataAiHint: 'savannah reserve', shortDescription: 'Discover rare wildlife species in a semi-arid savannah.', goal: 100, currentAmount: 60, tags: ['#RareWildlife', '#Savannah'], region: 'Northern' },
-  // Central Uganda
-  { id: '16', title: 'Kampala City Tour', imageUrl: placeholderImages.campaignKampala.src, dataAiHint: 'kampala city', shortDescription: 'Explore museums, mosques, and cultural centres in Uganda\'s capital.', goal: 100, currentAmount: 91, tags: ['#CityTour', '#Culture'], region: 'Central' },
-  { id: '17', title: 'Entebbe Botanical Gardens', imageUrl: placeholderImages.campaignEntebbe.src, dataAiHint: 'entebbe botanical', shortDescription: 'Visit the Wildlife Centre and relax by Lake Victoria.', goal: 100, currentAmount: 89, tags: ['#Gardens', '#Relaxation'], region: 'Central' },
-  { id: '18', title: 'Ngamba Island Chimpanzee Sanctuary', imageUrl: placeholderImages.campaignNgamba.src, dataAiHint: 'chimpanzee sanctuary', shortDescription: 'Visit a sanctuary for orphaned chimpanzees on Lake Victoria.', goal: 100, currentAmount: 94, tags: ['#Conservation', '#Chimpanzee'], region: 'Central' },
-  { id: '19', title: 'Mabira Forest Zip-Lining', imageUrl: placeholderImages.campaignMabira.src, dataAiHint: 'rainforest zip', shortDescription: 'Experience the thrill of zip-lining through a lush rainforest.', goal: 100, currentAmount: 86, tags: ['#Adventure', '#Forest'], region: 'Central' },
-  { id: '20', title: 'Ssese Islands Relaxation', imageUrl: placeholderImages.campaignSsese.src, dataAiHint: 'lake victoria island', shortDescription: 'Unwind on the beautiful beaches of the Ssese Islands.', goal: 100, currentAmount: 93, tags: ['#Beach', '#Relaxation'], region: 'Central' },
-  // Other Areas
-  { id: '21', title: 'Semuliki National Park', imageUrl: placeholderImages.campaignSemuliki.src, dataAiHint: 'semuliki hot springs', shortDescription: 'Discover unique bird species and boiling hot springs.', goal: 100, currentAmount: 77, tags: ['#BirdWatching', '#HotSprings'], region: 'Other' },
-  { id: '22', title: 'Toro Kingdom & Fort Portal', imageUrl: placeholderImages.campaignFortPortal.src, dataAiHint: 'crater lake', shortDescription: 'Explore stunning crater lakes and rich cultural experiences.', goal: 100, currentAmount: 81, tags: ['#Culture', '#Scenery'], region: 'Other' },
-];
+import { fetchCampaigns, type Campaign } from '@/lib/services/cms-service';
 
 const ITEMS_PER_PAGE = 6;
 const regions = ['All Regions', 'Western', 'Eastern', 'Northern', 'Central', 'Other'];
 
 export default function CampaignsPage() {
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [regionFilter, setRegionFilter] = useState('All Regions');
 
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const data = await fetchCampaigns();
+        setCampaigns(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    load();
+  }, []);
+
   const filteredCampaigns = useMemo(() => {
-    return mockCampaignsData.filter(campaign => {
+    return campaigns.filter(campaign => {
       const matchesSearch = !searchTerm || 
         campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         campaign.shortDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        campaign.tags.some(tag => tag.toLowerCase().replace('#', '').includes(searchTerm.toLowerCase()));
+        campaign.tags?.some(tag => tag.toLowerCase().replace('#', '').includes(searchTerm.toLowerCase()));
       
       const matchesRegion = regionFilter === 'All Regions' || campaign.region === regionFilter;
 
       return matchesSearch && matchesRegion;
     });
-  }, [searchTerm, regionFilter]);
+  }, [campaigns, searchTerm, regionFilter]);
   
   useEffect(() => {
     setVisibleCount(ITEMS_PER_PAGE);
@@ -89,14 +63,14 @@ export default function CampaignsPage() {
     setTimeout(() => {
       setVisibleCount(prevCount => prevCount + ITEMS_PER_PAGE);
       setIsLoadingMore(false);
-    }, 500); // Simulate network delay
+    }, 500);
   };
 
   const campaignsToShow = filteredCampaigns.slice(0, visibleCount);
 
-  const AnimatedCard = ({ campaign }: { campaign: CampaignTeaser }) => {
+  const AnimatedCard = ({ campaign }: { campaign: Campaign }) => {
     const [ref, isVisible] = useScrollAnimation();
-    const progressPercentage = campaign.goal > 0 ? (campaign.currentAmount / campaign.goal) * 100 : 0;
+    const progressPercentage = campaign.currentAmount || 0;
     const [imgSrc, setImgSrc] = useState(campaign.imageUrl);
 
     return (
@@ -121,14 +95,14 @@ export default function CampaignsPage() {
             <CardContent className="flex-grow space-y-3">
                 <div>
                 <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-primary">{campaign.currentAmount.toLocaleString()}% Traveller Rating</span>
-                    <span className="text-muted-foreground">based on {campaign.goal.toLocaleString()} reviews</span>
+                    <span className="text-primary">{campaign.currentAmount}% Traveller Rating</span>
+                    <span className="text-muted-foreground">based on reviews</span>
                 </div>
-                <Progress value={progressPercentage} className="h-2" aria-label={`${progressPercentage}% funded`} />
+                <Progress value={progressPercentage} className="h-2" aria-label={`${progressPercentage}% rating`} />
                 </div>
                 {campaign.tags && campaign.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
-                    {campaign.tags.slice(0, 2).map(tag => ( // Show max 2 tags
+                    {campaign.tags.slice(0, 2).map(tag => (
                     <Badge key={tag} variant="secondary" className="text-xs">
                         <Tag className="h-3 w-3 mr-1" /> {tag.replace('#', '')}
                     </Badge>
@@ -188,7 +162,9 @@ export default function CampaignsPage() {
         </div>
       </AnimatedSection>
 
-      {campaignsToShow.length > 0 ? (
+      {isLoading ? (
+        <div className="flex justify-center py-20"><Loader2 className="h-12 w-12 animate-spin text-primary" /></div>
+      ) : campaignsToShow.length > 0 ? (
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {campaignsToShow.map(campaign => (
             <AnimatedCard key={campaign.id} campaign={campaign} />
