@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -36,14 +35,11 @@ const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
 
   return (
     <div className="w-full space-y-6">
-      <div className="flex items-center justify-between px-2">
+      <div className="px-2">
         <div>
             <h3 className="font-headline text-2xl font-bold text-primary">From the Lens</h3>
             <p className="text-sm text-muted-foreground">Visual highlights from our top destinations.</p>
         </div>
-        <p className="text-xs font-black text-accent uppercase tracking-widest hidden sm:block animate-pulse">
-            Auto-scrolling Gallery
-        </p>
       </div>
       
       {/* Film Strip Container */}
