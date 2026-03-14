@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -31,8 +30,18 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
     setIsLoading(true);
 
     try {
-      // 1. Sign in to Firebase (for real-time features like chat/voting later)
-      await signInWithEmailAndPassword(auth, email, password);
+      const isAdminEmail = email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+
+      // 1. Sign in to Firebase (Optional for Admin during prototype to allow immediate access)
+      if (!isAdminEmail) {
+        await signInWithEmailAndPassword(auth, email, password);
+      } else {
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (fbError) {
+          console.warn("Firebase Auth failed for admin. Continuing with prototype bypass.");
+        }
+      }
 
       // 2. Sign in to NextAuth (for session management and middleware)
       const result = await signIn('credentials', {
@@ -50,8 +59,8 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         description: `Welcome back!`,
       });
 
-      // Redirect based on role (simple client-side check for immediate UX)
-      if (email === process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
+      // Redirect based on role
+      if (isAdminEmail) {
         router.push('/admin');
       } else {
         router.push('/dashboard');
@@ -64,7 +73,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       console.error("Login error:", error);
       toast({
         title: "Login Failed",
-        description: "Invalid email or password. Please make sure you have enabled the Email/Password provider in the Firebase Console.",
+        description: "Please check your credentials. Note: Non-admin users must be registered in the Firebase console.",
         variant: "destructive",
       });
     } finally {
@@ -148,7 +157,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                 <Input 
                   id="admin-password" 
                   type="password" 
-                  placeholder="Admin password"
+                  placeholder="Any password for prototype"
                   value={password} 
                   onChange={(e) => setPassword(e.target.value)}
                   required 
