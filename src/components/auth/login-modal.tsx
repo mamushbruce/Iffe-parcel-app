@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -40,12 +39,12 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       
       toast({
         title: "Login Successful!",
-        description: "Welcome to e-Rotary Hub.",
+        description: `Welcome back, ${res.user.email}`,
       });
 
       onOpenChange(false);
       
-      // Role based redirection from reference
+      // Role based redirection based on reference
       if (res.user.email?.toLowerCase() === adminEmail.toLowerCase()) {
         router.push("/admin");
       } else {
@@ -57,7 +56,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
       setError("Login failed. Please check your credentials.");
       toast({
         title: "Login Failed",
-        description: "Invalid email or password.",
+        description: err.message || "Invalid email or password.",
         variant: "destructive",
       });
     } finally {
@@ -87,7 +86,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         </DialogHeader>
 
         {error && (
-          <Alert variant="destructive" className="mb-2">
+          <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -95,12 +94,12 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
         )}
 
         <Tabs defaultValue="user" className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="grid w-full grid-cols-2 mb-4">
+          <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="user" disabled={isLoading}>Traveler</TabsTrigger>
             <TabsTrigger value="admin" disabled={isLoading}>Administrator</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="user">
+          <TabsContent value="user" className="space-y-4">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="user-email">Email Address</Label>
@@ -132,10 +131,10 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
             </form>
           </TabsContent>
           
-          <TabsContent value="admin">
+          <TabsContent value="admin" className="space-y-4">
              <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="admin-email">Admin Identifier</Label>
+                <Label htmlFor="admin-email">Admin Email</Label>
                 <Input 
                   id="admin-email" 
                   type="email" 
@@ -158,7 +157,7 @@ export default function LoginModal({ open, onOpenChange }: LoginModalProps) {
                   disabled={isLoading}
                 />
               </div>
-              <Button type="submit" className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90" disabled={isLoading}>
+              <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" disabled={isLoading}>
                 {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Unlocking Panel...</> : "Enter Admin Panel"}
               </Button>
             </form>
