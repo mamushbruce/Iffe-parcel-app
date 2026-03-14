@@ -1,4 +1,3 @@
-
 'use client';
 
 import Link from 'next/link';
@@ -354,77 +353,77 @@ export default function Home() {
         {/* Trust & Authority - Moved below the Featured Expeditions section */}
         <section>
             <AnimatedCard>
-                <Card className="bg-primary text-primary-foreground border-none relative overflow-hidden flex flex-col">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-3xl -mr-16 -mt-16" />
+                <Card className="bg-card/80 backdrop-blur-md border-primary/10 relative overflow-hidden flex flex-col">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl -mr-16 -mt-16" />
                     <CardHeader>
-                        <CardTitle className="font-headline text-2xl flex items-center">
+                        <CardTitle className="font-headline text-2xl flex items-center text-primary">
                             <ShieldCheck className="mr-3 h-6 w-6 text-accent" />
                             Why Choose Iffe-Travels?
                         </CardTitle>
-                        <CardDescription className="text-primary-foreground/70">Building trust through thousands of successful African adventures.</CardDescription>
+                        <CardDescription className="text-muted-foreground">Building trust through thousands of successful African adventures.</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow space-y-6">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                <div className="p-2 bg-primary/5 rounded-lg shrink-0 border border-primary/10">
                                     <Users className="h-5 w-5 text-accent" />
                                 </div>
                                 <div>
-                                    <p className="text-xl font-black leading-none">2,000+</p>
-                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Happy Travelers</p>
+                                    <p className="text-xl font-black leading-none text-primary">2,000+</p>
+                                    <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Happy Travelers</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                <div className="p-2 bg-primary/5 rounded-lg shrink-0 border border-primary/10">
                                     <Calendar className="h-5 w-5 text-accent" />
                                 </div>
                                 <div>
-                                    <p className="text-xl font-black leading-none">10+ Yrs</p>
-                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Safari Experience</p>
+                                    <p className="text-xl font-black leading-none text-primary">10+ Yrs</p>
+                                    <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Safari Experience</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                <div className="p-2 bg-primary/5 rounded-lg shrink-0 border border-primary/10">
                                     <MapPin className="h-5 w-5 text-accent" />
                                 </div>
                                 <div>
-                                    <p className="text-xl font-black leading-none">500+</p>
-                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Tours Completed</p>
+                                    <p className="text-xl font-black leading-none text-primary">500+</p>
+                                    <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Tours Completed</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">
-                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                <div className="p-2 bg-primary/5 rounded-lg shrink-0 border border-primary/10">
                                     <Award className="h-5 w-5 text-accent" />
                                 </div>
                                 <div>
-                                    <p className="text-xl font-black leading-none">Certified</p>
-                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Safety & Quality</p>
+                                    <p className="text-xl font-black leading-none text-primary">Certified</p>
+                                    <p className="text-[10px] uppercase font-bold text-muted-foreground tracking-wider">Safety & Quality</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-4 border-t border-white/10">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-4 border-t border-border">
                             <div className="space-y-3">
                                 <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent">Our Global Partnerships</p>
-                                <div className="flex flex-wrap gap-4 opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-                                    <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
-                                        <Globe className="h-3 w-3" />
-                                        <span className="text-[10px] font-black tracking-widest">UTB CERTIFIED</span>
+                                <div className="flex flex-wrap gap-4 opacity-80 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+                                    <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 rounded-full border border-border">
+                                        <Globe className="h-3 w-3 text-primary" />
+                                        <span className="text-[10px] font-black tracking-widest text-primary">UTB CERTIFIED</span>
                                     </div>
-                                    <div className="flex items-center gap-1.5 bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
-                                        <CheckCircle2 className="h-3 w-3" />
-                                        <span className="text-[10px] font-black tracking-widest">AUTO MEMBER</span>
+                                    <div className="flex items-center gap-1.5 bg-muted px-3 py-1.5 rounded-full border border-border">
+                                        <CheckCircle2 className="h-3 w-3 text-primary" />
+                                        <span className="text-[10px] font-black tracking-widest text-primary">AUTO MEMBER</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="md:max-w-xs">
-                                <p className="text-sm font-medium text-white/80 leading-relaxed italic border-l-2 border-accent pl-4">
+                                <p className="text-sm font-medium text-muted-foreground leading-relaxed italic border-l-2 border-accent pl-4">
                                     "Our mission is to provide authentic, responsible, and safe travel experiences that leave you with memories for a lifetime."
                                 </p>
                             </div>
                         </div>
                     </CardContent>
-                    <CardFooter className="mt-auto border-t border-white/5 pt-4">
-                        <Button variant="link" className="text-accent hover:text-white p-0" asChild>
+                    <CardFooter className="mt-auto border-t border-border pt-4">
+                        <Button variant="link" className="text-accent hover:text-primary p-0" asChild>
                             <Link href="/about">Learn more about our heritage <ArrowRight className="ml-2 h-4 w-4" /></Link>
                         </Button>
                     </CardFooter>
