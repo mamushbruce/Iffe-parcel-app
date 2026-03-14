@@ -95,6 +95,17 @@ export interface Addon {
   isActive: boolean;
 }
 
+export interface Promotion {
+  id: string;
+  title: string;
+  code: string;
+  discountType: 'percentage' | 'fixed';
+  value: number;
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
+}
+
 export interface Idea {
   id: string;
   title: string;
@@ -155,7 +166,6 @@ export async function fetchAddons(): Promise<Addon[]> {
   const snapshot = await getDocs(q);
   
   const defaultAddons: Addon[] = [
-    // Wildlife Category - Updated to 2026 Master Pricing Table
     { id: 'gorilla', name: 'Gorilla Trekking', price: 900, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
     { id: 'chimp', name: 'Chimpanzee Tracking', price: 320, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
     { id: 'golden_monkey', name: 'Golden Monkey Tracking', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
@@ -164,8 +174,6 @@ export async function fetchAddons(): Promise<Addon[]> {
     { id: 'bird_watching', name: 'Bird Watching Safari', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'night_game', name: 'Night Game Drive', price: 120, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'predator_tracking', name: 'Predator Tracking Experience', price: 200, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    
-    // Adventure Category
     { id: 'safari_game_drive', name: 'Guided Safari Game Drive', price: 150, category: 'activity', subCategory: 'Adventure', isActive: true },
     { id: 'off_road_adventure', name: 'Off-Road Safari Adventure', price: 180, category: 'activity', subCategory: 'Adventure', isActive: true },
     { id: 'walking_safari', name: 'Walking Safari', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
@@ -178,81 +186,17 @@ export async function fetchAddons(): Promise<Addon[]> {
     { id: 'bungee_jumping', name: 'Bungee Jumping', price: 150, category: 'activity', subCategory: 'Adventure', isActive: true },
     { id: 'abseiling', name: 'Abseiling', price: 100, category: 'activity', subCategory: 'Adventure', isActive: true },
     { id: 'ballooning', name: 'Hot Air Ballooning', price: 450, category: 'activity', subCategory: 'Adventure', isActive: true },
-    
-    // Nature & Scenic Category
     { id: 'np_scenic', name: 'National Park Scenic Tour', price: 120, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
     { id: 'waterfall_visit', name: 'Waterfall Visit', price: 50, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
     { id: 'canopy_walk', name: 'Forest Canopy Walk', price: 80, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
     { id: 'botanical_tour', name: 'Botanical Garden Tour', price: 40, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
     { id: 'sun_view', name: 'Sunrise or Sunset Viewing', price: 30, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
     { id: 'photo_safari', name: 'Photography Safari', price: 150, category: 'activity', subCategory: 'Nature & Scenic', isActive: true },
-
-    // Culture Category - Central
-    { id: 'kampala', name: 'Kampala City', price: 50, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'entebbe', name: 'Entebbe', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'masaka', name: 'Masaka', price: 70, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'mukono', name: 'Mukono', price: 40, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'wakiso', name: 'Wakiso', price: 40, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'kalangala', name: 'Kalangala', price: 150, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'mubende', name: 'Mubende', price: 80, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'kayunga', name: 'Kayunga', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'luwero', name: 'Luwero', price: 50, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-    { id: 'mityana', name: 'Mityana', price: 60, category: 'activity', subCategory: 'Culture', region: 'Central', isActive: true },
-
-    // Culture Category - Western
-    { id: 'fort_portal', name: 'Fort Portal', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'mbarara', name: 'Mbarara', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'hoima', name: 'Hoima', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kabale', name: 'Kabale', price: 110, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kisoro', name: 'Kisoro', price: 120, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kasese', name: 'Kasese', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'masindi', name: 'Masindi', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'bushenyi', name: 'Bushenyi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kyenjojo', name: 'Kyenjojo', price: 70, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kamwenge', name: 'Kamwenge', price: 80, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'kanungu', name: 'Kanungu', price: 100, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-    { id: 'rubirizi', name: 'Rubirizi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Western', isActive: true },
-
-    // Culture Category - Eastern
-    { id: 'jinja', name: 'Jinja', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'mbale', name: 'Mbale', price: 90, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'soroti', name: 'Soroti', price: 100, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'kapchorwa', name: 'Kapchorwa', price: 110, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'tororo', name: 'Tororo', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'kumi', name: 'Kumi', price: 80, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'iganga', name: 'Iganga', price: 60, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'kamuli', name: 'Kamuli', price: 70, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'bugiri', name: 'Bugiri', price: 60, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-    { id: 'busia', name: 'Busia', price: 70, category: 'activity', subCategory: 'Culture', region: 'Eastern', isActive: true },
-
-    // Culture Category - Northern
-    { id: 'gulu', name: 'Gulu', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'lira', name: 'Lira', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'arua', name: 'Arua', price: 110, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'moroto', name: 'Moroto', price: 130, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'kotido', name: 'Kotido', price: 120, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'nebbi', name: 'Nebbi', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'pakwach', name: 'Pakwach', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'kitgum', name: 'Kitgum', price: 110, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'moyo', name: 'Moyo', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'adjumani', name: 'Adjumani', price: 90, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    { id: 'koboko', name: 'Koboko', price: 100, category: 'activity', subCategory: 'Culture', region: 'Northern', isActive: true },
-    
-    // Luxury Options
     { id: 'luxury_lodge', name: 'Luxury Lodge Upgrade', price: 1200, category: 'luxury', isActive: true },
     { id: 'private_guide', name: 'Private Safari Guide', price: 900, category: 'luxury', isActive: true },
     { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },
-    { id: 'heli_tour', name: 'Helicopter Scenic Tour', price: 2500, category: 'luxury', isActive: true },
-    { id: 'vip_transfer', name: 'VIP Airport Transfer', price: 150, category: 'luxury', isActive: true },
-    { id: 'brush_dinner', name: 'Luxury Bush Dinner', price: 200, category: 'luxury', isActive: true },
-    
-    // Extensions
     { id: 'extra_2days', name: 'Extra 2 Days Safari', price: 900, category: 'extension', isActive: true },
-    { id: 'zanzibar_ext', name: 'Zanzibar Beach Extension', price: 2000, category: 'extension', isActive: true },
-    { id: 'serengeti_ext', name: 'Serengeti Extension', price: 2500, category: 'extension', isActive: true },
-    { id: 'gorilla_combo', name: 'Gorilla & Safari Combo', price: 3000, category: 'extension', isActive: true },
-    { id: 'multi_country', name: 'Multi-Country Safari (Kenya/Tanzania)', price: 4500, category: 'extension', isActive: true },
-    { id: 'beach_relax', name: 'Beach Relaxation Package', price: 1500, category: 'extension', isActive: true }
+    { id: 'zanzibar_ext', name: 'Zanzibar Beach Extension', price: 2000, category: 'extension', isActive: true }
   ];
 
   if (snapshot.empty) {
@@ -282,7 +226,6 @@ export function calculatePricing(basePackage: Package, selectedAddons: Addon[], 
   const basePrice = basePackage.basePrice;
   let addonsTotalPerPerson = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
   
-  // Bundle Logic: 5% off Gorilla + Chimp (applied per person)
   let discountAmountPerPerson = 0;
   const hasGorilla = selectedAddons.some(a => a.id === 'gorilla');
   const hasChimp = selectedAddons.some(a => a.id === 'chimp');
@@ -306,6 +249,31 @@ export function calculatePricing(basePackage: Package, selectedAddons: Addon[], 
     finalTotal,
     tier
   };
+}
+
+// --- PROMOTIONS ---
+
+export async function fetchPromotions(): Promise<Promotion[]> {
+  const q = query(collection(db, 'promotions'), orderBy('endDate', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Promotion));
+}
+
+export async function savePromotion(promo: Partial<Promotion>) {
+  if (promo.id) {
+    const ref = doc(db, 'promotions', promo.id);
+    await updateDoc(ref, { ...promo, updatedAt: serverTimestamp() });
+  } else {
+    await addDoc(collection(db, 'promotions'), {
+      ...promo,
+      isActive: true,
+      createdAt: serverTimestamp(),
+    });
+  }
+}
+
+export async function deletePromotion(id: string) {
+  await deleteDoc(doc(db, 'promotions', id));
 }
 
 // --- GALLERY ---

@@ -1,43 +1,72 @@
 
-// src/app/admin/page.tsx (Overview Page)
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import StatCard from "@/components/stat-card"; // Assuming you have or will create this
-import { Users, CheckCircle2, FileText, Activity, Hourglass } from "lucide-react";
+'use client';
 
-// Mock Data for Stats
-const mockStats = {
-  totalUsers: 1250,
-  approvedCommunityMembers: 350,
-  onlineMembers: 85, // This might mean e-Rotaract Online members
-  totalPosts: 780,
-  pendingApprovals: 15, // Combined pending members + posts
-};
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import StatCard from "@/components/stat-card";
+import { Users, CheckCircle2, FileText, Activity, Hourglass, Database, Map, Percent, ArrowRight } from "lucide-react";
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { fetchBasePackages, fetchCampaigns, fetchPromotions } from '@/lib/services/cms-service';
 
 export default function AdminOverviewPage() {
+  const [counts, setCounts] = useState({ packages: 0, expeditions: 0, promos: 0 });
+
+  useEffect(() => {
+    const loadCounts = async () => {
+      const [pkgs, camps, promos] = await Promise.all([
+        fetchBasePackages(),
+        fetchCampaigns(),
+        fetchPromotions()
+      ]);
+      setCounts({
+        packages: pkgs.length,
+        expeditions: camps.length,
+        promos: promos.length
+      });
+    };
+    loadCounts();
+  }, []);
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold font-headline text-primary">Admin Overview</h1>
       
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard title="Total Users" value={mockStats.totalUsers.toLocaleString()} icon={Users} description="All registered users" />
-        <StatCard title="Community Members" value={mockStats.approvedCommunityMembers.toLocaleString()} icon={CheckCircle2} description="Approved Rotaract Club members" />
-        <StatCard title="e-Rotaract Online Members" value={mockStats.onlineMembers.toLocaleString()} icon={Activity} description="Paid e-Rotaract members" />
-        <StatCard title="Total Posts" value={mockStats.totalPosts.toLocaleString()} icon={FileText} description="Blog posts & other content" />
-        <StatCard title="Pending Approvals" value={mockStats.pendingApprovals.toLocaleString()} icon={Hourglass} description="Memberships & posts awaiting review" />
+        <StatCard title="Inventory Items" value={counts.packages} icon={Database} description="Base safari foundations" />
+        <StatCard title="Live Expeditions" value={counts.expeditions} icon={Map} description="Public tour itineraries" />
+        <StatCard title="Active Promos" value={counts.promos} icon={Percent} description="Coupons and special deals" />
       </div>
 
-      <Card className="transition-all duration-300 ease-out hover:shadow-lg hover:-translate-y-1">
-        <CardHeader>
-          <CardTitle>Recent Activity</CardTitle>
-          <CardDescription>A log of recent important actions will appear here.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Recent activity feed placeholder...</p>
-          {/* Example: List of recent signups, posts, approvals */}
-        </CardContent>
-      </Card>
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+            <CardHeader>
+                <CardTitle>Business Controls</CardTitle>
+                <CardDescription>Quick actions to manage your tour offerings.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+                <Button variant="outline" className="w-full justify-between" asChild>
+                    <Link href="/admin/inventory">Update Pricing & Add-ons <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+                <Button variant="outline" className="w-full justify-between" asChild>
+                    <Link href="/admin/expeditions">Create New Expedition <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+                <Button variant="outline" className="w-full justify-between" asChild>
+                    <Link href="/admin/promotions">Manage Seasonal Offers <ArrowRight className="h-4 w-4" /></Link>
+                </Button>
+            </CardContent>
+        </Card>
 
-      {/* More sections can be added here, e.g., quick links to common tasks */}
+        <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+            <CardHeader>
+                <CardTitle>Recent Activity</CardTitle>
+                <CardDescription>A log of recent platform management actions.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <p className="text-muted-foreground text-sm">No recent activity to show.</p>
+            </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
