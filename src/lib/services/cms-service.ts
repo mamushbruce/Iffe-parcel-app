@@ -141,13 +141,13 @@ export async function fetchAddons(): Promise<Addon[]> {
   const snapshot = await getDocs(q);
   
   const defaultAddons: Addon[] = [
-    // Wildlife Category
-    { id: 'gorilla', name: 'Gorilla Trekking', price: 700, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
-    { id: 'chimp', name: 'Chimpanzee Tracking', price: 250, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+    // Wildlife Category - Updated to 2026 Master Pricing Table
+    { id: 'gorilla', name: 'Gorilla Trekking', price: 900, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
+    { id: 'chimp', name: 'Chimpanzee Tracking', price: 320, category: 'activity', subCategory: 'Wildlife', bundleEligible: true, isActive: true },
     { id: 'golden_monkey', name: 'Golden Monkey Tracking', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'big_five', name: 'Big Five Game Drive', price: 150, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'rhino_tracking', name: 'Rhino Tracking', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
-    { id: 'bird_watching', name: 'Bird Watching Safari', price: 80, category: 'activity', subCategory: 'Wildlife', isActive: true },
+    { id: 'bird_watching', name: 'Bird Watching Safari', price: 100, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'night_game', name: 'Night Game Drive', price: 120, category: 'activity', subCategory: 'Wildlife', isActive: true },
     { id: 'predator_tracking', name: 'Predator Tracking Experience', price: 200, category: 'activity', subCategory: 'Wildlife', isActive: true },
     
@@ -230,7 +230,7 @@ export async function fetchAddons(): Promise<Addon[]> {
     { id: 'private_cruiser', name: 'Private Land Cruiser', price: 1500, category: 'luxury', isActive: true },
     { id: 'heli_tour', name: 'Helicopter Scenic Tour', price: 2500, category: 'luxury', isActive: true },
     { id: 'vip_transfer', name: 'VIP Airport Transfer', price: 150, category: 'luxury', isActive: true },
-    { id: 'bush_dinner', name: 'Luxury Bush Dinner', price: 200, category: 'luxury', isActive: true },
+    { id: 'brush_dinner', name: 'Luxury Bush Dinner', price: 200, category: 'luxury', isActive: true },
     
     // Extensions
     { id: 'extra_2days', name: 'Extra 2 Days Safari', price: 900, category: 'extension', isActive: true },
