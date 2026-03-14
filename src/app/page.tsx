@@ -4,8 +4,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck, Package, Loader2 } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Edit3, Lightbulb, MessageCircle, ArrowRight, MountainSnow, ShieldCheck, Package, Loader2, Users, MapPin, Award, Calendar, Send } from 'lucide-react';
 import BlogCard from '@/components/blog-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import placeholderImages from '@/app/lib/placeholder-images.json';
@@ -18,6 +18,8 @@ import ERotaractSignupTrigger from '@/components/auth/erotaract-signup-trigger';
 import fifaCardData from '@/app/lib/fifa-card-data.json';
 import { fetchBlogPosts, fetchGalleryImages, type BlogPost, type GalleryImage } from '@/lib/services/cms-service';
 import TestimonialSection from '@/components/testimonial-section';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/use-toast';
 
 interface FeedItemBase {
   id: string;
@@ -48,6 +50,7 @@ export default function Home() {
     const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeCarouselImage, setActiveCarouselImage] = useState<string | null>(null);
+    const { toast } = useToast();
 
     useEffect(() => {
       const loadFeed = async () => {
@@ -84,6 +87,14 @@ export default function Home() {
       loadFeed();
     }, []);
 
+    const handleQuickInquiry = (e: React.FormEvent) => {
+        e.preventDefault();
+        toast({
+            title: "Inquiry Sent!",
+            description: "We've received your quick inquiry. Our team will reach out shortly.",
+        });
+    };
+
     const AnimatedCard = ({ children, className }: { children: React.ReactNode, className?: string }) => {
         const [ref, isVisible] = useScrollAnimation();
         return (
@@ -102,7 +113,7 @@ export default function Home() {
       <div className="relative z-10 space-y-12 animate-fade-in pt-12">
         <section>
           <AnimatedCard>
-          <Card className="shadow-lg bg-card/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
+          <Card className="shadow-lg bg-card/80 backdrop-blur-sm transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 border-primary/10">
             <CardHeader>
               <CardTitle className="font-headline text-2xl text-primary">Your Adventure Starts Here</CardTitle>
               <CardDescription>Ready to explore the wild? Let's get started:</CardDescription>
@@ -127,6 +138,108 @@ export default function Home() {
             </CardContent>
           </Card>
           </AnimatedCard>
+        </section>
+
+        {/* New Trust & Booking Section */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <AnimatedCard>
+                <Card className="h-full bg-card/80 backdrop-blur-sm border-primary/10 flex flex-col">
+                    <CardHeader>
+                        <CardTitle className="font-headline text-2xl text-primary flex items-center">
+                            <Calendar className="mr-3 h-6 w-6 text-accent" />
+                            Quick Safari Inquiry
+                        </CardTitle>
+                        <CardDescription>Get a personalized itinerary started in seconds.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                        <form onSubmit={handleQuickInquiry} className="space-y-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Full Name</label>
+                                    <Input placeholder="John Doe" required />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Email Address</label>
+                                    <Input type="email" placeholder="john@example.com" required />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Where would you like to go?</label>
+                                <Input placeholder="e.g. Bwindi Gorilla Trekking" />
+                            </div>
+                            <Button type="submit" className="w-full bg-accent text-accent-foreground hover:bg-accent/90 mt-2 font-bold py-6">
+                                <Send className="mr-2 h-5 w-5" /> Send Inquiry
+                            </Button>
+                        </form>
+                    </CardContent>
+                    <CardFooter className="bg-muted/30 py-4 text-center">
+                        <p className="text-xs text-muted-foreground w-full">We typically respond within 2-4 business hours.</p>
+                    </CardFooter>
+                </Card>
+            </AnimatedCard>
+
+            <AnimatedCard>
+                <Card className="h-full bg-primary text-primary-foreground border-none relative overflow-hidden flex flex-col">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-3xl -mr-16 -mt-16" />
+                    <CardHeader>
+                        <CardTitle className="font-headline text-2xl flex items-center">
+                            <ShieldCheck className="mr-3 h-6 w-6 text-accent" />
+                            Why Choose Iffe-Travels?
+                        </CardTitle>
+                        <CardDescription className="text-primary-foreground/70">Building trust through thousands of successful African adventures.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="flex-grow space-y-6">
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="flex items-start gap-3">
+                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                    <Users className="h-5 w-5 text-accent" />
+                                </div>
+                                <div>
+                                    <p className="text-xl font-black leading-none">2,000+</p>
+                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Happy Travelers</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                    <Calendar className="h-5 w-5 text-accent" />
+                                </div>
+                                <div>
+                                    <p className="text-xl font-black leading-none">10+ Yrs</p>
+                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Safari Experience</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                    <MapPin className="h-5 w-5 text-accent" />
+                                </div>
+                                <div>
+                                    <p className="text-xl font-black leading-none">Expert</p>
+                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Local Guides</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3">
+                                <div className="p-2 bg-white/10 rounded-lg shrink-0">
+                                    <Award className="h-5 w-5 text-accent" />
+                                </div>
+                                <div>
+                                    <p className="text-xl font-black leading-none">Certified</p>
+                                    <p className="text-[10px] uppercase font-bold text-white/60 tracking-wider">Safety & Quality</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="pt-4 border-t border-white/10">
+                            <p className="text-sm font-medium text-white/80 leading-relaxed italic">
+                                "Our mission is to provide authentic, responsible, and safe travel experiences that leave you with memories for a lifetime."
+                            </p>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="mt-auto">
+                        <Button variant="link" className="text-accent hover:text-white p-0" asChild>
+                            <Link href="/about">Learn more about our heritage <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                        </Button>
+                    </CardFooter>
+                </Card>
+            </AnimatedCard>
         </section>
         
         <section>
