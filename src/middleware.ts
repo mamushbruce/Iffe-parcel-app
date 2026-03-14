@@ -4,20 +4,20 @@ import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  // Protect /admin routes
+  // Protect Admin routes
   if (pathname.startsWith('/admin')) {
-    const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-    if (!token) {
-      // Not logged in, redirect to home
+    if (!token || token.role !== 'admin') {
       const url = req.nextUrl.clone();
       url.pathname = '/';
       return NextResponse.redirect(url);
     }
+  }
 
-    if (token.role !== 'admin') {
-      // Logged in but not an admin, redirect to home
+  // Protect Traveler Dashboard
+  if (pathname.startsWith('/dashboard')) {
+    if (!token) {
       const url = req.nextUrl.clone();
       url.pathname = '/';
       return NextResponse.redirect(url);
@@ -28,5 +28,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/admin/:path*', '/dashboard/:path*'],
 };
