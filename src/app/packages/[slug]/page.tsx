@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation';
 import packagesData from '@/app/lib/packages-data.json';
 import ComboPackageClientPage from './client-page';
@@ -27,7 +26,7 @@ const mockCampaignsData = [
   { id: '15', title: 'Pian Upe Wildlife Reserve', imageUrl: placeholderImages.campaignPianUpe.src, dataAiHint: 'savannah reserve', shortDescription: 'Discover rare wildlife species in a semi-arid savannah.', tags: ['#RareWildlife', '#Savannah'], region: 'Northern' },
   // Central Uganda
   { id: '16', title: 'Kampala City Tour', imageUrl: placeholderImages.campaignKampala.src, dataAiHint: 'kampala city', shortDescription: 'Explore museums, mosques, and cultural centres in Uganda\'s capital.', tags: ['#CityTour', '#Culture'], region: 'Central' },
-  { id: '17', title: 'Entebbe Botanical Gardens', imageUrl: placeholderImages.campaignEntebbe.src, dataAiHint: 'entebbe botanical', shortDescription: 'Visit the Wildlife Centre and relax by Lake Victoria.', tags: ['#Gardens', '#Relaxation'], region: 'Central' },
+  { id: '17', title: 'Entebbe Botanical Gardens', imageUrl: placeholderImages.campaignEntebbe.src, dataAiHint: 'entebbe botanical', shortDescription: 'Nature, wildlife, and relaxation by Africa’s largest lake.', tags: ['#Gardens', '#Relaxation'], region: 'Central' },
   { id: '18', title: 'Ngamba Island Chimpanzee Sanctuary', imageUrl: placeholderImages.campaignNgamba.src, dataAiHint: 'chimpanzee sanctuary', shortDescription: 'Visit a sanctuary for orphaned chimpanzees on Lake Victoria.', tags: ['#Conservation', '#Chimpanzee'], region: 'Central' },
   { id: '19', title: 'Mabira Forest Zip-Lining', imageUrl: placeholderImages.campaignMabira.src, dataAiHint: 'rainforest zip', shortDescription: 'Experience the thrill of zip-lining through a lush rainforest.', tags: ['#Adventure', '#Forest'], region: 'Central' },
   { id: '20', title: 'Ssese Islands Relaxation', imageUrl: placeholderImages.campaignSsese.src, dataAiHint: 'lake victoria island', shortDescription: 'Unwind on the beautiful beaches of the Ssese Islands.', tags: ['#Beach', '#Relaxation'], region: 'Central' },
@@ -36,14 +35,6 @@ const mockCampaignsData = [
   { id: '22', title: 'Toro Kingdom & Fort Portal', imageUrl: placeholderImages.campaignFortPortal.src, dataAiHint: 'crater lake', shortDescription: 'Explore stunning crater lakes and rich cultural experiences.', tags: ['#Culture', '#Scenery'], region: 'Other' },
 ];
 
-
-interface CampaignTeaser {
-  id: string;
-  title: string;
-  imageUrl: string;
-  dataAiHint?: string;
-  shortDescription: string;
-}
 
 async function getPackageDetails(slug: string) {
     const pkg = packagesData.find(p => p.slug === slug);
@@ -59,20 +50,21 @@ async function getPackageDetails(slug: string) {
                 id: tour.id,
                 title: tour.title,
                 shortDescription: tour.shortDescription,
-                imageUrl: placeholderImages[tour.imageUrl as keyof typeof placeholderImages]?.src || '',
-                dataAiHint: placeholderImages[tour.imageUrl as keyof typeof placeholderImages]?.hint || '',
+                imageUrl: (placeholderImages as any)[tour.imageUrl]?.src || tour.imageUrl || '',
+                dataAiHint: (placeholderImages as any)[tour.imageUrl]?.hint || tour.dataAiHint || '',
             };
         })
         .filter((tour): tour is NonNullable<typeof tour> => tour !== null);
 
-    const heroImage = placeholderImages[pkg.imageUrl as keyof typeof placeholderImages];
+    const heroImage = (placeholderImages as any)[pkg.imageUrl];
 
     return { ...pkg, includedTours, heroImage };
 }
 
 
-export default async function ComboPackagePage({ params }: { params: { slug: string } }) {
-  const packageDetails = await getPackageDetails(params.slug);
+export default async function ComboPackagePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const packageDetails = await getPackageDetails(slug);
 
   if (!packageDetails) {
     notFound();
