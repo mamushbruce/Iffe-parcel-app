@@ -126,11 +126,14 @@ export default function Hero() {
             <p className={cn("text-stone-300 transition-opacity duration-500 leading-relaxed font-medium", hasScrolled ? "text-xs line-clamp-2" : "text-sm")} key={currentBg.description}>
                 {currentBg.description}
             </p>
-            <div className="pt-2">
+            <div className="flex flex-col gap-3 pt-2">
                <Button size={hasScrolled ? 'sm' : 'lg'} asChild className="bg-accent text-accent-foreground hover:bg-accent/90 font-black rounded-full transition-all duration-500 uppercase tracking-widest w-full h-12">
                 <Link href="/contact">
                   GET STARTED
                 </Link>
+              </Button>
+              <Button variant="outline" size={hasScrolled ? 'sm' : 'lg'} asChild className="rounded-full border-white/50 text-white hover:bg-white/10 hover:text-white transition-all duration-500 uppercase tracking-widest w-full h-12">
+                <Link href="/about">Who we are</Link>
               </Button>
             </div>
         </div>
