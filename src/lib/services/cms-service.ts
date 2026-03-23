@@ -20,6 +20,7 @@ import {
   type DocumentData
 } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import placeholderImages from '@/app/lib/placeholder-images.json';
 
 // --- TYPES ---
 
@@ -391,16 +392,46 @@ export async function deleteVideo(id: string) {
 
 // --- CAMPAIGNS (Expeditions) ---
 
+const DEFAULT_CAMPAIGNS: Campaign[] = [
+  // Western Uganda
+  { id: '1', title: 'Bwindi Gorilla Trekking', imageUrl: placeholderImages.campaignBwindi.src, dataAiHint: 'bwindi forest', shortDescription: 'World-famous gorilla trekking in a UNESCO World Heritage site.', description: 'Venture into the ancient Bwindi Impenetrable Forest for a face-to-face encounter with endangered mountain gorillas.', region: 'Western', goal: 100, currentAmount: 98, tags: ['#Gorilla', '#UNESCO'] },
+  { id: '2', title: 'Queen Elizabeth National Park', imageUrl: placeholderImages.campaignQueenElizabeth.src, dataAiHint: 'tree climbing lion', shortDescription: 'Spot tree-climbing lions and enjoy Kazinga Channel boat safaris.', description: 'Explore Ugandas most popular savanna park, famous for its diverse ecosystems and the iconic Ishasha tree-climbing lions.', region: 'Western', goal: 100, currentAmount: 95, tags: ['#Wildlife', '#Lions'] },
+  { id: '3', title: 'Murchison Falls Safari', imageUrl: placeholderImages.campaignMurchison.src, dataAiHint: 'murchison falls', shortDescription: 'See the powerful falls and diverse wildlife of Murchison.', description: 'Witness the Nile River explode through a narrow gorge at Murchison Falls, surrounded by elephants, giraffes, and hippos.', region: 'Western', goal: 100, currentAmount: 96, tags: ['#Wildlife', '#Waterfalls'] },
+  { id: '4', title: 'Kibale Forest Chimpanzee Trekking', imageUrl: placeholderImages.campaignKibale.src, dataAiHint: 'chimpanzee forest', shortDescription: 'Trek chimpanzees in the primate capital of East Africa.', description: 'Track our closest relatives through the lush rainforest of Kibale, home to 13 different primate species.', region: 'Western', goal: 100, currentAmount: 94, tags: ['#Chimpanzee', '#Primates'] },
+  { id: '5', title: 'Rwenzori Mountains Hiking', imageUrl: placeholderImages.campaignRwenzori.src, dataAiHint: 'rwenzori mountains', shortDescription: 'Hike the snow-capped "Mountains of the Moon".', description: 'Embark on a challenging trek to the glaciers of the Rwenzori Mountains, one of Africas most unique alpine landscapes.', region: 'Western', goal: 100, currentAmount: 92, tags: ['#Hiking', '#Mountains'] },
+  { id: '6', title: 'Relax at Lake Bunyonyi', imageUrl: placeholderImages.campaignBunyonyi.src, dataAiHint: 'lake bunyonyi', shortDescription: 'Relax by one of Africa’s deepest and most scenic lakes.', description: 'Unwind at the stunning "Lake of Little Birds," famous for its 29 islands and breathtaking terraced hillsides.', region: 'Western', goal: 100, currentAmount: 97, tags: ['#Relaxation', '#Scenery'] },
+  { id: '7', title: 'Lake Mburo Cycling Safari', imageUrl: placeholderImages.campaignMburo.src, dataAiHint: 'zebra safari', shortDescription: 'The closest park to Kampala, perfect for cycling among zebras.', description: 'Experience wildlife from a different perspective with a bicycle tour through the savanna of Lake Mburo.', region: 'Western', goal: 100, currentAmount: 93, tags: ['#Cycling', '#Zebras'] },
+  // Eastern Uganda
+  { id: '8', title: 'Jinja - Source of the Nile', imageUrl: placeholderImages.campaignSourceNile.src, dataAiHint: 'source of nile', shortDescription: 'Discover the legendary source of the world\'s longest river.', description: 'Visit the historic point where the Great Nile begins its 6,000km journey to the Mediterranean Sea.', region: 'Eastern', goal: 100, currentAmount: 95, tags: ['#Jinja', '#RiverNile'] },
+  { id: '9', title: 'White-Water Rafting in Jinja', imageUrl: placeholderImages.campaignRafting.src, dataAiHint: 'white water rafting', shortDescription: 'Experience the thrill of Grade 5 rapids on the Nile.', description: 'Conquer the legendary rapids of the Victoria Nile in Jinja, the adventure capital of East Africa.', region: 'Eastern', goal: 100, currentAmount: 98, tags: ['#Adventure', '#Jinja'] },
+  { id: '10', title: 'Mount Elgon National Park', imageUrl: placeholderImages.campaignElgon.src, dataAiHint: 'mount elgon', shortDescription: 'Hike a volcanic mountain and explore caves near Sipi Falls.', description: 'Explore the world\'s largest volcanic base and discover ancient caves and diverse flora on the slopes of Mt. Elgon.', region: 'Eastern', goal: 100, currentAmount: 91, tags: ['#Hiking', '#Volcano'] },
+  { id: '11', title: 'Sipi Falls Adventure', imageUrl: placeholderImages.campaignSipi.src, dataAiHint: 'sipi falls', shortDescription: 'Explore a series of beautiful waterfalls with coffee tours and hikes.', description: 'Hike to three stunning waterfalls and learn about local Arabica coffee production from farm to cup.', region: 'Eastern', goal: 100, currentAmount: 96, tags: ['#Waterfalls', '#Coffee'] },
+  { id: '12', title: 'Busoga Kingdom Cultural Tour', imageUrl: placeholderImages.campaignBusoga.src, dataAiHint: 'cultural kingdom', shortDescription: 'Immerse yourself in the royal heritage and traditions of Busoga.', description: 'Visit the royal palace and historical sites to understand the rich cultural fabric of the Busoga people.', region: 'Eastern', goal: 100, currentAmount: 89, tags: ['#Culture', '#History'] },
+  // Northern Uganda
+  { id: '13', title: 'Kidepo Valley National Park', imageUrl: placeholderImages.campaignKidepo.src, dataAiHint: 'kidepo valley', shortDescription: 'Explore remote, rugged landscapes with unique wildlife.', description: 'Journey to Ugandas most remote park for a wild experience with cheetahs, ostriches, and stunning savanna views.', region: 'Northern', goal: 100, currentAmount: 99, tags: ['#Remote', '#Wilderness'] },
+  { id: '14', title: 'Karuma Falls Wildlife Tour', imageUrl: placeholderImages.campaignKaruma.src, dataAiHint: 'karuma falls', shortDescription: 'Spot wildlife near the stunning Karuma Falls on the Nile.', description: 'Observe the powerful Karuma rapids and search for wildlife in the surrounding reserves of northern Uganda.', region: 'Northern', goal: 100, currentAmount: 88, tags: ['#Wildlife', '#NationalPark'] },
+  { id: '15', title: 'Pian Upe Wildlife Reserve', imageUrl: placeholderImages.campaignPianUpe.src, dataAiHint: 'savannah reserve', shortDescription: 'Discover rare wildlife species in a semi-arid savannah.', description: 'Visit one of Ugandas largest protected areas, home to roan antelopes and vibrant birdlife.', region: 'Northern', goal: 100, currentAmount: 87, tags: ['#RareWildlife', '#Savannah'] },
+  // Central Uganda
+  { id: '16', title: 'Kampala City Tour', imageUrl: placeholderImages.campaignKampala.src, dataAiHint: 'kampala city', shortDescription: 'Explore museums, mosques, and cultural centres in Uganda\'s capital.', description: 'Dive into the pulse of East Africas most vibrant city, from historic Cathedrals to bustling local markets.', region: 'Central', goal: 100, currentAmount: 92, tags: ['#CityTour', '#Culture'] },
+  { id: '17', title: 'Entebbe Botanical Gardens', imageUrl: placeholderImages.campaignEntebbe.src, dataAiHint: 'entebbe botanical', shortDescription: 'Nature, wildlife, and relaxation by Africa’s largest lake.', description: 'Walk through historic gardens on the shores of Lake Victoria, spotting exotic birds and monkeys.', region: 'Central', goal: 100, currentAmount: 94, tags: ['#Gardens', '#Relaxation'] },
+  { id: '18', title: 'Ngamba Island Chimpanzee Sanctuary', imageUrl: placeholderImages.campaignNgamba.src, dataAiHint: 'chimpanzee sanctuary', shortDescription: 'Visit a sanctuary for orphaned chimpanzees on Lake Victoria.', description: 'Take a boat trip to see rescued chimps and learn about conservation efforts on this beautiful island.', region: 'Central', goal: 100, currentAmount: 95, tags: ['#Conservation', '#Chimpanzee'] },
+  { id: '19', title: 'Mabira Forest Zip-Lining', imageUrl: placeholderImages.campaignMabira.src, dataAiHint: 'rainforest zip', shortDescription: 'Experience the thrill of zip-lining through a lush rainforest.', description: 'Soar through the canopy of Ugandas largest central forest reserve on an adrenaline-pumping zip-line.', region: 'Central', goal: 100, currentAmount: 93, tags: ['#Adventure', '#Forest'] },
+  { id: '20', title: 'Ssese Islands Relaxation', imageUrl: placeholderImages.campaignSsese.src, dataAiHint: 'lake victoria island', shortDescription: 'Unwind on the beautiful beaches of the Ssese Islands.', description: 'Escape to a tropical paradise in the middle of Lake Victoria, perfect for sunbathing, fishing, and island hopping.', region: 'Central', goal: 100, currentAmount: 96, tags: ['#Beach', '#Relaxation'] },
+  // Other Areas
+  { id: '21', title: 'Semuliki National Park', imageUrl: placeholderImages.campaignSemuliki.src, dataAiHint: 'semuliki hot springs', shortDescription: 'Discover unique bird species and boiling hot springs.', description: 'Visit the Sempaya hot springs where the water reaches boiling temperatures in a Central African-style forest.', region: 'Other', goal: 100, currentAmount: 90, tags: ['#BirdWatching', '#HotSprings'] },
+  { id: '22', title: 'Toro Kingdom & Fort Portal', imageUrl: placeholderImages.campaignFortPortal.src, dataAiHint: 'crater lake', shortDescription: 'Explore stunning crater lakes and rich cultural experiences.', description: 'Visit the clean city of Fort Portal and explore the many crater lakes surrounding the Toro Royal Palace.', region: 'Other', goal: 100, currentAmount: 94, tags: ['#Culture', '#Scenery'] },
+];
+
 export async function fetchCampaigns(featuredOnly?: boolean): Promise<Campaign[]> {
   const campaignsRef = collection(db, 'campaigns');
-  let q = query(campaignsRef, orderBy('createdAt', 'desc'));
-  if (featuredOnly) {
-    q = query(q, where('featured', '==', true));
-  }
+  // Removing order by for now to handle missing createdAt fields in older docs
+  const q = featuredOnly 
+    ? query(campaignsRef, where('featured', '==', true))
+    : query(campaignsRef);
   
   const querySnapshot = await getDocs(q);
   if (querySnapshot.empty) {
-    return [];
+    return featuredOnly ? DEFAULT_CAMPAIGNS.filter(c => c.featured) : DEFAULT_CAMPAIGNS;
   }
   return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Campaign));
 }
@@ -410,7 +441,9 @@ export async function getCampaignById(id: string): Promise<Campaign | null> {
   if (docSnap.exists()) {
     return { id: docSnap.id, ...docSnap.data() } as Campaign;
   }
-  return null;
+  // Fallback to defaults
+  const defaultC = DEFAULT_CAMPAIGNS.find(c => c.id === id);
+  return defaultC || null;
 }
 
 export async function saveCampaign(campaign: Partial<Campaign>) {
