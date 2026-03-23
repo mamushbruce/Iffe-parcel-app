@@ -34,7 +34,7 @@ async function getDetailedCampaign(id: string): Promise<{ campaign: Campaign | u
     const enrichedCampaign = {
         ...campaign,
         storyline: campaign.storyline || [
-            "Experience the raw beauty of " + campaign.region + " Uganda.",
+            "Experience the raw beauty of " + (campaign.region || "this region") + " Uganda.",
             "Our expert guides ensure an authentic and safe journey.",
             "Connect with nature and local communities in a meaningful way."
         ],
@@ -57,8 +57,9 @@ async function getDetailedCampaign(id: string): Promise<{ campaign: Campaign | u
     return { campaign: enrichedCampaign as any, relatedTours: related };
 }
 
-export default async function CampaignDetailPage({ params }: { params: { id: string } }) {
-  const { campaign, relatedTours } = await getDetailedCampaign(params.id);
+export default async function CampaignDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const { campaign, relatedTours } = await getDetailedCampaign(id);
 
   if (!campaign) {
     notFound();

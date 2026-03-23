@@ -1,4 +1,3 @@
-
 import { notFound } from 'next/navigation';
 import { getMockVideoData, type VideoItem } from '@/app/videos/data';
 import Image from 'next/image';
@@ -7,11 +6,11 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { PlayCircle } from 'lucide-react';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function WatchPage({ params }: Props) {
-  const videoId = params.id;
+export default async function WatchPage({ params }: Props) {
+  const { id: videoId } = await params;
   const allVideos = getMockVideoData();
 
   const currentVideo = allVideos.find(v => v.youtubeVideoId === videoId);
@@ -27,7 +26,7 @@ export default function WatchPage({ params }: Props) {
       <div className="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-black">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           className="absolute inset-0 w-full h-full"
           title={currentVideo.title}
