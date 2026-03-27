@@ -5,15 +5,13 @@ This is a professional adventure tourism platform built with Next.js, Firebase, 
 ## Administrator Credentials (Prototype)
 To access the Admin Panel (/admin), use the following credentials:
 - **Email**: `admin@iffe-travels.com`
-- **Password**: `admin123` (Suggested)
-
-
+- **Password**: `admin123` 
 
 ### Setup Instructions
 1. **Firebase Console**: Go to the [Firebase Console](https://console.firebase.google.com/).
 2. **Authentication**: Select your project, go to **Build > Authentication > Users**.
 3. **Add User**: Click "Add user", enter the email `admin@iffe-travels.com` and the password `admin123`.
-4. **Login**: Use these credentials in the app's login modal. The system will automatically recognize the email and route you to the `/admin` engine.
+4. **Login**: Use these credentials in the app's login modal. The system will automatically recognize the email and route you to the `/admin` dashboard.
 
 ## Project Architecture & Strategic Phases
 

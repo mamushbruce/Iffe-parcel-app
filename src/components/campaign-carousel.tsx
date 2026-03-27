@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -20,6 +20,47 @@ interface CampaignCarouselProps {
 }
 
 const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isInteracting, setIsInteracting] = useState(false);
+
+  // We triple the campaigns list to create a seamless infinite scroll experience
+  const displayCampaigns = [...campaigns, ...campaigns, ...campaigns];
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer || isInteracting) return;
+
+    let animationFrameId: number;
+    const autoScroll = () => {
+      if (scrollContainer) {
+        scrollContainer.scrollLeft += 0.8; // Slow smooth movement
+        
+        // Reset scroll position seamlessly when reaching the boundaries of the middle set
+        const setWidth = scrollContainer.scrollWidth / 3;
+        if (scrollContainer.scrollLeft >= setWidth * 2) {
+          scrollContainer.scrollLeft -= setWidth;
+        } else if (scrollContainer.scrollLeft <= 0) {
+          scrollContainer.scrollLeft += setWidth;
+        }
+      }
+      animationFrameId = requestAnimationFrame(autoScroll);
+    };
+
+    animationFrameId = requestAnimationFrame(autoScroll);
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isInteracting, campaigns.length]);
+
+  // Set initial scroll position to the middle set for infinite effect
+  useEffect(() => {
+    if (scrollRef.current) {
+      const setWidth = scrollRef.current.scrollWidth / 3;
+      scrollRef.current.scrollLeft = setWidth;
+    }
+  }, []);
+
   if (!campaigns || campaigns.length === 0) {
     return (
       <Card className="bg-muted/50">
@@ -30,15 +71,39 @@ const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
     );
   }
 
-  // To create a seamless infinite loop, we duplicate the list
-  const fullSet = [...campaigns, ...campaigns];
+  // Mouse drag logic
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDown(true);
+    setIsInteracting(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+    setIsInteracting(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+    setIsInteracting(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   return (
     <div className="w-full space-y-6">
       <div className="px-2">
         <div>
             <h3 className="font-headline text-2xl font-bold text-primary">From the Lens</h3>
-            <p className="text-sm text-muted-foreground">Visual highlights from our top destinations.</p>
+            <p className="text-sm text-muted-foreground">Visual highlights from our top destinations. (Drag or swipe to explore)</p>
         </div>
       </div>
       
@@ -51,60 +116,44 @@ const CampaignCarousel: React.FC<CampaignCarouselProps> = ({ campaigns }) => {
             ))}
         </div>
 
-        {/* Marquee Wrapper */}
-        <div className="overflow-hidden p-6 pt-12 pb-12 relative">
-          <div className="flex gap-4 animate-marquee hover:[animation-play-state:paused] w-max">
-            {/* Render the double set for infinite effect */}
-            <div className="flex gap-4 pr-4">
-              {campaigns.map((campaign, idx) => (
-                <div key={`set1-${campaign.id}-${idx}`} className="relative w-[280px] md:w-[400px] shrink-0 group/strip border-x-8 border-stone-900 bg-stone-900 overflow-hidden shadow-inner transition-all duration-500 hover:brightness-110">
-                  <div className="aspect-[16/10] relative rounded-lg overflow-hidden border border-white/10">
-                    <Image
-                      src={campaign.imageUrl}
-                      alt={campaign.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="transition-transform duration-700 ease-in-out group-hover/strip:scale-110"
-                      data-ai-hint={campaign.dataAiHint}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent opacity-80" />
-                    
-                    <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col justify-end h-full">
-                      <h4 className="text-white font-headline text-lg font-bold truncate leading-none mb-1 whitespace-normal">{campaign.title}</h4>
-                      <p className="text-white/60 text-[10px] line-clamp-1 mb-3 whitespace-normal">{campaign.shortDescription}</p>
-                      <Button variant="secondary" size="sm" asChild className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-7 text-[9px] font-black uppercase tracking-widest self-start rounded-full">
-                        <Link href={`/campaigns/${campaign.id}`}>Explore Tour</Link>
-                      </Button>
-                    </div>
+        {/* Scroll Container */}
+        <div 
+          ref={scrollRef}
+          className={cn(
+            "overflow-x-auto p-6 pt-12 pb-12 relative cursor-grab active:cursor-grabbing scrollbar-hide select-none",
+            isDown && "cursor-grabbing"
+          )}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => setIsInteracting(false)}
+        >
+          <div className="flex gap-4 w-max">
+            {displayCampaigns.map((campaign, idx) => (
+              <div key={`${campaign.id}-${idx}`} className="relative w-[280px] md:w-[400px] shrink-0 group/strip border-x-8 border-stone-900 bg-stone-900 overflow-hidden shadow-inner transition-all duration-500 hover:brightness-110">
+                <div className="aspect-[16/10] relative rounded-lg overflow-hidden border border-white/10">
+                  <Image
+                    src={campaign.imageUrl}
+                    alt={campaign.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="transition-transform duration-700 ease-in-out group-hover/strip:scale-110 pointer-events-none"
+                    data-ai-hint={campaign.dataAiHint}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent opacity-80" />
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col justify-end h-full">
+                    <h4 className="text-white font-headline text-lg font-bold truncate leading-none mb-1 whitespace-normal">{campaign.title}</h4>
+                    <p className="text-white/60 text-[10px] line-clamp-1 mb-3 whitespace-normal">{campaign.shortDescription}</p>
+                    <Button variant="secondary" size="sm" asChild className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-7 text-[9px] font-black uppercase tracking-widest self-start rounded-full">
+                      <Link href={`/campaigns/${campaign.id}`} className="pointer-events-auto">Explore Tour</Link>
+                    </Button>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="flex gap-4 pr-4">
-              {campaigns.map((campaign, idx) => (
-                <div key={`set2-${campaign.id}-${idx}`} className="relative w-[280px] md:w-[400px] shrink-0 group/strip border-x-8 border-stone-900 bg-stone-900 overflow-hidden shadow-inner transition-all duration-500 hover:brightness-110">
-                  <div className="aspect-[16/10] relative rounded-lg overflow-hidden border border-white/10">
-                    <Image
-                      src={campaign.imageUrl}
-                      alt={campaign.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="transition-transform duration-700 ease-in-out group-hover/strip:scale-110"
-                      data-ai-hint={campaign.dataAiHint}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/20 to-transparent opacity-80" />
-                    
-                    <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col justify-end h-full">
-                      <h4 className="text-white font-headline text-lg font-bold truncate leading-none mb-1 whitespace-normal">{campaign.title}</h4>
-                      <p className="text-white/60 text-[10px] line-clamp-1 mb-3 whitespace-normal">{campaign.shortDescription}</p>
-                      <Button variant="secondary" size="sm" asChild className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 h-7 text-[9px] font-black uppercase tracking-widest self-start rounded-full">
-                        <Link href={`/campaigns/${campaign.id}`}>Explore Tour</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
