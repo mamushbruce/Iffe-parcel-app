@@ -43,7 +43,7 @@ export default function AppFooter() {
                     </Link>
                     <div className="flex items-start text-sm text-muted-foreground mb-4 max-w-sm">
                         <MapPin className="h-4 w-4 mr-2 mt-1 text-accent shrink-0" />
-                        <span>Plot 123, Adventure Lane, Kampala, Uganda</span>
+                        <span>Buwenda, Jinja Uganda</span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-4 max-w-sm">
                         Subscribe to our newsletter for the latest travel deals, tips, and stories from the wild.
@@ -61,22 +61,27 @@ export default function AppFooter() {
                         <Facebook className="h-5 w-5" />
                     </Button>
                     </Link>
-                    <Link href="#" aria-label="Instagram">
+                    <Link href="https://www.instagram.com/iffe.travels.ltd" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                     <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
                         <Instagram className="h-5 w-5" />
                     </Button>
                     </Link>
-                    <Link href="#" aria-label="Twitter">
+                    <Link href="https://x.com/IMudembula" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                     <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
                         <Twitter className="h-5 w-5" />
                     </Button>
                     </Link>
-                    <Link href="#" aria-label="LinkedIn">
+                    <Link href="https://www.linkedin.com/in/iffe-travels-limited-201849415" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                     <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
                         <Linkedin className="h-5 w-5" />
                     </Button>
                     </Link>
-                    <Link href="#" aria-label="YouTube">
+                    <Link href="https://www.tripadvisor.com/Profile/iffetravels" target="_blank" rel="noopener noreferrer" aria-label="TripAdvisor">
+                    <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
+                        <i className="fa-brands fa-tripadvisor h-5 w-5"></i>
+                    </Button>
+                    </Link>
+                    <Link href="https://www.youtube.com/channel/UCpzZFQ5eBs11PElV5z7CGPw" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                     <Button variant="outline" size="icon" className="border-muted-foreground/50 text-muted-foreground hover:bg-accent/10 hover:border-accent hover:text-accent">
                         <Youtube className="h-5 w-5" />
                     </Button>
@@ -92,8 +97,7 @@ export default function AppFooter() {
                 <ul className="space-y-2 text-sm">
                     <li><Link href="/packages" className="text-muted-foreground hover:text-primary">Packages</Link></li>
                     <li><Link href="/events" className="text-muted-foreground hover:text-primary">Departures</Link></li>
-                    <li className="flex items-center gap-2"><Waves className="h-4 w-4 text-accent" /><Link href="/discover-jinja" className="text-muted-foreground hover:text-primary">Discover Jinja</Link></li>
-                    <li className="flex items-center gap-2"><Mountain className="h-4 w-4 text-accent" /><Link href="/sipi-falls" className="text-muted-foreground hover:text-primary">Sipi Falls</Link></li>
+                    <li><Link href="/campaigns" className="text-muted-foreground hover:text-primary">All Expeditions</Link></li>
                     <li><Link href="/ideas" className="text-muted-foreground hover:text-primary">Dream Trips</Link></li>
                 </ul>
                 </div>
@@ -117,6 +121,7 @@ export default function AppFooter() {
             </div>
             </div>
 
+            {/* Bottom Perforation Strip (Inert in Footer) */}
             <Separator className="my-6" />
 
             <div className="text-center text-xs text-muted-foreground">

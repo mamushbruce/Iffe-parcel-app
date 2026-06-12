@@ -9,14 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Users, Send, MapPin, Share2, Facebook, Instagram, Twitter, Linkedin, Loader2 } from "lucide-react";
+import { Users, Send, MapPin, Share2, Facebook, Instagram, Twitter, Linkedin, Loader2, Mail, Youtube } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import placeholderImages from "@/app/lib/placeholder-images.json";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { cn } from "@/lib/utils";
-import HeroSection from "@/components/layout/hero-section";
+import PageHero from "@/components/layout/page-hero";
 import { useState } from 'react';
 import TestimonialSection from '@/components/testimonial-section';
 import Link from 'next/link';
@@ -35,20 +35,14 @@ const teamMembers = [
   {
     name: "Ian Mudembula",
     role: "Founder & Lead Guide",
-    avatar: placeholderImages.teamJane,
+    avatar: placeholderImages.teamIvan,
     link: "/profile/ian-mudembula",
   },
   {
     name: "Ben",
     role: "Head of Operations",
-    avatar: placeholderImages.teamJohn,
+    avatar: placeholderImages.teamBen,
     link: "/profile/ben",
-  },
-  {
-    name: "Alice Green",
-    role: "Customer Relations",
-    avatar: placeholderImages.teamAlice,
-    link: "/profile/alice-green",
   },
 ];
 
@@ -88,12 +82,11 @@ export default function ContactPage() {
 
   return (
     <div className="space-y-12 pb-20">
-      <HeroSection 
+      <PageHero 
         title="Get in Touch"
         subtitle="We'd love to hear from you. Whether you have a question about our tours or want to plan a custom safari, our team is ready to help."
-        iconName="Mail"
-        imageUrl={placeholderImages.teamJane.src}
-        dataAiHint={placeholderImages.teamJane.hint}
+        imageUrl={placeholderImages.contactHeader.src}
+        dataAiHint={placeholderImages.contactHeader.hint}
       />
       
       <div className={cn('grid grid-cols-1 md:grid-cols-2 gap-12 container mx-auto max-w-4xl px-4')}>
@@ -159,43 +152,41 @@ export default function ContactPage() {
                 <div className="relative aspect-[4/3] w-full rounded-lg overflow-hidden bg-muted">
                     <iframe
                         className="absolute inset-0 w-full h-full"
-                        src="https://maps.google.com/maps?q=0.347596,32.582520&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                        frameBorder="0"
-                        scrolling="no"
-                        marginHeight={0}
-                        marginWidth={0}
-                        title="iffe-travels Location"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15958.765184678583!2d33.17908971680265!3d0.45719914681677315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sug!4v1781147042465!5m2!1sen!2sug"
+                        style={{ border: 0 }}
+                        allowFullScreen
                         loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="iffe-travels Location"
                     ></iframe>
                 </div>
-                <p className="text-muted-foreground mt-2 text-sm">Plot 123, Adventure Lane, Kampala, Uganda</p>
             </CardContent>
         </AnimatedCard>
         <div className="space-y-4">
             <h2 className="font-headline text-2xl font-bold text-primary flex items-center"><Share2 className="mr-2 h-6 w-6 text-accent"/> Connect With Us</h2>
             <div className="space-y-3">
                  <Button asChild variant="outline" className="w-full justify-center text-lg py-6 rounded-full border-primary/50">
-                    <Link href="#">
-                        <i className="fa-brands fa-facebook mr-3 h-6 w-6 text-blue-600"></i> Facebook
+                    <Link href="https://www.youtube.com/channel/UCpzZFQ5eBs11PElV5z7CGPw" target="_blank" rel="noopener noreferrer">
+                        <Youtube className="mr-3 h-6 w-6 text-red-600" /> YouTube
                     </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-center text-lg py-6 rounded-full border-primary/50">
-                    <Link href="#">
-                        <i className="fa-brands fa-instagram mr-3 h-6 w-6 text-pink-500"></i> Instagram
+                    <Link href="https://www.instagram.com/iffe.travels.ltd" target="_blank" rel="noopener noreferrer">
+                        <Instagram className="mr-3 h-6 w-6 text-pink-500" /> Instagram
                     </Link>
                 </Button>
                  <Button asChild variant="outline" className="w-full justify-center text-lg py-6 rounded-full border-primary/50">
-                    <Link href="#">
-                        <i className="fa-brands fa-x-twitter mr-3 h-6 w-6 text-foreground"></i> X (Twitter)
+                    <Link href="https://x.com/IMudembula" target="_blank" rel="noopener noreferrer">
+                        <Twitter className="mr-3 h-6 w-6 text-foreground" /> X (Twitter)
                     </Link>
                 </Button>
                 <Button asChild variant="outline" className="w-full justify-center text-lg py-6 rounded-full border-primary/50">
-                    <Link href="#">
-                        <i className="fa-brands fa-linkedin mr-3 h-6 w-6 text-sky-700"></i> LinkedIn
+                    <Link href="https://www.linkedin.com/in/iffe-travels-limited-201849415" target="_blank" rel="noopener noreferrer">
+                        <Linkedin className="mr-3 h-6 w-6 text-sky-700" /> LinkedIn
                     </Link>
                 </Button>
                  <Button asChild variant="outline" className="w-full justify-center text-lg py-6 rounded-full border-primary/50">
-                    <Link href="#">
+                    <Link href="https://www.tripadvisor.com/Profile/iffetravels" target="_blank" rel="noopener noreferrer">
                         <i className="fa-brands fa-tripadvisor mr-3 h-6 w-6 text-green-600"></i> TripAdvisor
                     </Link>
                 </Button>

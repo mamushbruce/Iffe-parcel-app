@@ -1,10 +1,9 @@
-
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, UserCircle, MapPin, DollarSign } from 'lucide-react';
+import { UserCircle, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import cardDataFromFile from '@/app/lib/fifa-card-data.json';
 import { cn } from '@/lib/utils';
@@ -20,7 +19,7 @@ export interface CardData {
   rating: string;
   speed: string; // Represents days for trips, experience for people
   skill: string; // Represents activities for trips, tour count for people
-  image: keyof typeof placeholderImages;
+  image: string; // Updated to accept full URL
   dataAiHint: string;
   link: string;
   price?: string;
@@ -33,11 +32,12 @@ interface FifaCardCarouselProps {
 }
 
 const CardImage = ({ card }: { card: CardData }) => {
-    const imageData = placeholderImages[card.image] || placeholderImages.campaignDetailWildebeest;
+    // Check if image is a key in placeholderImages, otherwise treat as URL
+    const imageData = placeholderImages[card.image as keyof typeof placeholderImages] || { src: card.image };
     const [imgSrc, setImgSrc] = useState(imageData.src);
 
     useEffect(() => {
-        const newImageData = placeholderImages[card.image] || placeholderImages.campaignDetailWildebeest;
+        const newImageData = placeholderImages[card.image as keyof typeof placeholderImages] || { src: card.image };
         setImgSrc(newImageData.src);
     }, [card.image]);
 
@@ -48,7 +48,7 @@ const CardImage = ({ card }: { card: CardData }) => {
             layout="fill" 
             objectFit="cover" 
             data-ai-hint={card.dataAiHint}
-            onError={() => setImgSrc(placeholderImages.campaignDetailWildebeest.src)}
+            onError={() => setImgSrc('https://images.unsplash.com/photo-1673667618335-face21a8b1a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')}
             key={card.id}
         />
     );
@@ -73,13 +73,9 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
     setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
   }, [cards.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
-  };
-  
-  const handleIndicatorClick = (index: number) => {
-    setCurrentIndex(index);
-  };
+  }, [cards.length]);
   
   const onTouchStart = (e: React.TouchEvent) => {
       setTouchEnd(null);
@@ -123,8 +119,8 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
   useEffect(() => {
     if (onActiveCardChange && cards.length > 0) {
         const activeCard = cards[currentIndex];
-        const activeImageData = placeholderImages[activeCard.image];
-        onActiveCardChange({ ...activeCard, image: activeImageData.src as any });
+        const activeImageData = placeholderImages[activeCard.image as keyof typeof placeholderImages] || { src: activeCard.image };
+        onActiveCardChange({ ...activeCard, image: activeImageData.src });
     }
 
     const interval = setInterval(handleNext, 4000);
@@ -152,10 +148,6 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
         return 'card-right';
       case -1:
         return 'card-left';
-      case 2:
-        return 'card-far-right';
-      case -2:
-        return 'card-far-left';
       default:
         return 'card-hidden';
     }
@@ -164,7 +156,7 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
 
   return (
      <div 
-        className="carousel-container" 
+        className="carousel-container overflow-hidden max-w-full" 
         onTouchStart={onTouchStart} 
         onTouchMove={onTouchMove} 
         onTouchEnd={onTouchEnd}
@@ -172,7 +164,7 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
       >
         <h1 className="font-headline text-2xl md:text-4xl font-bold text-white mb-6 text-center">{title}</h1>
         
-        <div className="carousel">
+        <div className="carousel overflow-hidden">
             <div className="carousel-track">
                 {cards.map((card, index) => (
                     <div 
@@ -210,25 +202,6 @@ export default function FifaCardCarousel({ cards: cardsProp, title = "Featured E
                     </div>
                 ))}
             </div>
-        </div>
-        
-        <div className="carousel-nav">
-            <Button variant="outline" size="icon" onClick={handlePrev} className="nav-button prev">
-                <ChevronLeft />
-            </Button>
-            <Button variant="outline" size="icon" onClick={handleNext} className="nav-button next">
-                <ChevronRight />
-            </Button>
-        </div>
-        
-        <div className="card-indicators">
-            {cards.map((_, index) => (
-                <div 
-                    key={index}
-                    className={`indicator ${index === currentIndex ? 'active' : ''}`}
-                    onClick={() => handleIndicatorClick(index)}
-                />
-            ))}
         </div>
     </div>
   );
