@@ -26,79 +26,34 @@ interface Profile {
 
 const profilesData: Profile[] = [
   {
-    id: 'reuben-traveller',
-    name: 'Reuben Traveller',
-    title: 'Experienced Tour Guide',
-    avatar: 'userEdward',
-    bio: `Reuben, nicknamed "Traveller," is an experienced tour guide who combines his camping setup and socialising skills with tourists to give them a better experience while in East Africa. He knows all the best spots in the region where you can create unforgettable moments with your family, friends, and maybe workmates. His socialising skills include making a client know the rich history of the region as you spend time together on campfires, hikes, boat cruises, and many more.`,
-    stats: [
-      { label: 'Experience', value: '12+ Years' },
-      { label: 'Tours Guided', value: '400+' },
-      { label: 'Specialty', value: 'Campsite Setup, Socialising' },
-    ],
-    isVerified: true,
-    blogPosts: [],
-    guidedTours: [],
-  },
-  {
-    id: 'ian-ivan',
-    name: 'Ian Ivan',
-    title: 'Expert Guide & Wildlife Photographer',
-    avatar: 'homeCreatorJane',
-    bio: `Ian Ivan seamlessly blends his technical photography skills with a deep, ancestral connection to the Pearl of Africa. With over four years of professional experience navigating Uganda’s diverse landscapes, he specializes in guiding travelers through the rhythmic pulse of our cities and the serenity of our wild spaces.  Whether you are exploring the source of the Nile in Jinja, trekking the highlands of Kapchorwa, or navigating the vibrant streets of Kampala, Ivan ensures you don't just see the sights—you capture them perfectly. His tours are defined by a "storyteller’s lens," combining vast knowledge of Ugandan wildlife with intimate insights into the local cultures that make this country unique. From technical photography workshops in the field to expert navigation of Uganda’s hidden gems, Ivan is dedicated to creating an immersive, safe, and visually stunning journey for every traveler.`,
-    stats: [
-      { label: 'Experience', value: '4+ Years' },
-      { label: 'Tours Guided', value: '79+' },
-      { label: 'Specialty', value: 'Photography, Big Cats' },
-    ],
-    isVerified: true,
-    blogPosts: [
-      { id: 'b1', title: 'A Lion\'s Tale: A Close Encounter', author: 'Ian Ivan', date: 'Nov 05, 2023', excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.', imageUrl: 'https://images.unsplash.com/photo-1549429355-2070c1b4122d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', dataAiHint: 'lion pride', tags: ['#BigCats', '#Serengeti'], commentCount: 18 },
-    ],
-    guidedTours: [
-      { id: '3', title: 'Murchison Falls Safari – Uganda', shortDescription: 'See the powerful falls and diverse wildlife of Murchison.', image: 'campaignMurchison' },
-    ],
-  },
-  {
     id: 'ian-mudembula',
     name: 'Ian Mudembula',
     title: 'Founder & Lead Guide',
-    avatar: 'teamJane',
-    bio: `Ian founded iffe-travels with a singular vision: to share the magic of Africa with the world in a responsible and authentic way. With 15 years of guiding experience, his knowledge of the continent's ecosystems is unparalleled. He is passionate about community-based tourism and works tirelessly to ensure that local communities benefit from every tour.`,
+    avatar: 'teamIvan',
+    bio: `Ian founded iffe-travels with a singular vision: to share the magic of Africa with the world in a responsible and authentic way. With 15 years of guiding experience, his knowledge of the continent's ecosystems is unparalleled. He is passionate about community-based tourism and works tirelessly to ensure that local communities benefit from every tour. He seamlessly blends his technical photography skills with a deep, ancestral connection to the Pearl of Africa, ensuring you don't just see the sights—you capture them perfectly.`,
     stats: [
       { label: 'Experience', value: '15 Yrs' },
       { label: 'Tours Guided', value: '300+' },
-      { label: 'Specialty', value: 'Community Tourism' },
+      { label: 'Specialty', value: 'Community Tourism & Photography' },
     ],
     isVerified: true,
-    blogPosts: [],
-    guidedTours: [],
+    blogPosts: [
+        { id: 'b1', title: 'A Lion\'s Tale: A Close Encounter', author: 'Ian Mudembula', date: 'Nov 05, 2023', excerpt: 'The story of a thrilling and humbling afternoon spent observing a pride of lions in their natural habitat.', imageUrl: 'https://images.unsplash.com/photo-1549429355-2070c1b4122d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', dataAiHint: 'lion pride', tags: ['#BigCats', '#Serengeti'], commentCount: 18 },
+    ],
+    guidedTours: [
+      { id: '3', title: 'Murchison Falls Safari – Uganda', shortDescription: 'See the powerful falls and diverse wildlife of Murchison.', image: 'campaignDetailWildebeest' },
+    ],
   },
   {
     id: 'ben',
     name: 'Ben',
     title: 'Head of Operations',
-    avatar: 'teamJohn',
+    avatar: 'teamBen',
     bio: `Ben is the logistical mastermind behind every seamless iffe-travels journey. With a decade in operations, he ensures that every detail, from airport transfers to lodge bookings, is perfectly coordinated. His dedication to excellence allows our guests to relax and immerse themselves fully in their adventure.`,
     stats: [
         { label: 'Experience', value: '10 Yrs' },
         { label: 'Tours Managed', value: '500+' },
         { label: 'Specialty', value: 'Logistics' },
-    ],
-    isVerified: true,
-    blogPosts: [],
-    guidedTours: [],
-  },
-  {
-    id: 'alice-green',
-    name: 'Alice Green',
-    title: 'Customer Relations',
-    avatar: 'teamAlice',
-    bio: `Alice is the friendly voice and first point of contact for many of our travelers. She excels at understanding our clients' dreams and helping them choose the perfect safari. Her warmth and dedication ensure that every traveler feels supported from their first inquiry to their return home.`,
-    stats: [
-      { label: 'Experience', value: '8 Yrs' },
-      { label: 'Clients Assisted', value: '1000+' },
-      { label: 'Specialty', value: 'Customer Happiness' },
     ],
     isVerified: true,
     blogPosts: [],
@@ -170,7 +125,7 @@ export default function RangerProfilePage() {
     const profileAvatar = placeholderImages[profileData.avatar];
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in max-w-7xl mx-auto px-4 py-8">
         <Button variant="ghost" asChild>
             <Link href="/about">
                 <ArrowLeft className="mr-2 h-4 w-4" /> Back to Team Page
@@ -181,7 +136,7 @@ export default function RangerProfilePage() {
         <section ref={headerRef} className={cn('scroll-animate', isHeaderVisible && 'scroll-animate-in')}>
             <Card className="overflow-hidden shadow-lg transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
                 <div className="relative h-48 w-full bg-muted">
-                    <Image src={placeholderImages.gallerySafariGroup.src} alt="Safari landscape" layout="fill" objectFit="cover" data-ai-hint="safari landscape" className="opacity-50" />
+                    <Image src={placeholderImages.aboutHeader.src} alt="Safari landscape" layout="fill" objectFit="cover" data-ai-hint={placeholderImages.aboutHeader.hint} className="opacity-50" />
                 </div>
                 <div className="p-6 pt-0 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left -mt-16 z-10 relative">
                   <Avatar className="h-32 w-32 border-4 border-card shadow-xl shrink-0">
@@ -266,7 +221,7 @@ export default function RangerProfilePage() {
                       </CardHeader>
                       <CardContent className="space-y-4">
                           {profileData.guidedTours.map(tour => {
-                              const tourImage = placeholderImages[tour.image];
+                              const tourImage = placeholderImages[tour.image as keyof typeof placeholderImages] || placeholderImages.campaignDetailWildebeest;
                               return (
                                   <Link key={tour.id} href={`/campaigns/${tour.id}`} className="flex items-center gap-4 group p-2 rounded-md hover:bg-muted/50">
                                       <div className="relative w-16 h-16 rounded-md overflow-hidden shrink-0">
