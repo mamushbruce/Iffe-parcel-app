@@ -136,7 +136,7 @@ export default function RangerProfilePage() {
         <section ref={headerRef} className={cn('scroll-animate', isHeaderVisible && 'scroll-animate-in')}>
             <Card className="overflow-hidden shadow-lg transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1">
                 <div className="relative h-48 w-full bg-muted">
-                    <Image src={placeholderImages.gallerySafariGroup.src} alt="Safari landscape" layout="fill" objectFit="cover" data-ai-hint="safari landscape" className="opacity-50" />
+                    <Image src={placeholderImages.aboutHeader.src} alt="Safari landscape" layout="fill" objectFit="cover" data-ai-hint={placeholderImages.aboutHeader.hint} className="opacity-50" />
                 </div>
                 <div className="p-6 pt-0 flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left -mt-16 z-10 relative">
                   <Avatar className="h-32 w-32 border-4 border-card shadow-xl shrink-0">
